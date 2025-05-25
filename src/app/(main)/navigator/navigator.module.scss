@@ -1,0 +1,52 @@
+.mainnavigator {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    .pagebtn {
+        background-color: hsl(0, 0, 20%);
+        border-radius: 100rem;
+
+        font-size: 2rem;
+        color: hsl(0, 0, 90%);
+        font-family: Instrument Serif;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.6rem;
+
+        padding: 0.4rem;
+        padding-right: 1.6rem;
+        user-select: none;
+        cursor: pointer;
+        transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+        outline: 0.16rem solid hsl(0, 0, 10%);
+        outline-offset: 0.16rem;
+
+        &:hover {
+            outline-offset: 0.16rem;
+            outline: 0.16rem solid hsl(0, 0, 20%);
+        }
+
+        &:focus {
+            outline-offset: 0.16rem;
+            outline: 0.16rem solid hsl(0, 0, 30%);
+        }
+
+        .pagebanner {
+            border-radius: 100rem;
+            object-fit: cover;
+            object-position: center;
+            aspect-ratio: 1/1;
+            height: 4rem;
+            pointer-events: none;
+        }
+
+
+    }
+}
+
+.active {
+  outline: 0.16rem solid #b3b3b3;
+}

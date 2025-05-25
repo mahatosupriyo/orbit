@@ -1,0 +1,100 @@
+@mixin smooth {
+    transition: all 0.3s cubic-bezier(0, 0, 1, 0), background-position 0.2s cubic-bezier(0, 0, 1, 0), color 300ms cubic-bezier(0.5, 0, 0, 1);
+}
+
+@mixin protectmedia {
+    user-select: none;
+    pointer-events: none;
+}
+
+$corner: 0rem;
+
+.highlighttxt {
+    background: linear-gradient(87deg, #AFA7A1 -15.71%, #FE4200 28.99%, #FF805B 89.6%, #98B7C0 114.83%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn {
+    padding: 1.8rem 2rem;
+    font-size: 1.56rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    line-height: 100%;
+    border-radius: 6rem;
+    background-color: hsl(0, 0, 90%);
+    color: hsl(0, 0, 10%);
+    @include smooth();
+
+    &:hover {
+        background-color: hsl(0, 0, 70%);
+
+    }
+}
+
+@mixin btn($bg: #fff, $color: '#222') {
+    padding: 1.8rem 2rem;
+    font-size: 1.56rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    line-height: 100%;
+    border-radius: 6rem;
+    background-color: $bg;
+    color: $color;
+    @include smooth();
+
+    &:hover {
+        background-color: hsl(0, 0, 70%);
+
+    }
+}
+
+
+
+
+// Skeleton Starts
+// Variables for customization
+$bg-color: hsl(0, 0%, 16%);
+$shimmer-color: hsl(0, 0%, 20%);
+$default-animation-duration: 1.5s;
+
+// Mixin for skeleton loading animation
+@mixin skeleton-loading($width: 100%, $height: 20px, $animation-duration: $default-animation-duration) {
+    background-color: $bg-color;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: $width;
+    height: $height;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                $bg-color 0%,
+                $shimmer-color 50%,
+                $bg-color 100%);
+        animation: shimmer $animation-duration infinite;
+        background-size: 200% 100%;
+    }
+}
+
+// Keyframes for the shimmer effect
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+// Skeleton Ends

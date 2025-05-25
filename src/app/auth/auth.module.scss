@@ -1,0 +1,167 @@
+@use '../styles/essentials';
+@import '../styles/essentials';
+
+.authwraper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: hsl(0, 0%, 6%);
+
+    background-image: url("https://images.unsplash.com/photo-1653562330901-1a0600eea6e6?q=80&w=2428&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .authcontainer {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        min-height: 100dvh;
+        max-width: 44rem;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10rem;
+        padding: 10rem 2rem;
+
+
+
+        .authheader {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            width: 100%;
+            align-items: flex-start;
+
+            .headertxt {
+                font-size: 4.6rem;
+                font-weight: 400;
+                line-height: 100%;
+                font-family: Instrument Serif;
+
+                .low {
+                    font-family: Instrument Serif;
+                    color: hsl(0, 0%, 100%, 0.5);
+                }
+
+                color: #fff;
+            }
+        }
+
+        .btnwraper {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            background-color: hsl(0, 0%, 6%);
+            height: 9rem;
+            position: relative;
+            border-radius: 100rem;
+
+            .authbtn {
+                display: flex;
+                width: 100%;
+                height: 9.6rem;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+
+                background-color: none;
+                background: none;
+
+                border: 0.2rem solid #404040;
+                border-radius: 100rem;
+
+
+                position: relative;
+                overflow: hidden;
+
+                transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
+
+                user-select: none;
+
+
+                .providericon {
+                    height: 2.4rem;
+                    transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
+                    opacity: 1;
+                }
+
+                &:focus {
+                    outline: 0.2rem solid #fff;
+                    outline-offset: -0.2rem;
+                }
+
+                &:hover {
+                    background-color: #2F2F2F;
+
+                    .providericon {
+                        opacity: 0;
+                        transform: translateY(-6rem);
+                    }
+
+                    .authtextcontainer {
+                        transform: translateY(0);
+
+                        .authtxt {
+                            transform: translateY(0);
+                            opacity: 1;
+                        }
+                    }
+                }
+
+
+                .authtextcontainer {
+                    display: flex;
+                    color: #fff;
+                    font-size: 1.6rem;
+                    position: absolute;
+                    font-weight: 300;
+
+                    transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+                    transform: translateY(6rem);
+                }
+            }
+        }
+
+        .authfooter {
+            font-size: 1.46rem;
+            line-height: 140%;
+            color: hsl(0, 0%, 60%);
+
+            .linkinline {
+                text-decoration: none;
+                color: #fff;
+            }
+        }
+    }
+}
+
+
+// Button Animation Hover
+.authtextcontainer {
+    display: flex;
+    gap: 0.4rem;
+    position: absolute;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: #fff;
+
+    .authtxt {
+        transform: translateY(6rem);
+        opacity: 0;
+        transition: transform 0.3s cubic-bezier(.51, .92, .24, 1.15), opacity 0.3s cubic-bezier(.51, .92, .24, 1.15);
+
+        &:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        &:nth-child(2) {
+            transition-delay: 0.05s;
+        }
+
+        &:nth-child(3) {
+            transition-delay: 0.1s;
+        }
+    }
+}

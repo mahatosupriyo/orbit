@@ -1,0 +1,64 @@
+.capsulewraper {
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+
+        .save {
+            transform: translateY(0rem);
+            opacity: 1;
+        }
+
+
+    }
+
+    .save {
+        position: absolute;
+        display: flex;
+        background-color: #fff;
+        border-radius: 10rem;
+        bottom: 2rem;
+        right: 2rem;
+        cursor: pointer;
+        padding: 1.6rem;
+        transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+        transform: translateY(7.6rem);
+        opacity: 0;
+
+        &:focus {
+            outline: 0.2rem solid hsl(0, 0%, 85%);
+            outline-offset: 0.2rem;
+        }
+    }
+
+
+    .capsulebtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 1rem;
+        cursor: pointer;
+
+        &::after {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: hsl(0, 0, 0%, 0.1);
+        }
+
+        .capsulebanner {
+            aspect-ratio: 1/1;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            pointer-events: none;
+            user-select: none;
+        }
+
+
+    }
+
+}

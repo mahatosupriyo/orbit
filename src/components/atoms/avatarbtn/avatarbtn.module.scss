@@ -1,0 +1,108 @@
+.avatarbtncontainer {
+    display: flex;
+    position: relative;
+    z-index: 9999;
+
+    .dropdown {
+        position: absolute;
+        top: 6rem;
+        right: 0rem;
+        background: #fff;
+        border-radius: 1.4rem;
+        padding: 0.4rem;
+        z-index: 9999;
+
+        min-width: 20rem;
+
+        .menu {
+            list-style: none;
+            width: 100%;
+
+
+            .option {
+                padding: 1rem 1rem;
+                font-size: 1.46rem;
+                width: 100%;
+                line-height: 100%;
+
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                cursor: pointer;
+                transition: background 0.2s;
+                color: #121212;
+                border-radius: 1rem;
+                user-select: none;
+
+                &:hover {
+                    background: hsl(0, 0%, 86%);
+                }
+            }
+
+            .hr {
+                border: none;
+                border-top: 1px solid hsl(0, 0%, 70%);
+                margin: 0.4rem 0;
+                border-radius: 10rem;
+            }
+
+            .logout {
+                color: #e74c3c;
+
+                padding: 1.3rem 1.6rem;
+                font-size: 1.5rem;
+                width: 100%;
+
+                line-height: 100%;
+
+                display: flex;
+                gap: 0.75rem;
+                align-items: center;
+                cursor: pointer;
+                transition: background 0.2s ease-in-out;
+                user-select: none;
+                border-radius: 1rem;
+
+
+                &:hover {
+                    background: #e74c3c;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .avatarbtn {
+        display: flex;
+        align-items: center;
+        border-radius: 100rem;
+        justify-content: center;
+        overflow: hidden;
+
+        transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
+
+        cursor: pointer;
+        outline: 0.2rem solid hsl(0, 0%, 15%);
+        outline-offset: 0.2rem;
+
+        &:hover {
+            outline: 0.2rem solid hsl(0, 0%, 35%);
+            outline-offset: 0.2rem;
+        }
+
+        &:focus {
+            outline: 0.2rem solid hsl(0, 0%, 85%);
+            outline-offset: 0.2rem;
+        }
+
+        .avatar {
+            height: 5rem;
+            width: 5rem;
+
+            object-fit: cover;
+            user-select: none;
+            pointer-events: none;
+            object-position: center;
+        }
+    }
+}

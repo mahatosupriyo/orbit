@@ -1,0 +1,80 @@
+.wraper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .container {
+        width: 100%;
+        max-width: 200rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .capsulegrid {
+            padding: 20rem 2rem;
+            display: flex;
+            z-index: 99;
+            flex-direction: column;
+            gap: 2rem;
+
+            .deengineering {
+                display: flex;
+                padding: 10rem 0rem;
+                flex-direction: column;
+                gap: 2rem;
+
+            }
+
+            .drops {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                width: 100%;
+                gap: 2rem;
+
+                .dropcard {
+                    position: relative;
+
+                    .tag {
+                        display: flex;
+                        position: absolute;
+                        top: 2rem;
+                        right: 2rem;
+                        font-size: 1.6rem;
+                        color: #fff;
+                        z-index: 100;
+                        // mix-blend-mode: difference;
+                        user-select: none;
+                    }
+
+
+                }
+            }
+        }
+    }
+}
+
+.title {
+    font-family: Instrument Serif;
+    font-size: 10rem;
+    font-weight: 400;
+    color: hsl(0, 0, 60%);
+    transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    cursor: pointer;
+
+    &:hover {
+        color: hsl(0, 0, 100%);
+    }
+}
+
+.capsuleheader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+
+    flex-direction: row;
+
+
+}

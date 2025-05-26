@@ -3,6 +3,7 @@ import "./styles/global.scss";
 import "./styles/global.css";
 import Head from "next/head";
 import { SessionProvider } from 'next-auth/react';
+import { Toaster } from 'react-hot-toast'
 
 
 export const metadata: Metadata = {
@@ -72,6 +73,24 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/ika2qcu.css"></link>
       </Head>
       <body>
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 2000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+              height: '5.4rem',
+              paddingLeft: '1rem',
+              display: 'flex',
+              alignItems: 'center',
+              fontWeight: 400,
+              fontSize: '1.56rem',
+              borderRadius: '10rem'
+            },
+          }}
+        />
         <SessionProvider>
           {children}
         </SessionProvider>

@@ -60,17 +60,22 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    username      String?   @unique
+    id                 String    @id @default(cuid())
+    name               String?
+    email              String?   @unique
+    emailVerified      DateTime?
+    image              String?
+    username           String?   @unique
+    lastUsernameUpdate DateTime?
+    lastNameUpdate     DateTime?
 
     role     UserRole  @default(USER)
     accounts Account[]
     sessions Session[]
     posts    Post[]
+
+    garagePosts GaragePost[]
+    courses     Course[]
 }
 
 model VerificationToken {
@@ -79,4 +84,65 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model GaragePost {
+    id          Int      @id @default(autoincrement())
+    title       String
+    caption     String?
+    externalUrl String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String
+
+    images   Asset[] @relation("GaragePostImages")
+    makingOf Asset?  @relation("GaragePostVideo", fields: [assetId], references: [id])
+    assetId  Int?    @unique
+}
+
+model Course {
+    id          Int      @id @default(autoincrement())
+    title       String
+    description String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String
+
+    lessons Lesson[]
+}
+
+model Lesson {
+    id       Int     @id @default(autoincrement())
+    title    String
+    content  String? // optional text content or markdown
+    video    Asset   @relation(fields: [videoId], references: [id])
+    videoId  Int
+    course   Course  @relation(fields: [courseId], references: [id])
+    courseId Int
+
+    order Int // for lesson ordering
+}
+
+model Asset {
+    id        Int      @id @default(autoincrement())
+    url       String
+    type      String
+    width     Int?
+    height    Int?
+    duration  Int?
+    publicId  String?
+    createdAt DateTime @default(now())
+
+    // Optional making-of video for a single GaragePost
+    GaragePostVideo GaragePost? @relation("GaragePostVideo")
+
+    // Multiple images for a GaragePost
+    GaragePostImages GaragePost[] @relation("GaragePostImages")
+
+    // Used in lessons
+    Lesson Lesson[]
 }

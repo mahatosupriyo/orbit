@@ -5,6 +5,7 @@ import Logo from '@/components/atoms/icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import Overlay from "@/components/overlay/overlay";
 import { useSession, signOut } from "next-auth/react"
+import Link from "next/link";
 
 
 type AvatarBtnProps = {
@@ -60,7 +61,7 @@ const AvatarBtn: React.FC<AvatarBtnProps> = ({ avatarSrc }) => {
       >
         <img
           className={styles.avatar}
-          src={session?.user.image || "https://via.placeholder.com/40"}
+          src={session?.user?.image || "https://via.placeholder.com/40"}
           alt="User Avatar"
           draggable="false"
         />
@@ -77,10 +78,10 @@ const AvatarBtn: React.FC<AvatarBtnProps> = ({ avatarSrc }) => {
             transition={{ duration: 0.2 }}
           >
             <ul className={styles.menu}>
-              <motion.li whileTap={{ opacity: 0.6 }} className={styles.option}>
+              <Link href="/account" className={styles.option}>
                 <Logo name="account" fill="#121212" size={24} />
-                Account settings
-              </motion.li>
+                Account settings 
+              </Link>
 
               <Overlay
                 buttonIcon={<Logo name="otostroke" fill="#121212" size={24} />}

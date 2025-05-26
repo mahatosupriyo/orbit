@@ -7,6 +7,14 @@ import { motion } from 'framer-motion'
 import { signIn } from "next-auth/react"
 
 export default function AuthPage() {
+
+    const handleSignIn = async (providerName: string) => {
+        try {
+            await signIn(providerName, { callbackUrl: '/' });
+        } catch (error) {
+            console.error('Failed to sign in:', error);
+        }
+    };
     return (
         <div className={styles.authwraper}>
 
@@ -25,7 +33,7 @@ export default function AuthPage() {
                     <motion.button
                         whileTap={{ opacity: 0.6 }}
                         className={styles.authbtn}
-                        onClick={() => signIn()}
+                        onClick={() => handleSignIn('github')}
                     >
                         <img
                             className={styles.providericon}

@@ -7,22 +7,14 @@ import Overlay from "@/components/overlay/overlay";
 import { useSession, signOut } from "next-auth/react"
 import Link from "next/link";
 
-
-type AvatarBtnProps = {
-  avatarSrc?: string;
-};
-
 /**
  * AvatarBtn Component
  * Renders a user avatar button with a dropdown menu.
  * Handles menu open/close, click outside to close, and simple menu options.
- * @param {AvatarBtnProps} props - Props containing the avatar image source.
- * @returns {JSX.Element} The AvatarBtn component.
+ * Uses the session's user image for the avatar.
  */
-const AvatarBtn: React.FC<AvatarBtnProps> = ({ avatarSrc }) => {
-
-  const { data } = useSession()
-  const { data: session } = useSession()
+const AvatarBtn: React.FC = () => {
+  const { data: session } = useSession();
 
   // State to control dropdown menu visibility
   const [menuOpen, setMenuOpen] = useState(false);

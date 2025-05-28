@@ -40,7 +40,10 @@
                     gap: 0rem;
 
                     .wraperheader{
-                        padding: 0rem 2rem 2rem 2rem;
+                        padding: 0rem 2rem 1rem 2rem;
+                        font-size: 2.4rem;
+                        font-weight: 400;
+                        font-family: Instrument Serif;
                     }
                 }
             }
@@ -64,10 +67,11 @@
                     .eplabel {
                         font-size: 1.46rem;
                         opacity: 0.6;
+                        font-weight: 400;
                     }
 
                     .title {
-                        font-weight: 700;
+                        font-weight: 400;
                         font-size: 2rem;
                     }
                 }

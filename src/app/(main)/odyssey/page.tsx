@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import NavBar from '@/components/molecules/navbar/navbar';
 import styles from './odyssey.module.scss';
 import Video from 'next-video';
-// import getStarted from 'https://ik.imagekit.io/localstore/FLORA-original-20632726.mp4';
 import { motion } from 'framer-motion';
 import VideoChip from '@/components/atoms/videochip/videochip';
 

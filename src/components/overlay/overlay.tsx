@@ -17,6 +17,13 @@ interface OverlayProps {
   onOpenChange?: (open: boolean) => void
 }
 
+/**
+ * Overlay component
+ * - Renders a modal overlay with animation and accessibility features.
+ * - Can be controlled externally or manage its own open state.
+ * - Closes on ESC key or clicking outside the content.
+ * - Optionally renders a trigger button if not controlled.
+ */
 export default function Overlay({
   children,
   fullScreenOnDesktop = false,
@@ -33,9 +40,10 @@ export default function Overlay({
   // Determine if the overlay is open based on whether it's controlled or not
   const isOpen = isControlled ? controlledIsOpen : internalIsOpen
 
+  // Ref for the overlay content to detect outside clicks
   const contentRef = useRef<HTMLDivElement>(null)
 
-  // Handle opening and closing
+  // Handle opening the overlay
   const handleOpen = () => {
     if (isControlled) {
       onOpenChange?.(true)
@@ -44,6 +52,7 @@ export default function Overlay({
     }
   }
 
+  // Handle closing the overlay
   const handleClose = () => {
     if (isControlled) {
       onOpenChange?.(false)
@@ -64,7 +73,7 @@ export default function Overlay({
     return () => window.removeEventListener("keydown", handleEscKey)
   }, [isOpen])
 
-  // Handle click outside to close
+  // Handle click outside the overlay content to close
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
       handleClose()
@@ -73,15 +82,19 @@ export default function Overlay({
 
   return (
     <>
-      {/* Trigger Button (only show if not controlled) */}
+      {/* Trigger Button (only show if not controlled externally) */}
       {!isControlled && (
-        <motion.button whileTap={{ opacity: 0.6 }} onClick={handleOpen} className={`${styles.triggerButton} ${buttonClassName}`}>
+        <motion.button
+          whileTap={{ opacity: 0.6 }}
+          onClick={handleOpen}
+          className={`${styles.triggerButton} ${buttonClassName}`}
+        >
           {buttonIcon && <span className={styles.buttonIcon}>{buttonIcon}</span>}
           {buttonText}
         </motion.button>
       )}
 
-      {/* Overlay */}
+      {/* Overlay modal with animation */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -99,11 +112,16 @@ export default function Overlay({
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
             >
-
-              <button className={styles.closeButton} onClick={handleClose} aria-label="Close overlay">
+              {/* Close button in the top-right corner */}
+              <button
+                className={styles.closeButton}
+                onClick={handleClose}
+                aria-label="Close overlay"
+              >
                 <X size={24} />
               </button>
 
+              {/* Overlay content body */}
               <div className={styles.overlayBody}>{children}</div>
             </motion.div>
           </motion.div>

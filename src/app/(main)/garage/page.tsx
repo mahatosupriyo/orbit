@@ -75,7 +75,7 @@ export default function GaragePage() {
                                 <CapsuleCard imgSrc="https://i.pinimg.com/736x/fe/88/a3/fe88a3685cb6e9e586c969e33e9c504c.jpg" />
                             </motion.div>
                             <motion.div className={styles.dropcard} variants={itemVariants}>
-                                <CapsuleCard imgSrc="https://i.pinimg.com/736x/b7/aa/f1/b7aaf141191a0b53d259b08cf239acd3.jpg" />
+                                <CapsuleCard imgSrc="https://i.pinimg.com/originals/db/8b/73/db8b737c8560d6b6df114d43eccb982e.gif" />
                             </motion.div>
                             <motion.div className={styles.dropcard} variants={itemVariants}>
                                 <CapsuleCard imgSrc="https://i.pinimg.com/736x/ad/01/fd/ad01fde01183d57b43326404d946da5b.jpg" />

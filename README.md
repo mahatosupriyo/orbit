@@ -1,29 +1,97 @@
-# Create T3 App
+# Orbit
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Orbit is a modern web application built with the [T3 Stack](https://create.t3.gg/), featuring a clean UI, authentication, user account management, and interactive video and capsule components. This project leverages Next.js, NextAuth.js, Prisma, and other best-in-class tools for a robust developer and user experience.
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- **Authentication**: Secure sign-in with GitHub (NextAuth.js).
+- **User Profiles**: Update name and username with validation and daily limits.
+- **Account Management**: Responsive account settings page with avatar and email display.
+- **Video & Capsule Components**: Interactive, animated UI elements for media and content.
+- **Reusable UI**: Modular components (buttons, overlays, navigation, etc.) with production-ready patterns.
+- **Prisma ORM**: Type-safe database access and migrations.
+- **Modern Animations**: Smooth transitions and feedback using Framer Motion.
+- **Production Best Practices**: Singleton database client, error handling, and accessibility.
+
+---
+
+## Tech Stack
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Zod](https://zod.dev) (validation)
+- [SCSS Modules](https://sass-lang.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-## Learn More
+---
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Getting Started
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/orbit.git
+   cd orbit
+   ```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## How do I deploy this?
+3. **Configure environment variables**
+   - Copy `.env.example` to `.env` and fill in your secrets (GitHub OAuth, database URL, etc.).
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+4. **Set up the database**
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
+
+---
+
+## Project Structure
+
+- `/src/app` — Next.js app directory (pages, layouts, routes)
+- `/src/components` — Reusable UI components (atoms, molecules, overlay, etc.)
+- `/src/server` — Database and server utilities
+- `/src/lib` — Helper functions (authentication, validation, etc.)
+
+---
+
+## Deployment
+
+Orbit is ready for deployment on [Vercel](https://vercel.com), [Netlify](https://www.netlify.com/), or any platform supporting Next.js.
+
+- See [Next.js deployment docs](https://nextjs.org/docs/deployment) for more info.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please open issues or pull requests for improvements or bug fixes.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Acknowledgements
+
+- [T3 Stack](https://create.t3.gg/)
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Framer Motion](https://www.framer.com/motion/)

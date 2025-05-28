@@ -18,11 +18,11 @@ export const env = createEnv({
       .default("development"),
 
     // ORBIT AWS credentials and settings
-    ORBIT_AWS_ACCESS_KEY_ID: z.string(),
-    ORBIT_AWS_SECRET_ACCESS_KEY: z.string(),
-    ORBIT_AWS_REGION: z.string(),
-    ORBIT_S3_BUCKET_NAME: z.string(),
-    ORBIT_CLOUDFRONT_URL: z.string().url(),
+    // ORBIT_AWS_ACCESS_KEY_ID: z.string(),
+    // ORBIT_AWS_SECRET_ACCESS_KEY: z.string(),
+    // ORBIT_AWS_REGION: z.string(),
+    // ORBIT_S3_BUCKET_NAME: z.string(),
+    // ORBIT_CLOUDFRONT_URL: z.string().url(),
   },
 
   /**
@@ -42,11 +42,11 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
 
-    ORBIT_AWS_ACCESS_KEY_ID: process.env.ORBIT_AWS_ACCESS_KEY_ID,
-    ORBIT_AWS_SECRET_ACCESS_KEY: process.env.ORBIT_AWS_SECRET_ACCESS_KEY,
-    ORBIT_AWS_REGION: process.env.ORBIT_AWS_REGION,
-    ORBIT_S3_BUCKET_NAME: process.env.ORBIT_S3_BUCKET_NAME,
-    ORBIT_CLOUDFRONT_URL: process.env.ORBIT_CLOUDFRONT_URL,
+    // ORBIT_AWS_ACCESS_KEY_ID: process.env.ORBIT_AWS_ACCESS_KEY_ID,
+    // ORBIT_AWS_SECRET_ACCESS_KEY: process.env.ORBIT_AWS_SECRET_ACCESS_KEY,
+    // ORBIT_AWS_REGION: process.env.ORBIT_AWS_REGION,
+    // ORBIT_S3_BUCKET_NAME: process.env.ORBIT_S3_BUCKET_NAME,
+    // ORBIT_CLOUDFRONT_URL: process.env.ORBIT_CLOUDFRONT_URL,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

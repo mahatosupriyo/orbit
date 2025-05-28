@@ -33,7 +33,7 @@ Orbit is a modern web application built with the [T3 Stack](https://create.t3.gg
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/orbit.git
+   git clone https://github.com/mahatosupriyo/orbit.git
    cd orbit
    ```
 

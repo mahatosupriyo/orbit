@@ -10,7 +10,7 @@ import { signIn } from "next-auth/react"
  * AuthPage component
  * - Renders the authentication UI for signing in with a provider.
  * - Handles sign-in logic and error reporting.
- * - Shows branding, sign-in button, and legal links.
+ * - Shows branding, sign-in button, and legal link.
  */
 export default function AuthPage() {
 

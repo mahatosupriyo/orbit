@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React from 'react';
 import NavBar from '@/components/molecules/navbar/navbar';
 import styles from './odyssey.module.scss';
 import Video from 'next-video';
@@ -14,6 +14,7 @@ const containerVariants = {
         },
     },
 };
+
 
 const itemVariants = {
     initial: { opacity: 0, y: 20 },
@@ -43,8 +44,10 @@ export default function OdysseyPage() {
                         className={styles.playercontainer}>
                         <motion.div variants={itemVariants} className={styles.playersection}>
                             <motion.div style={{ width: '100%', overflow: 'hidden' }}>
-                                <Video className={styles.playercomp} style={{ width: '100%', userSelect: 'none', pointerEvents: 'none', height: '100%' }} 
-                                src="https://ik.imagekit.io/localstore/FLORA-original-20632726.mp4" />
+                                <Video className={styles.playercomp} style={{ width: '100%', userSelect: 'none', pointerEvents: 'none', height: '100%' }}
+                                    playbackId='I00sgVOUCVQLklE5mtWQF4vsuumi00ZODzfMEjzVeOL900'
+                                    poster="https://image.mux.com/I00sgVOUCVQLklE5mtWQF4vsuumi00ZODzfMEjzVeOL900/thumbnail.webp"
+                                />
                             </motion.div>
 
 

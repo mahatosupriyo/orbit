@@ -102,6 +102,7 @@ export default function AccountForm({ user }: { user: User }) {
                             required
                             aria-label="Name"
                             autoComplete="off"
+                            autoCorrect='off'
                         />
                     </div>
 
@@ -116,6 +117,7 @@ export default function AccountForm({ user }: { user: User }) {
                             maxLength={32}
                             pattern="^[a-zA-Z]*$"
                             aria-label="Username"
+                            autoCorrect='off'
                             autoComplete="off"
                         />
                     </div>

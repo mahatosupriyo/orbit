@@ -97,7 +97,7 @@
     font-size: 1.6rem;
     font-weight: 400;
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
-
+    
 
     &:hover {
         border: 0.2rem solid hsl(0, 0, 26%);
@@ -106,5 +106,19 @@
     &:focus {
         border: 0.2rem solid #1d75de;
         color: #fff;
+    }
+}
+
+
+.email {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    user-select: none;
+
+    .input {
+        user-select: none;
+        pointer-events: none;
     }
 }

@@ -53,7 +53,7 @@ const AvatarBtn: React.FC = () => {
       >
         <img
           className={styles.avatar}
-          src={session?.user?.image || "https://via.placeholder.com/40"}
+          src={session?.user?.image || '/'}
           alt="User Avatar"
           draggable="false"
         />

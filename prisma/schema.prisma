@@ -76,6 +76,7 @@ model User {
 
     garagePosts GaragePost[]
     courses     Course[]
+    payments    Payment[]
 }
 
 model VerificationToken {
@@ -118,23 +119,19 @@ model Course {
 model Lesson {
     id       Int     @id @default(autoincrement())
     title    String
-    content  String? // optional text content or markdown
+    content  String?
     video    Asset   @relation(fields: [videoId], references: [id])
     videoId  Int
     course   Course  @relation(fields: [courseId], references: [id])
     courseId Int
 
-    order Int // for lesson ordering
+    order Int
 }
 
 model Asset {
-    id        Int      @id @default(autoincrement())
-    url       String
-    type      String
-    width     Int?
-    height    Int?
-    duration  Int?
-    publicId  String?
+    id         Int    @id @default(autoincrement())
+    playbackID String
+
     createdAt DateTime @default(now())
 
     // Optional making-of video for a single GaragePost
@@ -145,4 +142,17 @@ model Asset {
 
     // Used in lessons
     Lesson Lesson[]
+}
+
+model Payment {
+    id                String   @id @default(cuid())
+    user              User     @relation(fields: [userId], references: [id])
+    userId            String
+    razorpayOrderId   String   @unique
+    razorpayPaymentId String?
+    amount            Int // Amount in paise
+    status            String // "created", "paid", "failed"
+    plan              String // "pro", "exclusive"
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
 }

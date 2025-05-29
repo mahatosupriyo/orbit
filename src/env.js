@@ -17,6 +17,10 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
 
+    RAZORPAY_KEY_ID: z.string(),
+    RAZORPAY_KEY_SECRET: z.string(),
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string(),
+
     // ORBIT AWS credentials and settings
     // ORBIT_AWS_ACCESS_KEY_ID: z.string(),
     // ORBIT_AWS_SECRET_ACCESS_KEY: z.string(),
@@ -47,6 +51,10 @@ export const env = createEnv({
     // ORBIT_AWS_REGION: process.env.ORBIT_AWS_REGION,
     // ORBIT_S3_BUCKET_NAME: process.env.ORBIT_S3_BUCKET_NAME,
     // ORBIT_CLOUDFRONT_URL: process.env.ORBIT_CLOUDFRONT_URL,
+
+    RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+    RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

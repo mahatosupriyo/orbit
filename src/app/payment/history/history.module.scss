@@ -1,3 +1,6 @@
+$height: 12rem;
+
+
 .wraper {
     display: flex;
     width: 100%;
@@ -33,6 +36,8 @@
 
         .attributes {
             position: fixed;
+            user-select: none;
+            pointer-events: none;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -95,8 +100,7 @@
                     aspect-ratio: 1/1;
                     display: flex;
                     object-fit: cover;
-                    height: 10rem;
-                    width: 10rem;
+                    height: $height;
 
                     pointer-events: none;
                     user-select: none;
@@ -108,7 +112,7 @@
                     flex-direction: row;
                     padding: 0rem 1.6rem;
                     width: 100%;
-                    min-height: 10rem;
+                    min-height: $height;
                     position: relative;
 
 
@@ -153,7 +157,7 @@
 
                             .paymentstatus {
                                 color: #121212;
-                                font-size: 1.46rem;
+                                font-size: 1.4rem;
                             }
                         }
                     }
@@ -170,6 +174,7 @@
                         gap: 0.4rem;
                         line-height: 90%;
                         font-weight: 400;
+                        font-size: 1.6rem;
 
 
                         .rupee {
@@ -185,7 +190,7 @@
                 display: flex;
                 flex-direction: row;
                 gap: 2rem;
-                padding: 1.4rem 1.4rem 1.2rem 1.4rem;
+                padding: 1.8rem 1.4rem 1.6rem 1.4rem;
 
                 @media only screen and (max-width: 380px) {
                     flex-direction: column;
@@ -205,6 +210,9 @@
                         color: hsl(0, 0, 40%);
 
                         font-size: 1rem;
+                        font-weight: 400;
+
+                        user-select: none;
                     }
                 }
             }

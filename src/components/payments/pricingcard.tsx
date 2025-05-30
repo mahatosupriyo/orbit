@@ -1,5 +1,6 @@
 import { BuyNowButton } from "./paymentbtn";
 
+
 export function ProductCard() {
   return (
     <div className="w-full max-w-sm overflow-hidden">

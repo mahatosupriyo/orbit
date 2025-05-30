@@ -4,8 +4,11 @@ import { Loader2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createRazorpayOrder } from "@/app/actions/actions";
+import { useSession } from "next-auth/react";
 
 export function BuyNowButton() {
+  const { data: session } = useSession();
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -27,18 +30,18 @@ export function BuyNowButton() {
     if (data) {
       const paymentWindow = new window.Razorpay({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        name: "Agam Shop",
-        description: "A development shop",
+        name: "On The Orbit",
+        description: "Launchpad for Designers",
         currency: "INR",
         order_id: data.id,
-        image: "https://avatar.vercel.sh/agam-shop",
+        image: "https://www.ontheorbit.com/Essentials/logo.png",
         prefill: {
-          name: "John Doe",
-          email: "johndoe@gmail.com",
-          contact: "9999999999",
+          name: session?.user?.id,
+          email: session?.user?.email,
+          contact: "",
         },
         theme: {
-          color: "#e5e7eb",
+          color: "#FBFAFA",
         },
         handler: async function (response: any) {
           const { razorpay_payment_id, razorpay_order_id } = response;

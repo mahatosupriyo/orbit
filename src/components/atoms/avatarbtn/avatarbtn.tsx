@@ -16,28 +16,35 @@ import Link from "next/link";
 const AvatarBtn: React.FC = () => {
   const { data: session } = useSession();
 
-  // State to control dropdown menu visibility
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Ref for the menu container to detect outside clicks
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Toggle the dropdown menu open/close
-  const toggleMenu = () => setMenuOpen(prev => !prev);
+  // Loading states
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [showImage, setShowImage] = useState(false);
 
-  // Close the menu if a click occurs outside the menu container
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (imageLoaded) {
+      const timer = setTimeout(() => {
+        setShowImage(true);
+      }, 400); 
+      return () => clearTimeout(timer);
+    }
+  }, [imageLoaded]);
+
+  const toggleMenu = () => setMenuOpen(prev => !prev);
 
   return (
     <div className={styles.avatarbtncontainer} ref={menuRef}>
@@ -51,15 +58,21 @@ const AvatarBtn: React.FC = () => {
         aria-expanded={menuOpen}
         type="button"
       >
+        {/* Skeleton Loader */}
+        {!showImage && (
+          <div className={styles.skeleton}></div>
+        )}
         <img
-          className={styles.avatar}
+          className={`${styles.avatar} ${showImage ? styles.fadeIn : styles.hidden}`}
           src={session?.user?.image || '/'}
           alt="User Avatar"
           draggable="false"
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageLoaded(true)}
         />
       </motion.button>
 
-      {/* Dropdown menu with animation */}
+      {/* Dropdown menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div

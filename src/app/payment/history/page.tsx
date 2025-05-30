@@ -4,9 +4,14 @@ import React from "react";
 import Link from "next/link";
 import styles from "./history.module.scss";
 import NavBar from "@/components/molecules/navbar/navbar";
+import { redirect } from 'next/navigation'
 
 const PaymentHistoryPage = async () => {
     const session = await auth();
+
+    if (!session?.user?.id) {
+        return redirect('/')
+    }
 
     if (!session?.user?.id) {
         return (
@@ -150,6 +155,3 @@ const PaymentHistoryPage = async () => {
 };
 
 export default PaymentHistoryPage;
-
-{/* <td>{payment.razorpayOrderId}</td> */ }
-{/* <td>{payment.razorpayPaymentId || "N/A"}</td> */ }

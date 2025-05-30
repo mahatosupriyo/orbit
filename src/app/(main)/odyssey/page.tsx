@@ -76,7 +76,7 @@ export default function OdysseyPage() {
 
                                 <VideoChip
                                     videourl='/'
-                                    imageBanner='https://i.pinimg.com/736x/48/2b/22/482b22ce795d2868d307a82d69d74082.jpg'
+                                    imageBanner='https://i.pinimg.com/736x/b1/b6/d1/b1b6d1c1509c01b4950771329a6a63c3.jpg'
                                     label='Episode I'
                                     title='Introduction - Breaking the Ice'
                                 />

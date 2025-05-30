@@ -54,7 +54,7 @@ export default function GaragePage() {
                             <motion.div className={styles.dropcard} variants={itemVariants}>
                                 <p className={styles.tag}>Latest</p>
 
-                                <CapsuleCard imgSrc="https://i.pinimg.com/736x/9f/e5/54/9fe5540569c9f0a0a16fd5453410fb7a.jpg" />
+                                <CapsuleCard imgSrc="https://i.pinimg.com/736x/26/75/b3/2675b3aae8f8f764a012dc6aea7992c9.jpg" />
                             </motion.div>
                         </motion.div>
 
@@ -72,7 +72,7 @@ export default function GaragePage() {
                                 <CapsuleCard imgSrc="https://i.pinimg.com/736x/84/f8/4e/84f84e06db1465074526e65d949015dd.jpg" />
                             </motion.div>
                             <motion.div className={styles.dropcard} variants={itemVariants}>
-                                <CapsuleCard imgSrc="https://i.pinimg.com/736x/fe/88/a3/fe88a3685cb6e9e586c969e33e9c504c.jpg" />
+                                <CapsuleCard imgSrc="https://i.pinimg.com/originals/91/c5/a4/91c5a48c3efb6bf0cb50784a143aa21a.gif" />
                             </motion.div>
                             <motion.div className={styles.dropcard} variants={itemVariants}>
                                 <CapsuleCard imgSrc="https://i.pinimg.com/originals/db/8b/73/db8b737c8560d6b6df114d43eccb982e.gif" />

@@ -70,7 +70,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
+        
         <link rel="stylesheet" href="https://use.typekit.net/ika2qcu.css"></link>
+        
       </Head>
       <body>
         <Toaster

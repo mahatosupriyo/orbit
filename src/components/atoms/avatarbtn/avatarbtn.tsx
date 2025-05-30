@@ -100,10 +100,10 @@ const AvatarBtn: React.FC = () => {
                 <Logo name="help" fill="#121212" size={24} />
                 Help center
               </motion.button>
-              <motion.button whileTap={{ opacity: 0.6 }} className={styles.option}>
+              <Link href="/payment/history" className={styles.option}>
                 <Logo name="bill" fill="#121212" size={24} />
                 Payments
-              </motion.button>
+              </Link>
               <hr className={styles.hr} />
               <motion.button onClick={() => signOut()} whileTap={{ opacity: 0.6 }} className={styles.logout}>
                 Logout

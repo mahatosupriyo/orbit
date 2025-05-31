@@ -1,0 +1,29 @@
+.companyheader{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .pageheading {
+        text-align: center;
+        // font-family: Involve Bold;
+        font-family: Instrument Serif;
+        font-weight: 400;
+        font-size: 7rem;
+        color: #222;
+        line-height: 110%;
+        text-transform: uppercase;
+
+        @media only screen and (max-width: 60rem){
+            font-size: 3.6rem;
+        }
+    }
+
+    .update {
+        padding: 1.4rem 0rem;
+        // font-family: Involve;
+        font-weight: 400;
+        font-size: 1.1rem;
+        color: #a7a7a7;
+        letter-spacing: 0.1rem;
+        text-transform: uppercase;
+    }
+}

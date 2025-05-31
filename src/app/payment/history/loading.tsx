@@ -12,7 +12,7 @@ export default function Loading() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3, ease: [0.785, 0.135, 0.15, 0.86] }}
                         className={styles.title}>
-                        Payment History
+                        Payment history
                     </motion.h1>
                 </div>
 

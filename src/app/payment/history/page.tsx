@@ -23,7 +23,7 @@ const PaymentHistoryPage = async () => {
       <NavBar />
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Payment History</h1>
+          <h1 className={styles.title}>Payment history</h1>
         </div>
         <div className={styles.paymentwraper}>
           <PaymentTable payments={payments} />

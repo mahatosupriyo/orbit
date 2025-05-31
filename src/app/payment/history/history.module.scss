@@ -92,7 +92,7 @@ $height: 12rem;
             .tableinfo {
                 display: flex;
                 flex-direction: row;
-                padding: 1.6rem;
+                padding: 1.66rem;
                 background-color: #FBFAFA;
                 width: 100%;
 
@@ -128,13 +128,13 @@ $height: 12rem;
                             gap: 1rem;
 
                             .time {
-                                font-family: 1.56rem;
+                                font-family: 1.66rem;
                                 color: #121212;
                                 font-weight: 500;
                             }
 
                             .date {
-                                font-family: 1.56rem;
+                                font-family: 1.66rem;
                                 color: #121212;
                                 font-weight: 500;
                             }
@@ -142,7 +142,7 @@ $height: 12rem;
 
 
                         .plan {
-                            font-size: 2.4rem;
+                            font-size: 2.6rem;
                             color: #121212;
                             font-weight: 400;
                             font-family: Instrument Serif;
@@ -157,7 +157,7 @@ $height: 12rem;
 
                             .paymentstatus {
                                 color: #121212;
-                                font-size: 1.4rem;
+                                font-size: 1.56rem;
                             }
                         }
                     }
@@ -174,7 +174,7 @@ $height: 12rem;
                         gap: 0.4rem;
                         line-height: 90%;
                         font-weight: 400;
-                        font-size: 1.6rem;
+                        font-size: 1.56rem;
 
 
                         .rupee {
@@ -202,14 +202,14 @@ $height: 12rem;
                     flex-direction: column;
                     gap: 0.3rem;
 
-                    font-size: 1.26rem;
+                    font-size: 1.4rem;
                     font-weight: 400;
                     color: hsl(0, 0, 50%);
 
                     .label {
                         color: hsl(0, 0, 40%);
 
-                        font-size: 1rem;
+                        font-size: 1.26rem;
                         font-weight: 400;
 
                         user-select: none;

@@ -59,7 +59,7 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ payments }) => {
     };
 
     if (payments.length === 0) {
-        return <p>No payments found.</p>;
+        return <p style={{ fontSize: '1.6rem' }}>No payments found.</p>;
     }
 
 

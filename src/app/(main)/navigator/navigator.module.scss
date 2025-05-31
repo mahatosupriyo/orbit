@@ -7,9 +7,7 @@
         background-color: hsl(0, 0, 20%);
         border-radius: 100rem;
 
-        font-size: 2rem;
-        color: hsl(0, 0, 90%);
-        font-family: Instrument Serif;
+
 
         display: flex;
         flex-direction: row;
@@ -23,6 +21,12 @@
         transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
         outline: 0.16rem solid hsl(0, 0, 10%);
         outline-offset: 0.16rem;
+
+        position: relative;
+
+        display: flex;
+        align-content: center;
+        justify-content: center;
 
         &:hover {
             outline-offset: 0.16rem;
@@ -41,12 +45,39 @@
             aspect-ratio: 1/1;
             height: 4rem;
             pointer-events: none;
+            position: relative;
+
+            display: flex;
+            align-content: center;
+            justify-content: center;
         }
 
+        @media only screen and (max-width: 600px) {
+            padding: 0rem;
+
+            .pagebanner {
+                height: 5rem;
+            }
+        }
+
+
+        .itemlabel {
+            font-size: 2rem;
+            color: hsl(0, 0, 90%);
+            font-family: Instrument Serif;
+            padding-right: 0rem;
+
+
+            @media only screen and (max-width: 600px) {
+                position: absolute;
+                mix-blend-mode: difference;
+                font-size: 1.46rem;
+            }
+        }
 
     }
 }
 
 .active {
-  outline: 0.16rem solid #b3b3b3;
+    outline: 0.16rem solid #b3b3b3;
 }

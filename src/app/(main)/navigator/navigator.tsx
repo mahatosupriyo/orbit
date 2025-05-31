@@ -64,7 +64,6 @@ const Navigator: React.FC = () => {
   return (
     <motion.div
       className={styles.mainnavigator}
-      // Only apply animation variants if on an animated route
       {...(shouldAnimate
         ? { variants: containerVariants, initial: "initial", animate: "animate" }
         : {})}
@@ -85,7 +84,6 @@ const Navigator: React.FC = () => {
             tabIndex={0}
             aria-current={pathname === item.href ? "page" : undefined}
           >
-            {/* Use next/image for better performance if possible */}
             <img
               className={styles.pagebanner}
               src={item.imgSrc}
@@ -93,7 +91,9 @@ const Navigator: React.FC = () => {
               alt={item.imgAlt}
               loading="lazy"
             />
-            {item.label}
+            <p className={styles.itemlabel}>
+              {item.label}
+            </p>
           </Link>
         </motion.div>
       ))}

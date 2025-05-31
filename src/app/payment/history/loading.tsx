@@ -1,10 +1,12 @@
 "use client"
 import { motion } from 'framer-motion';
 import styles from './loading.module.scss';
+import NavBar from '@/components/molecules/navbar/navbar';
 
 export default function Loading() {
     return (
         <div className={styles.wraper}>
+            <NavBar/>
             <div className={styles.container}>
                 <div className={styles.header}>
                     <motion.h1

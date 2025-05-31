@@ -35,7 +35,7 @@ export default function NavBar() {
     return (
         <nav className={styles.navbarwraper}>
             <div className={styles.navbarcontainer}>
-                {/* Logo: animated on homepage, static otherwise */}
+                
                 {isHomePage ? (
                     <motion.div whileTap={{ scale: 0.96 }} variants={slideDownVariant} initial="initial" animate="animate">
                         <Link href="/">
@@ -48,7 +48,7 @@ export default function NavBar() {
                     </Link>
                 )}
 
-                {/* Show navigation only on non-home pages */}
+                
                 {!isHomePage && <Navigator />}
 
                 {/* Avatar button: animated on homepage, static otherwise */}

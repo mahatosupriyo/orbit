@@ -11,7 +11,7 @@
 
         .playerwraper {
             width: 100%;
-            padding: 10rem 2rem;
+            padding: 10rem 0rem;
             border-radius: 1rem;
             overflow: hidden;
 
@@ -20,7 +20,7 @@
             display: flex;
             flex-direction: column;
 
-            .playercontainer{
+            .playercontainer {
                 display: flex;
                 flex-direction: row;
                 width: 100%;
@@ -28,22 +28,30 @@
                 align-items: flex-start;
                 justify-content: flex-start;
 
-                .playersection{
-                    width: 100%;
+                @media only screen and (max-width: 800px) {
+                    flex-direction: column;
                 }
 
-                .videochipwraper{
+                .playersection {
+                    width: 100%;
+                    padding: 2rem;
+                }
+
+                .videochipwraper {
                     display: flex;
                     flex-direction: column;
-                    padding: 0rem 0rem 0rem 0rem;
-                    // background-color: hsl(0, 0, 16%);
                     gap: 0rem;
+                    width: 100%;
 
-                    .wraperheader{
+                    .wraperheader {
                         padding: 0rem 2rem 1rem 2rem;
                         font-size: 2.4rem;
                         font-weight: 400;
                         font-family: Instrument Serif;
+
+                        @media only screen and (max-width: 800px){
+                            padding-left: 2rem;
+                        }
                     }
                 }
             }
@@ -86,34 +94,4 @@
             gap: 2rem;
         }
     }
-}
-
-
-.nextbutton {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    line-height: 100%;
-    font-weight: 400;
-    font-size: 1.56rem;
-    background-color: none;
-    background: none;
-    gap: 0.4rem;
-    color: #fff;
-    border-radius: 10rem;
-    padding: 1.4rem 2rem;
-    padding-right: 2.2rem;
-    font-family: Instrument Serif;
-    font-size: 2.2rem;
-    cursor: pointer;
-    border: 0.16rem solid hsl(0, 0%, 30%);
-    text-decoration: none;
-    user-select: none;
-
-    &:focus{
-        outline: 0.16rem solid hsl(0, 0%, 40%);
-        outline-offset: 0.16rem;
-    }
-
 }

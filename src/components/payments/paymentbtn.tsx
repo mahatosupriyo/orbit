@@ -76,16 +76,16 @@ export function BuyNowButton({
 
             const result = await res.json();
             if (result.success) {
-              toast.success("Payment successful! Redirecting...");
-              router.push("/");
+              toast.success("Payment successful");
+              router.push("/success");
             } else {
               toast.error("Payment verification failed.");
-              router.push("/test");
+              router.push("/");
             }
           } catch (e) {
             console.error("Error verifying Razorpay", e);
             toast.error("An error occurred during payment verification.");
-            router.push("/test");
+            router.push("/");
           }
         },
         modal: {

@@ -14,10 +14,10 @@ export async function createRazorpayOrder(amount: number, plan: string) {
     };
   }
 
+  // 🔒 Check if the user has *any* active subscription (Pro or Exclusive)
   const existingPayment = await db.payment.findFirst({
     where: {
       userId: session.user.id,
-      plan,
       status: "paid",
       endDate: {
         gt: new Date(),
@@ -28,7 +28,7 @@ export async function createRazorpayOrder(amount: number, plan: string) {
   if (existingPayment) {
     return {
       data: null,
-      error: `You’re already subscribed`,
+      error: `You’re already subscribed.`,
     };
   }
 
@@ -44,7 +44,7 @@ export async function createRazorpayOrder(amount: number, plan: string) {
   if (error || !data) {
     return {
       data: null,
-      error: "Something went wrong while creating the order.", // string
+      error: "Something went wrong while creating the order.",
     };
   }
 
@@ -72,4 +72,3 @@ export async function createRazorpayOrder(amount: number, plan: string) {
     error: null,
   };
 }
-

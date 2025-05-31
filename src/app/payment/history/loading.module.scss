@@ -1,0 +1,74 @@
+.wraper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    .container {
+        display: flex;
+        width: 100%;
+        max-width: 50rem;
+        flex-direction: column;
+        min-height: 100dvh;
+        position: relative;
+        align-items: center;
+        padding: 0rem 2rem;
+        padding-top: 16rem;
+        padding-bottom: 16rem;
+        gap: 4rem;
+
+        .header {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            width: 100%;
+            max-width: 50rem;
+
+
+            .title {
+                font-size: 8rem;
+                font-family: Instrument Serif;
+                font-weight: 400;
+            }
+        }
+    }
+}
+
+
+.paymentwraper {
+    display: flex;
+    height: 10rem;
+    width: 100%;
+    // border-radius: 100rem;
+    background-color: hsl(0, 0, 20%);
+    animation: pulse 1.5s infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+.fadeIn {
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

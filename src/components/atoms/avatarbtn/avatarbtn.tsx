@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Overlay from "@/components/overlay/overlay";
 import { useSession, signOut } from "next-auth/react"
 import Link from "next/link";
+import { BuyNowButton } from "@/components/payments/paymentbtn";
+import Icon from "@/components/atoms/icons";
 
 /**
  * AvatarBtn Component
@@ -39,7 +41,7 @@ const AvatarBtn: React.FC = () => {
     if (imageLoaded) {
       const timer = setTimeout(() => {
         setShowImage(true);
-      }, 400); 
+      }, 400);
       return () => clearTimeout(timer);
     }
   }, [imageLoaded]);
@@ -85,15 +87,33 @@ const AvatarBtn: React.FC = () => {
             <ul className={styles.menu}>
               <Link href="/account" className={styles.option}>
                 <Logo name="account" fill="#121212" size={24} />
-                Account settings 
+                Account settings
               </Link>
 
               <Overlay
                 buttonIcon={<Logo name="otostroke" fill="#121212" size={24} />}
                 buttonText="Orbit Pro"
               >
-                this is pro
-                <br /><br /><br /><br />
+
+                <div className={styles.wraperplans}>
+                  <h1 className={styles.title}>Upgrade your plan</h1>
+
+                  <div className={styles.planbtns}>
+                    <BuyNowButton
+                      plan="pro"
+                      amount={6499}
+                      description="Pro Plan for On The Orbit"
+                      buttonLabel="Pro"
+                    />
+
+                    <BuyNowButton
+                      plan="exclusive"
+                      amount={14999}
+                      description="Pro Plan for On The Orbit"
+                      buttonLabel="Exclusive"
+                    />
+                  </div>
+                </div>
               </Overlay>
 
               <motion.button whileTap={{ opacity: 0.6 }} className={styles.option}>

@@ -31,7 +31,20 @@ export function ProductCard() {
         </div>
       </div>
       <div className="p-6 pt-0">
-        <BuyNowButton />
+        <BuyNowButton
+          plan="pro"
+          amount={9999}
+          description="Pro Plan for On The Orbit"
+          buttonLabel="Pro"
+        />
+
+        <BuyNowButton
+          plan="exclusive"
+          amount={14999}
+          description="Exclusive Plan for On The Orbit"
+          buttonLabel="Exclusive"
+        />
+
       </div>
     </div>
   );

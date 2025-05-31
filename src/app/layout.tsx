@@ -84,7 +84,7 @@ export default function RootLayout({
               background: '#363636',
               color: '#fff',
               height: '5.4rem',
-              paddingLeft: '1rem',
+              paddingLeft: '1.3rem',
               display: 'flex',
               alignItems: 'center',
               fontWeight: 400,

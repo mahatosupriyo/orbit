@@ -145,14 +145,17 @@ model Asset {
 }
 
 model Payment {
-    id                String   @id @default(cuid())
-    user              User     @relation(fields: [userId], references: [id])
-    userId            String
-    razorpayOrderId   String   @unique
-    razorpayPaymentId String?
-    amount            Int // Amount in paise
-    status            String // "created", "paid", "failed"
-    plan              String // "pro", "exclusive"
-    createdAt         DateTime @default(now())
-    updatedAt         DateTime @updatedAt
+  id                String   @id @default(cuid())
+  user              User     @relation(fields: [userId], references: [id])
+  userId            String
+  razorpayOrderId   String   @unique
+  razorpayPaymentId String?
+  amount            Int
+  status            String
+  plan              String
+  startDate         DateTime?
+  endDate           DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
+

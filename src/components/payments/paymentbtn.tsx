@@ -1,14 +1,26 @@
 "use client";
 
-import { Loader2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createRazorpayOrder } from "@/app/actions/actions";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import Button from "../atoms/button/button";
 
-export function BuyNowButton() {
+interface BuyNowButtonProps {
+  plan: string;              // e.g., "pro", "exclusive", etc.
+  amount: number;            // in paise (e.g., 9999 means ₹99.99)
+  description?: string;      // optional description
+  buttonLabel?: string;      // optional label, default "Buy Now"
+}
+
+export function BuyNowButton({
+  plan,
+  amount,
+  description = "Launchpad for Designers",
+  buttonLabel = "Buy Now",
+}: BuyNowButtonProps) {
   const { data: session } = useSession();
-
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -20,24 +32,27 @@ export function BuyNowButton() {
 
   async function onClick() {
     setIsLoading(true);
-    const { data, error } = await createRazorpayOrder(9999);
+
+    const { data, error } = await createRazorpayOrder(amount, plan);
 
     if (error) {
       setIsLoading(false);
+      toast.error(error);
       return;
     }
+
 
     if (data) {
       const paymentWindow = new window.Razorpay({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         name: "On The Orbit",
-        description: "Launchpad for Designers",
+        description,
         currency: "INR",
         order_id: data.id,
         image: "https://www.ontheorbit.com/Essentials/logo.png",
         prefill: {
-          name: session?.user?.id,
-          email: session?.user?.email,
+          name: session?.user?.name || "Guest",
+          email: session?.user?.email || "",
           contact: "",
         },
         theme: {
@@ -55,20 +70,29 @@ export function BuyNowButton() {
               body: JSON.stringify({
                 razorpay_payment_id,
                 razorpay_order_id,
-                plan: "pro",
+                plan,
               }),
             });
 
             const result = await res.json();
             if (result.success) {
+              toast.success("Payment successful! Redirecting...");
               router.push("/");
             } else {
+              toast.error("Payment verification failed.");
               router.push("/test");
             }
           } catch (e) {
             console.error("Error verifying Razorpay", e);
+            toast.error("An error occurred during payment verification.");
             router.push("/test");
           }
+        },
+        modal: {
+          ondismiss: () => {
+            toast("Payment window closed.");
+            setIsLoading(false);
+          },
         },
       });
 
@@ -78,9 +102,16 @@ export function BuyNowButton() {
   }
 
   return (
-    <button className="w-full" onClick={onClick} disabled={isLoading}>
-      {isLoading && <Loader2Icon className="animate-spin size-4 mr-2" />}
-      Buy now
-    </button>
+    <Button
+      fullWidth
+      style={{
+        background: '#0C8CE9',
+        color: '#fff'
+      }}
+      onClick={onClick}
+      disabled={isLoading}
+    >
+      {buttonLabel}
+    </Button>
   );
 }

@@ -22,7 +22,7 @@ const containerVariants = {
     hidden: {},
     show: {
         transition: {
-            staggerChildren: 0.15, 
+            staggerChildren: 0.15,
         },
     },
 };
@@ -62,6 +62,7 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ payments }) => {
         return <p>No payments found.</p>;
     }
 
+
     return (
         <motion.div
             variants={containerVariants}
@@ -71,11 +72,19 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ payments }) => {
             {payments.map((payment) => (
                 <motion.div className={styles.tablecontainer} key={payment.id} variants={childVariants}>
                     <div className={styles.tableinfo}>
+
                         {payment.plan === "pro" && (
                             <img
+                                src="https://i.pinimg.com/736x/52/be/ce/52becefe0abc6b9da0f8a2ac2732cc29.jpg"  // Replace with your actual 'pro' image URL
+                                alt="Orbit Pro Plan"
                                 className={styles.banner}
-                                src="https://i.pinimg.com/736x/26/75/b3/2675b3aae8f8f764a012dc6aea7992c9.jpg"
-                                alt="Pro Plan Banner"
+                            />
+                        )}
+                        {payment.plan === "exclusive" && (
+                            <img
+                                src="https://i.pinimg.com/736x/5c/44/66/5c446611174b1419d36862e30978d10d.jpg"  // Replace with your actual 'exclusive' image URL
+                                alt="Orbit Exclusive Plan"
+                                className={styles.banner}
                             />
                         )}
                         <div className={styles.paymentinfo}>
@@ -98,6 +107,7 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ payments }) => {
 
                                 <h2 className={styles.plan}>
                                     {payment.plan === "pro" && "Orbit Pro"}
+                                    {payment.plan === "exclusive" && "Orbit Exclusive"}
                                 </h2>
 
                                 <div className={styles.timing}>

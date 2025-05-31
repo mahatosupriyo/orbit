@@ -7,7 +7,6 @@
     .container {
         display: flex;
         width: 100%;
-        max-width: 50rem;
         flex-direction: column;
         min-height: 100dvh;
         position: relative;
@@ -39,6 +38,7 @@
     display: flex;
     height: 10rem;
     width: 100%;
+    max-width: 50rem;
     // border-radius: 100rem;
     background-color: hsl(0, 0, 20%);
     animation: pulse 1.5s infinite;

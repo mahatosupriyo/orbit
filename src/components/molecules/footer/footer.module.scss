@@ -28,7 +28,7 @@
 
             .passiontxt {
                 font-size: 1.5rem;
-                font-weight: 500;
+                font-weight: 300;
                 display: flex;
                 flex-direction: row;
                 gap: 1rem;
@@ -48,7 +48,7 @@
                     padding: 1rem 0rem;
                     color: hsl(0, 0%, 60%);
                     font-size: 1.6rem;
-                    font-weight: 500;
+                    font-weight: 400;
                 }
 
                 .linkcolumn {
@@ -68,7 +68,7 @@
                         text-decoration: none;
                         color: #fff;
                         font-size: 1.8rem;
-                        font-weight: 500;
+                        font-weight: 400;
                         @include smooth;
                         padding: 0.6rem 0rem;
 

@@ -71,7 +71,7 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         
-        <link rel="stylesheet" href="https://use.typekit.net/ika2qcu.css"></link>
+        <link rel="stylesheet" href="https://use.typekit.net/aaf7wuq.css"></link>
         
       </Head>
       <body>

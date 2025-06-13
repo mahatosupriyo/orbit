@@ -67,7 +67,6 @@ const AvatarBtn: React.FC = () => {
         <img
           className={`${styles.avatar} ${showImage ? styles.fadeIn : styles.hidden}`}
           src={session?.user?.image || '/'}
-          alt="User Avatar"
           draggable="false"
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageLoaded(true)}

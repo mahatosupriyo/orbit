@@ -1,0 +1,154 @@
+$color: #202020;
+// $color: #EFE6E8;
+$sec-color: #fff;
+$background: hsl(0, 0, 0%);
+$background: #9A9A9A;
+
+.subheadingmed {
+    color: #202020;
+    // font-family: Interstate;
+    font-size: 2.2rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+}
+
+.headingbig {
+    color: #202020;
+    font-size: 16rem;
+    font-family: "interstate-compressed", sans-serif;
+    font-weight: 900;
+    line-height: 100%;
+}
+
+.wraper {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+    .container {
+        display: flex;
+        width: 100%;
+        max-width: 200rem;
+        flex-direction: column;
+        min-height: 100dvh;
+        // max-height: 100dvh;
+        align-items: center;
+        background-color: $background;
+
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+            padding: 1rem;
+            background-color: $background;
+
+
+            .cta {
+                display: flex;
+                // background-color: #0988f0;
+                background-color: #fff;
+
+
+                color: #202020;
+
+                padding: 2rem 2rem 2rem 1.6rem;
+                line-height: 100%;
+                font-size: 1.66rem;
+                border-radius: 1.6rem;
+                font-family: 'interstate', sans-serif;
+
+                font-weight: 500;
+                cursor: pointer;
+
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                gap: 1rem;
+                user-select: none;
+
+                transition: 0.1s ease-in-out;
+
+                &:hover {
+                    background-color: #202020;
+                    color: #bbbbbb;
+                }
+
+                .providericon{
+                    height: 2rem;
+                }
+            }
+
+            .navleft {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 0.4rem;
+
+                .logo {
+                    text-decoration: none;
+
+                    .otoicon {
+                        height: 5.4rem;
+                    }
+                }
+
+                .navbtn {
+                    display: flex;
+                    height: 5.4rem;
+                    width: 5.4rem;
+                    padding: 1rem;
+                    border-radius: 100rem;
+                    cursor: pointer;
+                    background-color: #bbbbbb;
+
+                    transition: 0.1s ease-in-out;
+
+                    &:hover {
+                        background-color: #d0d0d0;
+                    }
+
+                    &:focus {
+                        background-color: #fff;
+                    }
+                }
+            }
+
+        }
+
+
+        .hero {
+            width: 100%;
+            display: flex;
+            padding: 20rem 6rem;
+
+            .headingcontainer {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+
+                .subheadingmed {
+                    color: #202020;
+                }
+
+                .headingbig {
+                    color: #202020;
+                }
+
+            }
+        }
+    }
+}
+
+.animatedRole {
+    font-family: "interstate-compressed", sans-serif;
+    font-weight: 900;
+    line-height: 100%;
+}

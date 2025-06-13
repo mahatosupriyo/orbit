@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url("https://use.typekit.net/aaf7wuq.css");
 
 * {
     margin: 0;
@@ -9,39 +10,39 @@
     outline: none;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    font-family: "Hanken Grotesk", sans-serif;
+    // font-family: "Hanken Grotesk", sans-serif;
     // font-family: Gabarito;
     // font-family: 'BeauSans', sans-serif;
-    font-family: Interstate;
+    font-family: 'interstate', sans-serif;
 }
 
-@font-face {
-    font-family: 'Interstate';
-    src: url('/Essentials/interstate/Interstate-black.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Interstate';
+//     src: url('/Essentials/interstate/Interstate-black.ttf') format('truetype');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
-@font-face {
-    font-family: 'Interstate';
-    src: url('/Essentials/interstate/Interstate-bold.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Interstate';
+//     src: url('/Essentials/interstate/Interstate-bold.ttf') format('truetype');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
-@font-face {
-    font-family: 'Interstate';
-    src: url('/Essentials/interstate/Interstate-light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Interstate';
+//     src: url('/Essentials/interstate/Interstate-light.ttf') format('truetype');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
-@font-face {
-    font-family: 'Interstate';
-    src: url('/Essentials/interstate/Interstate-regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Interstate';
+//     src: url('/Essentials/interstate/Interstate-regular.ttf') format('truetype');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
 
 

@@ -1,25 +1,8 @@
 $color: #202020;
 // $color: #EFE6E8;
 $sec-color: #fff;
-$background: hsl(0, 0, 0%);
-$background: #9A9A9A;
-
-.subheadingmed {
-    color: #202020;
-    // font-family: Interstate;
-    font-size: 2.2rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 100%;
-}
-
-.headingbig {
-    color: #202020;
-    font-size: 16rem;
-    font-family: "interstate-compressed", sans-serif;
-    font-weight: 900;
-    line-height: 100%;
-}
+$background: hsl(0, 0, 100%);
+$background: #D3C7B4;
 
 .wraper {
     display: flex;
@@ -39,6 +22,7 @@ $background: #9A9A9A;
 
 
         .navbar {
+            z-index: 1000;
             position: fixed;
             top: 0;
             display: flex;
@@ -47,7 +31,7 @@ $background: #9A9A9A;
             align-items: center;
             flex-direction: row;
             padding: 1rem;
-            background-color: $background;
+            // background-color: $background;
 
 
             .cta {
@@ -80,7 +64,7 @@ $background: #9A9A9A;
                     color: #bbbbbb;
                 }
 
-                .providericon{
+                .providericon {
                     height: 2rem;
                 }
             }
@@ -107,12 +91,12 @@ $background: #9A9A9A;
                     padding: 1rem;
                     border-radius: 100rem;
                     cursor: pointer;
-                    background-color: #bbbbbb;
+                    background-color: #E6DFD4;
 
                     transition: 0.1s ease-in-out;
 
                     &:hover {
-                        background-color: #d0d0d0;
+                        background-color: #fff;
                     }
 
                     &:focus {
@@ -127,28 +111,65 @@ $background: #9A9A9A;
         .hero {
             width: 100%;
             display: flex;
-            padding: 20rem 6rem;
+            background-color: $background;
+
+            padding: 10rem 1rem;
 
             .headingcontainer {
                 display: flex;
-                flex-direction: column;
-                gap: 2rem;
+                flex-direction: row;
+                align-items: center;
+                width: 100%;
+                padding: 0rem 0rem;
+                position: relative;
+                overflow: hidden;
+                border-radius: 50rem;
 
-                .subheadingmed {
-                    color: #202020;
+
+                @media (max-width: 800px){
+                    border-radius: 1rem;
                 }
 
-                .headingbig {
-                    color: #202020;
+
+                .title {
+                    z-index: 20;
+                    position: absolute;
+                    height: 42rem;
+                    left: 0;
+                    padding: 10rem 16rem;
+
+                    user-select: none;
+                    pointer-events: none;
+
+                    @media (max-width: 800px){
+                        height: 32rem;
+                        padding: 2rem;
+                    }
+                }
+
+                .titlebanner {
+                    z-index: 10;
+                    height: 100%;
+                    max-height: 50rem;
+
+                    width: 100%;
+                    display: flex;
+                    object-fit: cover;
+                    object-position: center;
+
+                    pointer-events: none;
+                    user-select: none;
+
+                    transform: scaleX(-1);
+
+                    @media (max-width: 800px){
+                        aspect-ratio: 1/1;
+                        height: 100%;
+                    }
+
                 }
 
             }
         }
     }
-}
-
-.animatedRole {
-    font-family: "interstate-compressed", sans-serif;
-    font-weight: 900;
-    line-height: 100%;
 }

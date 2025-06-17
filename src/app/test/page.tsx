@@ -1,48 +1,9 @@
 "use client"
 import styles from './test.module.scss'
 import Link from 'next/link'
-
-import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
-
-const roles = [
-    'Product Designers',
-    'Entrepreneurs',
-    'Creative Directors',
-]
-
-const letterVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: {
-            delay: i * 0.02,
-            duration: 0.2,
-            ease: [0.785, 0.135, 0.15, 0.86]
-        },
-    }),
-    exit: (i: number) => ({
-        opacity: 0,
-        y: 20,
-        transition: {
-            ease: [0.785, 0.135, 0.15, 0.86],
-            delay: i * 0.02,
-            duration: 0.2,
-        },
-    }),
-}
+import { motion } from 'framer-motion'
 
 export default function LandingPage() {
-
-    const [index, setIndex] = useState(0)
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setIndex(prev => (prev + 1) % roles.length)
-        }, 4500)
-        return () => clearInterval(interval)
-    }, [])
     return (
         <div className={styles.wraper}>
             <div className={styles.container}>
@@ -99,34 +60,22 @@ export default function LandingPage() {
 
                     <div className={styles.headingcontainer}>
 
-                        <h3 className={styles.subheadingmed}>
-                            Become the next generation of
-                        </h3>
-                        <h1 className={styles.headingbig}>
-                            <AnimatePresence mode="wait">
-                                <motion.span
-                                    key={roles[index]}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                    className={styles.animatedRole}
+                        {/* <img src="https://ik.imagekit.io/localstore/v2.png?updatedAt=1750113056989"
+                            draggable="false"
+                            className={styles.titlebanner} /> */}
 
-                                    style={{ display: 'inline-block' }}
-                                >
-                                    {roles[index].split('').map((char, i) => (
-                                        <motion.span
-                                            key={i}
-                                            variants={letterVariants}
-                                            custom={i}
-                                            style={{ display: 'inline-block', fontFamily: 'inherit' }}
-                                            className={styles.headingbig}
-                                        >
-                                            {char}
-                                        </motion.span>
-                                    ))}
-                                </motion.span>
-                            </AnimatePresence>
-                        </h1>
+                        <img
+                            src="https://ik.imagekit.io/localstore/orbit%20pro.png?updatedAt=1750117831155"
+                            className={styles.title}
+                            draggable="false" />
+
+                        <video
+                            src="https://ik.imagekit.io/localstore/bd6f7de4-2b1f-4cf6-ab2e-1bcaa900886c_ZMAiPRhgv.webm/ik-video.mp4?updatedAt=1750117608988"
+                            autoPlay
+                            className={styles.titlebanner}
+                            loop
+                            muted
+                        />
 
                     </div>
 

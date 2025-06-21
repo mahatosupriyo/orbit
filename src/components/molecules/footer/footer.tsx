@@ -17,7 +17,6 @@ export default function Footer() {
                             <p className={styles.linklabel}>Features</p>
                             <Link draggable="false" href="/" className={styles.linkitem}>Garage</Link>
                             <Link draggable="false" href="/" className={styles.linkitem}>Space</Link>
-                            {/* <Link draggable="false" href="/" className={styles.linkitem}>Voyager</Link> */}
                         </div>
 
                         <div className={styles.linkcolumn}>
@@ -60,9 +59,7 @@ export default function Footer() {
                 <div className={styles.footercontent}>
                     <h4 className={styles.passiontxt} style={{ textWrap: 'nowrap', width: '100%', maxWidth: '50%' }}>
                         Made with
-                        <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 56 56" fill="none">
-                            <path d="M49.371 12.34V18.508V18.51V24.678H49.363H43.203V18.51V18.508V12.34H49.371V6.17H43.207V0H37.039V6.17H37.036H30.868V12.34H24.696V6.17H18.528V0H12.356V6.17H12.352H6.18V12.34H0.00800133V18.508V18.51V24.678H0V30.848H6.172V37.018H12.344V43.188H18.516V49.358H24.688V55.527H30.86V49.358H37.028V43.188H43.196V37.018H49.364V30.848H55.532V24.678H55.54V18.51V18.508V12.34H49.371ZM37.028 30.848V24.678H37.036H43.196V30.848H37.028Z" fill="#FF2A2A" />
-                        </svg>
+                        Love
                         in India  © 2025 On The Orbit
                     </h4>
                     <p>

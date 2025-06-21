@@ -10,7 +10,7 @@
     .footerwraper {
         width: 100%;
         max-width: 200rem;
-        // background-color: hsl(0, 0, 10%);
+        background-color: hsl(0, 0, 10%);
 
         .footercontent {
             width: 100%;
@@ -22,14 +22,30 @@
             color: hsl(0, 0%, 90%);
 
             &:nth-child(1) {
-                // border-bottom: 0.02rem solid hsl(0, 0%, 16%);
                 padding: 10rem 10rem 4rem 10rem;
+
+                @media (max-width: 800px) {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2rem;
+                    padding: 6rem 2rem;
+                }
+            }
+
+            &:nth-child(2) {
+                @media (max-width: 1200px) {
+                    display: flex;
+                    flex-direction: column-reverse;
+                    gap: 2rem;
+                    padding-bottom: 6rem;
+                }
             }
 
             .passiontxt {
                 font-size: 1.5rem;
                 font-weight: 300;
                 display: flex;
+                width: 100%;
                 flex-direction: row;
                 gap: 1rem;
                 align-items: center;
@@ -37,11 +53,17 @@
 
             .linklist {
                 width: 100%;
-                max-width: 30%;
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
                 gap: 4rem;
+                max-width: 40rem;
+
+                @media (max-width: 800px) {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2rem;
+                }
 
                 .linklabel {
                     display: flex;
@@ -69,6 +91,7 @@
                         color: #fff;
                         font-size: 1.8rem;
                         font-weight: 400;
+                        // text-wrap: nowrap;
                         @include smooth;
                         padding: 0.6rem 0rem;
 

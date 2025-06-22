@@ -3,6 +3,8 @@ import styles from './test.module.scss'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Footer from '@/components/molecules/footer/footer'
+import Curriculum from './curriculum'
+import FAQ from './faq'
 
 export default function LandingPage() {
     return (
@@ -78,11 +80,11 @@ export default function LandingPage() {
                                 Thousands of designers felt the same: lost, overcharged, and underestimated.
                                 <br /><br />
 
-                                <div className={styles.highlight}>
+                                <span className={styles.highlight}>
                                     ' You were not the problem,
                                     <br />
                                     The system was.'
-                                </div>
+                                </span>
                                 <br />
                                 We at Orbit rebuilt everything.
 
@@ -90,7 +92,7 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </div>
-
+                {/* 
                 <div className={styles.applycontainer}>
                     <h2 className={styles.label}>
                         Limited Seats*, only <span className={styles.boldunder}>40 Seats</span> Across Globe
@@ -103,9 +105,29 @@ export default function LandingPage() {
                             Be Pro
                         </Link>
                     </motion.div>
+                </div> */}
+
+                <div className={styles.curriculumcontainer}>
+                    <div className={styles.curriculumheader}>
+                        <p className={styles.subheadingcurriculum}>From Curious to Confident</p>
+                        <h1 className={styles.curriculumheading}>
+                            <span style={{ fontStyle: 'italic', fontFamily: 'inherit' }}>Your</span> journey
+                        </h1>
+                    </div>
+                    <Curriculum />
                 </div>
 
 
+                <div className={styles.faqcontainer}>
+                    <div className={styles.subheadingfaq}>
+                        What You Deserve to Know
+                    </div>
+                    <h1 className={styles.faqheader}>
+                        Go on, <span style={{ fontStyle: 'italic', fontFamily: 'inherit' }}>Ask</span> us
+                    </h1>
+                    <FAQ />
+
+                </div>
             </div>
             <Footer />
 

@@ -114,13 +114,8 @@ $condensed: 'interstate-compressed', sans-serif;
         width: 100%;
         max-width: 200rem;
         flex-direction: column;
-        min-height: 100dvh;
-        // max-height: 100dvh;
         align-items: center;
         background-color: $background;
-        // background-color: #201F18;
-        // background-color: hsl(53, 14%, 8%);
-        // background-color: #000;
 
 
         .hero {
@@ -172,19 +167,21 @@ $condensed: 'interstate-compressed', sans-serif;
                     display: flex;
                     flex-direction: column;
                     gap: 2rem;
+                    padding-bottom: 16rem;
+
 
                     .description {
-                        font-size: 1.8rem;
+                        font-size: 1.6rem;
                         color: $color;
-                        font-weight: 400;
+                        font-weight: 300;
                         line-height: 150%;
                         padding: 4rem 0rem;
 
                         .highlight {
+                            display: flex;
                             font-family: Instrument Serif;
 
-                            font-size: 4.6rem;
-                            // font-style: italic;
+                            font-size: 5rem;
                             line-height: 100%;
                             font-weight: 400;
                         }
@@ -242,162 +239,63 @@ $condensed: 'interstate-compressed', sans-serif;
 
         }
 
-
-        .features {
+        .faqcontainer {
             display: flex;
             width: 100%;
-            gap: 2rem;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 1rem;
-
-            .feature {
-                overflow: hidden;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                gap: 4rem;
-                align-items: center;
-
-                border-radius: 2rem;
-                padding: 4rem;
-
-                &:nth-child(1) {
-                    // background-color: #fff;
-
-                    .featureheading {
-                        width: 100%;
-                        font-size: 2.8rem;
-                        font-family: interstate-condensed, sans-serif;
-                        font-weight: 400;
-                        color: $color;
-
-                        .boldunder {
-                            font-family: inherit;
-                            font-weight: 900;
-                        }
-
-
-                        color: $charcoal;
-
-                    }
-
-                }
-
-                &:nth-child(2) {
-                    background-color: #201F18;
-
-                    .featureheading {
-                        width: 100%;
-                        font-size: 2.2rem;
-                        font-family: interstate-condensed, sans-serif;
-                        font-weight: 400;
-                        color: $color;
-
-                        .boldunder {
-                            font-family: inherit;
-                            font-weight: 900;
-                        }
-
-
-                        color: #E6DFD4;
-
-                    }
-
-                }
-
-                .downloadbtn {
-                    background: none;
-                    padding: 3rem;
-                    cursor: pointer;
-                    border-radius: 40rem;
-                    border: 0.3rem solid #fff;
-
-                    .downicon {
-                        height: 26rem;
-                    }
-                }
-            }
-
-
-        }
-
-
-    }
-}
-
-
-.supportsection {
-    display: flex;
-    width: 100%;
-
-    padding: 1rem 2rem;
-
-    .supportcontainer {
-        width: 100%;
-        border-radius: 4rem;
-        padding: 0rem 4rem;
-        background-color: #E6DFD4;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-
-        .supportheading {
-            display: flex;
             flex-direction: column;
+            padding: 14rem 4rem;
             gap: 2rem;
 
-            .title {
-                font-size: 4rem;
-                color: $charcoal;
-                font-weight: 700;
-                font-family: interstate-compressed, sans-serif;
+            @media (max-width: 1000px) {
+                padding: 10rem 1rem;
             }
 
-            .desc {
-                font-size: 1.6rem;
-                color: $charcoal;
+            .subheadingfaq {
+                font-size: 1.56rem;
+                color: #202020;
+            }
+
+            .faqheader {
+                font-size: 16rem;
                 font-weight: 400;
+                color: #202020;
+                line-height: 100%;
+                font-family: Instrument Serif;
             }
         }
 
-        .supporter {
+        .curriculumcontainer {
             display: flex;
-            flex-direction: row;
-            align-items: flex-start;
+            width: 100%;
+            flex-direction: column;
+            padding: 6rem 0rem;
+            background-color: #E6DFD4;
 
-            .supporterimg {
-                display: flex;
-                width: 34rem;
-                aspect-ratio: 1/1;
-                pointer-events: none;
-                user-select: none;
-                object-fit: cover;
-                margin-top: 4rem;
-                object-position: center;
-            }
-
-            .supporterinfo {
+            .curriculumheader {
+                padding: 10rem 1rem 0rem 4rem;
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
-                padding: 10rem 0rem;
+                gap: 2rem;
 
-                .regulartxt {
-                    font-size: 1.6rem;
+                .subheadingcurriculum {
+                    font-size: 1.56rem;
+                    color: #202020;
+                }
+
+                .curriculumheading {
+                    font-size: 16rem;
                     font-weight: 400;
-                    color: $charcoal;
-
-                    &:nth-child(2) {
-                        opacity: 0.5;
-                    }
+                    color: #202020;
+                    line-height: 100%;
+                    font-family: Instrument Serif;
                 }
             }
         }
+
     }
 }
+
+
 
 
 .title {

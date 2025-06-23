@@ -1,0 +1,239 @@
+@use '../../styles/essentials';
+@import '../../styles/essentials';
+
+$serif: 'Instrument Serif';
+
+.container {
+    display: flex;
+    // min-height: 100vh;
+}
+
+.leftpanel {
+    background-color: #e8ddd4;
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+}
+
+.leftcontent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.leftcontentheader{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.lefttitle {
+    font-size: 3.2rem;
+    font-weight: 400;
+    color: #333;
+    font-family: $serif;
+}
+
+.leftsubtitle {
+    font-size: 1.56rem;
+    color: #666;
+    line-height: 100%;
+}
+
+.rightpanel {
+    background-color: white;
+    flex: 1;
+    padding: 60px 80px;
+}
+
+.maintitle {
+    font-size: 4.6rem;
+    font-weight: 400;
+    margin: 0 0 16px 0;
+    color: #333;
+    font-family: $serif;
+
+    sup {
+        font-size: 24px;
+        vertical-align: super;
+    }
+}
+
+.tagline {
+    font-size: 1.56rem;
+    color: #666;
+    margin: 0 0 60px 0;
+    line-height: 100%;
+}
+
+.phasescontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 60px;
+}
+
+.phase {
+    .phasetitle {
+        font-size: 2rem;
+        font-weight: 300;
+        margin: 0 0 24px 0;
+        color: #333;
+    }
+}
+
+.featurelist {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.featureitem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    svg {
+        color: #333;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+
+    span {
+        font-size: 1.56rem;
+        color: #333;
+        line-height: 1.4;
+    }
+}
+
+.nopressure {
+    font-size: 1.46rem;
+    color: #666;
+    margin-top: 24px;
+    line-height: 100%;
+}
+
+.pricinginfo {
+    margin-bottom: 40px;
+}
+
+.journeycost {
+    font-size: 16px;
+    color: #202020;
+    margin: 0;
+    line-height: 150%;
+
+    .strikethrough {
+        text-decoration: line-through;
+        color: #999;
+    }
+}
+
+.bottomsection {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+}
+
+.pricingsection {
+    
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.currentprice {
+    font-size: 32px;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.pricereturn {
+    font-size: 1.46rem;
+    color: #666;
+    margin: 0 0 16px 0;
+}
+
+.refund {
+    
+    font-size: 1.46rem;
+
+    color: #666;
+    margin: 0;
+}
+
+.buttonsection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.freebutton,
+.probutton {
+    display: flex;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 1.6rem;
+    font-size: 1.46rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    padding: 2rem 2.4rem;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
+.disclaimer {
+    font-size: 1.46rem;
+    color: #666;
+    font-weight: 300;
+    line-height: 100%;
+}
+
+.paymentinfo {
+    font-size: 1.46rem;
+    color: #666;
+    margin: 0;
+    text-align: right;
+}
+
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .leftpanel {
+        flex: none;
+        padding: 40px 20px;
+    }
+
+    .rightpanel {
+        padding: 40px 20px;
+    }
+
+    .phasescontainer {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .bottomsection {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .buttonsection {
+        align-items: stretch;
+    }
+
+    .paymentinfo {
+        text-align: left;
+    }
+}

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Footer from '@/components/molecules/footer/footer'
 import Curriculum from './curriculum'
 import FAQ from './faq'
+import PricingPage from '../(company)/pricing/page'
 
 export default function LandingPage() {
     return (
@@ -92,8 +93,8 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </div>
-                {/* 
-                <div className={styles.applycontainer}>
+
+                {/* <div className={styles.applycontainer}>
                     <h2 className={styles.label}>
                         Limited Seats*, only <span className={styles.boldunder}>40 Seats</span> Across Globe
                     </h2>
@@ -128,6 +129,8 @@ export default function LandingPage() {
                     <FAQ />
 
                 </div>
+
+                <PricingPage />
             </div>
             <Footer />
 

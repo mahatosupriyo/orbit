@@ -66,6 +66,10 @@ const AvatarBtn: React.FC = () => {
       >
         <img
           className={styles.avatar}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = 'https://ontheorbit.com/placeholder.png';
+          }}
           src={session?.user?.image || 'https://ontheorbit.com/placeholder.png'}
           draggable="false"
         />

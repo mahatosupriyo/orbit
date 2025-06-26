@@ -20,9 +20,22 @@ const AvatarBtn: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  /**
+ * Animation variant for sliding down elements with fade-in.
+ */
+  const slideDownVariant = {
+    initial: { opacity: 0, y: -20 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.785, 0.135, 0.15, 0.86],
+      },
+    },
+  };
+
   // Loading states
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [showImage, setShowImage] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,15 +48,6 @@ const AvatarBtn: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    if (imageLoaded) {
-      const timer = setTimeout(() => {
-        setShowImage(true);
-      }, 400);
-      return () => clearTimeout(timer);
-    }
-  }, [imageLoaded]);
 
   const toggleMenu = () => setMenuOpen(prev => !prev);
 
@@ -58,17 +62,12 @@ const AvatarBtn: React.FC = () => {
         aria-haspopup="true"
         aria-expanded={menuOpen}
         type="button"
+        variants={slideDownVariant}
       >
-        {/* Skeleton Loader */}
-        {!showImage && (
-          <div className={styles.skeleton}></div>
-        )}
         <img
-          className={`${styles.avatar} ${showImage ? styles.fadeIn : styles.hidden}`}
-          src={session?.user?.image || '/'}
+          className={styles.avatar}
+          src={session?.user?.image || 'https://ontheorbit.com/placeholder.png'}
           draggable="false"
-          onLoad={() => setImageLoaded(true)}
-          onError={() => setImageLoaded(true)}
         />
       </motion.button>
 

@@ -7,7 +7,6 @@ import Overlay from "@/components/overlay/overlay";
 import { useSession, signOut } from "next-auth/react"
 import Link from "next/link";
 import { BuyNowButton } from "@/components/payments/paymentbtn";
-import Icon from "@/components/atoms/icons";
 
 /**
  * AvatarBtn Component

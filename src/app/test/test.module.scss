@@ -4,8 +4,8 @@ $color: $charcoal;
 // $color: #EFE6E8;
 $sec-color: #fff;
 
-$background: hsl(0, 0, 100%);
-$background: #D3C7B4;
+$background: hsl(0, 0, 0%);
+// $background: #D3C7B4;
 $cream: #D3C7B4;
 
 $condensed: 'interstate-compressed', sans-serif;
@@ -32,7 +32,7 @@ $condensed: 'interstate-compressed', sans-serif;
     .cta {
         display: flex;
         // background-color: #0988f0;
-        background-color: #fff;
+        background-color: hsla(0, 0%, 100%, 0.8);
 
 
         color: $color;
@@ -76,6 +76,7 @@ $condensed: 'interstate-compressed', sans-serif;
 
             .otoicon {
                 height: 5.4rem;
+                fill: #ffffffcc;
             }
         }
 
@@ -87,15 +88,16 @@ $condensed: 'interstate-compressed', sans-serif;
             border-radius: 100rem;
             cursor: pointer;
             background-color: #E6DFD4;
+            background-color: #1d1d1f;
 
             transition: 0.1s ease-in-out;
 
             &:hover {
-                background-color: #fff;
+                background-color: #1d1d1f;
             }
 
             &:focus {
-                background-color: #fff;
+                background-color: #1d1d1f;
             }
         }
     }
@@ -139,6 +141,7 @@ $condensed: 'interstate-compressed', sans-serif;
                 .herotitle {
                     font-size: 20rem;
                     color: $color;
+                    color: hsla(0, 0, 100%, 0.8);
                     line-height: 100%;
                     text-align: center;
                     font-family: $condensed;
@@ -171,70 +174,25 @@ $condensed: 'interstate-compressed', sans-serif;
 
 
                     .description {
-                        font-size: 1.6rem;
+                        font-size: 2.4rem;
                         color: $color;
                         font-weight: 300;
                         line-height: 150%;
                         padding: 4rem 0rem;
+                        color: #86868b;
+                        font-family: Instrument Serif;
+
 
                         .highlight {
                             display: flex;
                             font-family: Instrument Serif;
-
+                            color: #ffffffcc;
                             font-size: 5rem;
                             line-height: 100%;
                             font-weight: 400;
                         }
                     }
                 }
-            }
-
-        }
-
-        .applycontainer {
-            padding: 2.6rem 3rem 2.6rem 4rem;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            background-color: #fff;
-            border-radius: 16rem;
-
-            .label {
-                font-family: interstate-condensed, sans-serif;
-                color: $color;
-                font-weight: 400;
-                font-size: 1.8rem;
-
-            }
-
-            .applybtn {
-                color: $background;
-
-                padding: 2.2rem 2.2rem;
-                line-height: 100%;
-                font-size: 1.66rem;
-                border-radius: 1.6rem;
-                font-family: 'interstate', sans-serif;
-
-                font-weight: 500;
-                cursor: pointer;
-
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-                gap: 1rem;
-                user-select: none;
-                background-color: $charcoal;
-
-                transition: 0.1s ease-in-out;
-
-                &:hover {
-                    background-color: hsl(0, 0%, 18%);
-                    color: #fff;
-                }
-
             }
 
         }
@@ -246,19 +204,20 @@ $condensed: 'interstate-compressed', sans-serif;
             padding: 14rem 4rem;
             gap: 2rem;
 
+            background-color: #1d1d1f;
             @media (max-width: 1000px) {
                 padding: 10rem 1rem;
             }
 
             .subheadingfaq {
                 font-size: 1.56rem;
-                color: #202020;
+                color: #86868b;
             }
 
             .faqheader {
-                font-size: 16rem;
+                font-size: 6rem;
                 font-weight: 400;
-                color: #202020;
+                color: #f5f5f7;
                 line-height: 100%;
                 font-family: Instrument Serif;
             }
@@ -269,8 +228,8 @@ $condensed: 'interstate-compressed', sans-serif;
             width: 100%;
             flex-direction: column;
             padding: 6rem 0rem;
-            background-color: #E6DFD4;
-
+            background-color: #1d1d1f;
+            
             .curriculumheader {
                 padding: 10rem 1rem 0rem 4rem;
                 display: flex;
@@ -279,13 +238,14 @@ $condensed: 'interstate-compressed', sans-serif;
 
                 .subheadingcurriculum {
                     font-size: 1.56rem;
-                    color: #202020;
+                    color: #86868b;
                 }
 
                 .curriculumheading {
-                    font-size: 16rem;
+                    font-size: 6rem;
                     font-weight: 400;
-                    color: #202020;
+                    color: #f5f5f7;
+
                     line-height: 100%;
                     font-family: Instrument Serif;
                 }

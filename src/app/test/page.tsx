@@ -20,7 +20,7 @@ export default function LandingPage() {
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <Link href="/" className={styles.logo}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.otoicon} viewBox="0 0 366 366" fill="#202020">
+                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.otoicon} viewBox="0 0 366 366">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M183 210.652C198.272 210.652 210.652 198.272 210.652 183C210.652 167.728 198.272 155.348 183 155.348C167.728 155.348 155.348 167.728 155.348 183C155.348 198.272 167.728 210.652 183 210.652ZM183 365.5C283.792 365.5 365.5 283.792 365.5 183C365.5 82.208 283.792 0.5 183 0.5C82.208 0.5 0.5 82.208 0.5 183C0.5 283.792 82.208 365.5 183 365.5Z" />
                             </svg>
                         </Link>
@@ -35,7 +35,7 @@ export default function LandingPage() {
                         whileTap={{ scale: 0.99 }}
                         className={styles.navbtn}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63" fill='none' >
-                            <path d="M0 31.6873H63M30.1104 63V0" stroke="#202020" strokeWidth="4" />
+                            <path d="M0 31.6873H63M30.1104 63V0" stroke="#ffffffcc" strokeWidth="4" />
                         </svg>
                     </motion.button>
 
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
                     <div className={styles.heroheading}>
                         <h1 className={styles.herotitle}>
-                            They never<br />got it. You do.
+                            They never<br />got it. We do.
                         </h1>
                     </div>
                     <div className={styles.descriptioncontainer}>
@@ -87,32 +87,19 @@ export default function LandingPage() {
                                     The system was.'
                                 </span>
                                 <br />
-                                We at Orbit rebuilt everything.
+                                At Orbit, we rebuilt everything from scratch.
 
                             </p>
                         </div>
                     </div>
                 </div>
 
-                {/* <div className={styles.applycontainer}>
-                    <h2 className={styles.label}>
-                        Limited Seats*, only <span className={styles.boldunder}>40 Seats</span> Across Globe
-                    </h2>
-                    <motion.div
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.99 }}
-                    >
-                        <Link className={styles.applybtn} href="/">
-                            Be Pro
-                        </Link>
-                    </motion.div>
-                </div> */}
 
                 <div className={styles.curriculumcontainer}>
                     <div className={styles.curriculumheader}>
                         <p className={styles.subheadingcurriculum}>From Curious to Confident</p>
                         <h1 className={styles.curriculumheading}>
-                            <span style={{ fontStyle: 'italic', fontFamily: 'inherit' }}>Your</span> journey
+                            your <span style={{ fontStyle: 'italic', fontFamily: 'inherit' }}>journey</span>
                         </h1>
                     </div>
                     <Curriculum />
@@ -132,7 +119,7 @@ export default function LandingPage() {
 
                 <PricingPage />
             </div>
-            <Footer />
+            {/* <Footer /> */}
 
         </div>
     )

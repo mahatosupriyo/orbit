@@ -18,7 +18,7 @@ const Icon = ({ name, size }: IconProps) => {
 
 export default function PricingPage() {
     return (
-        <div className={styles.container}>
+        <div className={styles.pricecontainer}>
             <div className={styles.leftpanel}>
                 <div className={styles.leftcontent}>
                     <div className={styles.leftcontentheader}>
@@ -48,7 +48,7 @@ export default function PricingPage() {
                     <h1 className={styles.maintitle}>
                         Orbit Pro<sup>+</sup>
                     </h1>
-                    <p className={styles.tagline}>Every phase you delay is someone else's advantage.</p>
+                    <p className={styles.tagline}>Step Into Orbit. One Phase at a Time.</p>
 
                     <div className={styles.phasescontainer}>
                         <div className={styles.phase}>

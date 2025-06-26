@@ -48,17 +48,24 @@ export default function NavBar() {
                     </Link>
                 )}
 
-                {/* Show navigation only on non-home pages */}
-                {!isHomePage && <Navigator />}
 
-                {/* Avatar button: animated on homepage, static otherwise */}
-                {isHomePage ? (
-                    <motion.div variants={slideDownVariant} initial="initial" animate="animate">
+                {/* Show navigation only on non-home pages */}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '1.6rem'
+                }}>
+                    {!isHomePage && <Navigator />}
+
+                    {/* Avatar button: animated on homepage, static otherwise */}
+                    {isHomePage ? (
+                        <motion.div variants={slideDownVariant} initial="initial" animate="animate">
+                            <AvatarBtn />
+                        </motion.div>
+                    ) : (
                         <AvatarBtn />
-                    </motion.div>
-                ) : (
-                    <AvatarBtn />
-                )}
+                    )}
+                </div>
             </div>
         </nav>
     );

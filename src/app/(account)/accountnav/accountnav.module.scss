@@ -1,0 +1,42 @@
+.accountnav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    // transform: translateX(-1.6rem);
+
+    .navbtn {
+        display: flex;
+
+        &:nth-child(1) {
+            .navlinkchip {
+                background-color: hsl(0, 0, 16%);
+                border-radius: 1rem;
+                outline-offset: 0.16rem;
+                color: hsl(0, 0, 60%);
+
+            }
+        }
+
+        .navlinkchip {
+            text-decoration: none;
+            display: flex;
+            width: 100%;
+            padding: 1.6rem 1.6rem 1.6rem 1.4rem;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: hsl(0, 0, 38%);
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+
+            &:hover {
+                border-radius: 1rem;
+                outline: 0.2rem solid hsl(0, 0, 28%);
+                outline-offset: 0.16rem;
+            }
+        }
+
+
+    }
+}

@@ -2,7 +2,6 @@
 
 import styles from './account.module.scss'
 import { useState, useEffect } from 'react'
-import Button from '@/components/atoms/button/button'
 import { updateAccountInfo } from './actions'
 import { toast } from 'react-hot-toast'
 
@@ -62,87 +61,68 @@ export default function AccountForm({ user }: { user: User }) {
     }
 
     return (
-        <>
-            {/* Header section with user avatar and title */}
+        <div className={styles.formwraper}>
+            {/* Header title */}
             <div className={styles.header}>
                 <div className={styles.headerdata}>
                     <h1 className={styles.title}>Account settings</h1>
                 </div>
-                <img
-                    src={user.image ?? '/default-avatar.png'}
-                    alt={user.name ?? 'User avatar'}
-                    className={styles.avatar}
-                    draggable="false"
-                />
             </div>
 
             {/* Account update form */}
             <form
                 action={handleSubmit}
-                style={{
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '2rem',
-                    alignItems: 'flex-end',
-                }}
-                // Prevent browser autocomplete for sensitive fields
+                className={styles.formlayout}
                 autoComplete="off"
             >
                 <div className={styles.userInfo}>
                     {/* Name input */}
                     <div className={styles.name}>
-                        <p className={styles.label}>Name</p>
-                        <input
-                            className={styles.input}
-                            name="name"
-                            defaultValue={user.name ?? ''}
-                            onChange={(e) => setName(e.target.value)}
-                            maxLength={100}
-                            required
-                            aria-label="Name"
-                            autoComplete="off"
-                            autoCorrect='off'
-                        />
+                        <label className={styles.label}>
+                            name*
+                            <input
+                                className={styles.input}
+                                name="name"
+                                defaultValue={user.name ?? ''}
+                                onChange={(e) => setName(e.target.value)}
+                                maxLength={100}
+                                required
+                                aria-label="Name"
+                                autoComplete="off"
+                                autoCorrect='off'
+                            />
+                        </label>
+
                     </div>
 
                     {/* Username input */}
                     <div className={styles.username}>
-                        <p className={styles.label}>Username</p>
-                        <input
-                            className={styles.input}
-                            name="username"
-                            defaultValue={user.username ?? ''}
-                            onChange={(e) => setUsername(e.target.value)}
-                            maxLength={32}
-                            pattern="^[a-zA-Z]*$"
-                            aria-label="Username"
-                            autoCorrect='off'
-                            autoComplete="off"
-                        />
+                        <label className={styles.label}>
+                            username*
+                            <input
+                                className={styles.input}
+                                name="username"
+                                defaultValue={user.username ?? ''}
+                                onChange={(e) => setUsername(e.target.value)}
+                                maxLength={32}
+                                pattern="^[a-zA-Z]*$"
+                                aria-label="ontheorbit.com/username"
+                                autoCorrect='off'
+                                autoComplete="off"
+                                style={{ textTransform: 'lowercase' }}
+                            />
+                        </label>
                     </div>
 
-                    {/* Email display (read-only) */}
-                    <div className={styles.email}>
-                        <p className={styles.label}>Email</p>
-                        <div
-                            className={styles.input}
-                            style={{ cursor: 'not-allowed', userSelect: 'all' }}
-                            aria-label="Email"
-                            tabIndex={0}
-                        >
-                            {user.email}
-                        </div>
-                    </div>
                 </div>
 
                 {/* Submit button, disabled if submitting or no changes */}
                 <div>
-                    <Button type="submit" disabled={isSubmitting || !hasChanges}>
-                        {isSubmitting ? 'Saving' : 'Save'}
-                    </Button>
+                    <button className={styles.submitbtn} type="submit" disabled={isSubmitting || !hasChanges}>
+                        {isSubmitting ? 'Saving changes' : 'Save changes'}
+                    </button>
                 </div>
             </form>
-        </>
+        </div>
     )
 }

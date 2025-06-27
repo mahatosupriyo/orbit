@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    // transform: translateX(-1.6rem);
 
     .navbtn {
         display: flex;
@@ -13,13 +12,15 @@
                 border-radius: 1rem;
                 outline-offset: 0.16rem;
                 color: hsl(0, 0, 60%);
-
             }
         }
 
         .navlinkchip {
+            transition: 0.16s cubic-bezier(.51, .92, .24, 1.15);
+
             text-decoration: none;
             display: flex;
+            user-select: none;
             width: 100%;
             padding: 1.6rem 1.6rem 1.6rem 1.4rem;
             font-size: 1.6rem;

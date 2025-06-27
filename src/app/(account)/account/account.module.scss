@@ -93,6 +93,27 @@
                 gap: 1rem;
                 flex-direction: column;
                 user-select: none;
+
+                .emaillabel {
+                    font-size: 1.36rem;
+                    user-select: none;
+                    font-weight: 400;
+                    color: hsl(0, 0, 30%);
+                    border: 0.2rem dotted hsl(0, 0, 16%);
+                    border-radius: 1rem;
+                    padding: 2rem 1.6rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.6rem;
+
+                    .emailinput {
+                        color: hsl(0, 0, 30%);
+                        padding: 0.6rem 0rem 0.2rem 0rem;
+                        font-size: 1.8rem;
+                        font-weight: 500;
+                    }
+                }
+
             }
         }
 
@@ -125,6 +146,7 @@
                     font-family: Instrument Serif;
                     font-weight: 400;
                     line-height: 100%;
+                    user-select: none;
                 }
             }
 
@@ -160,6 +182,7 @@
     padding: 2rem 1.6rem;
     display: flex;
     flex-direction: column;
+    cursor: text;
 
     gap: 0.6rem;
 
@@ -178,13 +201,12 @@
 }
 
 .input {
-    border-radius: 1rem;
     padding: 0.6rem 0rem 0.2rem 0rem;
+    font-size: 1.8rem;
+    font-weight: 500;
     background-color: none;
     background: none;
     color: hsl(0, 0, 60%);
-    font-size: 1.8rem;
-    font-weight: 500;
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
 }
 
@@ -212,5 +234,6 @@
     font-weight: 500;
     cursor: pointer;
     align-items: center;
+    user-select: none;
     justify-content: center;
 }

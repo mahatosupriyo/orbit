@@ -4,6 +4,7 @@ import styles from './account.module.scss'
 import { useState, useEffect } from 'react'
 import { updateAccountInfo } from './actions'
 import { toast } from 'react-hot-toast'
+import { motion, Variants } from 'framer-motion'
 
 type User = {
     name: string | null
@@ -12,24 +13,35 @@ type User = {
     image: string | null
 }
 
-/**
- * AccountForm component for updating user profile information.
- * - Tracks changes to name and username fields.
- * - Disables submit button if no changes or while submitting.
- * - Shows toast notifications for success or error.
- * - Prevents editing of email (display only).
- */
-export default function AccountForm({ user }: { user: User }) {
-    // Track submission state to prevent duplicate submissions
-    const [isSubmitting, setIsSubmitting] = useState(false)
+// Parent variant for stagger
+const containerVariants: Variants = {
+    initial: {},
+    animate: {
+        transition: {
+            staggerChildren: 0.2,
+        },
+    },
+}
 
-    // Track input values for name and username
+// Child animation for form elements
+const itemVariants: Variants = {
+    initial: { opacity: 0, y: 12 },
+    animate: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.4,
+            ease: [0.785, 0.135, 0.15, 0.86],
+        },
+    },
+}
+
+export default function AccountForm({ user }: { user: User }) {
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [name, setName] = useState(user.name ?? '')
     const [username, setUsername] = useState(user.username ?? '')
-    // Track if any changes have been made to enable/disable the save button
     const [hasChanges, setHasChanges] = useState(false)
 
-    // Effect to determine if form values have changed from initial user data
     useEffect(() => {
         const changed =
             name.trim() !== (user.name ?? '').trim() ||
@@ -37,11 +49,6 @@ export default function AccountForm({ user }: { user: User }) {
         setHasChanges(changed)
     }, [name, username, user.name, user.username])
 
-    /**
-     * Handles form submission.
-     * Calls the server action to update account info and shows toast notifications.
-     * @param formData FormData from the form submission
-     */
     const handleSubmit = async (formData: FormData) => {
         setIsSubmitting(true)
         try {
@@ -52,7 +59,6 @@ export default function AccountForm({ user }: { user: User }) {
                 toast.success('Account updated successfully!')
             }
         } catch (err) {
-            // Log error for debugging, but show generic error to user
             console.error('Account update failed:', err)
             toast.error('Something went wrong. Please try again.')
         } finally {
@@ -61,23 +67,28 @@ export default function AccountForm({ user }: { user: User }) {
     }
 
     return (
-        <div className={styles.formwraper}>
-            {/* Header title */}
+        <motion.div
+            className={styles.formwraper}
+            variants={containerVariants}
+            initial="initial"
+            animate="animate"
+        >
+            {/* Header */}
             <div className={styles.header}>
                 <div className={styles.headerdata}>
-                    <h1 className={styles.title}>Account settings</h1>
+                    <h1 className={styles.title}>Account core</h1>
                 </div>
             </div>
 
-            {/* Account update form */}
+            {/* Form */}
             <form
                 action={handleSubmit}
                 className={styles.formlayout}
                 autoComplete="off"
             >
-                <div className={styles.userInfo}>
-                    {/* Name input */}
-                    <div className={styles.name}>
+                <motion.div className={styles.userInfo} variants={containerVariants}>
+                    {/* Name */}
+                    <motion.div className={styles.name} variants={itemVariants}>
                         <label className={styles.label}>
                             name*
                             <input
@@ -89,14 +100,13 @@ export default function AccountForm({ user }: { user: User }) {
                                 required
                                 aria-label="Name"
                                 autoComplete="off"
-                                autoCorrect='off'
+                                autoCorrect="off"
                             />
                         </label>
+                    </motion.div>
 
-                    </div>
-
-                    {/* Username input */}
-                    <div className={styles.username}>
+                    {/* Username */}
+                    <motion.div className={styles.username} variants={itemVariants}>
                         <label className={styles.label}>
                             username*
                             <input
@@ -107,22 +117,38 @@ export default function AccountForm({ user }: { user: User }) {
                                 maxLength={32}
                                 pattern="^[a-zA-Z]*$"
                                 aria-label="ontheorbit.com/username"
-                                autoCorrect='off'
+                                autoCorrect="off"
                                 autoComplete="off"
                                 style={{ textTransform: 'lowercase' }}
                             />
                         </label>
-                    </div>
+                    </motion.div>
 
-                </div>
+                    {/* Email (read-only) */}
+                    <motion.div className={styles.email} variants={itemVariants}>
+                        <label className={styles.emaillabel}>
+                            email (can't change)
+                            <div
+                                className={styles.emailinput}
+                                style={{ textTransform: 'lowercase' }}
+                            >
+                                {user.email}
+                            </div>
+                        </label>
+                    </motion.div>
+                </motion.div>
 
-                {/* Submit button, disabled if submitting or no changes */}
-                <div>
-                    <button className={styles.submitbtn} type="submit" disabled={isSubmitting || !hasChanges}>
+                {/* Submit */}
+                <motion.div variants={itemVariants}>
+                    <button
+                        className={styles.submitbtn}
+                        type="submit"
+                        disabled={isSubmitting || !hasChanges}
+                    >
                         {isSubmitting ? 'Saving changes' : 'Save changes'}
                     </button>
-                </div>
+                </motion.div>
             </form>
-        </div>
+        </motion.div>
     )
 }

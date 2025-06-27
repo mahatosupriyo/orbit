@@ -4,6 +4,7 @@ import styles from "./navigator.module.scss";
 import Link from "next/link";
 import Icon from "@/components/atoms/icons";
 import { usePathname } from "next/navigation";
+import { motion } from 'framer-motion'
 
 /**
  * Navigator component renders navigation buttons for the main pages.
@@ -22,34 +23,43 @@ const Navigator: React.FC = () => {
   return (
     <nav className={styles.mainnavigatorcontainer} aria-label="Main Navigation">
       {/* Garage Page Link */}
-      <Link
-        href="/garage"
-        className={`${styles.pagebtn} ${isActive("/garage") ? styles.active : ""}`}
-        aria-current={isActive("/garage") ? "page" : undefined}
-        tabIndex={0}
+      <motion.div
+        whileTap={{ opacity: 0.6, scale: 0.96 }}
       >
-        <Icon
-          name="garage"
-          size={28}
-          fill={isActive("/garage") ? "#fafafa" : "#666"}
-          aria-label="Garage"
-        />
-      </Link>
+        <Link
+          href="/garage"
+          className={`${styles.pagebtn} ${isActive("/garage") ? styles.active : ""}`}
+          aria-current={isActive("/garage") ? "page" : undefined}
+          tabIndex={0}
+        >
+          <Icon
+            name="garage"
+            size={28}
+            fill={isActive("/garage") ? "#fafafa" : "#666"}
+            aria-label="Garage"
+          />
+        </Link>
+      </motion.div>
 
       {/* Odyssey Page Link */}
-      <Link
-        href="/odyssey"
-        className={`${styles.pagebtn} ${isActive("/odyssey") ? styles.active : ""}`}
-        aria-current={isActive("/odyssey") ? "page" : undefined}
-        tabIndex={0}
+      <motion.div
+        whileTap={{ opacity: 0.6, scale: 0.96 }}
       >
-        <Icon
-          name="series"
-          size={28}
-          fill={isActive("/odyssey") ? "#fafafa" : "#666"}
-          aria-label="Odyssey"
-        />
-      </Link>
+        <Link
+          href="/odyssey"
+          className={`${styles.pagebtn} ${isActive("/odyssey") ? styles.active : ""}`}
+          aria-current={isActive("/odyssey") ? "page" : undefined}
+          tabIndex={0}
+        >
+          <Icon
+            name="series"
+            size={28}
+            fill={isActive("/odyssey") ? "#fafafa" : "#666"}
+            aria-label="Odyssey"
+          />
+        </Link>
+      </motion.div>
+
     </nav>
   );
 };

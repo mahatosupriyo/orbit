@@ -5,6 +5,8 @@ import styles from "./history.module.scss";
 import NavBar from "@/components/molecules/navbar/navbar";
 import PaymentTable from "./historytable";
 import { redirect } from "next/navigation";
+import AccountNav from "@/app/(account)/accountnav/accountnav";
+import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn";
 
 const PaymentHistoryPage = async () => {
   const session = await auth();
@@ -22,10 +24,9 @@ const PaymentHistoryPage = async () => {
     <div className={styles.wraper}>
       <NavBar />
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Payment history</h1>
-        </div>
-        <div className={styles.paymentwraper}>
+        <BackBtn />
+        <div className={styles.screenwraper}>
+          <AccountNav />
           <PaymentTable payments={payments} />
         </div>
       </div>

@@ -14,211 +14,203 @@ $height: 12rem;
         flex-direction: column;
         min-height: 100dvh;
         position: relative;
-        align-items: center;
-        padding: 0rem 2rem;
-        padding-top: 16rem;
-        padding-bottom: 16rem;
+        padding: 10rem 2rem;
 
-        .header {
-            display: flex;
-            align-items: flex-start;
-            flex-direction: column;
-            width: 100%;
-            max-width: 50rem;
-
-
-            .title {
-                font-size: 8rem;
-                font-family: Instrument Serif;
-                font-weight: 400;
-                line-height: 100%;
-            }
-        }
-
-        .attributes {
-            position: fixed;
-            user-select: none;
-            pointer-events: none;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.6rem;
-            background-color: hsl(0, 0%, 8%);
-
-            .credits {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-                gap: 0.6rem;
-
-                .label {
-                    font-size: 1.2rem;
-                    color: hsl(0, 0, 36%);
-                }
-
-                .logo {
-                    height: 2rem;
-                    fill: hsl(0, 0, 36%);
-                }
-            }
-        }
-
+        gap: 4rem;
     }
 }
 
+.header {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+
+    .title {
+        font-size: 4rem;
+        font-family: Instrument Serif;
+        font-weight: 400;
+        line-height: 100%;
+        user-select: none;
+    }
+}
+
+.screenwraper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-column: auto;
+    gap: 10rem;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+}
 
 .paymentwraper {
-    display: flex;
-    flex-direction: column;
-    margin-top: 4rem;
-    align-items: center;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column: auto;
+    gap: 10rem;
 
-    .table {
+    @media (max-width: 1000px) {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .portion {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 4rem;
+
+        .table {
+            width: 100%;
+            display: flex;
+
+        }
+    }
+}
+
+.tablecontainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+
+
+    .tableinfo {
+        display: flex;
+        flex-direction: row;
+        padding: 1.66rem;
+        background-color: hsl(0, 11%, 88%);
         width: 100%;
 
-        max-width: 50rem;
-
-        .tablecontainer {
+        .banner {
+            aspect-ratio: 1/1;
             display: flex;
-            flex-direction: column;
+            object-fit: cover;
+            height: $height;
 
-            .tableinfo {
-                display: flex;
-                flex-direction: row;
-                padding: 1.66rem;
-                background-color: #FBFAFA;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .paymentinfo {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            flex-direction: row;
+            padding: 0rem 1.6rem;
+            min-height: $height;
+            position: relative;
+
+
+            .paymentdirectory {
                 width: 100%;
-
-                .banner {
-                    aspect-ratio: 1/1;
-                    display: flex;
-                    object-fit: cover;
-                    height: $height;
-
-                    pointer-events: none;
-                    user-select: none;
-                }
-
-                .paymentinfo {
-                    display: flex;
-                    height: 100%;
-                    flex-direction: row;
-                    padding: 0rem 1.6rem;
-                    width: 100%;
-                    min-height: $height;
-                    position: relative;
-
-
-                    .paymentdirectory {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-between;
-                        gap: 1rem;
-                        width: 100%;
-
-                        .timing {
-                            display: flex;
-                            gap: 1rem;
-
-                            .time {
-                                font-family: 1.66rem;
-                                color: #121212;
-                                font-weight: 500;
-                            }
-
-                            .date {
-                                font-family: 1.66rem;
-                                color: #121212;
-                                font-weight: 500;
-                            }
-                        }
-
-
-                        .plan {
-                            font-size: 2.6rem;
-                            color: #121212;
-                            font-weight: 400;
-                            font-family: Instrument Serif;
-                        }
-
-
-                        .status {
-                            display: flex;
-                            align-items: center;
-                            flex-direction: row;
-                            gap: 0.4rem;
-
-                            .paymentstatus {
-                                color: #121212;
-                                font-size: 1.56rem;
-                            }
-                        }
-                    }
-
-                    .price {
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                        padding: 0.2rem;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        color: #121212;
-                        gap: 0.4rem;
-                        line-height: 90%;
-                        font-weight: 400;
-                        font-size: 1.56rem;
-
-
-                        .rupee {
-                            font-weight: 400;
-                            color: hsl(0, 0, 50%);
-                        }
-                    }
-                }
-            }
-
-            .moreinfo {
-                background-color: hsl(0, 0, 20%);
                 display: flex;
-                flex-direction: row;
-                gap: 2rem;
-                padding: 1.8rem 1.4rem 1.6rem 1.4rem;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 1rem;
+                padding: 0.2rem 0rem;
 
-                @media only screen and (max-width: 380px) {
-                    flex-direction: column;
+
+
+
+                .plan {
+                    font-size: 2.6rem;
+                    color: #121212;
+                    font-weight: 400;
+                    font-family: Instrument Serif;
                 }
 
-                .id {
+
+                .status {
                     display: flex;
-                    align-items: flex-start;
-                    flex-direction: column;
-                    gap: 0.3rem;
+                    align-items: center;
+                    flex-direction: row;
+                    gap: 0.4rem;
 
-                    font-size: 1.4rem;
-                    font-weight: 400;
-                    color: hsl(0, 0, 50%);
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    padding: 0.2rem;
 
-                    .label {
-                        color: hsl(0, 0, 40%);
-
-                        font-size: 1.26rem;
-                        font-weight: 400;
-
+                    .paymentstatus {
+                        color: #121212;
+                        font-size: 1.6rem;
                         user-select: none;
                     }
                 }
             }
+
+
+        }
+    }
+
+    .moreinfo {
+        background-color: hsl(0, 0, 20%);
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        padding: 1.8rem 1.4rem 1.6rem 1.4rem;
+
+        @media only screen and (max-width: 380px) {
+            flex-direction: column;
         }
 
+        .id {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 0.6rem;
 
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: hsl(0, 0, 50%);
+
+            .label {
+                color: hsl(0, 0, 40%);
+
+                font-size: 1.26rem;
+                font-weight: 400;
+
+                user-select: none;
+            }
+        }
+    }
+}
+
+.price {
+    display: inline-flex;
+    color: #121212;
+    gap: 0.4rem;
+    line-height: 90%;
+    font-weight: 500;
+    font-size: 1.56rem;
+
+
+    .rupee {
+        font-size: inherit;
+        font-weight: 400;
+        color: hsl(0, 0, 50%);
+    }
+}
+
+.timing {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+
+    .time {
+        font-size: 1.46rem;
+        color: #121212;
+        font-weight: 400;
+    }
+
+    .date {
+        font-size: 1.46rem;
+        color: #121212;
+        font-weight: 400;
     }
 }

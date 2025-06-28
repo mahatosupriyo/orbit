@@ -5,19 +5,11 @@
 
     .navbtn {
         display: flex;
-
-        &:nth-child(1) {
-            .navlinkchip {
-                background-color: hsl(0, 0, 16%);
-                border-radius: 1rem;
-                outline-offset: 0.16rem;
-                color: hsl(0, 0, 60%);
-            }
-        }
+        
 
         .navlinkchip {
             transition: 0.16s cubic-bezier(.51, .92, .24, 1.15);
-
+            width: 100%;
             text-decoration: none;
             display: flex;
             user-select: none;
@@ -40,4 +32,11 @@
 
 
     }
+}
+
+.active {
+    background-color: hsl(0, 0, 16%);
+    border-radius: 1rem;
+    outline-offset: 0.16rem;
+    color: hsl(0, 0, 60%);
 }

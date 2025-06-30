@@ -79,8 +79,8 @@ export default function PaymentTable({ payments }: PaymentTableProps) {
                   <div className={styles.leftportion}>
 
                     <h2 className={styles.plan}>
-                      {payment.plan === "pro" && "Orbit Pro Membership"}
-                      {payment.plan === "exclusive" && "Orbit Exc. Membership"}
+                      {payment.plan === "pro" && "Pro Membership"}
+                      {payment.plan === "exclusive" && "Exclusive Membership"}
                     </h2>
 
                   </div>

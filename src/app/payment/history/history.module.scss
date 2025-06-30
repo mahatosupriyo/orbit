@@ -1,216 +1,215 @@
+@use '../../styles/essentials';
+@import '../../styles/essentials';
+
 $height: 12rem;
 
 
 .wraper {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+
+  .container {
     display: flex;
     width: 100%;
+    max-width: 200rem;
     flex-direction: column;
-    align-items: center;
+    min-height: 100dvh;
+    position: relative;
+    padding: 10rem 2rem;
 
-    .container {
-        display: flex;
-        width: 100%;
-        max-width: 200rem;
-        flex-direction: column;
-        min-height: 100dvh;
-        position: relative;
-        padding: 10rem 2rem;
-
-        gap: 4rem;
-    }
+    gap: 4rem;
+  }
 }
 
 .header {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 
-    .title {
-        font-size: 4rem;
-        font-family: Instrument Serif;
-        font-weight: 400;
-        line-height: 100%;
-        user-select: none;
-    }
+  .title {
+    font-size: 4rem;
+    font-family: Instrument Serif;
+    font-weight: 400;
+    line-height: 100%;
+    color: #fff;
+    user-select: none;
+  }
 }
 
 .screenwraper {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-column: auto;
-    gap: 10rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-column: auto;
+  gap: 10rem;
 
-    @media (max-width: 1000px) {
-        grid-template-columns: 1fr;
-        gap: 4rem;
-    }
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
 }
 
 .paymentwraper {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-column: auto;
-    gap: 10rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-column: auto;
+  gap: 10rem;
 
-    @media (max-width: 1000px) {
-        grid-template-columns: 1fr;
-        gap: 4rem;
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .portion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    .table {
+      width: 100%;
+      display: flex;
+
     }
+  }
+}
 
-    .portion {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 4rem;
 
-        .table {
-            width: 100%;
-            display: flex;
+.title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #333;
+}
 
-        }
-    }
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .tablecontainer {
+  background-color: hsl(0, 0%, 86%);
+  border-radius: 1rem;
+  transition: box-shadow 0.3s ease;
+  border-radius: 1.6rem;
+  padding: 0.4rem;
+
+
+}
+
+.tablehead {
+  border-radius: 1.4rem;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 1.8rem 1rem 1.8rem 1.5rem;
+  cursor: pointer;
+  @include smooth;
+  background-color: hsl(0, 0%, 100%);
+
+
+  &:hover {
+    background-color: hsl(0, 0%, 90%);
+  }
+
+  .leftportion {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow: hidden;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
 
+    .plan {
+      font-size: 1.66rem;
 
-    .tableinfo {
-        display: flex;
-        flex-direction: row;
-        padding: 1.66rem;
-        background-color: hsl(0, 11%, 88%);
-        width: 100%;
-
-        .banner {
-            aspect-ratio: 1/1;
-            display: flex;
-            object-fit: cover;
-            height: $height;
-
-            pointer-events: none;
-            user-select: none;
-        }
-
-        .paymentinfo {
-            display: flex;
-            height: 100%;
-            width: 100%;
-            flex-direction: row;
-            padding: 0rem 1.6rem;
-            min-height: $height;
-            position: relative;
-
-
-            .paymentdirectory {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                gap: 1rem;
-                padding: 0.2rem 0rem;
-
-
-
-
-                .plan {
-                    font-size: 2.6rem;
-                    color: #121212;
-                    font-weight: 400;
-                    font-family: Instrument Serif;
-                }
-
-
-                .status {
-                    display: flex;
-                    align-items: center;
-                    flex-direction: row;
-                    gap: 0.4rem;
-
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    padding: 0.2rem;
-
-                    .paymentstatus {
-                        color: #121212;
-                        font-size: 1.6rem;
-                        user-select: none;
-                    }
-                }
-            }
-
-
-        }
+      font-weight: 500;
+      color: hsl(0, 0, 10%);
     }
+  }
 
-    .moreinfo {
-        background-color: hsl(0, 0, 20%);
-        display: flex;
-        flex-direction: row;
-        gap: 2rem;
-        padding: 1.8rem 1.4rem 1.6rem 1.4rem;
-
-        @media only screen and (max-width: 380px) {
-            flex-direction: column;
-        }
-
-        .id {
-            display: flex;
-            align-items: flex-start;
-            flex-direction: column;
-            gap: 0.6rem;
-
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: hsl(0, 0, 50%);
-
-            .label {
-                color: hsl(0, 0, 40%);
-
-                font-size: 1.26rem;
-                font-weight: 400;
-
-                user-select: none;
-            }
-        }
-    }
-}
-
-.price {
-    display: inline-flex;
-    color: #121212;
+  .rightportion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 0.4rem;
-    line-height: 90%;
-    font-weight: 500;
-    font-size: 1.56rem;
 
+    .status {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem;
+      border: 0.16rem solid hsl(0, 0, 60%);
+      border-radius: 1.6rem;
 
-    .rupee {
-        font-size: inherit;
+      .paymentstatus {
+        font-size: 1.3rem;
         font-weight: 400;
-        color: hsl(0, 0, 50%);
+        color: hsl(0, 0%, 20%);
+      }
     }
+
+  }
 }
 
-.timing {
+.paymentdirectory {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.moreinfo {
+  padding: 2rem 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 0rem 0rem 1.6rem 1.6rem;
+
+  .price {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: hsl(0, 0%, 10%);
+  }
+
+  .timing {
     display: flex;
     gap: 1rem;
-    flex-direction: row;
+    font-size: 1.4rem;
+    color: hsl(0, 0%, 40%);
+  }
 
-    .time {
-        font-size: 1.46rem;
-        color: #121212;
-        font-weight: 400;
-    }
+  .ids {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    padding-top: 1rem;
 
-    .date {
-        font-size: 1.46rem;
-        color: #121212;
-        font-weight: 400;
+    @media (max-width: 400px){
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
     }
+  }
+
+  .id {
+    font-size: 1.4rem;
+    color: hsl(0, 0%, 20%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-weight: 400;
+    padding-top: 0.6rem;
+  }
+
+  .label {
+    font-weight: 400;
+    color: hsl(0, 0%, 40%);
+    font-size: 1.26rem;
+  }
+
 }

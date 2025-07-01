@@ -88,10 +88,10 @@ const AvatarBtn: React.FC = () => {
             <ul className={styles.menu}>
               <Link href="/account" className={styles.option}>
                 <Logo name="account" fill="#121212" size={24} />
-                Account settings
+                Settings
               </Link>
 
-              <Overlay
+              {/* <Overlay
                 buttonIcon={<Logo name="otostroke" fill="#121212" size={24} />}
                 buttonText="Orbit Pro"
               >
@@ -115,12 +115,12 @@ const AvatarBtn: React.FC = () => {
                     />
                   </div>
                 </div>
-              </Overlay>
+              </Overlay> */}
 
-              <motion.button whileTap={{ opacity: 0.6 }} className={styles.option}>
+              {/* <motion.button whileTap={{ opacity: 0.6 }} className={styles.option}>
                 <Logo name="help" fill="#121212" size={24} />
                 Help center
-              </motion.button>
+              </motion.button> */}
               <Link href="/payment/history" className={styles.option}>
                 <Logo name="bill" fill="#121212" size={24} />
                 Payments

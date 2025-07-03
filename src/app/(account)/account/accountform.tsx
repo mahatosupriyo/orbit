@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { updateAccountInfo } from './actions'
 import { toast } from 'react-hot-toast'
 import { motion, Variants } from 'framer-motion'
-import AvatarUploadInput from '@/app/test/page'
+import AvatarUploadInput from '@/components/atoms/avatar/uploadavatar'
 
 type User = {
     name: string | null

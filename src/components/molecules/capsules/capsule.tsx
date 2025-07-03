@@ -22,6 +22,8 @@ export default function CapsuleCard({ imgSrcs, alt = "Capsule Image" }: CapsuleP
                     scrollbar={{
                         hide: false,
                     }}
+                    spaceBetween={10}
+                    
                     modules={[Scrollbar]}
                     loop={imgSrcs.length > 1}
                     className={styles.swiper}

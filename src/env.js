@@ -21,7 +21,7 @@ export const env = createEnv({
     RAZORPAY_KEY_SECRET: z.string(),
     NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string(),
 
-    NEXT_PUBLIC_NEXTAUTH_URL: z.string().url(), // ✅ Added
+    NEXT_PUBLIC_NEXTAUTH_URL: z.string().url(),
 
 
     // ORBIT AWS credentials and settings
@@ -56,7 +56,7 @@ export const env = createEnv({
     RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
     NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
 
-    NEXT_PUBLIC_NEXTAUTH_URL: process.env.NEXT_PUBLIC_NEXTAUTH_URL, // ✅ Added
+    NEXT_PUBLIC_NEXTAUTH_URL: process.env.NEXT_PUBLIC_NEXTAUTH_URL, 
 
 
     ORBIT_AWS_ACCESS_KEY_ID: process.env.ORBIT_AWS_ACCESS_KEY_ID,

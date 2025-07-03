@@ -1,41 +1,42 @@
-"use client";
+'use client';
+
 import React, { useState, useEffect, useRef } from "react";
 import styles from './avatarbtn.module.scss';
 import Logo from '@/components/atoms/icons';
 import { motion, AnimatePresence } from 'framer-motion';
-import Overlay from "@/components/overlay/overlay";
 import { useSession, signOut } from "next-auth/react"
 import Link from "next/link";
 import { BuyNowButton } from "@/components/payments/paymentbtn";
+import { useAvatarStore } from "@/app/store/avatarStore";
+import { getAvatar } from "@/app/actions/getAvatar";
+import AvatarImage from "../avatar/avatar";
 
-/**
- * AvatarBtn Component
- * Renders a user avatar button with a dropdown menu.
- * Handles menu open/close, click outside to close, and simple menu options.
- * Uses the session's user image for the avatar.
- */
 const AvatarBtn: React.FC = () => {
   const { data: session } = useSession();
-
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  /**
- * Animation variant for sliding down elements with fade-in.
- */
-  const slideDownVariant = {
-    initial: { opacity: 0, y: -20 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        ease: [0.785, 0.135, 0.15, 0.86],
-      },
-    },
-  };
+  const avatarUrl = useAvatarStore((state) => state.avatarUrl);
+  const setAvatarUrl = useAvatarStore((state) => state.setAvatarUrl);
 
-  // Loading states
+  useEffect(() => {
+    if (avatarUrl) return;
+
+    const fetchAvatar = async () => {
+      try {
+        const url = await getAvatar();
+        setAvatarUrl(url);
+      } catch (err) {
+        console.error("Failed to fetch avatar:", err);
+        setAvatarUrl('https://ontheorbit.com/placeholder.png');
+      }
+    };
+
+    fetchAvatar();
+
+  }, [avatarUrl, setAvatarUrl]);
+
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,17 +44,18 @@ const AvatarBtn: React.FC = () => {
         setMenuOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
-
-  const toggleMenu = () => setMenuOpen(prev => !prev);
+  }, [menuOpen]); // only when menu is open
 
   return (
     <div className={styles.avatarbtncontainer} ref={menuRef}>
-      {/* Avatar button */}
       <motion.button
         whileTap={{ opacity: 0.6, scale: 0.96 }}
         className={styles.avatarbtn}
@@ -62,20 +64,10 @@ const AvatarBtn: React.FC = () => {
         aria-haspopup="true"
         aria-expanded={menuOpen}
         type="button"
-        variants={slideDownVariant}
       >
-        <img
-          className={styles.avatar}
-          onError={(e) => {
-            e.currentTarget.onerror = null;
-            e.currentTarget.src = 'https://ontheorbit.com/placeholder.png';
-          }}
-          src={session?.user?.image || 'https://ontheorbit.com/placeholder.png'}
-          draggable="false"
-        />
+        <AvatarImage className={styles.avatar} />
       </motion.button>
 
-      {/* Dropdown menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -91,40 +83,11 @@ const AvatarBtn: React.FC = () => {
                 Settings
               </Link>
 
-              {/* <Overlay
-                buttonIcon={<Logo name="otostroke" fill="#121212" size={24} />}
-                buttonText="Orbit Pro"
-              >
-
-                <div className={styles.wraperplans}>
-                  <h1 className={styles.title}>Upgrade your plan</h1>
-
-                  <div className={styles.planbtns}>
-                    <BuyNowButton
-                      plan="pro"
-                      amount={6499}
-                      description="Pro Plan for On The Orbit"
-                      buttonLabel="Pro"
-                    />
-
-                    <BuyNowButton
-                      plan="exclusive"
-                      amount={14999}
-                      description="Pro Plan for On The Orbit"
-                      buttonLabel="Exclusive"
-                    />
-                  </div>
-                </div>
-              </Overlay> */}
-
-              {/* <motion.button whileTap={{ opacity: 0.6 }} className={styles.option}>
-                <Logo name="help" fill="#121212" size={24} />
-                Help center
-              </motion.button> */}
               <Link href="/payment/history" className={styles.option}>
                 <Logo name="bill" fill="#121212" size={24} />
                 Payments
               </Link>
+
               <hr className={styles.hr} />
               <motion.button onClick={() => signOut()} whileTap={{ opacity: 0.6 }} className={styles.logout}>
                 Logout

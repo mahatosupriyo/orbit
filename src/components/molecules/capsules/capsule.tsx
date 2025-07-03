@@ -1,33 +1,44 @@
-import Link from "next/link";
+'use client';
+
 import styles from "./capsule.module.scss";
 import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/css';
+import { Scrollbar } from 'swiper/modules';
+import "swiper/css";
+import 'swiper/css/scrollbar';
 
 interface CapsuleProps {
-    imgSrc: string;
+    imgSrcs: string[];
     alt?: string;
 }
 
-/**
- * CapsuleCard component
- * - Displays a capsule image inside a styled, animated container.
- * - Includes a save button with an icon.
- * - Accepts image source and alt text as props.
- */
-export default function CapsuleCard({ imgSrc, alt = "Capsule Image" }: CapsuleProps) {
+export default function CapsuleCard({ imgSrcs, alt = "Capsule Image" }: CapsuleProps) {
     return (
         <div className={styles.capsulewraper}>
-            {/* Capsule image with animation */}
-            <motion.div draggable="false" className={styles.capsulebtn}>
-                <img
-                    src={imgSrc}
-                    alt={alt}
-                    draggable="false"
-                    className={styles.capsulebanner}
-                />
+            <motion.div className={styles.capsulebtn} draggable="false">
+                <Swiper
+                    scrollbar={{
+                        hide: false,
+                    }}
+                    modules={[Scrollbar]}
+                    loop={imgSrcs.length > 1}
+                    className={styles.swiper}
+                >
+                    {imgSrcs.map((src, index) => (
+                        <SwiperSlide key={index}>
+                            <img
+                                src={src}
+                                alt={`${alt} ${index + 1}`}
+                                draggable="false"
+                                className={styles.capsulebanner}
+                            />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
             </motion.div>
 
-            {/* Save button with icon and tap animation */}
             <motion.button whileTap={{ scale: 0.9 }} className={styles.save}>
                 <Icon name='save' size={28} />
             </motion.button>

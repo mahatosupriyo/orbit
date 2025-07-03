@@ -68,6 +68,7 @@ model User {
     username           String?   @unique
     lastUsernameUpdate DateTime?
     lastNameUpdate     DateTime?
+    lastImageUpdate    DateTime?
 
     role     UserRole  @default(USER)
     accounts Account[]

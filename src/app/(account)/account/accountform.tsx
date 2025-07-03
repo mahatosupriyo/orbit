@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { updateAccountInfo } from './actions'
 import { toast } from 'react-hot-toast'
 import { motion, Variants } from 'framer-motion'
+import AvatarUploadInput from '@/app/test/page'
 
 type User = {
     name: string | null
@@ -78,15 +79,18 @@ export default function AccountForm({ user }: { user: User }) {
                 <div className={styles.headerdata}>
                     <h1 className={styles.title}>Account core</h1>
                 </div>
+
             </div>
+            
 
             {/* Form */}
             <form
                 action={handleSubmit}
                 className={styles.formlayout}
                 autoComplete="off"
-            >
+                >
                 <motion.div className={styles.userInfo} variants={containerVariants}>
+                <AvatarUploadInput/>
                     {/* Name */}
                     <motion.div className={styles.name} variants={itemVariants}>
                         <label className={styles.label}>

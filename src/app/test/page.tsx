@@ -1,125 +1,67 @@
-"use client"
-import styles from './test.module.scss'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import Footer from '@/components/molecules/footer/footer'
-import Curriculum from './curriculum'
-import FAQ from './faq'
-import PricingPage from '../(company)/pricing/page'
+'use client'
 
-export default function LandingPage() {
+import { useState } from 'react'
+import { updateAvatar } from './uploadavatar'
+import { toast } from 'react-hot-toast'
+import { useAvatarStore } from '@/app/store/avatarStore'
+import { getAvatar } from '@/app/actions/getAvatar'
+import styles from './uploadavatar.module.scss'
+import Icon from '@/components/atoms/icons'
+import AvatarImage from '@/components/atoms/avatar/avatar'
+
+const MAX_FILE_SIZE_MB = 2
+
+export default function AvatarUploadInput() {
+    const [isUploading, setIsUploading] = useState(false)
+    const setAvatarUrl = useAvatarStore((state) => state.setAvatarUrl)
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+            toast.error(`File too large. Max size is ${MAX_FILE_SIZE_MB}MB.`)
+            return
+        }
+
+        const formData = new FormData()
+        formData.append('file', file)
+
+        try {
+            setIsUploading(true)
+            const res = await updateAvatar(formData)
+            if (res.success) {
+                toast.success(res.message || 'Avatar updated successfully')
+                const latestAvatarUrl = await getAvatar()
+                setAvatarUrl(latestAvatarUrl)
+            } else {
+                toast.error(res.message || 'Upload failed')
+            }
+        } catch {
+            toast.error('Unexpected error occurred.')
+        } finally {
+            setIsUploading(false)
+        }
+    }
+
     return (
-        <div className={styles.wraper}>
-            <div className={styles.navbar}>
-
-                <div className={styles.navleft}>
-
-                    <motion.div
-                        whileHover={{ scale: 1.04 }}
-                        whileTap={{ scale: 0.99 }}
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <Link href="/" className={styles.logo}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.otoicon} viewBox="0 0 366 366">
-                                <path fillRule="evenodd" clipRule="evenodd" d="M183 210.652C198.272 210.652 210.652 198.272 210.652 183C210.652 167.728 198.272 155.348 183 155.348C167.728 155.348 155.348 167.728 155.348 183C155.348 198.272 167.728 210.652 183 210.652ZM183 365.5C283.792 365.5 365.5 283.792 365.5 183C365.5 82.208 283.792 0.5 183 0.5C82.208 0.5 0.5 82.208 0.5 183C0.5 283.792 82.208 365.5 183 365.5Z" />
-                            </svg>
-                        </Link>
-                    </motion.div>
-
-
-
-
-
-                    <motion.button
-                        whileHover={{ scale: 1.04 }}
-                        whileTap={{ scale: 0.99 }}
-                        className={styles.navbtn}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63 63" fill='none' >
-                            <path d="M0 31.6873H63M30.1104 63V0" stroke="#ffffffcc" strokeWidth="4" />
-                        </svg>
-                    </motion.button>
-
-
+        <div>
+            <span className={styles.label}>
+                headshot
+            </span>
+            <div className={styles.avatar}>
+                <div className={styles.icon}>
+                    <Icon name='upload' size={32} />
                 </div>
-
-                <motion.button
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
-                    className={styles.cta}>
-
-                    <img
-                        className={styles.providericon}
-                        src="https://ik.imagekit.io/ontheorbit/Essentials/GoogleProvider.svg?updatedAt=1747472834072"
-                        draggable="false"
-                        alt="Google Provider"
-                    />
-                    Get started
-                </motion.button>
-
+                <AvatarImage size={120} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    disabled={isUploading}
+                    className={styles.input}
+                />
             </div>
-
-            <div className={styles.container}>
-
-
-                <div className={styles.hero}>
-
-                    <div className={styles.heroheading}>
-                        <h1 className={styles.herotitle}>
-                            They never<br />got it. We do.
-                        </h1>
-                    </div>
-                    <div className={styles.descriptioncontainer}>
-                        <div className={styles.leftpanel}>
-                        </div>
-                        <div className={styles.descriptionwraper}>
-
-                            <p className={styles.description}>
-                                We felt it too —
-                                <br /><br />
-                                Paying huge fees for theory, no real tools, no hands-on work.
-                                <br />
-                                Thousands of designers felt the same: lost, overcharged, and underestimated.
-                                <br /><br />
-
-                                <span className={styles.highlight}>
-                                    ' You were not the problem,
-                                    <br />
-                                    The system was.'
-                                </span>
-                                <br />
-                                At Orbit, we rebuilt everything from scratch.
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className={styles.curriculumcontainer}>
-                    <div className={styles.curriculumheader}>
-                        <p className={styles.subheadingcurriculum}>From Curious to Confident</p>
-                        <h1 className={styles.curriculumheading}>
-                            your <span style={{ fontStyle: 'italic', fontFamily: 'inherit' }}>journey</span>
-                        </h1>
-                    </div>
-                    <Curriculum />
-                </div>
-
-
-                <div className={styles.faqcontainer}>
-                    <div className={styles.subheadingfaq}>
-                        What You Deserve to Know
-                    </div>
-                    <h1 className={styles.faqheader}>
-                        Go on, <span style={{ fontStyle: 'italic', fontFamily: 'inherit' }}>Ask</span> us
-                    </h1>
-                    <FAQ />
-
-                </div>
-
-                <PricingPage />
-            </div>
-            {/* <Footer /> */}
 
         </div>
     )

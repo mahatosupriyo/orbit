@@ -50,7 +50,7 @@ export async function updateAvatar(formData: FormData) {
 
       if (timeSinceLastUpdate < COOLDOWN_MS) {
         const minutesLeft = Math.ceil((COOLDOWN_MS - timeSinceLastUpdate) / 60000)
-        throw new Error(`Please wait ${minutesLeft} more minute(s) before updating again`)
+        throw new Error(`Hold on — ${minutesLeft} minute(s) left.`)
       }
     }
 

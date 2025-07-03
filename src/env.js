@@ -23,7 +23,6 @@ export const env = createEnv({
 
     NEXT_PUBLIC_NEXTAUTH_URL: z.string().url(),
 
-
     // ORBIT AWS credentials and settings
     ORBIT_AWS_ACCESS_KEY_ID: z.string(),
     ORBIT_AWS_SECRET_ACCESS_KEY: z.string(),
@@ -31,22 +30,21 @@ export const env = createEnv({
     ORBIT_S3_BUCKET_NAME: z.string(),
     ORBIT_CLOUDFRONT_URL: z.string().url(),
     ORBIT_CLOUDFRONT_KEY_PAIR_ID: z.string(),
-    ORBIT_CLOUDFRONT_PRIVATE_KEY: z.string(), // consider secure handling
+    ORBIT_CLOUDFRONT_PRIVATE_KEY: z.string(),
   },
 
   /**
    * Client-side environment variables schema
    */
   client: {
-    // If you need to expose any ORBIT_ env to the client, move it here with NEXT_PUBLIC_ prefix
-    // Example: NEXT_PUBLIC_ORBIT_CLOUDFRONT_URL: z.string().url()
+    // Add any public-facing envs here if needed
   },
 
   /**
    * Runtime environment mapping
    */
   runtimeEnv: {
-    NEXTAUTH_SECRET: process.env.AUTH_SECRET,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
     AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
@@ -56,8 +54,7 @@ export const env = createEnv({
     RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
     NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
 
-    NEXT_PUBLIC_NEXTAUTH_URL: process.env.NEXT_PUBLIC_NEXTAUTH_URL, 
-
+    NEXT_PUBLIC_NEXTAUTH_URL: process.env.NEXT_PUBLIC_NEXTAUTH_URL,
 
     ORBIT_AWS_ACCESS_KEY_ID: process.env.ORBIT_AWS_ACCESS_KEY_ID,
     ORBIT_AWS_SECRET_ACCESS_KEY: process.env.ORBIT_AWS_SECRET_ACCESS_KEY,

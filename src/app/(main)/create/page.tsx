@@ -9,9 +9,7 @@ import { useImageManager } from "@/hooks/garageimagemanager"
 import { SortableImageItem } from "./components/sortableimageitem"
 import { ImageUploadZone } from "./components/imageuploaderzone"
 import type { GaragePostFormData, UploadResult } from "@/types/garageimagesuploader"
-import { useSortable } from "@dnd-kit/sortable"
 import styles from "./create.module.scss"
-import { CSS } from "@dnd-kit/utilities"
 import NavBar from "@/components/molecules/navbar/navbar"
 import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn"
 
@@ -20,39 +18,6 @@ const INITIAL_FORM_DATA: GaragePostFormData = {
     caption: "",
     externalUrl: "",
     makingOf: "",
-}
-
-function SortableImage({
-    id,
-    url,
-    onRemove,
-}: {
-    id: string
-    url: string
-    onRemove: (id: string) => void
-}) {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id })
-
-    const style = {
-        transform: CSS.Transform.toString(transform),
-        transition,
-    }
-
-    return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={styles.preview}>
-            <img src={url || "/placeholder.svg"} alt="Preview" />
-            <button
-                type="button"
-                className={styles.removeButton}
-                onClick={(e) => {
-                    e.stopPropagation()
-                    onRemove(id)
-                }}
-            >
-                ✕
-            </button>
-        </div>
-    )
 }
 
 export default function GaragePostUploader() {

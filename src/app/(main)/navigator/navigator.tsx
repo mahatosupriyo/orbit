@@ -41,6 +41,25 @@ const Navigator: React.FC = () => {
         </Link>
       </motion.div>
 
+      {/* Garage Page Link */}
+      <motion.div
+        whileTap={{ opacity: 0.6, scale: 0.96 }}
+      >
+        <Link
+          href="/create"
+          className={`${styles.pagebtn} ${isActive("/create") ? styles.active : ""}`}
+          aria-current={isActive("/create") ? "page" : undefined}
+          tabIndex={0}
+        >
+          <Icon
+            name="upload"
+            size={28}
+            fill={isActive("/create") ? "#fafafa" : "#666"}
+            aria-label="Create"
+          />
+        </Link>
+      </motion.div>
+
       {/* Odyssey Page Link */}
       <motion.div
         whileTap={{ opacity: 0.6, scale: 0.96 }}

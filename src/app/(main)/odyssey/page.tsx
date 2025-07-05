@@ -32,8 +32,8 @@ export default function OdysseyPage() {
 
     return (
         <div className={styles.wraper}>
+            <NavBar />
             <div className={styles.container}>
-                <NavBar />
                 <div className={styles.playerwraper}>
 
                     <motion.div

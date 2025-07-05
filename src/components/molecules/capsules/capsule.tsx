@@ -28,18 +28,10 @@ export default function GaragePostCard({ post, userId }: GaragePostCardProps) {
     const firstImage = post.images[0];
     const hasMultipleImages = post.images.length > 1;
 
-    const formatDate = (date: Date) =>
-        new Intl.DateTimeFormat("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-        }).format(new Date(date));
-
     const dateObj = new Date(post.createdAt);
     const day = dateObj.getDate();
-    const month = dateObj.toLocaleString("default", { month: "short" }); // e.g., Jul
-    const year = dateObj.getFullYear().toString().slice(-2); // "25"
-
+    const month = dateObj.toLocaleString("default", { month: "short" });
+    const year = dateObj.getFullYear().toString().slice(-2);
 
     return (
         <div className={styles.capsulewraper}>
@@ -109,8 +101,6 @@ export default function GaragePostCard({ post, userId }: GaragePostCardProps) {
                                             <span className={styles.day}>{day}</span>
                                         </div>
                                     </div>
-
-
                                 </div>
 
                                 {post.externalUrl && (
@@ -123,16 +113,11 @@ export default function GaragePostCard({ post, userId }: GaragePostCardProps) {
                                         <Icon name="external" />
                                     </a>
                                 )}
-
                             </div>
                         </div>
                     </Drawer.Content>
                 </Drawer.Portal>
             </Drawer.Root>
-
-            {/* <motion.button whileTap={{ scale: 0.9 }} className={styles.save}>
-                <Icon name="save" size={28} />
-            </motion.button> */}
         </div>
     );
 }

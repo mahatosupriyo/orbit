@@ -1,0 +1,307 @@
+
+"use client"
+import type React from "react"
+import { useState, type FormEvent, useCallback } from "react"
+import { uploadGaragePost } from "./create"
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core"
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import { useImageManager } from "@/hooks/garageimagemanager"
+import { SortableImageItem } from "./components/sortableimageitem"
+import { ImageUploadZone } from "./components/imageuploaderzone"
+import type { GaragePostFormData, UploadResult } from "@/types/garageimagesuploader"
+import { useSortable } from "@dnd-kit/sortable"
+import styles from "./create.module.scss"
+import { CSS } from "@dnd-kit/utilities"
+import NavBar from "@/components/molecules/navbar/navbar"
+import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn"
+
+const INITIAL_FORM_DATA: GaragePostFormData = {
+    title: "",
+    caption: "",
+    externalUrl: "",
+    makingOf: "",
+}
+
+function SortableImage({
+    id,
+    url,
+    onRemove,
+}: {
+    id: string
+    url: string
+    onRemove: (id: string) => void
+}) {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id })
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    }
+
+    return (
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={styles.preview}>
+            <img src={url || "/placeholder.svg"} alt="Preview" />
+            <button
+                type="button"
+                className={styles.removeButton}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    onRemove(id)
+                }}
+            >
+                ✕
+            </button>
+        </div>
+    )
+}
+
+export default function GaragePostUploader() {
+    const [formData, setFormData] = useState<GaragePostFormData>(INITIAL_FORM_DATA)
+    const [submitError, setSubmitError] = useState<string | null>(null)
+
+    const {
+        images,
+        isUploading,
+        setIsUploading,
+        addImages,
+        removeImage,
+        reorderImages,
+        clearImages,
+        canAddMore,
+        getFiles,
+    } = useImageManager()
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        }),
+    )
+
+    const handleInputChange = useCallback(
+        (field: keyof GaragePostFormData) => {
+            return (e: React.ChangeEvent<HTMLInputElement>) => {
+                setFormData((prev) => ({
+                    ...prev,
+                    [field]: e.target.value,
+                }))
+                // Clear error when user starts typing
+                if (submitError) setSubmitError(null)
+            }
+        },
+        [submitError],
+    )
+
+    const handleFilesSelected = useCallback(
+        (files: FileList) => {
+            try {
+                addImages(files)
+            } catch (error) {
+                console.error("Error adding images:", error)
+                setSubmitError("Failed to add images. Please try again.")
+            }
+        },
+        [addImages],
+    )
+
+    const handleDragEnd = useCallback(
+        (event: DragEndEvent) => {
+            const { active, over } = event
+
+            if (!over || active.id === over.id) return
+
+            const oldIndex = images.findIndex((img) => img.id === active.id)
+            const newIndex = images.findIndex((img) => img.id === over.id)
+
+            if (oldIndex !== -1 && newIndex !== -1) {
+                reorderImages(oldIndex, newIndex)
+            }
+        },
+        [images, reorderImages],
+    )
+
+    const validateForm = (): string | null => {
+        if (!formData.title.trim()) {
+            return "Title is required"
+        }
+        if (images.length === 0) {
+            return "At least one image is required"
+        }
+        if (formData.externalUrl && !isValidUrl(formData.externalUrl)) {
+            return "Please enter a valid URL"
+        }
+        return null
+    }
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault()
+
+        const validationError = validateForm()
+        if (validationError) {
+            setSubmitError(validationError)
+            return
+        }
+
+        setIsUploading(true)
+        setSubmitError(null)
+
+        try {
+            const formDataToSubmit = new FormData()
+
+            // Add form fields
+            Object.entries(formData).forEach(([key, value]) => {
+                if (value.trim()) {
+                    formDataToSubmit.append(key, value.trim())
+                }
+            })
+
+            // Add images
+            getFiles().forEach((file) => {
+                formDataToSubmit.append("images", file)
+            })
+
+            const result: UploadResult = await uploadGaragePost(formDataToSubmit)
+
+            if (result.success) {
+                // Reset form on success
+                setFormData(INITIAL_FORM_DATA)
+                clearImages()
+                // You might want to show a success toast here instead of alert
+                console.log("Upload successful:", result.message)
+            } else {
+                setSubmitError(result.message || "Upload failed. Please try again.")
+            }
+        } catch (error) {
+            console.error("Upload error:", error)
+            setSubmitError("An unexpected error occurred. Please try again.")
+        } finally {
+            setIsUploading(false)
+        }
+    }
+
+    const imageIds = images.map((img) => img.id)
+
+    return (
+        <div className={styles.wraper}>
+            <NavBar />
+            <div className={styles.container}>
+                <form onSubmit={handleSubmit} className={styles.uploader} noValidate>
+                    <div className={styles.toplayer}>
+                        <BackBtn />
+
+                        <button type="submit" className={styles.submitbtn} disabled={isUploading || images.length === 0}>
+                            {isUploading ? "Uploading" : "Upload"}
+                        </button>
+                    </div>
+
+                    <div className={styles.layoutgrid}>
+                        <div className={styles.garagepost}>
+                            <label className={styles.imagelabel}>({images.length}/5)</label>
+
+                            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                                <SortableContext items={imageIds} strategy={verticalListSortingStrategy}>
+                                    <div className={styles.previewGrid}>
+                                        {images.map((image) => (
+                                            <SortableImageItem key={image.id} image={image} onRemove={removeImage} />
+                                        ))}
+
+                                        {canAddMore && (
+                                            <ImageUploadZone
+                                                onFilesSelected={handleFilesSelected}
+                                                canAddMore={canAddMore}
+                                                disabled={isUploading}
+                                            />
+                                        )}
+                                    </div>
+                                </SortableContext>
+                            </DndContext>
+
+                        </div>
+                        <div className={styles.garagepostform}>
+
+                            <label htmlFor="title" className={styles.label}>
+                                title*
+                                <input
+                                    id="title"
+                                    type="text"
+                                    autoComplete="off"
+                                    value={formData.title}
+                                    onChange={handleInputChange("title")}
+                                    className={styles.input}
+                                    placeholder="Catchy, short, and clear"
+                                    required
+                                    disabled={isUploading}
+                                />
+                            </label>
+
+                            <label htmlFor="caption" className={styles.label}>
+                                caption
+                                <input
+                                    id="caption"
+                                    type="text"
+                                    autoComplete="off"
+
+                                    value={formData.caption}
+                                    onChange={handleInputChange("caption")}
+                                    className={styles.input}
+                                    placeholder="What’s the story here"
+                                    disabled={isUploading}
+                                />
+                            </label>
+
+                            <label htmlFor="externalUrl" className={styles.label}>
+                                source
+                                <input
+                                    id="externalUrl"
+                                    type="url"
+                                    autoComplete="off"
+
+                                    value={formData.externalUrl}
+                                    onChange={handleInputChange("externalUrl")}
+                                    className={styles.input}
+                                    placeholder="YouTube, Loom, or anything else works"
+                                    disabled={isUploading}
+                                />
+                            </label>
+
+                            <label htmlFor="makingOf" className={styles.label}>
+                                breakdown
+                                <input
+                                    id="makingOf"
+                                    type="text"
+                                    autoComplete="off"
+
+                                    value={formData.makingOf}
+                                    onChange={handleInputChange("makingOf")}
+                                    className={styles.input}
+                                    placeholder="Behind the Scenes"
+                                    disabled={isUploading}
+                                />
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    {submitError && (
+                        <div className={styles.errorMessage} role="alert">
+                            {submitError}
+                        </div>
+                    )}
+
+                </form>
+            </div>
+        </div>
+    )
+}
+
+// Utility function
+function isValidUrl(string: string): boolean {
+    try {
+        new URL(string)
+        return true
+    } catch {
+        return false
+    }
+}

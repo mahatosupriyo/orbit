@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { updateAvatar } from '@/components/atoms/avatar/uploadAvatar'
-import { toast } from 'react-hot-toast'
-import { useAvatarStore } from '@/app/store/avatarStore'
-import { getAvatar } from '@/app/actions/getAvatar'
-import styles from './uploadavatar.module.scss'
-import Icon from '@/components/atoms/icons'
-import AvatarImage from '@/components/atoms/avatar/avatar'
+import { useState } from 'react';
+import { updateAvatar } from '@/components/atoms/avatar/uploadAvatar';
+import { toast } from 'react-hot-toast';
+import { useAvatarStore } from '@/app/store/avatarStore';
+import { getAvatar } from '@/app/actions/getAvatar';
+import styles from './uploadavatar.module.scss';
+import Icon from '@/components/atoms/icons';
+import AvatarImage from '@/components/atoms/avatar/avatar';
 
 const MAX_FILE_SIZE_MB = 2
 

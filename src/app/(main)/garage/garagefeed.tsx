@@ -72,6 +72,25 @@ export default function GarageFeed({ userId }: GarageFeedProps) {
     fetchPosts();
   }, [userId]);
 
+  if (loading) {
+    return (
+      <div className={styles.grid}>
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className={styles.placeholder} />
+        ))}
+      </div>
+    );
+  }
+
+  if (posts.length === 0) {
+    return (
+      <div className={styles.empty}>
+        <p>No posts found</p>
+        <span>Create your first garage post to get started!</span>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.wraper}>
       <NavBar />

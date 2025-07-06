@@ -12,45 +12,45 @@
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
     font-family: 'interstate', sans-serif;
+    font-family: 'BeauSans', sans-serif;
 }
 
 
 
 @font-face {
-    font-family: 'Yukita';
-    src: url('/Essentials/yukita/YukitaSans-Regular.otf') format('opentype');
+    font-family: 'BeauSans';
+    src: url('/Essentials/BT-BeauSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BeauSans';
+    src: url('/Essentials/BT-BeauSans-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Yukita';
-    src: url('/Essentials/yukita/YukitaSans-Black.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Yukita';
-    src: url('/Essentials/yukita/YukitaSans-Bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Yukita';
-    src: url('/Essentials/yukita/YukitaSans-Medium.otf') format('opentype');
+    font-family: 'BeauSans';
+    src: url('/Essentials/BT-BeauSans-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Yukita';
-    src: url('/Essentials/yukita/YukitaSans-SemiBold.otf') format('opentype');
-    font-weight: 600;
+    font-family: 'BeauSans';
+    src: url('/Essentials/BT-BeauSans-Bold.ttf') format('truetype');
+    font-weight: 700;
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'BeauSans';
+    src: url('/Essentials/BT-BeauSans-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
 
 html {
     font-size: 62.5%;
@@ -93,9 +93,9 @@ body {
 }
 
 .swiper-scrollbar-drag {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .swiper-scrollbar {
-  background-color: #fff;
+    background-color: #fff;
 }

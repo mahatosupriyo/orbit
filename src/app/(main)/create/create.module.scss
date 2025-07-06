@@ -122,7 +122,6 @@
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
 
     &:disabled {
-        background-color: #f9fafb;
         cursor: not-allowed;
     }
 }
@@ -199,7 +198,6 @@
 .uploadingOverlay {
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;

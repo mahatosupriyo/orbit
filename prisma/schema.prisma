@@ -70,6 +70,7 @@ model User {
     lastNameUpdate     DateTime?
     lastImageUpdate    DateTime?
 
+    verified Boolean   @default(false)
     role     UserRole  @default(USER)
     accounts Account[]
     sessions Session[]

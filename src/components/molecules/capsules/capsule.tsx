@@ -14,17 +14,16 @@ interface GaragePost {
     title: string;
     caption: string | null;
     externalUrl: string | null;
-    createdAt: Date;
+    createdAt: string;
     images: Array<{ id: number; url: string; order: number | null }>;
     makingOf: { id: number; playbackID: string } | null;
 }
 
 interface GaragePostCardProps {
     post: GaragePost;
-    userId: string;
 }
 
-export default function GaragePostCard({ post, userId }: GaragePostCardProps) {
+export default function GaragePostCard({ post }: GaragePostCardProps) {
     const firstImage = post.images[0];
     const hasMultipleImages = post.images.length > 1;
 
@@ -56,6 +55,7 @@ export default function GaragePostCard({ post, userId }: GaragePostCardProps) {
                                 <Icon name="save" size={48} />
                             </div>
                         )}
+
                         {hasMultipleImages && (
                             <div className={styles.imageCount}>+{post.images.length - 1}</div>
                         )}

@@ -5,10 +5,15 @@ import styles from './account.module.scss'
 import NavBar from '@/components/molecules/navbar/navbar'
 import AccountForm from './accountform'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
 import AccountNav from '../accountnav/accountnav'
-import Button from '@/components/atoms/button/button'
 import BackBtn from '@/components/atoms/(buttons)/backbtn/backbtn'
+import { Metadata } from 'next'
+
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://ontheorbit.com'),
+  title: "Account Core",
+};
 
 /**
  * AccountPage - Server component for the account settings page.

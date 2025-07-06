@@ -7,6 +7,12 @@ import PaymentTable from "./historytable";
 import { redirect } from "next/navigation";
 import AccountNav from "@/app/(account)/accountnav/accountnav";
 import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://ontheorbit.com'),
+  title: "Payments",
+};
 
 const PaymentHistoryPage = async () => {
   const session = await auth();

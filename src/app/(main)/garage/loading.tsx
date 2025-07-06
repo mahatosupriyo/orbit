@@ -3,8 +3,7 @@ import React from 'react'
 import styles from './garage.module.scss'
 import ShimmerLoader from '@/components/atoms/loading/loadingbox';
 
-
-function Loading() {
+export default function Loading() {
     return (
         <div className={styles.wraper}>
             <NavBar />
@@ -43,4 +42,3 @@ function Loading() {
     )
 }
 
-export default Loading

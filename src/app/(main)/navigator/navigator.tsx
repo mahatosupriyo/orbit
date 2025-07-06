@@ -5,6 +5,7 @@ import Link from "next/link";
 import Icon from "@/components/atoms/icons";
 import { usePathname } from "next/navigation";
 import { motion } from 'framer-motion'
+import { useSession } from "next-auth/react";
 
 /**
  * Navigator component renders navigation buttons for the main pages.
@@ -12,6 +13,7 @@ import { motion } from 'framer-motion'
  */
 const Navigator: React.FC = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   /**
    * Helper to determine if a link is active.
@@ -42,23 +44,27 @@ const Navigator: React.FC = () => {
       </motion.div>
 
       {/* Garage Page Link */}
-      <motion.div
-        whileTap={{ opacity: 0.6, scale: 0.96 }}
-      >
-        <Link
-          href="/create"
-          className={`${styles.pagebtn} ${isActive("/create") ? styles.active : ""}`}
-          aria-current={isActive("/create") ? "page" : undefined}
-          tabIndex={0}
+      {session?.user.role === "ADMIN" && (
+
+        <motion.div
+          whileTap={{ opacity: 0.6, scale: 0.96 }}
         >
-          <Icon
-            name="upload"
-            size={28}
-            fill={isActive("/create") ? "#fafafa" : "#666"}
-            aria-label="Create"
-          />
-        </Link>
-      </motion.div>
+          <Link
+            href="/create"
+            className={`${styles.pagebtn} ${isActive("/create") ? styles.active : ""}`}
+            aria-current={isActive("/create") ? "page" : undefined}
+            tabIndex={0}
+          >
+            <Icon
+              name="upload"
+              size={28}
+              fill={isActive("/create") ? "#fafafa" : "#666"}
+              aria-label="Create"
+            />
+          </Link>
+        </motion.div>
+
+      )}
 
       {/* Odyssey Page Link */}
       <motion.div

@@ -1,7 +1,6 @@
 "use client";
 
 import styles from './navbar.module.scss';
-import Icon from '@/components/atoms/icons';
 import AvatarBtn from '@/components/atoms/avatarbtn/avatarbtn';
 import Navigator from '@/app/(main)/navigator/navigator';
 import { usePathname } from 'next/navigation';
@@ -38,6 +37,7 @@ const parentStaggerVariant: Variants = {
 };
 
 export default function NavBar() {
+  
   const pathname = usePathname();
   const useStagger = isStaggeredRoute(pathname);
 
@@ -62,6 +62,7 @@ export default function NavBar() {
       <motion.div variants={slideDownVariant}>
         <Navigator />
       </motion.div>
+
       <motion.div variants={slideDownVariant}>
         <AvatarBtn />
       </motion.div>

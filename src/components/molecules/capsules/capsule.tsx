@@ -8,7 +8,7 @@ import "swiper/css";
 import { Scrollbar } from "swiper/modules";
 import "swiper/css/scrollbar";
 import { Drawer } from "vaul";
-import NextVideo from "next-video";
+import Video from "next-video";
 
 interface GaragePost {
     id: number;
@@ -131,8 +131,8 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     <div className={styles.drawerHandle} />
                                                     <Drawer.Title className={styles.nestedDrawerTitle}>Breakdown</Drawer.Title>
                                                     <div className={styles.videoWrapper}>
-                                                        <NextVideo
-                                                            poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
+                                                        <Video
+                                                            // poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
                                                             playbackId={post.makingOf.playbackID}
                                                         />
                                                     </div>

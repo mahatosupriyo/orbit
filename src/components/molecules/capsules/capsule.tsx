@@ -132,7 +132,8 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     <Drawer.Title className={styles.nestedDrawerTitle}>Breakdown</Drawer.Title>
                                                     <div className={styles.videoWrapper}>
                                                         <Video
-                                                            // poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
+                                                            autoPlay
+                                                            poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
                                                             playbackId={post.makingOf.playbackID}
                                                         />
                                                     </div>

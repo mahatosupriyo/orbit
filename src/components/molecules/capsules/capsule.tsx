@@ -8,6 +8,7 @@ import "swiper/css";
 import { Scrollbar } from "swiper/modules";
 import "swiper/css/scrollbar";
 import { Drawer } from "vaul";
+import NextVideo from "next-video";
 
 interface GaragePost {
     id: number;
@@ -112,6 +113,33 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     >
                                         <Icon name="external" />
                                     </a>
+                                )}
+
+                                {/* Nested Drawer */}
+                                {post.makingOf && (
+                                    <Drawer.NestedRoot>
+                                        <Drawer.Trigger asChild>
+                                            <button className={styles.makingvideobtn}>
+                                                <Icon name="play" />
+
+                                            </button>
+                                        </Drawer.Trigger>
+                                        <Drawer.Portal>
+                                            <Drawer.Overlay className={styles.overlaynested} />
+                                            <Drawer.Content className={styles.overlaycontentnested}>
+                                                <div className={styles.nestedDrawerInner}>
+                                                    <div className={styles.drawerHandle} />
+                                                    <Drawer.Title className={styles.nestedDrawerTitle}>Breakdown</Drawer.Title>
+                                                    <div className={styles.videoWrapper}>
+                                                        <NextVideo
+                                                            poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
+                                                            playbackId={post.makingOf.playbackID}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </Drawer.Content>
+                                        </Drawer.Portal>
+                                    </Drawer.NestedRoot>
                                 )}
                             </div>
                         </div>

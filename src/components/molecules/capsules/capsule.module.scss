@@ -106,9 +106,9 @@
 .drawerOverlay {
     position: fixed;
     inset: 0;
-    // background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.8);
     opacity: 0;
-    z-index: 90;
+    z-index: 999;
 }
 
 .drawerContent {
@@ -117,7 +117,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 99;
+    z-index: 9999;
     height: 100%;
     width: 100%;
     max-height: calc(100dvh - 8.4rem);
@@ -128,6 +128,7 @@
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    border-radius: 1.6rem;
 }
 
 .drawerInner {
@@ -159,6 +160,7 @@
             max-width: 50rem;
             padding: 2.6rem 2rem;
             text-decoration: none;
+            cursor: pointer;
             border-radius: 1.6rem;
             transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
@@ -287,6 +289,7 @@
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    z-index: 99999;
 
     @media only screen and (max-width: 800px) {
         padding: 2rem 1.6rem;
@@ -316,6 +319,8 @@
     border-radius: 1.2rem;
     overflow: hidden;
     background-color: #000;
+    pointer-events: none;
+    // user-select: all;
 }
 
 .makingvideobtn {
@@ -331,6 +336,7 @@
     text-decoration: none;
     border-radius: 1.6rem;
     transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    cursor: pointer;
 
     &:hover {
         background-color: hsl(0, 0%, 30%);

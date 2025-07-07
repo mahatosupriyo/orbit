@@ -111,7 +111,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                         rel="noopener noreferrer"
                                         className={styles.postLink}
                                     >
-                                        <Icon name="external" />
+                                        <Icon name="external" fill="#fff" />
                                     </a>
                                 )}
 
@@ -120,7 +120,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     <Drawer.NestedRoot>
                                         <Drawer.Trigger asChild>
                                             <button className={styles.makingvideobtn}>
-                                                <Icon name="play" />
+                                                <Icon name="play" fill="#fff" />
 
                                             </button>
                                         </Drawer.Trigger>
@@ -133,7 +133,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     <div className={styles.videoWrapper}>
                                                         <Video
                                                             autoPlay
-                                                            poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
+                                                            // poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
                                                             playbackId={post.makingOf.playbackID}
                                                         />
                                                     </div>

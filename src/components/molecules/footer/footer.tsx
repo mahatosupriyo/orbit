@@ -11,30 +11,19 @@ export default function Footer() {
 
                 <div className={styles.footercontent}>
 
+                    <h1 className={styles.tag}>
+                        Future of creations needs more than prompts.
+                    </h1>
+
+                    <div className={styles.mobilehide}></div>
+
                     <div className={styles.linklist}>
 
-                        <div className={styles.linkcolumn}>
-                            <p className={styles.linklabel}>Features</p>
-                            <Link draggable="false" href="/" className={styles.linkitem}>Garage</Link>
-                            <Link draggable="false" href="/" className={styles.linkitem}>Space</Link>
-                        </div>
-
-                        <div className={styles.linkcolumn}>
-                            <p className={styles.linklabel}>Resources</p>
-
-                            <Link draggable="false" href="/" className={styles.linkitem}>Blogs</Link>
-                            <Link draggable="false" href="/" className={styles.linkitem}>Brand kit</Link>
-                        </div>
-
-                        <div className={styles.linkcolumn}>
-
-                            <p className={styles.linklabel}>Company</p>
-
-                            <Link draggable="false" href="/" className={styles.linkitem}>About us</Link>
-                            <Link draggable="false" href="/" className={styles.linkitem}>Careers</Link>
-                            <Link draggable="false" href="/" className={styles.linkitem}>Legals</Link>
-                        </div>
-
+                        <Link href="/" className={styles.linkitem}>console</Link>
+                        <Link href="/" className={styles.linkitem}>company</Link>
+                        <Link href="/" className={styles.linkitem}>brand</Link>
+                        <Link href="/" className={styles.linkitem}>legals</Link>
+                        <Link href="/" className={styles.linkitem}>faq</Link>
 
                     </div>
 
@@ -57,12 +46,12 @@ export default function Footer() {
 
                 </div>
                 <div className={styles.footercontent}>
-                    <h4 className={styles.passiontxt} style={{ textWrap: 'nowrap', width: '100%', maxWidth: '50%' }}>
+                    <h4 className={styles.passiontxt}>
                         Made with
                         Love
                         in India  © 2025 On The Orbit
                     </h4>
-                    <p>
+                    <p className={styles.copyrighttxt}>
                         All rights reserved. No part of this website or its content may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of On The Orbit, except in the case of brief quotations embodied in critical reviews and certain other noncommercial uses permitted by copyright law. For permission requests, contact On The Orbit.
                     </p>
                 </div>

@@ -33,7 +33,7 @@ export default function AuthPage() {
 
                 {/* Header with logo and title */}
                 <div className={styles.authheader}>
-                    <Icon name='oto' size={70} />
+                    <Icon name='oto' size={24} />
                     <h1 className={styles.headertxt}>
                         <span className={styles.low}>get started with</span>
                         <br />

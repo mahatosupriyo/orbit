@@ -33,6 +33,9 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
     const month = dateObj.toLocaleString("default", { month: "short" });
     const year = dateObj.getFullYear().toString().slice(-2);
 
+    // const videoUrl = getSignedMuxUrl(post.makingOf?.playbackID || "");
+    // const posterUrl = getSignedPosterUrl(post.makingOf?.playbackID || "");
+
     return (
         <div className={styles.capsulewraper}>
             <Drawer.Root>
@@ -131,11 +134,16 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     <div className={styles.drawerHandle} />
                                                     <Drawer.Title className={styles.nestedDrawerTitle}>Breakdown</Drawer.Title>
                                                     <div className={styles.videoWrapper}>
+
+
                                                         <Video
                                                             autoPlay
+                                                            // src={videoUrl}
+                                                            // poster={posterUrl}
                                                             // poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
                                                             playbackId={post.makingOf.playbackID}
                                                         />
+
                                                     </div>
                                                 </div>
                                             </Drawer.Content>

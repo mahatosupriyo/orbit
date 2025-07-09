@@ -116,7 +116,7 @@
                     color: #fff;
                     font-size: 1.6rem;
                     position: absolute;
-                    font-weight: 300;
+                    font-weight: 500;
 
                     transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
                     transform: translateY(6rem);
@@ -127,6 +127,7 @@
         .authfooter {
             font-size: 1.46rem;
             line-height: 140%;
+            font-weight: 500;
             color: hsl(0, 0%, 60%);
 
             .linkinline {
@@ -144,7 +145,6 @@
     gap: 0.4rem;
     position: absolute;
     font-size: 1.6rem;
-    font-weight: 300;
     color: #fff;
 
     .authtxt {

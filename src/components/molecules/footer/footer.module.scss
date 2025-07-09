@@ -22,17 +22,11 @@
 
             &:nth-child(1) {
                 display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr;
                 gap: 4rem;
 
                 @media (max-width: 800px) {
                     grid-template-columns: 1fr;
-                }
-
-                .mobilehide {
-                    @media (max-width: 800px) {
-                        display: none;
-                    }
                 }
             }
 

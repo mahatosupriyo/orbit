@@ -15,8 +15,6 @@ export default function Footer() {
                         Future of creations needs more than prompts.
                     </h1>
 
-                    <div className={styles.mobilehide}></div>
-
                     <div className={styles.linklist}>
 
                         <Link href="/" className={styles.linkitem}>console</Link>
@@ -30,15 +28,15 @@ export default function Footer() {
                     <div className={styles.socialscontainer}>
 
                         <div className={styles.socials}>
-                            <Link target="_blank" draggable="false" href="https://www.linkedin.com/company/ontheorbit" className={styles.socialmedialink}>
+                            <Link target="_blank" draggable="false" href="https://www.linkedin.com/company/weareontheorbit" className={styles.socialmedialink}>
                                 <Icon name='linkedin' fill={'#fff'} size={34} />
                             </Link>
 
-                            <Link target="_blank" draggable="false" href="https://www.instagram.com/ontheorbitdotcom/" className={styles.socialmedialink}>
+                            <Link target="_blank" draggable="false" href="https://www.instagram.com/weareontheorbit/" className={styles.socialmedialink}>
                                 <Icon name='instagram' fill={'#fff'} size={34} />
                             </Link>
 
-                            <Link target="_blank" draggable="false" href="https://www.youtube.com/@ontheorbitdotcom" className={styles.socialmedialink}>
+                            <Link target="_blank" draggable="false" href="https://www.youtube.com/@weareontheorbit" className={styles.socialmedialink}>
                                 <Icon name='x' fill={'#fff'} size={34} />
                             </Link>
                         </div>

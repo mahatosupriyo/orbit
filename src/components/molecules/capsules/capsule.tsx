@@ -97,14 +97,15 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     {post.title && <h1 className={styles.postTitle}>{post.title}</h1>}
                                     {post.caption && <p className={styles.postCaption}>{post.caption}</p>}
 
-                                    <div>
+                                    {/* <div>
                                         <div className={styles.dateBadge}>
+                                            Posted on
                                             <span className={styles.monthYear}>
+                                            <span className={styles.day}>{day}</span>
                                                 {month} <sup className={styles.year}>{year}</sup>
                                             </span>
-                                            <span className={styles.day}>{day}</span>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {post.externalUrl && (

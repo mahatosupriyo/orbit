@@ -1,0 +1,22 @@
+.container {
+  padding: 2rem 4rem;
+  max-width: 50rem;
+}
+
+.paragraph {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 3rem;
+  line-height: 120%;
+  font-weight: 400;
+  color: #fff;
+  font-family: Instrument Serif, serif;
+  gap: 0.4rem;
+}
+
+.word {
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+  font-weight: 400;
+  font-family: Instrument Serif, serif;
+}

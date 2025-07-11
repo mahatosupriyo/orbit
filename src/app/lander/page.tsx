@@ -6,6 +6,7 @@ import Footer from '@/components/molecules/footer/footer'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRef } from 'react'
 import Icon from './landericon'
+import AnimatedTextReveal from './revealtxt/revealtext'
 
 function Lander() {
   const ref = useRef(null)
@@ -21,6 +22,16 @@ function Lander() {
   const rotateY = useTransform(smoothProgress, [0, 1], [25, 0])
   const rotateX = useTransform(smoothProgress, [0, 1], [-12, 0])
   const scale = useTransform(smoothProgress, [0, 1], [1.1, 1])
+
+  const launchmessage = `you’re here. 
+
+maybe unsure. maybe ready.  
+but something in you says — build.  
+
+not just design.  
+make something that feels like you.`;
+
+
 
 
   const features = [
@@ -97,7 +108,10 @@ function Lander() {
             />
           </div>
         </div>
-        <div className={styles.benefits}>
+
+        <AnimatedTextReveal text={launchmessage} />
+
+        {/* <div className={styles.benefits}>
           <div className={styles.benefitgrid}>
             {features.map((feature, index) => (
               <div key={index} className={styles.feature_card}>
@@ -108,7 +122,7 @@ function Lander() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </div>

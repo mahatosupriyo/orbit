@@ -15,7 +15,7 @@ export default function Footer() {
                     <motion.h2
                         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                        className={styles.tag}>The future belongs to the curious
+                        className={styles.tag}>Future belongs to the curious
                     </motion.h2>
 
                     <div className={styles.linklist}>

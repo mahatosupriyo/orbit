@@ -53,10 +53,18 @@
             }
 
             .tag {
+                display: inline-flex;
+                align-items: flex-start;
                 font-size: 1.8rem;
                 font-weight: 500;
                 color: hsl(0, 0%, 70%);
                 margin-bottom: 1rem;
+
+                .curious{
+                    display: inline-flex;
+                    gap: 0.3rem;
+                    align-items: center;
+                }
             }
 
             .linklist {

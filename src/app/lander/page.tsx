@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRef } from 'react'
 import Icon from './landericon'
 import AnimatedTextReveal from './revealtxt/revealtext'
+import Testimonial from './testimonial/testimonial'
 
 function Lander() {
   const ref = useRef(null)
@@ -108,8 +109,10 @@ make something that feels like you.`;
             />
           </div>
         </div>
-
-        <AnimatedTextReveal text={launchmessage} />
+        <div className={styles.revealtextcontainer}>
+          <AnimatedTextReveal text={launchmessage} />
+        </div>
+        <Testimonial />
 
         {/* <div className={styles.benefits}>
           <div className={styles.benefitgrid}>
@@ -123,8 +126,8 @@ make something that feels like you.`;
             ))}
           </div>
         </div> */}
+        <Footer />
       </div>
-      <Footer />
     </div>
   )
 }

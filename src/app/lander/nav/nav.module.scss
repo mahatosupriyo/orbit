@@ -23,6 +23,9 @@ $fill: $dark;
         max-width: 200rem;
         padding: 3rem 4rem;
 
+        @media (max-width: 800px) {
+            padding: 2rem 2rem;
+        }
 
         display: flex;
         justify-content: space-between;

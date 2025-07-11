@@ -7,7 +7,7 @@ import styles from "./testimonial.module.scss";
 
 const testimonials = [
     {
-        name: "Sharique Akhtar",
+        name: "Darshan Raval",
         role: "PRO member",
         quote: "Every part of Orbit makes you feel like a creator, not a student.",
         avatar: "https://lastfm.freetls.fastly.net/i/u/ar0/f1df7c3eb64df572d647ba70e5dfa795.jpg",

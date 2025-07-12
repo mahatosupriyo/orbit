@@ -23,8 +23,8 @@ export default function Footer() {
                         <Link href="/" className={styles.linkitem}>console</Link>
                         <Link href="/" className={styles.linkitem}>company</Link>
                         <Link href="/" className={styles.linkitem}>brand</Link>
-                        <Link href="/" className={styles.linkitem}>legals</Link>
-                        <Link href="/" className={styles.linkitem}>faq</Link>
+                        <Link href="/company/legals" className={styles.linkitem}>legals</Link>
+                        {/* <Link href="/" className={styles.linkitem}>faq</Link> */}
 
                     </div>
 
@@ -50,7 +50,7 @@ export default function Footer() {
                     <h4 className={styles.passiontxt}>
                         Made with
                         Love
-                        in India  © 2025 On The Orbit
+                        in India  © 2025 On The Orbit • formerly Edu Burner
                     </h4>
                     <p className={styles.copyrighttxt}>
                         All rights reserved. No part of this website or its content may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of On The Orbit, except in the case of brief quotations embodied in critical reviews and certain other noncommercial uses permitted by copyright law. For permission requests, contact On The Orbit.

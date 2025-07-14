@@ -60,8 +60,17 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                             </div>
                         )}
 
+                        {post.makingOf && (
+                            <div className={styles.makingIcon}>
+                                <Icon name="breakdown" fill="#fff" size={30} />
+                            </div>
+                        )}
+
                         {hasMultipleImages && (
-                            <div className={styles.imageCount}>+{post.images.length - 1}</div>
+                            <div className={styles.imageCount}>
+                                <Icon name="multiplepost" fill="#fff" size={20} />
+                                {/* +{post.images.length - 1} */}
+                            </div>
                         )}
                     </motion.button>
                 </Drawer.Trigger>

@@ -19,6 +19,14 @@
 
     &:hover {
         opacity: 0.8;
+
+        .makingIcon {
+            transform: scale(90%);
+        }
+
+        .imageCount{
+            transform: scale(90%);
+        }
     }
 }
 
@@ -79,17 +87,21 @@
     justify-content: center;
 }
 
+.makingIcon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+
+    transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
+}
+
 .imageCount {
     position: absolute;
     bottom: 1rem;
     left: 1rem;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 0.8rem 1rem;
-    border-radius: 10rem;
-    font-size: 1.46rem;
-    font-weight: 500;
-    font-family: Instrument Serif;
+    padding: 1rem;
+    transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
 }
 
 .drawerOverlay {
@@ -202,7 +214,7 @@
                 align-items: flex-start;
                 opacity: 0.4;
                 font-weight: 300;
-                
+
                 .monthYear {
                     font-size: 1.56rem;
                     font-weight: 500;

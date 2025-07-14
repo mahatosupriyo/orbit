@@ -46,7 +46,7 @@ export default function AuthPage() {
                     <motion.button
                         whileTap={{ opacity: 0.6 }}
                         className={styles.authbtn}
-                        onClick={() => handleSignIn('github')}
+                        onClick={() => handleSignIn('google')}
                     >
                         <img
                             className={styles.providericon}

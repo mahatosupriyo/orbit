@@ -105,16 +105,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                 <div className={styles.postdetailsinner}>
                                     {post.title && <h1 className={styles.postTitle}>{post.title}</h1>}
                                     {post.caption && <p className={styles.postCaption}>{post.caption}</p>}
-
-                                    {/* <div>
-                                        <div className={styles.dateBadge}>
-                                            Posted on
-                                            <span className={styles.monthYear}>
-                                            <span className={styles.day}>{day}</span>
-                                                {month} <sup className={styles.year}>{year}</sup>
-                                            </span>
-                                        </div>
-                                    </div> */}
                                 </div>
 
                                 {post.externalUrl && (

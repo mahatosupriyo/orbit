@@ -31,6 +31,9 @@ export const env = createEnv({
     ORBIT_CLOUDFRONT_URL: z.string().url(),
     ORBIT_CLOUDFRONT_KEY_PAIR_ID: z.string(),
     ORBIT_CLOUDFRONT_PRIVATE_KEY: z.string(),
+
+    REDIS_URL: z.string().url(),
+    REDIS_TOKEN: z.string(),
   },
 
   /**
@@ -63,6 +66,9 @@ export const env = createEnv({
     ORBIT_CLOUDFRONT_URL: process.env.ORBIT_CLOUDFRONT_URL,
     ORBIT_CLOUDFRONT_KEY_PAIR_ID: process.env.ORBIT_CLOUDFRONT_KEY_PAIR_ID,
     ORBIT_CLOUDFRONT_PRIVATE_KEY: process.env.ORBIT_CLOUDFRONT_PRIVATE_KEY,
+
+    REDIS_URL: process.env.REDIS_URL,
+    REDIS_TOKEN: process.env.REDIS_TOKEN,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

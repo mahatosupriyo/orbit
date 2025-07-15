@@ -18,6 +18,10 @@ interface GaragePost {
     createdAt: string;
     images: Array<{ id: number; url: string; order: number | null }>;
     makingOf: { id: number; playbackID: string } | null;
+    createdBy: {
+        username: string | null;
+        image: string | null;
+    };
 }
 
 interface GaragePostCardProps {
@@ -69,7 +73,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                         {hasMultipleImages && (
                             <div className={styles.imageCount}>
                                 <Icon name="multiplepost" fill="#fff" size={20} />
-                                {/* +{post.images.length - 1} */}
                             </div>
                         )}
                     </motion.button>
@@ -103,8 +106,23 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                             <div className={styles.postDetails}>
                                 <div className={styles.postdetailsinner}>
+                                    {post.createdBy.username && (
+                                        <div className={styles.postAuthor}>
+
+                                            {post.createdBy.image && (
+                                                <img
+                                                    src={post.createdBy.image}
+                                                    className={styles.postAuthorImage}
+                                                />
+                                            )}
+
+                                            {post.createdBy.username}
+                                            <Icon name="verified" fill="#00aaff" size={10} />
+                                        </div>
+                                    )}
+
                                     {post.title && <h1 className={styles.postTitle}>{post.title}</h1>}
-                                    {post.caption && <p className={styles.postCaption}>{post.caption}</p>}
+                                    {/* {post.caption && <p className={styles.postCaption}>{post.caption}</p>} */}
                                 </div>
 
                                 {post.externalUrl && (
@@ -118,13 +136,14 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     </a>
                                 )}
 
+
+
                                 {/* Nested Drawer */}
                                 {post.makingOf && (
                                     <Drawer.NestedRoot>
                                         <Drawer.Trigger asChild>
                                             <button className={styles.makingvideobtn}>
                                                 <Icon name="play" fill="#fff" />
-
                                             </button>
                                         </Drawer.Trigger>
                                         <Drawer.Portal>
@@ -138,8 +157,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                                                         <Video
                                                             autoPlay
-                                                            // src={videoUrl}
-                                                            // poster={posterUrl}
                                                             // poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
                                                             playbackId={post.makingOf.playbackID}
                                                         />

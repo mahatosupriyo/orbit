@@ -24,7 +24,7 @@
             transform: scale(90%);
         }
 
-        .imageCount{
+        .imageCount {
             transform: scale(90%);
         }
     }
@@ -175,32 +175,46 @@
         .postdetailsinner {
             border-radius: 1.6rem;
             display: flex;
-            padding: 2.6rem 2rem;
+            padding: 2rem 2rem;
             width: 100%;
             max-width: 50rem;
             background-color: hsl(0, 0%, 10%);
             margin-top: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.6rem;
+
+            .postAuthor {
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                font-size: 2.2rem;
+                font-weight: 400;
+                font-family: Instrument Serif;
+                color: hsl(0, 0%, 80%);
+                text-transform: lowercase;
+                gap: 0.4rem;
+
+                .postAuthorImage{
+                    height: 3.6rem;
+                    user-select: none;
+                    pointer-events: none;
+                    width: 3.6rem;
+                    margin-right: 0.5rem;
+                    border-radius: 40rem;
+                    border: 0.14rem solid hsl(0, 0%, 20%);
+                }
+            }
 
             @media only screen and (max-width: 800px) {
                 max-width: 100%;
             }
 
             .postTitle {
-                font-size: 2.4rem;
-                color: hsl(0, 0, 80%);
-                font-weight: 400;
-                font-family: Instrument Serif;
-                user-select: text; // Explicitly enable text selection
-            }
-
-            .postCaption {
                 font-size: 1.46rem;
-                color: hsl(0, 0%, 60%);
+                color: hsl(0, 0, 60%);
                 font-weight: 400;
-                line-height: 150%;
+                // font-family: Instrument Serif;
                 user-select: text; // Explicitly enable text selection
             }
 

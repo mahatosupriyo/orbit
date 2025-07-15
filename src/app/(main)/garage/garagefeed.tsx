@@ -27,6 +27,10 @@ interface GaragePost {
   createdAt: string;
   images: { id: number; url: string; order: number | null }[];
   makingOf: { id: number; playbackID: string } | null;
+  createdBy: {
+    username: string | null;
+    image: string | null;
+  };
 }
 
 export default function GarageFeed({ posts }: { posts: GaragePost[] }) {

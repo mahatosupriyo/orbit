@@ -20,7 +20,7 @@ const s3Client = new S3Client({
 
 const BUCKET_NAME = process.env.ORBIT_S3_BUCKET_NAME!
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"]
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024
 const MAX_IMAGES = 5
 const IMAGE_WIDTH = 1080
 const IMAGE_HEIGHT = 1350

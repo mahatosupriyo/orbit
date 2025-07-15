@@ -1,9 +1,10 @@
-import { withNextVideo } from "next-video/process";
-import type { NextConfig } from "next";
 import "./src/env.js";
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
-  // Add your Next.js config options here
-};
-
-export default withNextVideo(nextConfig);
+module.exports = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
+}

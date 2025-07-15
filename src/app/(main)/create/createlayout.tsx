@@ -25,7 +25,6 @@ export default function GaragePostUploader() {
     const [formData, setFormData] = useState<GaragePostFormData>(INITIAL_FORM_DATA)
     const [submitError, setSubmitError] = useState<string | null>(null)
 
-
     const {
         images,
         isUploading,
@@ -66,7 +65,7 @@ export default function GaragePostUploader() {
                 addImages(files)
             } catch (error) {
                 console.error("Error adding images:", error)
-                setSubmitError("Failed to add images. Please try again.")
+                // setSubmitError("Failed to add images. Please try again.")
             }
         },
         [addImages],
@@ -92,9 +91,9 @@ export default function GaragePostUploader() {
         if (!formData.title.trim()) {
             return "Title is required"
         }
-        if (images.length === 0) {
-            return "At least one image is required"
-        }
+        // if (images.length === 0) {
+        //     return "At least one image is required"
+        // }
         if (formData.externalUrl && !isValidUrl(formData.externalUrl)) {
             return "Please enter a valid URL"
         }

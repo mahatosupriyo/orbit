@@ -1,0 +1,121 @@
+@use '../../styles/essentials';
+@import '../../styles/essentials';
+
+.wraper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    .container {
+        width: 100%;
+        max-width: 200rem;
+        display: flex;
+        flex-direction: column;
+        // align-items: flex-end;
+        padding: 10rem 2rem;
+        // max-width: 50rem;
+        gap: 4rem;
+
+        .layoutgrid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            grid-column: auto;
+            gap: 10rem;
+
+            @media (max-width: 1000px) {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+
+    }
+}
+
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 4rem;
+
+    .headerdata {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .title {
+            font-size: 4rem;
+            font-family: Instrument Serif;
+            font-weight: 400;
+            line-height: 100%;
+            user-select: none;
+        }
+    }
+
+}
+
+.label {
+    font-size: 1.36rem;
+    user-select: none;
+    font-weight: 400;
+    color: hsl(0, 0, 40%);
+    border: 0.2rem solid hsl(0, 0, 16%);
+    border-radius: 1.6rem;
+    padding: 2rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    cursor: text;
+
+    gap: 0.6rem;
+
+    &:hover {
+        border: 0.2rem solid hsl(0, 0, 26%);
+    }
+
+    &:focus-within {
+        .input {
+            color: #fff;
+        }
+
+        border: 0.2rem solid #1d75de;
+    }
+}
+
+.deleteButton {
+    display: flex;
+    max-width: 30rem;
+    padding: 3rem 2rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 1rem;
+    font-size: 1.56rem;
+    color: #fff;
+    font-weight: 500;
+    background-color: hsl(0, 70%, 25%);
+
+    &:focus {
+        outline: 0.16rem solid hsl(0, 70%, 50%);
+        outline-offset: 0.3rem;
+    }
+
+    &:hover {
+        background-color: hsl(0, 70%, 20%);
+    }
+}
+
+.warning {
+    color: #666;
+    font-size: 1.36rem;
+    font-weight: 400;
+}

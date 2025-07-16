@@ -11,6 +11,7 @@ import type { IconProps } from '@/components/atoms/icons'; // Import IconProps t
 const links: { href: string; label: string; icon: IconProps['name'] }[] = [
   { href: '/account', label: 'Account core', icon: 'settings' },
   { href: '/payment/history', label: 'Payments', icon: 'bill' },
+  { href: '/goodbye', label: 'Data privacy', icon: 'lock' },
   // Uncomment and add more links as needed
   // { href: '/company/privacy', label: 'Privacy radar', icon: 'lock' },
   // { href: '/company/support', label: 'Support', icon: 'help' },

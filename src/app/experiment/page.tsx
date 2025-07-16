@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { searchGaragePosts } from "./experiment"; // your search server action
-import { generateAImessage } from "./aimessage"; // import your AI message action
 import styles from "./experiment.module.scss";
 
 export default function GarageSearchPage() {
@@ -11,20 +9,14 @@ export default function GarageSearchPage() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [aiMessage, setAiMessage] = useState<string>("");
 
   const handleSearch = async () => {
     if (!query.trim()) return;
     setLoading(true);
     setError(null);
     setResults([]);
-    setAiMessage("");
 
     try {
-      // 1. Generate AI message
-      const msg = await generateAImessage(query.trim());
-      setAiMessage(msg);
-
       // 2. Perform search
       const res = await searchGaragePosts(query.trim());
       setResults(res);
@@ -57,13 +49,10 @@ export default function GarageSearchPage() {
 
       {error && <p className={styles.error}>{error}</p>}
 
-      {/* Show AI generated message before results */}
-      {aiMessage && <p className={styles.aiMessage}>{aiMessage}</p>}
-
       {results.length > 0 && (
         <div className={styles.results}>
           {results.map((post) => (
-            <Link key={post.id} href={`/experiment/${post.id}`}>
+            <div key={post.id}>
               <div className={styles.card}>
                 {post.images?.[0]?.url && (
                   <img
@@ -79,7 +68,7 @@ export default function GarageSearchPage() {
                   {post.caption && <p className={styles.caption}>{post.caption}</p>}
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

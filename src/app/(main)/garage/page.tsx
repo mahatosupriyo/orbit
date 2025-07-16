@@ -18,7 +18,6 @@ export default async function GaragePage() {
 
   const posts = await getGaragePosts();
 
-  // Convert Date to string and keep username
   const safePosts = posts.map((post) => ({
     ...post,
     createdAt: post.createdAt.toISOString(),

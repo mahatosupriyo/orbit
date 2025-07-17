@@ -36,6 +36,8 @@ $fill: $dark;
             font-weight: 700;
             color: #fff;
             letter-spacing: -0.04rem;
+            user-select: none;
+            pointer-events: none;
         }
 
         .cta {

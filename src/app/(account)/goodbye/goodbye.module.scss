@@ -100,9 +100,9 @@
     cursor: pointer;
     border-radius: 1rem;
     font-size: 1.56rem;
-    color: #fff;
+    color: hsl(0, 0%, 75%);
     font-weight: 500;
-    background-color: hsl(0, 70%, 25%);
+    background-color: hsl(0, 0%, 29%);
 
     &:focus {
         outline: 0.16rem solid hsl(0, 70%, 50%);
@@ -110,7 +110,8 @@
     }
 
     &:hover {
-        background-color: hsl(0, 70%, 20%);
+        background-color: hsl(0, 0%, 36%);
+        color: hsl(0, 0%, 100%);
     }
 }
 

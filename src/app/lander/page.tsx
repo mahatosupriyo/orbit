@@ -8,6 +8,7 @@ import { useRef } from 'react'
 import Icon from './landericon'
 import AnimatedTextReveal from './revealtxt/revealtext'
 import Testimonial from './testimonial/testimonial'
+import Pricingtable from './pricingtable/pricingtable'
 
 function Lander() {
   const ref = useRef(null)
@@ -113,6 +114,8 @@ make something that feels like you.`;
           <AnimatedTextReveal text={launchmessage} />
         </div>
         <Testimonial />
+
+        <Pricingtable/>
 
         {/* <div className={styles.benefits}>
           <div className={styles.benefitgrid}>

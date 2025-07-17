@@ -21,7 +21,7 @@ function GoodBye() {
                         </div>
                         <DeleteAccountButton />
                         <p className={styles.warning}>
-                            This action is permanent and cannot be undone.
+                            * This action is permanent and cannot be undone.
                         </p>
                     </div>
                 </div>

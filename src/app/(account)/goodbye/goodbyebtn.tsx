@@ -33,9 +33,9 @@ export default function DeleteAccountButton() {
         <button
             onClick={handleDelete}
             disabled={isPending}
-            className={styles.deleteButton || "bg-red-600 text-white px-4 py-2 rounded"}
+            className={styles.deleteButton}
         >
-            {isPending ? "Deleting..." : "Delete My Account"}
+            {isPending ? "Deleting..." : "Delete my account"}
         </button>
     );
 }

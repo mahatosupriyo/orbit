@@ -105,8 +105,18 @@ export function BuyNowButton({
     <Button
       fullWidth
       style={{
-        background: '#0C8CE9',
-        color: '#fff'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: '#fff',
+        color: '#141414',
+        width: '100%',
+        fontWeight: 400,
+        lineHeight: '100%',
+        borderRadius: '0rem',
+        padding: '2rem 4rem',
+        fontSize: '2.2rem',
+        fontFamily: 'Instrument Serif'
       }}
       onClick={onClick}
       disabled={isLoading}

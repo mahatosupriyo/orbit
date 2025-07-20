@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './pricingtable.module.scss'
-import Link from 'next/link'
 import Icon from '@/components/atoms/icons'
+import { BuyNowButton } from '@/components/payments/paymentbtn';
+
 
 const proFeatures = [
     "Browse all garage",
@@ -9,11 +10,13 @@ const proFeatures = [
 ];
 
 const exclusiveFeatures = [
-    "Community - Designer to Designer Interactions",
+    "Weekly Designer Interactions",
+    "Community Interactions",
     "Get Adobe creative cloud for one year",
     "Godaddy (.com) domain for one year",
     "Spotify Premium for one year",
-    // "On ground work - to fuel your Portfolio"
+    "All Beta features",
+    "On-field brand trips"
 ];
 
 export default function Pricingtable() {
@@ -23,9 +26,13 @@ export default function Pricingtable() {
                 <div className={styles.plan}>
                     <div className={styles.plantitle}>Pro</div>
                     <p className={styles.planprice}>₹12,499</p>
-                    <button className={styles.planbtn}>
-                        get started
-                    </button>
+
+                    <BuyNowButton
+                        plan="pro"
+                        amount={12499}
+                        description="Pro Plan for On The Orbit"
+                        buttonLabel="get started"
+                    />
                     <p className={styles.plandescription}>
                         Perfect for college students, and working creatives who prefer to learn on their own time and build skills solo.
                     </p>
@@ -47,9 +54,13 @@ export default function Pricingtable() {
                     <p className={styles.planprice}>
                         ₹72,499
                     </p>
-                    <button className={styles.planbtn}>
-                        get started
-                    </button>
+                    <BuyNowButton
+                        plan="exclusive"
+                        amount={72499}
+                        description="Exclusive Plan for On The Orbit"
+                        buttonLabel="get started"
+                    />
+
                     <p className={styles.plandescription}>
                         Those who want to stay ahead of trends, and build a portfolio that actually opens doors. <br />
                         Those who believe on-ground experience matters more than theory. <br />

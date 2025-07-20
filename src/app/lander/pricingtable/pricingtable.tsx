@@ -10,6 +10,7 @@ const proFeatures = [
 ];
 
 const exclusiveFeatures = [
+    "Curriculum made by global top designers",
     "Weekly Designer Interactions",
     "Community Interactions",
     "Get Adobe creative cloud for one year",

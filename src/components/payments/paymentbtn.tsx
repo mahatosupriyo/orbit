@@ -114,7 +114,7 @@ export function BuyNowButton({
         fontWeight: 400,
         lineHeight: '100%',
         borderRadius: '0rem',
-        padding: '2rem 4rem',
+        padding: '2.4rem 4rem',
         fontSize: '2.2rem',
         fontFamily: 'Instrument Serif'
       }}

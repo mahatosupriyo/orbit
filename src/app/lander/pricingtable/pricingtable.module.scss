@@ -96,7 +96,7 @@
             }
 
             .planprice {
-                font-size: 4rem;
+                font-size: 4.6rem;
                 font-weight: 400;
                 font-family: Instrument Serif, serif;
                 color: #fff;
@@ -135,21 +135,23 @@
                 gap: 1rem;
 
                 .featuretitle {
-                    font-family: Instrument Serif, serif;
-                    font-size: 2.4rem;
-                    font-weight: 400;
+                    // font-family: Instrument Serif, serif;
+                    font-size: 1.46rem;
+                    font-weight: 500;
                     color: #fff;
                     margin-bottom: 1.6rem;
                 }
 
                 .feature {
-                    font-family: Instrument Serif, serif;
+                    // font-family: Instrument Serif, serif;
                     display: flex;
                     flex-direction: row;
                     align-items: center;
                     gap: 1rem;
-                    color: #fff;
-                    font-size: 2.2rem;
+                    font-weight: 400;
+                    font-size: 1.36rem;
+                    color: hsl(0, 0%, 64%);
+
                 }
             }
         }

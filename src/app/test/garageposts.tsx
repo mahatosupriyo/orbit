@@ -28,7 +28,7 @@ const BUCKET_NAME = process.env.ORBIT_S3_BUCKET_NAME!;
 
 export default async function GaragePostView() {
     const session = await auth();
-    if (!session?.user?.id) redirect('/login');
+    if (!session?.user?.id) redirect('/auth');
 
     const posts = await db.garagePost.findMany({
         where: { createdById: session.user.id },
@@ -137,7 +137,7 @@ export default async function GaragePostView() {
                 </button>
             </form>
 
-            <div className={styles.mainPreview}>
+            {/* <div className={styles.mainPreview}>
                 {firstImage && (
                     <img
                         key={firstImage.id}
@@ -146,13 +146,13 @@ export default async function GaragePostView() {
                         className={styles.mainImage}
                     />
                 )}
-            </div>
+            </div> */}
 
             <div className={styles.thumbnailRow}>
-                {signedImages.filter(Boolean).map((img) => (
-                    <Fragment key={img!.id}>
-                        <img src={img!.url} alt={`Thumbnail ${img!.id}`} className={styles.thumbnail} />
-                    </Fragment>
+                {signedImages.map((img) => (
+                    <div key={img!.id}>
+                        <img height={0} src={img!.url} alt={`Thumbnail ${img!.id}`} className={styles.thumbnail} />
+                    </div>
                 ))}
             </div>
         </div>

@@ -14,7 +14,6 @@ type User = {
     image: string | null
 }
 
-// Parent variant for stagger
 const containerVariants: Variants = {
     initial: {},
     animate: {
@@ -24,7 +23,6 @@ const containerVariants: Variants = {
     },
 }
 
-// Child animation for form elements
 const itemVariants: Variants = {
     initial: { opacity: 0, y: 12 },
     animate: {
@@ -54,8 +52,9 @@ export default function AccountForm({ user }: { user: User }) {
         setIsSubmitting(true)
         try {
             const result = await updateAccountInfo(formData)
+
             if (result?.error) {
-                toast.error(result.error)
+                toast.error(result.error) // ✅ Shows exact server error
             } else {
                 toast.success('Account updated successfully!')
             }
@@ -74,23 +73,16 @@ export default function AccountForm({ user }: { user: User }) {
             initial="initial"
             animate="animate"
         >
-            {/* Header */}
             <div className={styles.header}>
                 <div className={styles.headerdata}>
                     <h1 className={styles.title}>Account core</h1>
                 </div>
-
             </div>
-            
 
-            {/* Form */}
-            <form
-                action={handleSubmit}
-                className={styles.formlayout}
-                autoComplete="off"
-                >
+            <form action={handleSubmit} className={styles.formlayout} autoComplete="off">
                 <motion.div className={styles.userInfo} variants={containerVariants}>
-                <AvatarUploadInput/>
+                    <AvatarUploadInput />
+
                     {/* Name */}
                     <motion.div className={styles.name} variants={itemVariants}>
                         <label className={styles.label}>
@@ -132,17 +124,14 @@ export default function AccountForm({ user }: { user: User }) {
                     <motion.div className={styles.email} variants={itemVariants}>
                         <label className={styles.emaillabel}>
                             email (can't change)
-                            <div
-                                className={styles.emailinput}
-                                style={{ textTransform: 'lowercase' }}
-                            >
+                            <div className={styles.emailinput} style={{ textTransform: 'lowercase' }}>
                                 {user.email}
                             </div>
                         </label>
                     </motion.div>
                 </motion.div>
 
-                {/* Submit */}
+                {/* Submit Button */}
                 <motion.div variants={itemVariants}>
                     <button
                         className={styles.submitbtn}

@@ -9,11 +9,11 @@ const proFeatures = [
 ];
 
 const exclusiveFeatures = [
-    "Our exclusive community",
-    "On ground work — to fuel your portfolio",
+    "Community - Designer to Designer Interactions",
     "Get Adobe creative cloud for one year",
     "Godaddy (.com) domain for one year",
-    "Spotify Premium for one year"
+    "Spotify Premium for one year",
+    // "On ground work - to fuel your Portfolio"
 ];
 
 export default function Pricingtable() {

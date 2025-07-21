@@ -10,13 +10,15 @@ import { GaragePostSchema } from "@/types/userposts"
 import type { GaragePost } from "@/types/userposts"
 
 interface UserPageProps {
-  params: { username: string }
+  params: Promise<{ username: string }>
 }
 
 export default async function UserPage({ params }: UserPageProps) {
   const session = await auth()
   const loggedInUserId = session?.user?.id
-  const { username } = params
+
+  // Fix: Await the params since they're now a Promise in Next.js 15
+  const { username } = await params
 
   // Fix: Select name field as well since you want to display it
   const user = await db.user.findUnique({
@@ -67,6 +69,7 @@ export default async function UserPage({ params }: UserPageProps) {
           </div>
 
           <div className={styles.postsSection}>
+            <h2 className={styles.sectionTitle}>Garage Posts</h2>
             <div className={styles.gridpostlayout}>
               {posts.length === 0 ? (
                 <div className={styles.emptyState}>

@@ -188,7 +188,7 @@
                 display: inline-flex;
                 align-items: center;
                 flex-direction: row;
-                font-size: 2rem;
+                font-size: 1.6rem;
                 font-weight: 700;
                 // font-family: Instrument Serif;
                 color: hsl(0, 0%, 90%);
@@ -219,7 +219,7 @@
                         height: 0.12rem;
                         width: 100%;
 
-                        transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+                        transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
                         background-color: #fff;
                         transform: translateX(-101%);
                     }

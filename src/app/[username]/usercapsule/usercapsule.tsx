@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./capsule.module.scss";
+import styles from "./usercapsule.module.scss";
 import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,7 +9,6 @@ import { Scrollbar } from "swiper/modules";
 import "swiper/css/scrollbar";
 import { Drawer } from "vaul";
 import Video from "next-video";
-import Link from "next/link";
 
 interface GaragePost {
     id: number;
@@ -19,10 +18,6 @@ interface GaragePost {
     createdAt: string;
     images: Array<{ id: number; url: string; order: number | null }>;
     makingOf: { id: number; playbackID: string } | null;
-    createdBy: {
-        username: string | null;
-        image: string | null;
-    };
 }
 
 interface GaragePostCardProps {
@@ -107,19 +102,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                             <div className={styles.postDetails}>
                                 <div className={styles.postdetailsinner}>
-                                    {post.createdBy.username && (
-                                        <Link href={`/${post.createdBy.username}`} className={styles.postAuthor}>
-                                            {post.createdBy.image && (
-                                                <img
-                                                    src={post.createdBy.image}
-                                                    className={styles.postAuthorImage}
-                                                />
-                                            )}
-                                            {post.createdBy.username}
-                                            <Icon name="verified" fill="#00aaff" size={10} />
-                                        </Link>
-                                    )}
-
                                     {post.title && <h1 className={styles.postTitle}>{post.title}</h1>}
                                     {/* {post.caption && <p className={styles.postCaption}>{post.caption}</p>} */}
                                 </div>

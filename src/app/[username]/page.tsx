@@ -73,7 +73,7 @@ export default async function UserPage({ params }: UserPageProps) {
               {user.name && (
                 <h1 className={styles.userName}>
                   {user.name}
-                  {isOwnProfile && <span className={styles.ownProfileBadge}>(You)</span>}
+                  {isOwnProfile && <span className={styles.ownProfileBadge}></span>}
                 </h1>
               )}
               {user.username && <p className={styles.userUsername}>@{user.username}</p>}

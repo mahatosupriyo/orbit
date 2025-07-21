@@ -19,20 +19,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
   const firstImage = post.images[0]
   const hasMultipleImages = post.images.length > 1
 
-  // Handle case where there are no images
-  if (!firstImage) {
-    return (
-      <div className={styles.capsulewraper}>
-        <div className={styles.capsulebtn}>
-          <div className={styles.placeholder}>
-            <Icon name="save" size={48} />
-            <p className={styles.placeholderText}>{post.title}</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className={styles.capsulewraper}>
       <Drawer.Root>

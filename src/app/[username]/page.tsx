@@ -15,12 +15,16 @@ interface UserPageProps {
 
 export default async function UserPage({ params }: UserPageProps) {
   const session = await auth()
-  const loggedInUserId = session?.user?.id
+  
+  // Fix: Check if user is logged in (any logged-in user can view profiles)
+  if (!session?.user?.id) {
+    return notFound()
+  }
 
-  // Fix: Await the params since they're now a Promise in Next.js 15
+  const loggedInUserId = session.user.id
   const { username } = await params
 
-  // Fix: Select name field as well since you want to display it
+  // Find the profile user
   const user = await db.user.findUnique({
     where: { username },
     select: {
@@ -31,14 +35,18 @@ export default async function UserPage({ params }: UserPageProps) {
     },
   })
 
-  if (!user || user.id !== loggedInUserId) {
+  // Only check if user exists, not if it's the logged-in user
+  if (!user) {
     return notFound()
   }
+
+  // Check if viewing own profile
+  const isOwnProfile = user.id === loggedInUserId
 
   try {
     const rawPosts = await getGaragePosts(user.id)
 
-    // Fix: Better error handling for post validation with proper type narrowing
+    // Better error handling for post validation with proper type narrowing
     const posts = rawPosts
       .map((post) => {
         try {
@@ -53,27 +61,33 @@ export default async function UserPage({ params }: UserPageProps) {
           return null
         }
       })
-      .filter((post): post is GaragePost => post !== null) // Fix: Proper type guard
+      .filter((post): post is GaragePost => post !== null)
 
     return (
       <div className={styles.wraper}>
         <NavBar />
         <div className={styles.container}>
           <div className={styles.userProfile}>
-            {/* Fix: Pass user image to AvatarImage component */}
             <AvatarImage size={140} />
             <div className={styles.userInfo}>
-              {user.name && <h1 className={styles.userName}>{user.name}</h1>}
+              {user.name && (
+                <h1 className={styles.userName}>
+                  {user.name}
+                  {isOwnProfile && <span className={styles.ownProfileBadge}>(You)</span>}
+                </h1>
+              )}
               {user.username && <p className={styles.userUsername}>@{user.username}</p>}
             </div>
           </div>
 
           <div className={styles.postsSection}>
-            <h2 className={styles.sectionTitle}>Garage Posts</h2>
+            <h2 className={styles.sectionTitle}>
+              {isOwnProfile ? "Your Garage Posts" : `${user.name || user.username}'s Garage Posts`}
+            </h2>
             <div className={styles.gridpostlayout}>
               {posts.length === 0 ? (
                 <div className={styles.emptyState}>
-                  <p>No posts yet.</p>
+                  <p>{isOwnProfile ? "You haven't posted anything yet." : "No posts yet."}</p>
                 </div>
               ) : (
                 posts.map((post) => <GaragePostCard key={post.id} post={post} />)

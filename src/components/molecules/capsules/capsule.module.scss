@@ -178,29 +178,67 @@
             padding: 2rem 2rem;
             width: 100%;
             max-width: 50rem;
-            background-color: hsl(0, 0%, 10%);
-            margin-top: 2rem;
+            // background-color: hsl(0, 0%, 10%);
+            // margin-top: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 1.6rem;
+            gap: 1.2rem;
 
             .postAuthor {
-                display: flex;
+                display: inline-flex;
                 align-items: center;
                 flex-direction: row;
-                font-size: 2.2rem;
-                font-weight: 400;
-                font-family: Instrument Serif;
-                color: hsl(0, 0%, 80%);
+                font-size: 2rem;
+                font-weight: 700;
+                // font-family: Instrument Serif;
+                color: hsl(0, 0%, 90%);
                 text-transform: lowercase;
-                gap: 0.4rem;
+                gap: 0.5rem;
+                transform: 0.4s ease-in-out;
+                position: relative;
 
-                .postAuthorImage{
-                    height: 3.6rem;
+                .labelauthor {
+                    display: inline-flex;
+                    flex-direction: column;
+                    position: relative;
+                    align-items: center;
+                    justify-content: center;
+                    padding-bottom: 0.4rem;
+                    overflow: hidden;
+
+                    &:hover {
+                        &::after {
+                            transform: translateX(0%);
+                        }
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        height: 0.12rem;
+                        width: 100%;
+
+                        transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+                        background-color: #fff;
+                        transform: translateX(-101%);
+                    }
+                }
+
+                &:hover {
+                    .labelauthor {
+                        &::after {
+                            transform: translateX(0%);
+                        }
+                    }
+                }
+
+                .postAuthorImage {
+                    width: 3.4rem;
+                    height: 3.4rem;
                     user-select: none;
                     pointer-events: none;
-                    width: 3.6rem;
-                    margin-right: 0.5rem;
+                    margin-right: 0.4rem;
                     border-radius: 40rem;
                     border: 0.14rem solid hsl(0, 0%, 20%);
                 }

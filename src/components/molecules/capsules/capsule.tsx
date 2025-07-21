@@ -115,8 +115,12 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     className={styles.postAuthorImage}
                                                 />
                                             )}
-                                            {post.createdBy.username}
-                                            <Icon name="verified" fill="#00aaff" size={10} />
+                                            <div>
+                                                <span className={styles.labelauthor}>
+                                                    {post.createdBy.username}
+                                                </span>
+                                            </div>
+                                            <Icon name="verified" fill="#00aaff" size={12.3} />
                                         </Link>
                                     )}
 

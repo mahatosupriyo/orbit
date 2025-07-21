@@ -52,7 +52,7 @@
 .swiper {
     display: flex;
     aspect-ratio: 4/5;
-    max-height: 56rem;
+    max-width: 50rem;
 
     @media only screen and (max-width: 800px) {
         max-height: auto;
@@ -133,7 +133,7 @@
 }
 
 .drawerInner {
-    padding: 2rem 2rem;
+    padding: 0rem 2rem;
     overflow-y: scroll;
     height: 100%;
     min-height: 80dvh;

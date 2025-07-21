@@ -52,7 +52,7 @@
 .swiper {
     display: flex;
     aspect-ratio: 4/5;
-    max-height: 56rem;
+    max-width: 50rem;
 
     @media only screen and (max-width: 800px) {
         max-height: auto;
@@ -175,7 +175,7 @@
         .postdetailsinner {
             border-radius: 1.6rem;
             display: flex;
-            padding: 2rem 0rem;
+            padding: 0.6rem 0rem;
             width: 100%;
             max-width: 50rem;
             // background-color: hsl(0, 0%, 10%);

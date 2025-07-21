@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Scrollbar } from "swiper/modules";
+import { Scrollbar, Keyboard } from "swiper/modules";
 import "swiper/css/scrollbar";
 import { Drawer } from "vaul";
 import Video from "next-video";
@@ -89,7 +89,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                             <Swiper
                                 scrollbar={{ hide: false }}
                                 spaceBetween={10}
-                                modules={[Scrollbar]}
+                                modules={[Scrollbar, Keyboard]}
                                 loop={hasMultipleImages}
                                 className={styles.swiper}
                             >
@@ -160,7 +160,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                                                         <Video
                                                             autoPlay
-                                                            // poster={`https://image.mux.com/${post.makingOf.playbackID}/thumbnail.webp`}
                                                             playbackId={post.makingOf.playbackID}
                                                         />
 

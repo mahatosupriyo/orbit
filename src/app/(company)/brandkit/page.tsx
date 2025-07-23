@@ -22,7 +22,7 @@ function BrandKit() {
                     <div className={styles.brandheading}>
                         orbit-logo.svg (3.07KB)
 
-                        <a className={styles.downloadbtn} href="https://ontheorbit.com/orbit-logo.svg" download>
+                        <a target='_blank' className={styles.downloadbtn} href="/orbit-logo.svg" download>
                             <Icon name='downarrow' size={20} />
                             Download
                         </a>

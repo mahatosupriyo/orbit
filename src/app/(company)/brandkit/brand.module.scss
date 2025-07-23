@@ -1,0 +1,83 @@
+.wraper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 4rem;
+        align-items: center;
+        gap: 6rem;
+        max-width: 200rem;
+
+        @media (max-width: 800px) {
+            padding: 2rem;
+        }
+
+        .brandtitle {
+            font-weight: 400;
+            font-size: 4rem;
+            line-height: 90%;
+            text-align: center;
+            font-family: Instrument Serif, sans-serif;
+        }
+
+        .brandlogo {
+            display: flex;
+            flex-direction: column;
+            background-color: hsl(0, 0, 16%);
+            width: 100%;
+            max-width: 100%;
+
+
+            .brandheading {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-direction: row;
+                gap: 4rem;
+                background-color: hsl(0, 0, 16%);
+                font-size: 1.36rem;
+                font-weight: 300;
+                padding: 2rem 4rem;
+                user-select: none;
+
+                .downloadbtn {
+
+                    display: flex;
+                    padding: 1rem;
+                    text-decoration: none;
+                    color: #fff;
+                    flex-direction: row;
+                    align-items: center;
+
+                    .downloadicon {
+                        height: 2rem;
+                        fill: #fff;
+                    }
+                }
+
+                @media (max-width: 800px) {
+                    padding: 2rem;
+                }
+            }
+
+            .mainbox {
+                padding: 4rem;
+                background-color: hsl(0, 0, 26%);
+
+                @media (max-width: 800px) {
+                    padding: 2rem;
+                }
+
+                .orbitlogo {
+                    display: flex;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

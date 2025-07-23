@@ -20,9 +20,9 @@ export default function Footer() {
 
                     <div className={styles.linklist}>
 
-                        <Link href="/" className={styles.linkitem}>console</Link>
-                        <Link href="/" className={styles.linkitem}>company</Link>
-                        <Link href="/" className={styles.linkitem}>brand</Link>
+                        {/* <Link href="/" className={styles.linkitem}>console</Link> */}
+                        <Link href="/" className={styles.linkitem}>contact</Link>
+                        <Link href="/brandkit" className={styles.linkitem}>brand kit</Link>
                         <Link href="/company/legals" className={styles.linkitem}>legals</Link>
                         {/* <Link href="/" className={styles.linkitem}>faq</Link> */}
 

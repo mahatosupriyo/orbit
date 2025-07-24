@@ -20,9 +20,9 @@
     &:hover {
         opacity: 0.8;
 
-        .makingIcon {
-            transform: scale(90%);
-        }
+        // .makingIcon {
+        //     transform: scale(90%);
+        // }
 
         .imageCount {
             transform: scale(90%);
@@ -91,7 +91,15 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
-    padding: 1rem;
+
+    padding: 1.4rem 1.6rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #000;
+    border-radius: 10rem;
+    color: #fff;
 
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
 }

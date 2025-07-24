@@ -67,7 +67,8 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                         {post.makingOf && (
                             <div className={styles.makingIcon}>
-                                <Icon name="breakdown" fill="#fff" size={30} />
+                                {/* <Icon name="play" fill="#fff" size={30} /> */}
+                                Breakdown
                             </div>
                         )}
 

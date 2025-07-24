@@ -90,7 +90,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
               <div className={styles.postDetails}>
                 <div className={styles.postdetailsinner}>
                   <h1 className={styles.postTitle}>{post.title}</h1>
-                  {post.caption && <p className={styles.postCaption}>{post.caption}</p>}
+                  {/* {post.caption && <p className={styles.postCaption}>{post.caption}</p>} */}
                 </div>
 
                 {post.externalUrl && (

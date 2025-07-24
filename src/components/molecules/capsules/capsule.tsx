@@ -107,6 +107,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                             <div className={styles.postDetails}>
                                 <div className={styles.postdetailsinner}>
+
                                     {post.createdBy.username && (
                                         <Link href={`/${post.createdBy.username}`} className={styles.postAuthor}>
                                             {post.createdBy.image && (
@@ -115,16 +116,30 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     className={styles.postAuthorImage}
                                                 />
                                             )}
-                                            <div>
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '0.2rem',
+                                                }}
+                                            >
+                                                <span style={{
+                                                    fontSize: '1.26rem',
+                                                    fontWeight: 400,
+                                                    opacity: 0.6
+                                                }}>
+                                                    Creation by
+                                                </span>
                                                 <span className={styles.labelauthor}>
                                                     {post.createdBy.username}
+                                                    <Icon name="verified" fill="#00aaff" size={12} />
                                                 </span>
                                             </div>
-                                            <Icon name="verified" fill="#00aaff" size={12.3} />
                                         </Link>
                                     )}
 
                                     {post.title && <h1 className={styles.postTitle}>{post.title}</h1>}
+
                                     {/* {post.caption && <p className={styles.postCaption}>{post.caption}</p>} */}
                                 </div>
 

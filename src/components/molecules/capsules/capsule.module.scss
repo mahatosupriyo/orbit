@@ -181,6 +181,7 @@
             // background-color: hsl(0, 0%, 10%);
             // margin-top: 2rem;
             display: flex;
+            // align-items: center;
             flex-direction: column;
             gap: 1.2rem;
 
@@ -189,6 +190,7 @@
                 align-items: center;
                 flex-direction: row;
                 font-size: 1.6rem;
+                align-items: center;
                 font-weight: 700;
                 // font-family: Instrument Serif;
                 color: hsl(0, 0%, 90%);
@@ -199,12 +201,13 @@
 
                 .labelauthor {
                     display: inline-flex;
-                    flex-direction: column;
+                    flex-direction: row;
                     position: relative;
                     align-items: center;
                     justify-content: center;
                     padding-bottom: 0.4rem;
                     overflow: hidden;
+                    gap: 0.4rem;
 
                     &:hover {
                         &::after {
@@ -234,8 +237,8 @@
                 }
 
                 .postAuthorImage {
-                    width: 3.4rem;
-                    height: 3.4rem;
+                    width: 4.2rem;
+                    height: 4.2rem;
                     user-select: none;
                     pointer-events: none;
                     margin-right: 0.4rem;
@@ -252,6 +255,7 @@
                 font-size: 1.46rem;
                 color: hsl(0, 0, 60%);
                 font-weight: 400;
+                padding: 1.6rem 0rem;
                 // font-family: Instrument Serif;
                 user-select: text; // Explicitly enable text selection
             }

@@ -8,6 +8,7 @@ import AvatarImage from "@/components/atoms/avatar/avatar"
 import NavBar from "@/components/molecules/navbar/navbar"
 import { GaragePostSchema } from "@/types/userposts"
 import type { GaragePost } from "@/types/userposts"
+import AvatarImageForUser from "@/components/atoms/avatar/useravatar"
 
 interface UserPageProps {
   params: Promise<{ username: string }>
@@ -15,7 +16,7 @@ interface UserPageProps {
 
 export default async function UserPage({ params }: UserPageProps) {
   const session = await auth()
-  
+
   // Fix: Check if user is logged in (any logged-in user can view profiles)
   if (!session?.user?.id) {
     return notFound()
@@ -68,7 +69,7 @@ export default async function UserPage({ params }: UserPageProps) {
         <NavBar />
         <div className={styles.container}>
           <div className={styles.userProfile}>
-            <AvatarImage size={140} />
+            <AvatarImageForUser userId={user.id} size={140} />
             <div className={styles.userInfo}>
               {user.name && (
                 <h1 className={styles.userName}>
@@ -82,7 +83,7 @@ export default async function UserPage({ params }: UserPageProps) {
 
           <div className={styles.postsSection}>
             <h2 className={styles.sectionTitle}>
-              {isOwnProfile ? "Your Garage Posts" : `${user.name || user.username}'s Garage Posts`}
+              {/* {isOwnProfile ? "Your Garage Posts" : `${user.name || user.username}'s Garage Posts`} */}
             </h2>
             <div className={styles.gridpostlayout}>
               {posts.length === 0 ? (

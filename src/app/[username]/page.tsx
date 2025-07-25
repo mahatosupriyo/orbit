@@ -9,6 +9,7 @@ import NavBar from "@/components/molecules/navbar/navbar"
 import { GaragePostSchema } from "@/types/userposts"
 import type { GaragePost } from "@/types/userposts"
 import AvatarImageForUser from "@/components/atoms/avatar/useravatar"
+import Icon from "@/components/atoms/icons"
 
 interface UserPageProps {
   params: Promise<{ username: string }>
@@ -69,15 +70,18 @@ export default async function UserPage({ params }: UserPageProps) {
         <NavBar />
         <div className={styles.container}>
           <div className={styles.userProfile}>
-            <AvatarImageForUser userId={user.id} size={140} />
+            <AvatarImageForUser userId={user.id} size={100} />
             <div className={styles.userInfo}>
+              {user.username && <p className={styles.userUsername}>
+                {user.username}
+                <Icon name="verified" size={11.6}/>
+              </p>}
               {user.name && (
                 <h1 className={styles.userName}>
                   {user.name}
                   {isOwnProfile && <span className={styles.ownProfileBadge}></span>}
                 </h1>
               )}
-              {user.username && <p className={styles.userUsername}>@{user.username}</p>}
             </div>
           </div>
 

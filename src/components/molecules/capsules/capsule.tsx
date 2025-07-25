@@ -129,7 +129,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     fontWeight: 400,
                                                     opacity: 0.6
                                                 }}>
-                                                    Creation by
+                                                    {/* Creation by */}
                                                 </span>
                                                 <span className={styles.labelauthor}>
                                                     {post.createdBy.username}
@@ -139,7 +139,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                         </Link>
                                     )}
 
-                                    {post.title && <h1 className={styles.postTitle}>{post.title}</h1>}
+                                    {/* {post.title && <h1 className={styles.postTitle}>{post.title}</h1>} */}
 
                                     {/* {post.caption && <p className={styles.postCaption}>{post.caption}</p>} */}
                                 </div>

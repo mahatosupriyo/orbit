@@ -10,6 +10,7 @@ import { GaragePostSchema } from "@/types/userposts"
 import type { GaragePost } from "@/types/userposts"
 import AvatarImageForUser from "@/components/atoms/avatar/useravatar"
 import Icon from "@/components/atoms/icons"
+import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn"
 
 interface UserPageProps {
   params: Promise<{ username: string }>
@@ -69,6 +70,7 @@ export default async function UserPage({ params }: UserPageProps) {
       <div className={styles.wraper}>
         <NavBar />
         <div className={styles.container}>
+          <BackBtn />
           <div className={styles.userProfile}>
             <AvatarImageForUser userId={user.id} size={100} />
             <div className={styles.userInfo}>

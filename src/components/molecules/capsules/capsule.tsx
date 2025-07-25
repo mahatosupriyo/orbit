@@ -50,9 +50,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                         aria-label="Open Post"
                         whileTap={{ scale: 0.98 }}
                     >
-
-
-
                         {firstImage ? (
                             <motion.img
                                 src={firstImage.url}
@@ -78,7 +75,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                         {hasMultipleImages && (
                             <div className={styles.imageCount}>
-                                <Icon name="multiplepost" fill="#fff" size={20} />
                             </div>
                         )}
                     </motion.button>

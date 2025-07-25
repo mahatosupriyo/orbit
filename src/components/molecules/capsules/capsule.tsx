@@ -1,5 +1,6 @@
 "use client";
 
+import React, {useState} from "react";
 import styles from "./capsule.module.scss";
 import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";
@@ -34,12 +35,10 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
     const hasMultipleImages = post.images.length > 1;
 
     const dateObj = new Date(post.createdAt);
+
     const day = dateObj.getDate();
     const month = dateObj.toLocaleString("default", { month: "short" });
     const year = dateObj.getFullYear().toString().slice(-2);
-
-    // const videoUrl = getSignedMuxUrl(post.makingOf?.playbackID || "");
-    // const posterUrl = getSignedPosterUrl(post.makingOf?.playbackID || "");
 
     return (
         <div className={styles.capsulewraper}>
@@ -138,6 +137,19 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                             </div>
                                         </Link>
                                     )}
+
+                                    {/* Add close functionality */}
+                                    <Drawer.Close asChild>
+                                        <button
+                                            className={styles.closebtn}
+                                            aria-label="Close"
+                                        >
+                                            Close
+                                            <span className={styles.key}>
+                                                Esc
+                                            </span>
+                                        </button>
+                                    </Drawer.Close>
 
                                     {/* {post.title && <h1 className={styles.postTitle}>{post.title}</h1>} */}
 

@@ -50,7 +50,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
             {hasMultipleImages && (
               <div className={styles.imageCount}>
                 <Icon name="multiplepost" fill="#fff" size={20} />
-                <span className={styles.imageCountText}>{post.images.length}</span>
               </div>
             )}
           </motion.button>

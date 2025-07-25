@@ -1,6 +1,7 @@
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
 import { ProductCard } from '@/components/payments/pricingcard'
+import GaragePostView from './garageposts'
 
 export default async function GaragePage() {
   const session = await auth()
@@ -9,8 +10,8 @@ export default async function GaragePage() {
 
   return (
     <div>
-      {/* <GaragePostView /> */}
-      <ProductCard />
+      <GaragePostView />
+      {/* <ProductCard /> */}
     </div>
   )
 }

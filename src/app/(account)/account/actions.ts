@@ -18,6 +18,8 @@ const RESERVED_USERNAMES = [
   'account',
   'admin',
   'api',
+  'help',
+  'support',
   'garage',
   'odyssey',
   'create',

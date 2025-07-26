@@ -13,6 +13,40 @@ function isSameDay(d1: Date, d2: Date): boolean {
   )
 }
 
+// Add your reserved routes here
+const RESERVED_USERNAMES = [
+  'account',
+  'admin',
+  'api',
+  'garage',
+  'odyssey',
+  'create',
+  'space',
+  'delete',
+  'login',
+  'accounts',
+  'profile',
+  'profiles',
+  'logout',
+  'signup',
+  'settings',
+  'setting',
+  'payment',
+  'payments',
+  'history',
+  'dashboard',
+  'explore',
+  'home',
+  'auth',
+  'about',
+  'contact',
+  'contacts',
+  'privacy',
+  'terms',
+  'favicon.ico',
+  'robots.txt',
+]
+
 export async function updateAccountInfo(formData: FormData) {
   const session = await getAuthUser()
   if (!session.email) {
@@ -40,7 +74,6 @@ export async function updateAccountInfo(formData: FormData) {
 
   const now = new Date()
 
-  // Transform username to string, lowercase, or null
   const rawUsername = typeof raw.username === 'string' ? raw.username.trim().toLowerCase() : ''
   const transformedUsername = rawUsername === '' ? null : rawUsername
 
@@ -61,12 +94,17 @@ export async function updateAccountInfo(formData: FormData) {
       return { error: 'Username can only be updated once per day. Please try again tomorrow.' }
     }
 
-    // Check username availability
+    // ✅ Reserved route check
+    if (transformedUsername && RESERVED_USERNAMES.includes(transformedUsername)) {
+      return { error: 'This username is not allowed. Please choose another.' }
+    }
+
+    // Username availability check
     if (transformedUsername) {
       const usernameTaken = await db.user.findFirst({
         where: {
           username: transformedUsername,
-          NOT: { email: session.email }, // Ignore self
+          NOT: { email: session.email },
         },
       })
 
@@ -92,7 +130,6 @@ export async function updateAccountInfo(formData: FormData) {
       ])
       .transform((val) => (val === '' ? null : val?.toLowerCase())),
   })
-
 
   const parsed = schema.safeParse(raw)
   if (!parsed.success) {

@@ -1,6 +1,5 @@
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
-import { ProductCard } from '@/components/payments/pricingcard'
 import GaragePostView from './garageposts'
 
 export default async function GaragePage() {

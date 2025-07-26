@@ -1,27 +1,65 @@
-"use client"
-
-import styles from "./usercapsule.module.scss"
-import { motion } from "framer-motion"
-import Icon from "@/components/atoms/icons"
-import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/css"
-import { Keyboard, Scrollbar } from "swiper/modules"
-import "swiper/css/scrollbar"
-import { Drawer } from "vaul"
-import Video from "next-video"
-import type { GaragePost } from "@/types/userposts"
+"use client";
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { deleteGaragePost } from "@/app/(main)/garage/deleteGaragePost";
+import { useTransition } from "react";
+import styles from "./usercapsule.module.scss";
+import { motion } from "framer-motion";
+import Icon from "@/components/atoms/icons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Keyboard, Scrollbar } from "swiper/modules";
+import "swiper/css/scrollbar";
+import { Drawer } from "vaul";
+import Video from "next-video";
+import type { GaragePost } from "@/types/userposts";
 
 interface GaragePostCardProps {
-  post: GaragePost
+  post: GaragePost;
+  canDelete: boolean;
 }
 
-export default function GaragePostCard({ post }: GaragePostCardProps) {
-  const firstImage = post.images[0]
-  const hasMultipleImages = post.images.length > 1
+export default function GaragePostCard({ post, canDelete }: GaragePostCardProps) {
+  const { data: session } = useSession();
+  const firstImage = post.images[0];
+  const hasMultipleImages = post.images.length > 1;
+
+  const [isPending, startTransition] = useTransition();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDelete = () => {
+    if (!canDelete || isPending) return;
+    const confirmDelete = confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) return;
+
+    const formData = new FormData();
+    formData.append("postId", post.id.toString());
+
+    startTransition(() => {
+      deleteGaragePost(formData);
+    });
+  };
+
+  // Add keydown listener for Delete key when drawer is open
+  useEffect(() => {
+    if (!drawerOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Delete" || e.key === "Del") {
+        e.preventDefault();
+        handleDelete();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [drawerOpen, canDelete, isPending]);
 
   return (
     <div className={styles.capsulewraper}>
-      <Drawer.Root>
+      <Drawer.Root open={drawerOpen} onOpenChange={setDrawerOpen}>
         <Drawer.Trigger asChild>
           <motion.button
             className={styles.capsulebtn}
@@ -36,8 +74,8 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
               whileHover={{ scale: 1.02 }}
               draggable={false}
               onError={(e) => {
-                console.error("Failed to load image:", firstImage.url)
-                e.currentTarget.style.display = "none"
+                console.error("Failed to load image:", firstImage.url);
+                e.currentTarget.style.display = "none";
               }}
             />
 
@@ -78,7 +116,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                         draggable={false}
                         className={styles.capsulebanner}
                         onError={(e) => {
-                          console.error("Failed to load image in swiper:", img.url)
+                          console.error("Failed to load image in swiper:", img.url);
                         }}
                       />
                     </SwiperSlide>
@@ -87,10 +125,26 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
               )}
 
               <div className={styles.postDetails}>
-                <div className={styles.postdetailsinner}>
-                  {/* <h1 className={styles.postTitle}>{post.title}</h1> */}
-                  {/* {post.caption && <p className={styles.postCaption}>{post.caption}</p>} */}
-                </div>
+                <div className={styles.postdetailsinner} />
+
+                <Drawer.Close asChild>
+                  <button className={styles.closebtn} aria-label="Close">
+                    Close
+                    <span className={styles.key}>Esc</span>
+                  </button>
+                </Drawer.Close>
+
+                {canDelete && (
+                  <button
+                    className={styles.deleteButton}
+                    onClick={handleDelete}
+                    disabled={isPending}
+                    aria-label="Delete post"
+                  >
+                    {isPending ? "Deleting" : "Delete"}
+                    <span className={styles.key}>Del</span>
+                  </button>
+                )}
 
                 {post.externalUrl && (
                   <a
@@ -131,5 +185,5 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
         </Drawer.Portal>
       </Drawer.Root>
     </div>
-  )
+  );
 }

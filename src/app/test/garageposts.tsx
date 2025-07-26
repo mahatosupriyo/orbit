@@ -8,7 +8,6 @@ import styles from './garage-uploader.module.scss';
 
 import { S3Client, DeleteObjectsCommand } from '@aws-sdk/client-s3';
 import { auth } from '@/auth';
-import { Fragment } from 'react';
 
 const cloudfrontEnv = {
     keyPairId: process.env.ORBIT_CLOUDFRONT_KEY_PAIR_ID!,

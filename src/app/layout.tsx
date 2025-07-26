@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./styles/global.scss";
-import "./styles/global.css";
 import Head from "next/head";
 import { SessionProvider } from 'next-auth/react';
 import { Toaster } from 'react-hot-toast'

@@ -142,7 +142,8 @@
     width: 100%;
     padding-bottom: 10rem;
     max-width: 200rem;
-    user-select: text; // Ensure text selection is enabled for the entire scrollable area
+    user-select: text;
+    position: relative;
 
     .postDetails {
         width: 100%;
@@ -197,7 +198,7 @@
                 text-transform: lowercase;
                 gap: 0.4rem;
 
-                .postAuthorImage{
+                .postAuthorImage {
                     height: 3.6rem;
                     user-select: none;
                     pointer-events: none;
@@ -362,5 +363,98 @@
 
     @media only screen and (max-width: 800px) {
         max-width: 100%;
+    }
+}
+
+.deleteButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.6rem 1.2rem;
+    background-color: hsl(0, 0, 22%);
+    border-radius: 1.4rem;
+    color: hsl(0, 0, 70%);
+
+    position: absolute;
+    user-select: none;
+    left: 0;
+    top: 0;
+    margin: 2rem;
+    gap: 0.6rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+
+
+    @media only screen and (max-width: 1000px) {
+        position: relative;
+    }
+
+    &:hover {
+        background-color: hsl(0, 0, 26%);
+    }
+
+
+    @media only screen and (max-width: 800px) {
+        max-width: 100%;
+    }
+
+    .key {
+        // font-family: Consolas;
+        display: flex;
+        padding: 0.4rem 0.6rem;
+        border-radius: 0.6rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: hsl(0, 0, 40%);
+        border: 0.1rem solid hsl(0, 0, 12%);
+        transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+        box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
+        background-color: hsl(0, 0, 16%);
+    }
+}
+
+.closebtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.6rem 1.2rem;
+    background-color: hsl(0, 0, 22%);
+    border-radius: 1.4rem;
+    color: hsl(0, 0, 70%);
+
+    position: absolute;
+    user-select: none;
+    right: 0;
+    top: 0;
+    margin: 2rem;
+    gap: 0.6rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+
+
+    @media only screen and (max-width: 1000px) {
+        display: none;
+    }
+
+    &:hover {
+        background-color: hsl(0, 0, 26%);
+    }
+
+    .key {
+        // font-family: Consolas;
+        display: flex;
+        padding: 0.4rem 0.6rem;
+        border-radius: 0.6rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: hsl(0, 0, 40%);
+        border: 0.1rem solid hsl(0, 0, 12%);
+        transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+        box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
+        background-color: hsl(0, 0, 16%);
     }
 }

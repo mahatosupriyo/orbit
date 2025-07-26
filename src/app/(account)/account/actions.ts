@@ -77,17 +77,22 @@ export async function updateAccountInfo(formData: FormData) {
   }
 
   const schema = z.object({
-    name: z.string().min(1, 'Name is required').max(100),
+    name: z.string().min(1, 'Name is required').max(32, 'Name must be at most 32 characters'),
     username: z
       .union([
-        z.string().min(3, 'Username must be at least 3 characters').regex(/^[a-zA-Z]+$/, {
-          message: 'Username must contain only alphabets (A–Z or a–z)',
-        }),
+        z
+          .string()
+          .min(3, 'Username must be at least 3 characters')
+          .max(32, 'Username must be at most 32 characters')
+          .regex(/^[a-zA-Z]+$/, {
+            message: 'Username must contain only alphabets (A–Z or a–z)',
+          }),
         z.literal(''),
         z.null(),
       ])
       .transform((val) => (val === '' ? null : val?.toLowerCase())),
   })
+
 
   const parsed = schema.safeParse(raw)
   if (!parsed.success) {

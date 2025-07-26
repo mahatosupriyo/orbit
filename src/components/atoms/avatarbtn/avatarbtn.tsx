@@ -10,6 +10,7 @@ import { BuyNowButton } from "@/components/payments/paymentbtn";
 import { useAvatarStore } from "@/app/store/avatarStore";
 import { getAvatar } from "@/app/actions/getAvatar";
 import AvatarImage from "../avatar/avatar";
+import Icon from "@/components/atoms/icons";
 
 const AvatarBtn: React.FC = () => {
   const { data: session } = useSession();
@@ -78,6 +79,20 @@ const AvatarBtn: React.FC = () => {
             transition={{ duration: 0.2 }}
           >
             <ul className={styles.menu}>
+
+              {session?.user.username && (
+                <Link href={session?.user.username} className={styles.option}>
+                  {/* <Logo name="account" fill="#121212" size={24} /> */}
+                  <AvatarImage className={styles.avatar} size={24} />
+                  <span className={styles.subwraper}>
+                    {session.user.username}
+                    <span className={styles.key}>
+                      me
+                    </span>
+                  </span>
+                </Link>
+              )}
+
               <Link href="/account" className={styles.option}>
                 <Logo name="account" fill="#121212" size={24} />
                 Settings

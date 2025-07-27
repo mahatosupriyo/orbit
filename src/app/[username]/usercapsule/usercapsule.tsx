@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { deleteGaragePost } from "@/app/(main)/garage/deleteGaragePost";
@@ -13,6 +14,7 @@ import "swiper/css/scrollbar";
 import { Drawer } from "vaul";
 import Video from "next-video";
 import type { GaragePost } from "@/types/userposts";
+import ConfirmDialog from "@/components/atoms/confirmation/confirmationbox";
 
 interface GaragePostCardProps {
   post: GaragePost;
@@ -27,35 +29,16 @@ export default function GaragePostCard({ post, canDelete }: GaragePostCardProps)
   const [isPending, startTransition] = useTransition();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Delete handler with async wrapped for startTransition
   const handleDelete = () => {
-    if (!canDelete || isPending) return;
-    const confirmDelete = confirm("Are you sure you want to delete this post?");
-    if (!confirmDelete) return;
-
-    const formData = new FormData();
-    formData.append("postId", post.id.toString());
-
     startTransition(() => {
-      deleteGaragePost(formData);
+      (async () => {
+        const formData = new FormData();
+        formData.append("postId", post.id.toString());
+        await deleteGaragePost(formData);
+      })();
     });
   };
-
-  // Add keydown listener for Delete key when drawer is open
-  useEffect(() => {
-    if (!drawerOpen) return;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Delete" || e.key === "Del") {
-        e.preventDefault();
-        handleDelete();
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [drawerOpen, canDelete, isPending]);
 
   return (
     <div className={styles.capsulewraper}>
@@ -87,7 +70,7 @@ export default function GaragePostCard({ post, canDelete }: GaragePostCardProps)
 
             {hasMultipleImages && (
               <div className={styles.imageCount}>
-                {/* <Icon name="multiplepost" fill="#fff" size={20} /> */}
+                {/* Optional: Image count or multi-post icon */}
               </div>
             )}
           </motion.button>
@@ -134,18 +117,25 @@ export default function GaragePostCard({ post, canDelete }: GaragePostCardProps)
                   </button>
                 </Drawer.Close>
 
+                {/* Delete Button with Confirmation Dialog */}
                 {canDelete && (
-                  <button
-                    className={styles.deleteButton}
-                    onClick={handleDelete}
-                    disabled={isPending}
-                    aria-label="Delete post"
-                  >
-                    {isPending ? "Deleting" : "Delete"}
-                    <span className={styles.key}>Del</span>
-                  </button>
+                  <ConfirmDialog
+                    trigger={
+                      <button className={styles.deleteButton} disabled={isPending}>
+                        {isPending ? "Deleting" : "Delete"}
+                        <span className={styles.key}>Del</span>
+                      </button>
+                    }
+                    title="Confirm Delete"
+                    description="you can’t undo this."
+                    confirmText="Delete"
+                    cancelText="Cancel"
+                    onConfirm={handleDelete}
+                    openOnDeleteKey={true}
+                  />
                 )}
 
+                {/* External URL */}
                 {post.externalUrl && (
                   <a
                     href={post.externalUrl}
@@ -158,6 +148,7 @@ export default function GaragePostCard({ post, canDelete }: GaragePostCardProps)
                   </a>
                 )}
 
+                {/* Making Of Video */}
                 {post.makingOf && (
                   <Drawer.NestedRoot>
                     <Drawer.Trigger asChild>

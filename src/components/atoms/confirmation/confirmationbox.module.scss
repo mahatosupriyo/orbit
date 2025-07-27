@@ -1,0 +1,115 @@
+.overlay {
+    background: hsla(0, 0%, 0%, 0.8);
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    backdrop-filter: blur(4px);
+}
+
+.content {
+    background-color: #1c1c1c;
+    border-radius: 2.8rem;
+    padding: 2rem 2rem;
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 9999999;
+    min-height: 32rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    // font-family: Instrument Serif;
+}
+
+.description {
+    font-size: 1.6rem;
+    color: hsl(0, 0%, 47%);
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    width: 100%;
+}
+
+.confirmBtn {
+    width: 100%;
+    background: #ac1916;
+    color: white;
+    font-weight: 500;
+    padding: 1.6rem 1.2rem;
+
+    // background-color: hsl(0, 0, 22%);
+    border-radius: 1.4rem;
+    color: hsl(0, 0, 100%);
+
+    cursor: pointer;
+
+    font-size: 1.4rem;
+    user-select: none;
+
+    transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+
+    &:hover {
+        background: hsl(1, 77%, 30%);
+    }
+}
+
+.cancelBtn {
+    width: 100%;
+
+    padding: 1.6rem 1.2rem;
+    background-color: hsl(0, 0, 22%);
+    border-radius: 1.4rem;
+    color: hsl(0, 0, 70%);
+    font-weight: 500;
+
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.4rem;
+    align-items: center;
+
+    font-size: 1.4rem;
+    transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+
+    &:hover {
+        background-color: hsl(0, 0, 18%);
+    }
+}
+
+
+.key {
+    // font-family: Consolas;
+    display: flex;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: hsl(0, 0, 40%);
+    border: 0.1rem solid hsl(0, 0, 12%);
+    transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+    box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
+    background-color: hsl(0, 0, 16%);
+}
+
+.alertlogowraper{
+    display: flex;
+    padding: 0.6rem 0rem;
+}

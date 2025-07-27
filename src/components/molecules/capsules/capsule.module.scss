@@ -193,7 +193,7 @@
             display: flex;
             padding: 0.6rem 0rem;
             width: 100%;
-            max-width: 50rem;
+            // max-width: 50rem;
             // background-color: hsl(0, 0%, 10%);
             // margin-top: 2rem;
             display: flex;
@@ -414,18 +414,32 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: hsl(0, 0%, 40%);
+    justify-content: space-between;
+    background-color: hsl(0, 0%, 100%);
     width: 100%;
-    max-width: 50rem;
-    padding: 2.6rem 2rem;
+    max-width: 30rem;
+    padding: 1rem 1rem;
+    padding-right: 2.8rem;
     text-decoration: none;
-    border-radius: 1.6rem;
+    border-radius: 16rem;
     transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     cursor: pointer;
+    gap: 2rem;
+
+    font-family: Instrument Serif;
+    font-size: 2rem;
+    text-align: left;
+    line-height: 100%;
 
     &:hover {
-        background-color: hsl(0, 0%, 30%);
+        background-color: hsl(0, 0%, 80%);
+    }
+
+    .breakdownposter{
+        aspect-ratio: 5/4;
+        object-fit: cover;
+        height: 5.6rem;
+        border-radius: 16rem;
     }
 
     @media only screen and (max-width: 800px) {

@@ -164,7 +164,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     fontWeight: 400,
                                                     opacity: 0.6
                                                 }}>
-                                                    {/* Creation by */}
                                                 </span>
                                                 <span className={styles.labelauthor}>
                                                     {post.createdBy.username}
@@ -210,7 +209,15 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     <Drawer.NestedRoot>
                                         <Drawer.Trigger asChild>
                                             <button className={styles.makingvideobtn}>
-                                                <Icon name="play" fill="#fff" />
+
+                                                {signedUrls && (
+                                                    <img
+                                                    className={styles.breakdownposter}
+                                                        src={signedUrls.signedPosterUrl}
+                                                    />
+                                                )}
+
+                                                Watch the Breakdown
                                             </button>
                                         </Drawer.Trigger>
                                         <Drawer.Portal>
@@ -256,6 +263,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                     </Drawer.Content>
                 </Drawer.Portal>
             </Drawer.Root>
-        </div>
+        </div >
     );
 }

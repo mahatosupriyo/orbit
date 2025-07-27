@@ -203,7 +203,6 @@ export default function GaragePostCard({ post, canDelete }: GaragePostCardProps)
                               poster={post.signedMux.signedPosterUrl}
                               controls
                               autoPlay
-                              // width={720}
                               style={{ borderRadius: "12px" }}
                             />
                           </div>

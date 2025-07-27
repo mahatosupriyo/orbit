@@ -27,7 +27,7 @@
             transform: scale(90%);
         }
 
-        .makingIcon{
+        .makingIcon {
             transform: translateY(-0.2rem);
         }
     }
@@ -469,4 +469,61 @@
     }
 
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
+}
+
+
+
+
+
+
+.customNavBtn {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    width: 6.8rem;
+    height: 6.8rem;
+    display: flex;
+
+    background: hsla(0, 0%, 20%);
+
+
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+        background: hsla(0, 0%, 26%, 0.6);
+    }
+
+    @media (max-width: 800px) {
+        display: none;
+    }
+}
+
+.customPrevBtn {
+    left: 0rem;
+}
+
+.customNextBtn {
+    right: 0rem;
+}
+
+.customNavBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+
+    &:hover {
+        background: hsla(0, 0%, 30%);
+    }
+}
+
+.swiper {
+    position: relative;
+}
+
+.swiperwraper {
+    position: relative;
 }

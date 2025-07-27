@@ -10,7 +10,7 @@ export async function generateMuxSignedUrls(playbackId: string) {
   const posterToken = jwt.sign({ sub: playbackId, aud: 't', exp, time: 5, width: 640 }, privateKey, { algorithm: 'RS256', keyid: keyId })
 
   return {
-    videoUrl: `https://stream.mux.com/${playbackId}.m3u8?token=${videoToken}&time=2145`,
+    videoUrl: `https://stream.mux.com/${playbackId}.m3u8?token=${videoToken}&time=545`,
     posterUrl: `https://image.mux.com/${playbackId}/thumbnail.jpg?token=${posterToken}`
   }
 }

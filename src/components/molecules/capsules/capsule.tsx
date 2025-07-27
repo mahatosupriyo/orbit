@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./capsule.module.scss";
 import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";
@@ -39,6 +39,32 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
     const day = dateObj.getDate();
     const month = dateObj.toLocaleString("default", { month: "short" });
     const year = dateObj.getFullYear().toString().slice(-2);
+
+
+    const [signedUrls, setSignedUrls] = useState<null | { signedVideoUrl: string; signedPosterUrl: string }>(null);
+
+    useEffect(() => {
+        async function fetchSignedUrl() {
+            if (!post.makingOf?.playbackID) return;
+
+            const res = await fetch("/api/mux/sign", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ playbackId: post.makingOf.playbackID }),
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setSignedUrls(data);
+            }
+        }
+
+        fetchSignedUrl();
+    }, [post.makingOf?.playbackID]);
+
+
 
     return (
         <div className={styles.capsulewraper}>
@@ -199,10 +225,16 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     <div className={styles.videoWrapper}>
 
 
-                                                        <Video
-                                                            autoPlay
-                                                            playbackId={post.makingOf.playbackID}
-                                                        />
+                                                        {signedUrls ? (
+                                                            <Video
+                                                                autoPlay
+                                                                src={signedUrls.signedVideoUrl}
+                                                                poster={signedUrls.signedPosterUrl}
+                                                                controls
+                                                            />
+                                                        ) : (
+                                                            <p>Loading video...</p>
+                                                        )}
 
                                                     </div>
                                                 </div>

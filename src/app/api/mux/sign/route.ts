@@ -1,36 +1,39 @@
-import { type NextRequest, NextResponse } from "next/server"
-import jwt from "jsonwebtoken"
+import { NextResponse } from 'next/server'
+import jwt from 'jsonwebtoken'
 
-export async function POST(request: NextRequest) {
-    try {
-        const { playbackId } = await request.json()
+const MUX_SIGNING_KEY = process.env.MUX_SIGNING_KEY!
+const MUX_SIGNING_KEY_ID = process.env.MUX_SIGNING_KEY_ID!
 
-        if (!playbackId) {
-            return NextResponse.json({ error: "Playback ID is required" }, { status: 400 })
-        }
+export async function POST(req: Request) {
+  const { playbackId } = await req.json()
 
-        const keyId = process.env.MUX_SIGNING_KEY_ID!
-        const keySecret = process.env.MUX_SIGNING_KEY!
+  if (!playbackId) {
+    return NextResponse.json({ error: 'Missing playbackId' }, { status: 400 })
+  }
 
-        // Create JWT token for signed URL
-        const token = jwt.sign(
-            {
-                sub: playbackId,
-                aud: "v", // video
-                exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour expiration
-            },
-            Buffer.from(keySecret, "base64"),
-            {
-                algorithm: "RS256",
-                keyid: keyId,
-            },
-        )
+  const EXPIRATION_SECONDS = 60 * 60 
+  const expiration = Math.floor(Date.now() / 1000) + EXPIRATION_SECONDS
 
-        const signedUrl = `https://stream.mux.com/${playbackId}.m3u8?token=${token}`
+  const baseUrl = `https://stream.mux.com/${playbackId}.m3u8`
+  const basePosterUrl = `https://image.mux.com/${playbackId}/thumbnail.jpg`
 
-        return NextResponse.json({ signedUrl })
-    } catch (error) {
-        console.error("Signing error:", error)
-        return NextResponse.json({ error: "Failed to generate signed URL" }, { status: 500 })
+  const token = jwt.sign(
+    {
+      exp: expiration,
+    },
+    MUX_SIGNING_KEY,
+    {
+      algorithm: 'RS256',
+      header: {
+        typ: 'JWT',
+        alg: 'RS256',
+        kid: MUX_SIGNING_KEY_ID,
+      },
     }
+  )
+
+  const signedVideoUrl = `${baseUrl}?token=${token}`
+  const signedPosterUrl = `${basePosterUrl}?token=${token}`
+
+  return NextResponse.json({ signedVideoUrl, signedPosterUrl })
 }

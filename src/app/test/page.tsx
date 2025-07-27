@@ -19,6 +19,8 @@ export default async function TestMuxPage() {
                     controls
                     style={{ borderRadius: '12px' }}
                 />
+
+                <img src={signedPosterUrl} />
             </div>
         </main>
     )

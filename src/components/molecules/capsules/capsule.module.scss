@@ -25,7 +25,7 @@
         opacity: 0.8;
 
         .makingIcon {
-            transform: translateY(-0.4rem);
+            transform: translateY(-0.2rem);
         }
     }
 }
@@ -96,12 +96,12 @@
 }
 
 .makingIcon {
-    position: absolute;
-    top: -0.2rem;
-    right: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
+    position: absolute;
+    top: -0.2rem;
+    right: 1.6rem;
 
     .orbitoriginal {
         display: flex;
@@ -476,5 +476,3 @@
         background-color: hsl(0, 0, 16%);
     }
 }
-
-

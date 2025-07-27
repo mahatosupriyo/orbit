@@ -18,16 +18,17 @@
     justify-content: center;
     background-color: transparent;
     background: transparent;
+    position: relative;
 
     &:hover {
         opacity: 0.8;
 
-        .makingIcon {
+        .imageCount {
             transform: scale(90%);
         }
 
-        .imageCount {
-            transform: scale(90%);
+        .makingIcon{
+            transform: translateY(-0.2rem);
         }
     }
 }
@@ -90,11 +91,6 @@
 }
 
 .makingIcon {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 1rem;
-
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
 }
 
@@ -457,4 +453,20 @@
         box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
         background-color: hsl(0, 0, 16%);
     }
+}
+
+.makingIcon {
+    position: absolute;
+    top: 0rem;
+    right: 1.6rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .orbitoriginal {
+        display: flex;
+        height: 6rem;
+    }
+
+    transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
 }

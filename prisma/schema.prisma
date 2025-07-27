@@ -19,12 +19,18 @@ enum UserRole {
     ADMIN
 }
 
+enum AssetStatus {
+    UPLOADING
+    PROCESSING
+    READY
+    ERROR
+}
+
 model Post {
     id        Int      @id @default(autoincrement())
     name      String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
 
@@ -69,13 +75,11 @@ model User {
     lastUsernameUpdate DateTime?
     lastNameUpdate     DateTime?
     lastImageUpdate    DateTime?
-
     verified Boolean   @default(false)
     role     UserRole  @default(USER)
     accounts Account[]
     sessions Session[]
     posts    Post[]
-
     garagePosts GaragePost[]
     courses     Course[]
     payments    Payment[]
@@ -96,10 +100,8 @@ model GaragePost {
     externalUrl String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
-
     images   Asset[] @relation("GaragePostImages")
     makingOf Asset?  @relation("GaragePostVideo", fields: [assetId], references: [id])
     assetId  Int?    @unique
@@ -111,10 +113,8 @@ model Course {
     description String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
-
     lessons Lesson[]
 }
 
@@ -126,25 +126,30 @@ model Lesson {
     videoId  Int
     course   Course  @relation(fields: [courseId], references: [id])
     courseId Int
-
     order Int
 }
 
 model Asset {
-    id         Int    @id @default(autoincrement())
-    playbackID String
+    id         Int         @id @default(autoincrement())
+    playbackID String      @default("")
+    muxAssetId String?     @unique  // Mux asset ID for webhook lookups
+    status     AssetStatus @default(UPLOADING)
+    duration   Float?      // Video duration in seconds
+    aspectRatio String?    // e.g., "16:9", "4:3"
+    filename   String?     // Original filename
     order      Int?
-
-    createdAt DateTime @default(now())
-
+    createdAt  DateTime    @default(now())
+    updatedAt  DateTime    @default(now()) @updatedAt // <--- Added @default(now()) here
+    
     // Optional making-of video for a single GaragePost
     GaragePostVideo GaragePost? @relation("GaragePostVideo")
-
     // Multiple images for a GaragePost
     GaragePostImages GaragePost[] @relation("GaragePostImages")
-
     // Used in lessons
     Lesson Lesson[]
+
+    @@index([muxAssetId])
+    @@index([status])
 }
 
 model Payment {

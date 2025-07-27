@@ -1,0 +1,54 @@
+// subscribedialog.module.scss
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.dialog {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    top: 20%;
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.body {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.footer {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cta {
+    background: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.closebtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}

@@ -31,6 +31,10 @@ interface GaragePost {
     username: string | null;
     image: string | null;
   };
+  signedMux?: {
+    signedVideoUrl: string;
+    signedPosterUrl: string;
+  } | null;
 }
 
 export default function GarageFeed({ posts }: { posts: GaragePost[] }) {

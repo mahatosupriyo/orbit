@@ -24,6 +24,10 @@ interface GaragePost {
         username: string | null;
         image: string | null;
     };
+    signedMux?: {
+        signedVideoUrl: string;
+        signedPosterUrl: string;
+    } | null;
 }
 
 interface GaragePostCardProps {
@@ -40,30 +44,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
     const month = dateObj.toLocaleString("default", { month: "short" });
     const year = dateObj.getFullYear().toString().slice(-2);
 
-
-    const [signedUrls, setSignedUrls] = useState<null | { signedVideoUrl: string; signedPosterUrl: string }>(null);
-
-    useEffect(() => {
-        async function fetchSignedUrl() {
-            if (!post.makingOf?.playbackID) return;
-
-            const res = await fetch("/api/mux/sign", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ playbackId: post.makingOf.playbackID }),
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                setSignedUrls(data);
-            }
-        }
-
-        fetchSignedUrl();
-    }, [post.makingOf?.playbackID]);
-
+    const signedUrls = post.signedMux ?? null;
 
 
     return (

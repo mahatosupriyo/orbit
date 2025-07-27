@@ -17,9 +17,15 @@ import type { GaragePost } from "@/types/userposts";
 import ConfirmDialog from "@/components/atoms/confirmation/confirmationbox";
 
 interface GaragePostCardProps {
-  post: GaragePost;
-  canDelete: boolean;
+  post: GaragePost & {
+    signedMux?: {
+      signedVideoUrl: string
+      signedPosterUrl: string
+    } | null
+  }
+  canDelete: boolean
 }
+
 
 export default function GaragePostCard({ post, canDelete }: GaragePostCardProps) {
   const { data: session } = useSession();
@@ -151,8 +157,7 @@ export default function GaragePostCard({ post, canDelete }: GaragePostCardProps)
                   </a>
                 )}
 
-                {/* Making Of Video */}
-                {post.makingOf && (
+                {post.makingOf && post.signedMux && (
                   <Drawer.NestedRoot>
                     <Drawer.Trigger asChild>
                       <button className={styles.makingvideobtn} aria-label="Play making-of video">
@@ -166,13 +171,21 @@ export default function GaragePostCard({ post, canDelete }: GaragePostCardProps)
                           <div className={styles.drawerHandle} />
                           <Drawer.Title className={styles.nestedDrawerTitle}>Breakdown</Drawer.Title>
                           <div className={styles.videoWrapper}>
-                            <Video autoPlay playbackId={post.makingOf.playbackID} />
+                            <Video
+                              src={post.signedMux.signedVideoUrl}
+                              poster={post.signedMux.signedPosterUrl}
+                              controls
+                              autoPlay
+                              // width={720}
+                              style={{ borderRadius: "12px" }}
+                            />
                           </div>
                         </div>
                       </Drawer.Content>
                     </Drawer.Portal>
                   </Drawer.NestedRoot>
                 )}
+
               </div>
             </div>
           </Drawer.Content>

@@ -155,7 +155,7 @@
     width: 100%;
     padding-bottom: 10rem;
     max-width: 200rem;
-    user-select: text; // Ensure text selection is enabled for the entire scrollable area
+    user-select: text;
     position: relative;
 
     .postDetails {
@@ -475,4 +475,59 @@
         box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
         background-color: hsl(0, 0, 16%);
     }
+}
+
+
+
+
+.customNavBtn {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    width: 8.4rem;
+    height: 8.4rem;
+    display: flex;
+
+    background: hsla(0, 0%, 20%);
+
+
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+        background: hsla(0, 0%, 26%, 0.6);
+    }
+
+    @media (max-width: 800px) {
+        display: none;
+    }
+}
+
+.customPrevBtn {
+    left: 0rem;
+}
+
+.customNextBtn {
+    right: 0rem;
+}
+
+.customNavBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+
+    &:hover {
+        background: hsla(0, 0%, 30%);
+    }
+}
+
+.swiper {
+    position: relative;
+}
+
+.swiperwraper {
+    position: relative;
 }

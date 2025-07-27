@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./capsule.module.scss";
 import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Scrollbar, Keyboard } from "swiper/modules";
+import 'swiper/css/navigation';
+
+import { Scrollbar, Keyboard, Navigation } from "swiper/modules";
 import "swiper/css/scrollbar";
 import { Drawer } from "vaul";
 import Video from "next-video";
@@ -35,6 +37,8 @@ interface GaragePostCardProps {
 }
 
 export default function GaragePostCard({ post }: GaragePostCardProps) {
+    const prevRef = useRef<HTMLButtonElement>(null)
+    const nextRef = useRef<HTMLButtonElement>(null)
     const firstImage = post.images[0];
     const hasMultipleImages = post.images.length > 1;
 
@@ -94,24 +98,48 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                             <Drawer.Title className={styles.drawerTitle}>{post.title}</Drawer.Title>
                             <div aria-hidden className={styles.drawerHandle} />
 
-                            <Swiper
-                                scrollbar={{ hide: false }}
-                                spaceBetween={10}
-                                modules={[Scrollbar, Keyboard]}
-                                loop={hasMultipleImages}
-                                className={styles.swiper}
-                            >
-                                {post.images.map((img) => (
-                                    <SwiperSlide key={img.id}>
-                                        <img
-                                            src={img.url}
-                                            alt={`${post.title} image`}
-                                            draggable={false}
-                                            className={styles.capsulebanner}
-                                        />
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
+                            <div className={styles.swiperwraper}>
+                                <Swiper
+                                    navigation={{
+                                        nextEl: ".custom-next",
+                                        prevEl: ".custom-prev",
+                                    }}
+                                    scrollbar={{ hide: false }}
+                                      keyboard={{ enabled: true }}
+                                    spaceBetween={10}
+                                    modules={[Scrollbar, Keyboard, Navigation]}
+                                    loop={hasMultipleImages}
+                                    className={styles.swiper}
+                                >
+                                    {post.images.map((img) => (
+                                        <SwiperSlide key={img.id}>
+                                            <img
+                                                src={img.url}
+                                                alt={`${post.title} image`}
+                                                draggable={false}
+                                                className={styles.capsulebanner}
+                                            />
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+
+                                {/* Custom Navigation Buttons */}
+                                {hasMultipleImages && (
+                                    <div>
+                                        <motion.button
+                                            whileTap={{ scale: 0.9 }}
+                                            className={`custom-prev ${styles.customNavBtn} ${styles.customPrevBtn}`} aria-label="Previous image">
+                                            <Icon name="leftarrow" size={24} fill="#fff" />
+                                        </motion.button>
+                                        <motion.button
+                                            whileTap={{ scale: 0.9 }}
+                                            className={`custom-next ${styles.customNavBtn} ${styles.customNextBtn}`} aria-label="Next image">
+                                            <Icon name="rightarrow" size={24} fill="#fff" />
+                                        </motion.button>
+                                    </div>
+                                )}
+                            </div>
+
 
                             <div className={styles.postDetails}>
                                 <div className={styles.postdetailsinner}>

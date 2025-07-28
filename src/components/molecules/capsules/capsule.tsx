@@ -209,15 +209,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     <Drawer.NestedRoot>
                                         <Drawer.Trigger asChild>
                                             <button className={styles.makingvideobtn}>
-
-                                                {signedUrls && (
-                                                    <img
-                                                    className={styles.breakdownposter}
-                                                        src={signedUrls.signedPosterUrl}
-                                                    />
-                                                )}
-
-                                                Watch the Breakdown
+                                                <Icon name="play" fill="#fff" />
                                             </button>
                                         </Drawer.Trigger>
                                         <Drawer.Portal>

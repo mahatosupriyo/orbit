@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import styles from './test.module.scss'
 import { uploadToMux } from "./uploadMuxAsset";
+import Button from "@/components/atoms/button/button";
 
 interface MuxUploaderProps {
   userId: string;
@@ -31,7 +33,7 @@ export default function MuxUploader({ userId }: MuxUploaderProps) {
         accept="video/*"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
       />
-      <button onClick={handleUpload}>Upload to Mux</button>
+      <Button onClick={handleUpload}>Upload to Mux</Button>
     </div>
   );
 }

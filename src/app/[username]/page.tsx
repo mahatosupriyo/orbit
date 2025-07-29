@@ -42,6 +42,12 @@ export default async function UserPage({ params }: UserPageProps) {
     },
   });
 
+  const followerCount = await db.follow.count({
+    where: {
+      followingId: user.id,
+    },
+  });
+
   const isOwnProfile = user.id === loggedInUserId
 
   try {
@@ -95,15 +101,25 @@ export default async function UserPage({ params }: UserPageProps) {
                   {isOwnProfile && <span className={styles.ownProfileBadge} />}
                 </h1>
               )}
+
+                {!isOwnProfile ? (
+                <FollowButton
+                  isFollowing={!!isFollowing}
+                  targetUserId={user.id}
+                  initialFollowerCount={followerCount}
+                />
+                ) : (
+                <div className={styles.follower}>
+                  <div className={styles.followkey}>
+                  {followerCount}
+                  </div>
+                  {followerCount === 1 ? "Fan" : "Fans"}
+                </div>
+                )}
             </div>
           </div>
 
-          {!isOwnProfile && (
-            <FollowButton
-              isFollowing={!!isFollowing}
-              targetUserId={user.id}
-            />
-          )}
+
 
           <div className={styles.postsSection}>
             <h2 className={styles.sectionTitle}></h2>

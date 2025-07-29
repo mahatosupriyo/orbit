@@ -1,6 +1,3 @@
-// src/app/test/page.tsx
-"use client"; // if you want client side
-
 import MuxUploader from './muxUploader'  // adjust import path if needed
 import { auth } from "@/auth"; // or your auth method to get userId
 

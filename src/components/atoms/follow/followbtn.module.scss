@@ -1,5 +1,5 @@
 .followBtn {
-    padding: 2rem 2rem;
+    padding: 2rem 1.6rem;
     height: 6rem;
     font-weight: 500;
     border-radius: 10rem;
@@ -7,6 +7,8 @@
     color: #222;
     cursor: pointer;
     margin-top: 1.4rem;
+
+    // transform: translateX(-1.6rem);
 
     display: flex;
     flex-direction: row;

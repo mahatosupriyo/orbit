@@ -52,7 +52,7 @@ export default function FollowButton({
                 disabled={loading}
                 aria-label={isFollowing ? "Disconnect" : "Connect"}
             >
-                {loading ? "Connected" : isFollowing ? "Connected" : "Connect+"}
+                {loading ? "Connected" : isFollowing ? "Connected" : "Connect"}
                 {followerCount > 0 && (
                     <span className={styles.followkey}>
                         {followerCount}

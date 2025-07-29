@@ -24,7 +24,7 @@ model Post {
     name        String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    createdBy   User     @relation(fields: [createdById], references: [id])
+    createdBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
     createdById String
 
     @@index([name])
@@ -83,12 +83,8 @@ model User {
     following Follow[] @relation("FollowingRelation")
     followers Follow[] @relation("FollowerRelation")
 
-    followerCount  Int @default(0) // New field
-    followingCount Int @default(0) // New field
-
-    // Notifications
-    sentNotifications     Notification[] @relation("SentNotifications")
-    receivedNotifications Notification[] @relation("ReceivedNotifications")
+    followerCount  Int @default(0)
+    followingCount Int @default(0)
 }
 
 model VerificationToken {
@@ -106,7 +102,7 @@ model GaragePost {
     externalUrl String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    createdBy   User     @relation(fields: [createdById], references: [id])
+    createdBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
     createdById String
 
     images   Asset[] @relation("GaragePostImages")
@@ -120,7 +116,7 @@ model Course {
     description String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    createdBy   User     @relation(fields: [createdById], references: [id])
+    createdBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
     createdById String
 
     lessons Lesson[]
@@ -159,7 +155,7 @@ model Asset {
 
 model Payment {
     id                String    @id @default(cuid())
-    user              User      @relation(fields: [userId], references: [id])
+    user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId            String
     razorpayOrderId   String    @unique
     razorpayPaymentId String?
@@ -174,28 +170,13 @@ model Payment {
 
 model Follow {
     id          String   @id @default(cuid())
-    follower    User     @relation("FollowingRelation", fields: [followerId], references: [id])
+    follower    User     @relation("FollowingRelation", fields: [followerId], references: [id], onDelete: Cascade)
     followerId  String
-    following   User     @relation("FollowerRelation", fields: [followingId], references: [id])
+    following   User     @relation("FollowerRelation", fields: [followingId], references: [id], onDelete: Cascade)
     followingId String
     createdAt   DateTime @default(now())
 
     @@unique([followerId, followingId])
     @@index([followerId])
     @@index([followingId])
-}
-
-model Notification {
-    id         String   @id @default(cuid())
-    type       String // e.g., 'FOLLOW', 'COMMENT'
-    message    String
-    senderId   String
-    receiverId String
-    isRead     Boolean  @default(false)
-    createdAt  DateTime @default(now())
-
-    sender   User @relation("SentNotifications", fields: [senderId], references: [id])
-    receiver User @relation("ReceivedNotifications", fields: [receiverId], references: [id])
-
-    @@index([receiverId])
 }

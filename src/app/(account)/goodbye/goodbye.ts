@@ -51,165 +51,94 @@ export async function deleteAccount() {
         const user = await db.user.findUnique({
             where: { id: userId },
             include: {
-                garagePosts: {
-                    include: {
-                        images: true, // Include images assets
-                    },
-                },
-                courses: {
-                    include: {
-                        lessons: {
-                            include: { video: true },
-                        },
-                    },
-                },
+                garagePosts: { include: { images: true } },
+                courses: { include: { lessons: { include: { video: true } } } },
             },
         });
 
         if (!user) return { success: false, message: "User not found." };
 
-        // Delete avatar from S3 if internal custom
+        // Delete avatar from S3 if custom
         if (
             user.image &&
             !user.image.startsWith("http") &&
             user.image !== "defaultavatar.png"
         ) {
             try {
-                await s3.send(
-                    new DeleteObjectCommand({
-                        Bucket: BUCKET,
-                        Key: user.image,
-                    })
-                );
+                await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: user.image }));
             } catch (err) {
                 console.warn("Failed to delete avatar from S3:", err);
             }
         }
 
-        // Delete GaragePosts images and assets
+        // Delete GaragePosts and related assets
         for (const post of user.garagePosts) {
-            try {
-                // Delete S3 images folder for this post
-                await deleteS3Folder(`garage/${userId}/${post.id}/images/`);
-
-                // Delete each image asset related to this GaragePost
-                for (const asset of post.images) {
-                    if (asset.playbackID) {
-                        try {
-                            await s3.send(
-                                new DeleteObjectCommand({
-                                    Bucket: BUCKET,
-                                    Key: asset.playbackID,
-                                })
-                            );
-                        } catch (err) {
-                            console.warn(`Failed to delete garage post image asset S3 key ${asset.playbackID}:`, err);
-                        }
-
-                        try {
-                            await db.asset.delete({ where: { id: asset.id } });
-                        } catch (err) {
-                            console.warn(`Failed to delete asset record ID ${asset.id}:`, err);
-                        }
-                    }
+            await deleteS3Folder(`garage/${userId}/${post.id}/images/`);
+            for (const asset of post.images) {
+                if (asset.playbackID) {
+                    try {
+                        await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: asset.playbackID }));
+                    } catch {}
+                    await db.asset.delete({ where: { id: asset.id } }).catch(() => {});
                 }
-
-                // Delete makingOf video asset if any
-                if (post.assetId) {
-                    const makingOfAsset = await db.asset.findUnique({ where: { id: post.assetId } });
-                    if (makingOfAsset?.playbackID) {
-                        try {
-                            await s3.send(
-                                new DeleteObjectCommand({
-                                    Bucket: BUCKET,
-                                    Key: makingOfAsset.playbackID,
-                                })
-                            );
-                        } catch (err) {
-                            console.warn(`Failed to delete makingOf video S3 key ${makingOfAsset.playbackID}:`, err);
-                        }
-
-                        try {
-                            await db.asset.delete({ where: { id: post.assetId } });
-                        } catch (err) {
-                            console.warn(`Failed to delete makingOf asset record ID ${post.assetId}:`, err);
-                        }
-                    }
-                }
-
-                // Delete the GaragePost record itself
-                await db.garagePost.delete({ where: { id: post.id } });
-            } catch (err) {
-                console.warn(`Failed to delete GaragePost ID ${post.id}:`, err);
             }
+
+            if (post.assetId) {
+                const makingOfAsset = await db.asset.findUnique({ where: { id: post.assetId } });
+                if (makingOfAsset?.playbackID) {
+                    try {
+                        await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: makingOfAsset.playbackID }));
+                    } catch {}
+                    await db.asset.delete({ where: { id: post.assetId } }).catch(() => {});
+                }
+            }
+
+            await db.garagePost.delete({ where: { id: post.id } }).catch(() => {});
         }
 
-        // Delete Courses, Lessons, and Lesson video assets
+        // Delete Courses, Lessons, and video assets
         for (const course of user.courses) {
-            try {
-                for (const lesson of course.lessons) {
-                    if (lesson.video?.playbackID) {
-                        try {
-                            await s3.send(
-                                new DeleteObjectCommand({
-                                    Bucket: BUCKET,
-                                    Key: lesson.video.playbackID,
-                                })
-                            );
-                        } catch (err) {
-                            console.warn(`Failed to delete lesson video S3 key ${lesson.video.playbackID}:`, err);
-                        }
-
-                        try {
-                            await db.asset.delete({ where: { id: lesson.video.id } });
-                        } catch (err) {
-                            console.warn(`Failed to delete lesson video asset record ID ${lesson.video.id}:`, err);
-                        }
-                    }
+            for (const lesson of course.lessons) {
+                if (lesson.video?.playbackID) {
+                    try {
+                        await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: lesson.video.playbackID }));
+                    } catch {}
+                    await db.asset.delete({ where: { id: lesson.video.id } }).catch(() => {});
                 }
-
-                await db.lesson.deleteMany({ where: { courseId: course.id } });
-                await db.course.delete({ where: { id: course.id } });
-            } catch (err) {
-                console.warn(`Failed to delete course ID ${course.id}:`, err);
             }
+
+            await db.lesson.deleteMany({ where: { courseId: course.id } }).catch(() => {});
+            await db.course.delete({ where: { id: course.id } }).catch(() => {});
         }
 
-        // Delete User's Posts
-        try {
-            await db.post.deleteMany({ where: { createdById: userId } });
-        } catch (err) {
-            console.warn("Failed to delete user's posts:", err);
-        }
+        // Delete Posts
+        await db.post.deleteMany({ where: { createdById: userId } }).catch(() => {});
 
-        // Delete User Payments
-        try {
-            await db.payment.deleteMany({ where: { userId } });
-        } catch (err) {
-            console.warn("Failed to delete user's payments:", err);
-        }
+        // Delete Payments
+        await db.payment.deleteMany({ where: { userId } }).catch(() => {});
 
-        // Cleanup any leftover assets in S3 by prefix (optional but safe)
-        try {
-            await db.asset.deleteMany({
-                where: {
-                    playbackID: {
-                        startsWith: `garage/${userId}/*`,
-                    },
-                },
-            });
-            await db.asset.deleteMany({
-                where: {
-                    playbackID: {
-                        startsWith: `avatar/${userId}/`,
-                    },
-                },
-            });
-        } catch (err) {
-            console.warn("Failed to cleanup leftover assets:", err);
-        }
+        // Delete Follows
+        await db.follow.deleteMany({ where: { followerId: userId } }).catch(() => {});
+        await db.follow.deleteMany({ where: { followingId: userId } }).catch(() => {});
 
-        // Finally delete user (this cascades to accounts, sessions)
+        // Delete Verification Tokens
+        await db.verificationToken.deleteMany({ where: { identifier: user.email ?? "" } }).catch(() => {});
+
+        // Wipe sensitive user fields (optional defense-in-depth)
+        await db.user.update({
+            where: { id: userId },
+            data: {
+                email: null,
+                username: null,
+                image: null,
+            },
+        });
+
+        // Delete orphaned assets by user prefix
+        await deleteS3Folder(`garage/${userId}/`);
+        await deleteS3Folder(`avatar/${userId}/`);
+
+        // Final user deletion (cascades to sessions, accounts, etc.)
         await db.user.delete({ where: { id: userId } });
 
         return { success: true, message: "Account deleted successfully." };

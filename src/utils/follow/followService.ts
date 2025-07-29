@@ -21,16 +21,6 @@ export async function followUser(followerId: string, followingId: string, follow
         data: { followerId, followingId },
       });
 
-      // Create notification
-      await tx.notification.create({
-        data: {
-          type: "FOLLOW",
-          message: `${followerName || "Someone"} started following you.`,
-          senderId: followerId,
-          receiverId: followingId,
-        },
-      });
-
       // Increment follower/following counts in DB to keep source of truth accurate
       await tx.user.update({
         where: { id: followingId },

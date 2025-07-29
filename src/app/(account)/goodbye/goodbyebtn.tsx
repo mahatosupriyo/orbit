@@ -20,7 +20,6 @@ export default function DeleteAccountButton() {
             const res = await deleteAccount();
 
             if (res.success) {
-                // Optionally replace this with a toast
                 console.log("Account deleted successfully");
                 router.replace("/auth"); // Redirect to auth page after deletion
             } else {

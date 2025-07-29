@@ -1,29 +1,15 @@
-'use client'
+// src/app/test/page.tsx
+"use client"; // if you want client side
 
-import { useState } from 'react'
-import { uploadToMux } from './uploadMuxAsset'
+import MuxUploader from './muxUploader'  // adjust import path if needed
+import { auth } from "@/auth"; // or your auth method to get userId
 
-export default function MuxUploader({ userId }: { userId: string }) {
-  const [file, setFile] = useState<File | null>(null)
+export default async function TestPage() {
+  const session = await auth();
+  const userId = session?.user?.id;
 
-  const handleUpload = async () => {
-    if (!file) return
+  if (!userId) return <div>Please login to upload videos</div>;
 
-    const { uploadUrl } = await uploadToMux({ filename: file.name, userId })
-
-    await fetch(uploadUrl, {
-      method: 'PUT',
-      headers: { 'Content-Type': file.type },
-      body: file,
-    })
-
-    alert('Uploaded! Mux will process it soon.')
-  }
-
-  return (
-    <div>
-      <input type="file" accept="video/*" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-      <button onClick={handleUpload}>Upload to Mux</button>
-    </div>
-  )
+  // Render the uploader with userId passed in
+  return <MuxUploader userId={userId} />;
 }

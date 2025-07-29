@@ -1,0 +1,21 @@
+.followBtn {
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    border-radius: 4px;
+    border: 1.5px solid #1414ff;
+    background-color: white;
+    color: #1414ff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.followBtn:hover {
+    background-color: #1414ff;
+    color: white;
+}
+
+.following {
+    background-color: #1414ff;
+    color: white;
+    cursor: default;
+}

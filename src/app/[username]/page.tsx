@@ -11,6 +11,7 @@ import AvatarImageForUser from "@/components/atoms/avatar/useravatar"
 import Icon from "@/components/atoms/icons"
 import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn"
 import { generateSignedMuxUrls } from "@/utils/signedmuxurl"
+import FollowButton from "@/components/atoms/follow/followbtn"
 
 interface UserPageProps {
   params: Promise<{ username: string }>
@@ -31,6 +32,15 @@ export default async function UserPage({ params }: UserPageProps) {
   })
 
   if (!user) return notFound()
+
+  const isFollowing = await db.follow.findUnique({
+    where: {
+      followerId_followingId: {
+        followerId: loggedInUserId,
+        followingId: user.id,
+      },
+    },
+  });
 
   const isOwnProfile = user.id === loggedInUserId
 
@@ -87,6 +97,13 @@ export default async function UserPage({ params }: UserPageProps) {
               )}
             </div>
           </div>
+
+          {!isOwnProfile && (
+            <FollowButton
+              isFollowing={!!isFollowing}
+              targetUserId={user.id}
+            />
+          )}
 
           <div className={styles.postsSection}>
             <h2 className={styles.sectionTitle}></h2>

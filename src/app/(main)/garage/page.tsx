@@ -32,7 +32,7 @@ export default async function GaragePage() {
         username: post.createdBy.username,
         image: post.createdBy.image || "https://ontheorbit.com/placeholder.png",
       },
-      signedMux, // add this
+      signedMux,
     };
   }));
 

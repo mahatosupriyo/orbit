@@ -7,7 +7,6 @@ import Icon from "@/components/atoms/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import 'swiper/css/navigation';
-
 import { Scrollbar, Keyboard, Navigation } from "swiper/modules";
 import "swiper/css/scrollbar";
 import { Drawer } from "vaul";

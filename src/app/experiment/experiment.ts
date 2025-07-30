@@ -3,6 +3,12 @@
 import { db } from "@/server/db";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import { Prisma } from "@prisma/client";
+import OpenAI from "openai";
+import { redis } from "@/utils/redis"; // using your setup
+
+const MAX_QUERY_LENGTH = 100; // Limit user input length
+const RATE_LIMIT_WINDOW = 60; // seconds
+const RATE_LIMIT_MAX = 20; // Max searches per user per window
 
 const cloudfrontEnv = {
   keyPairId: process.env.ORBIT_CLOUDFRONT_KEY_PAIR_ID!,
@@ -10,56 +16,120 @@ const cloudfrontEnv = {
   cloudfrontUrl: process.env.ORBIT_CLOUDFRONT_URL!,
 };
 
-// Utility to sanitize the search input into individual keywords
-function sanitizeInput(input: string): string[] {
-  return input
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY!,
+});
+
+/**
+ * Token sanitization for fallback and deduplication.
+ */
+function sanitizeTokens(text: string): string[] {
+  const tokens = text
     .toLowerCase()
-    .replace(/[^\w\s]/g, "") // remove punctuation
-    .split(/\s+/) // split by space
-    .filter((word) => word.length > 1); // remove short tokens
+    .replace(/[^\w\s]/g, "")
+    .split(/\s+/)
+    .filter((t) => t.length > 1);
+
+  const seen = new Set<string>();
+  return tokens.filter((t) => (seen.has(t) ? false : (seen.add(t), true)));
 }
 
-export async function searchGaragePosts(userInput: string) {
+/**
+ * Extract keywords from natural language using OpenAI.
+ */
+async function extractKeywords(userInput: string): Promise<string[]> {
   try {
-    if (!userInput || userInput.trim().length === 0) return [];
+    const prompt = `Extract the main keywords from this user query for searching a design-related database. 
+Return only a comma-separated list without extra words: ${userInput}`;
 
-    const keywords = sanitizeInput(userInput);
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: "You are a precise keyword extractor." },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0,
+      max_tokens: 40,
+    });
+
+    const raw = response.choices?.[0]?.message?.content?.trim() || "";
+    let parts = raw.split(",").map((k) => k.trim());
+    if (parts.length === 1) parts = raw.split(/\s+/).map((k) => k.trim());
+
+    const cleaned = sanitizeTokens(parts.join(" "));
+    return cleaned.length > 0 ? cleaned : sanitizeTokens(userInput);
+  } catch (err) {
+    console.error("[OPENAI ERROR]:", err);
+    return sanitizeTokens(userInput);
+  }
+}
+
+/**
+ * Redis-based rate limit
+ */
+async function checkRateLimit(identifier: string) {
+  const key = `search:rate:${identifier}`;
+  const requests = await redis.incr(key);
+
+  if (requests === 1) {
+    await redis.expire(key, RATE_LIMIT_WINDOW);
+  }
+
+  return requests <= RATE_LIMIT_MAX;
+}
+
+export async function searchGaragePosts(
+  userInput: string,
+  userIp?: string,
+  cursor?: number // NEW
+) {
+  try {
+    const q = (userInput || "").trim();
+
+    // 1) Input validation
+    if (!q) return [];
+    if (q.length > MAX_QUERY_LENGTH) {
+      throw new Error("Search query too long");
+    }
+
+    // 2) Rate limit
+    const identifier = userIp || "global";
+    const allowed = await checkRateLimit(identifier);
+    if (!allowed) throw new Error("Too many searches. Try again in 1 minute.");
+
+    // 3) Extract keywords
+    const keywords = await extractKeywords(q);
     if (keywords.length === 0) return [];
 
+    // 4) Build Prisma query
     const searchConditions: Prisma.GaragePostWhereInput[] = keywords.map((keyword) => ({
       OR: [
-        {
-          title: {
-            contains: keyword,
-            mode: "insensitive",
-          },
-        },
-        {
-          caption: {
-            contains: keyword,
-            mode: "insensitive",
-          },
-        },
+        { title: { contains: keyword, mode: "insensitive" } },
+        { caption: { contains: keyword, mode: "insensitive" } },
       ],
     }));
 
+    // 5) Fetch posts (pagination with cursor)
     const posts = await db.garagePost.findMany({
       where: {
-        AND: searchConditions,
+        OR: searchConditions,
+        ...(cursor && { id: { lt: cursor } }), // fetch posts older than last one
       },
       include: {
         images: { orderBy: { order: "asc" } },
         makingOf: true,
       },
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: 10,
+      orderBy: { createdAt: "desc" },
+      take: 11, // fetch one extra to check if there's more
     });
 
-    // Sign CloudFront URLs
+    // 6) Prepare result
+    const hasMore = posts.length > 10;
+    const data = hasMore ? posts.slice(0, 10) : posts;
+
+    // 7) Sign CloudFront URLs
     const postsWithSignedUrls = await Promise.all(
-      posts.map(async (post) => {
+      data.map(async (post) => {
         const signedImages = await Promise.all(
           post.images.map(async (image) => {
             const url = `${cloudfrontEnv.cloudfrontUrl}/${image.playbackID}`;
@@ -68,14 +138,9 @@ export async function searchGaragePosts(userInput: string) {
                 url,
                 keyPairId: cloudfrontEnv.keyPairId,
                 privateKey: cloudfrontEnv.privateKey,
-                dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24h
+                dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
               });
-
-              return {
-                id: image.id,
-                url: signedUrl,
-                order: image.order,
-              };
+              return { id: image.id, url: signedUrl, order: image.order };
             } catch (err) {
               console.error("Error signing image URL:", err);
               return null;
@@ -85,14 +150,23 @@ export async function searchGaragePosts(userInput: string) {
 
         return {
           ...post,
-          images: signedImages.filter(Boolean) as Array<{ id: number; url: string; order: number | null }>,
+          images: signedImages.filter(Boolean) as Array<{
+            id: number;
+            url: string;
+            order: number | null;
+          }>,
         };
       })
     );
 
-    return postsWithSignedUrls;
+    return {
+      posts: postsWithSignedUrls,
+      hasMore,
+      nextCursor: hasMore ? postsWithSignedUrls[postsWithSignedUrls.length - 1].id : null,
+    };
   } catch (error) {
     console.error("[SEARCH ERROR]:", error);
-    return [];
+    return { posts: [], hasMore: false, nextCursor: null };
   }
 }
+

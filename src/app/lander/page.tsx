@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './lander.module.scss'
 import NavBarLander from './nav/nav'
 import Footer from '@/components/molecules/footer/footer'
@@ -23,6 +23,7 @@ function Lander() {
   const rotateY = useTransform(smoothProgress, [0, 1], [25, 0])
   const rotateX = useTransform(smoothProgress, [0, 1], [-12, 0])
   const scale = useTransform(smoothProgress, [0, 1], [1.1, 1])
+
 
   const launchmessage = `you’re here. 
 
@@ -114,7 +115,10 @@ make something that feels like you.`;
         </div>
         <Testimonial />
 
-        <Pricingtable/>
+
+
+
+        <Pricingtable />
 
         {/* <div className={styles.benefits}>
           <div className={styles.benefitgrid}>

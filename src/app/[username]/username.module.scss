@@ -31,7 +31,7 @@
     gap: 4rem;
 
     box-sizing: content-box;
-    background-color: hsl(0, 0, 38%);
+    background-color: hsl(0, 0%, 38%);
     padding: 2.6rem;
     justify-content: space-between;
     height: 100%;
@@ -65,13 +65,13 @@
         .userName {
             font-size: 1.6rem;
             font-weight: 400;
-            color: hsl(0, 0, 70%);
+            color: hsl(0, 0%, 70%);
         }
 
         .userUsername {
             font-size: 1.6rem;
             font-weight: 500;
-            color: hsl(0, 0, 100%);
+            color: hsl(0, 0%, 100%);
             display: flex;
             flex-direction: row;
             gap: 0.4rem;
@@ -97,9 +97,9 @@
     border-radius: 0.6rem;
     font-size: 1.1rem;
     font-weight: 500;
-    color: hsl(0, 0, 40%);
-    border: 0.1rem solid hsl(0, 0, 28%);
+    color: hsl(0, 0%, 40%);
+    border: 0.1rem solid hsl(0, 0%, 28%);
     transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
     box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
-    background-color: hsl(0, 0, 26%);
+    background-color: hsl(0, 0%, 26%);
 }

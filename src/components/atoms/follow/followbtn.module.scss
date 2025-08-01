@@ -20,13 +20,13 @@
 }
 
 .followBtn:hover {
-    background-color: hsl(0, 0, 60%);
+    background-color: hsl(0, 0%, 60%);
     color: white;
 }
 
 .following {
-    background-color: hsl(0, 0, 50%);
-    color: hsl(0, 0, 30%);
+    background-color: hsl(0, 0%, 50%);
+    color: hsl(0, 0%, 30%);
     cursor: pointer;
 }
 
@@ -36,9 +36,9 @@
     border-radius: 0.6rem;
     font-size: 1.1rem;
     font-weight: 500;
-    color: hsl(0, 0, 40%);
-    border: 0.1rem solid hsl(0, 0, 28%);
+    color: hsl(0, 0%, 40%);
+    border: 0.1rem solid hsl(0, 0%, 28%);
     transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
     box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
-    background-color: hsl(0, 0, 26%);
+    background-color: hsl(0, 0%, 26%);
 }

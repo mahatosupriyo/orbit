@@ -20,10 +20,10 @@
     }
 
     @include smooth;
-    background-color: hsl(0, 0, 100%);
+    background-color: hsl(0, 0%, 100%);
 
     &:hover {
-        background-color: hsl(0, 0, 80%);
+        background-color: hsl(0, 0%, 80%);
     }
 
     &:focus {
@@ -38,20 +38,20 @@
 }
 
 .default {
-    background-color: hsl(0, 0, 100%);
+    background-color: hsl(0, 0%, 100%);
 
     &:hover {
-        background-color: hsl(0, 0, 80%);
+        background-color: hsl(0, 0%, 80%);
     }
 
     &:hover:not(:disabled) {
-        background-color: hsl(0, 0, 80%);
+        background-color: hsl(0, 0%, 80%);
     }
 }
 
 .disabled {
-    color: hsl(0, 0, 20%);
-    background-color: hsl(0, 0, 60%);
+    color: hsl(0, 0%, 20%);
+    background-color: hsl(0, 0%, 60%);
 
     &:hover:not(:disabled) {
         background-color: #565e64;
@@ -60,10 +60,10 @@
 
 .fullWidth {
     color: #000;
-    background-color: hsl(0, 0, 100%);
+    background-color: hsl(0, 0%, 100%);
 
     &:hover:not(:disabled) {
-        background-color: hsl(0, 0, 80%);
+        background-color: hsl(0, 0%, 80%);
     }
 }
 

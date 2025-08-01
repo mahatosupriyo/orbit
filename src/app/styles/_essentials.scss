@@ -24,12 +24,12 @@ $corner: 0rem;
     user-select: none;
     line-height: 100%;
     border-radius: 6rem;
-    background-color: hsl(0, 0, 90%);
-    color: hsl(0, 0, 10%);
+    background-color: hsl(0, 0%, 90%);
+    color: hsl(0, 0%, 10%);
     @include smooth();
 
     &:hover {
-        background-color: hsl(0, 0, 70%);
+        background-color: hsl(0, 0%, 70%);
     }
 }
 
@@ -46,7 +46,7 @@ $corner: 0rem;
     @include smooth();
 
     &:hover {
-        background-color: hsl(0, 0, 70%);
+        background-color: hsl(0, 0%, 70%);
 
     }
 }

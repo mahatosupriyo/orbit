@@ -112,12 +112,12 @@
                 width: 100%;
                 cursor: pointer;
                 padding: 2rem 4rem;
-                background-color: hsl(0, 0, 100%);
+                background-color: hsl(0, 0%, 100%);
                 transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
                 user-select: none;
 
                 &:hover {
-                    background-color: hsl(0, 0, 70%);
+                    background-color: hsl(0, 0%, 70%);
                 }
             }
 

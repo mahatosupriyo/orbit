@@ -89,8 +89,8 @@
     font-size: 1.36rem;
     user-select: none;
     font-weight: 400;
-    color: hsl(0, 0, 40%);
-    border: 0.2rem solid hsl(0, 0, 16%);
+    color: hsl(0, 0%, 40%);
+    border: 0.2rem solid hsl(0, 0%, 16%);
     border-radius: 1.6rem;
     padding: 2rem 1.6rem;
     display: flex;
@@ -100,7 +100,7 @@
     gap: 0.6rem;
 
     &:hover {
-        border: 0.2rem solid hsl(0, 0, 26%);
+        border: 0.2rem solid hsl(0, 0%, 26%);
     }
 
     &:focus-within {
@@ -118,7 +118,7 @@
     font-weight: 500;
     background-color: none;
     background: none;
-    color: hsl(0, 0, 60%);
+    color: hsl(0, 0%, 60%);
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
 
     &:disabled {

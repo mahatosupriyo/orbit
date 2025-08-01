@@ -5,7 +5,7 @@
 }
 
 .pagebtn {
-    // background-color: hsl(0, 0, 16%);
+    // background-color: hsl(0, 0%, 16%);
     border-radius: 100rem;
     text-decoration: none;
     display: flex;
@@ -20,22 +20,22 @@
     user-select: none;
     cursor: pointer;
     transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
-    outline: 0.2rem solid hsl(0, 0, 18%);
+    outline: 0.2rem solid hsl(0, 0%, 18%);
     outline-offset: 0.16rem;
     position: relative;
 
     &:hover {
         outline-offset: 0.16rem;
-        outline: 0.2rem solid hsl(0, 0, 35%);
+        outline: 0.2rem solid hsl(0, 0%, 35%);
         
     }
 
     &:focus {
         outline-offset: 0.16rem;
-        outline: 0.2rem solid hsl(0, 0, 28%);
+        outline: 0.2rem solid hsl(0, 0%, 28%);
     }
 }
 
 .active {
-    outline: 0.2rem solid hsl(0, 0, 30%);
+    outline: 0.2rem solid hsl(0, 0%, 30%);
 }

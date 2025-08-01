@@ -211,7 +211,7 @@
 
             .postTitle {
                 font-size: 2.2rem;
-                color: hsl(0, 0, 60%);
+                color: hsl(0, 0%, 60%);
                 font-weight: 400;
                 font-family: Instrument Serif;
                 user-select: text;
@@ -367,9 +367,9 @@
     flex-direction: row;
     align-items: center;
     padding: 1.6rem 1.2rem;
-    background-color: hsl(0, 0, 22%);
+    background-color: hsl(0, 0%, 22%);
     border-radius: 1.4rem;
-    color: hsl(0, 0, 70%);
+    color: hsl(0, 0%, 70%);
 
     position: absolute;
     user-select: none;
@@ -388,7 +388,7 @@
     }
 
     &:hover {
-        background-color: hsl(0, 0, 26%);
+        background-color: hsl(0, 0%, 26%);
     }
 
 
@@ -403,11 +403,11 @@
         border-radius: 0.6rem;
         font-size: 1.1rem;
         font-weight: 500;
-        color: hsl(0, 0, 40%);
-        border: 0.1rem solid hsl(0, 0, 12%);
+        color: hsl(0, 0%, 40%);
+        border: 0.1rem solid hsl(0, 0%, 12%);
         transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
         box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
-        background-color: hsl(0, 0, 16%);
+        background-color: hsl(0, 0%, 16%);
     }
 }
 
@@ -416,9 +416,9 @@
     flex-direction: row;
     align-items: center;
     padding: 1.6rem 1.2rem;
-    background-color: hsl(0, 0, 22%);
+    background-color: hsl(0, 0%, 22%);
     border-radius: 1.4rem;
-    color: hsl(0, 0, 70%);
+    color: hsl(0, 0%, 70%);
 
     position: absolute;
     user-select: none;
@@ -437,7 +437,7 @@
     }
 
     &:hover {
-        background-color: hsl(0, 0, 26%);
+        background-color: hsl(0, 0%, 26%);
     }
 
     .key {
@@ -447,11 +447,11 @@
         border-radius: 0.6rem;
         font-size: 1.1rem;
         font-weight: 500;
-        color: hsl(0, 0, 40%);
-        border: 0.1rem solid hsl(0, 0, 12%);
+        color: hsl(0, 0%, 40%);
+        border: 0.1rem solid hsl(0, 0%, 12%);
         transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
         box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
-        background-color: hsl(0, 0, 16%);
+        background-color: hsl(0, 0%, 16%);
     }
 }
 

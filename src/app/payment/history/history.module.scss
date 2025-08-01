@@ -128,7 +128,7 @@ $height: 12rem;
       font-size: 1.66rem;
 
       font-weight: 500;
-      color: hsl(0, 0, 10%);
+      color: hsl(0, 0%, 10%);
     }
   }
 
@@ -144,7 +144,7 @@ $height: 12rem;
       align-items: center;
       gap: 0.6rem;
       padding: 1rem;
-      border: 0.16rem solid hsl(0, 0, 60%);
+      border: 0.16rem solid hsl(0, 0%, 60%);
       border-radius: 1.6rem;
 
       .paymentstatus {

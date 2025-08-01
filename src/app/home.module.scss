@@ -37,11 +37,11 @@
       }
 
       .pagebtn {
-        background-color: hsl(0, 0, 16%);
+        background-color: hsl(0, 0%, 16%);
         border-radius: 100rem;
 
         font-size: 6rem;
-        color: hsl(0, 0, 90%);
+        color: hsl(0, 0%, 90%);
         font-family: Instrument Serif;
 
         display: flex;
@@ -54,17 +54,17 @@
         user-select: none;
         cursor: pointer;
         transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
-        outline: 0.3rem solid hsl(0, 0, 10%);
+        outline: 0.3rem solid hsl(0, 0%, 10%);
         outline-offset: 0.2rem;
 
         &:hover {
           outline-offset: 0.2rem;
-          outline: 0.3rem solid hsl(0, 0, 20%);
+          outline: 0.3rem solid hsl(0, 0%, 20%);
         }
 
         &:focus {
           outline-offset: 0.2rem;
-          outline: 0.3rem solid hsl(0, 0, 30%);
+          outline: 0.3rem solid hsl(0, 0%, 30%);
         }
 
         @media only screen and (max-width: 300px) {

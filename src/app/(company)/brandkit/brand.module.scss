@@ -28,7 +28,7 @@
         .brandlogo {
             display: flex;
             flex-direction: column;
-            background-color: hsl(0, 0, 16%);
+            background-color: hsl(0, 0%, 16%);
             width: 100%;
             max-width: 100%;
 
@@ -39,7 +39,7 @@
                 justify-content: space-between;
                 flex-direction: row;
                 gap: 4rem;
-                background-color: hsl(0, 0, 16%);
+                background-color: hsl(0, 0%, 16%);
                 font-size: 1.36rem;
                 font-weight: 300;
                 padding: 2rem 4rem;
@@ -67,7 +67,7 @@
 
             .mainbox {
                 padding: 4rem;
-                background-color: hsl(0, 0, 26%);
+                background-color: hsl(0, 0%, 26%);
 
                 @media (max-width: 800px) {
                     padding: 2rem;

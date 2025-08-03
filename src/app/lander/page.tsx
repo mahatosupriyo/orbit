@@ -21,7 +21,7 @@ function Lander() {
 
   // Transform from tilted to straight
   const rotateY = useTransform(smoothProgress, [0, 1], [15, 10])
-  const rotateX = useTransform(smoothProgress, [0, 1], [0,0])
+  const rotateX = useTransform(smoothProgress, [0, 1], [0, 0])
   const scale = useTransform(smoothProgress, [0, 1], [1.1, 1.3])
 
 
@@ -93,7 +93,7 @@ make something that feels like you.`;
             we do.
           </motion.h1>
 
-          <div className={styles.bannerwraper}>
+          <div className={styles.bannerwraper} draggable="false">
             <motion.img
               src="https://ik.imagekit.io/ontheorbit/Essentials/WEBOPTIM.png?updatedAt=1754198766413"
               draggable="false"
@@ -106,6 +106,7 @@ make something that feels like you.`;
               }}
               initial={{ opacity: 0, scale: 1.2 }}
               animate={{ opacity: 1, scale: 1.1 }}
+
               transition={{ duration: 0.8, ease: 'easeOut' }}
             />
           </div>

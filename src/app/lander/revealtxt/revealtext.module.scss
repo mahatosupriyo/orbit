@@ -1,6 +1,6 @@
 .container {
   padding: 2rem 4rem;
-  max-width: 50rem;
+  max-width: 60rem;
 
   @media (max-width: 800px) {
     padding: 2.4rem 2rem;
@@ -10,12 +10,16 @@
 .paragraph {
   display: flex;
   flex-wrap: wrap;
-  font-size: 3rem;
+  font-size: 3.6rem;
   line-height: 120%;
   font-weight: 400;
-  color: #fff;
+  color: hsl(0, 0%, 90%);
   font-family: Instrument Serif, serif;
   gap: 0.4rem;
+
+  @media (max-width: 800px) {
+      font-size: 3rem;
+  }
 }
 
 .word {

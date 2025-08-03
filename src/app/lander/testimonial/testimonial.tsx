@@ -7,28 +7,28 @@ import styles from "./testimonial.module.scss";
 
 const testimonials = [
     {
-        name: "Darshan Raval",
-        role: "PRO member",
-        quote: "Every part of Orbit makes you feel like a creator, not a student.",
-        avatar: "https://lastfm.freetls.fastly.net/i/u/ar0/f1df7c3eb64df572d647ba70e5dfa795.jpg",
+        name: "Ayush Singh",
+        role: "Cofounder at SecondBrainLabs",
+        quote: "The future of design learning doesn’t look like school. It looks like this.",
+        avatar: "https://ik.imagekit.io/ontheorbit/Essentials/testimonial/ayush.jpg?updatedAt=1754227940336",
     },
     {
-        name: "Alicia Dsouza",
-        role: "Creator",
-        quote: "Orbit turned my curiosity into a creative habit.",
-        avatar: "https://svgames.me/jpg/ab6761610000e5ebe1e00861cdb6bf56b14a1118-1.jpg",
+        name: "Srijanika Dey",
+        role: "COO At OnTheOrbit",
+        quote: "We built what we needed when we were lost.",
+        avatar: "https://ik.imagekit.io/ontheorbit/Essentials/testimonial/srija.png?updatedAt=1754230512798",
     },
     {
-        name: "Ravi Narayan",
+        name: "Anushka Saha",
         role: "Designer",
-        quote: "I finally found a space that respects beginners with ambition.",
-        avatar: "https://book-my-singer.s3.ap-south-1.amazonaws.com/website-assets/artist/Darshan+Raval/Book+Darshan+Raval+from+Book+My+Singer.webp",
+        quote: "I was a beta learner, Colleges teach you rules, Orbit teaches you taste. That’s what we need in the Post AI Era.",
+        avatar: "https://ik.imagekit.io/ontheorbit/Essentials/testimonial/anushka.png?updatedAt=1754230845261",
     },
     {
-        name: "Luna Park",
-        role: "Freelancer",
-        quote: "No boring lectures—just real-world creation.",
-        avatar: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR-M795oQ-_jnzRyrmxDZpzQUglKIAW1WkhiP3JuAx24sSajIZyP1gjBOR2-bghlac4BRfJUvIwoClCXjzCKBQyWw",
+        name: "Subhra Kabiraj",
+        role: "Aspiring Developer",
+        quote: "Orbit made me see design as a story, not just a project.",
+        avatar: "https://ik.imagekit.io/ontheorbit/Essentials/testimonial/subhro.png?updatedAt=1754231026154",
     },
 ];
 

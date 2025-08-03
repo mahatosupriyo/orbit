@@ -68,6 +68,7 @@ export default function NavBar() {
       animate="animate"
       style={{ display: 'flex', flexDirection: 'row', gap: '1.6rem' }}
     >
+      
       <motion.div variants={slideDownVariant}>
         <Navigator />
       </motion.div>

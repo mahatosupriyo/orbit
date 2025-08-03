@@ -132,7 +132,7 @@
     cursor: pointer;
     user-select: none;
     pointer-events: none;
-    filter: grayscale(100%);
+    // filter: grayscale(100%);
 
     @media (max-width: 800px) {
         height: 4.6rem;

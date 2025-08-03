@@ -63,6 +63,10 @@
 
             padding: 2.4rem 4rem;
 
+            position: relative;
+
+            
+
             @media (max-width: 800px) {
                 padding: 2.4rem 2rem;
             }
@@ -70,12 +74,22 @@
             .bannerheading {
                 display: flex;
                 z-index: 40;
-                font-size: 8rem;
+                font-size: 18rem;
                 line-height: 90%;
                 font-weight: 400;
                 text-align: center;
                 font-family: 'Instrument Serif', serif;
                 color: #fff;
+
+                @media (max-width: 1000px) {
+                    font-size: 12rem;
+                }
+
+                @media (max-width: 800px) {
+                    font-size: 5.6rem;
+                }
+
+
             }
 
 
@@ -90,30 +104,36 @@
             }
 
             .bannerwraper {
-                margin-top: 6rem;
+                margin-top: 0rem;
 
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                max-width: 90rem;
-                padding: 2rem;
+                width: 100%;
+                max-width: 100rem;
+                // padding: 2rem;
                 position: relative;
-
                 flex-direction: column;
 
-                // &::after {
-                //     z-index: 60;
-                //     content: ' ';
-                //     display: block;
-                //     position: absolute;
-                //     width: 100%;
-                //     height: 100%;
-                //     pointer-events: none;
-                //     background-size: 0.6px 1px, 1px 1px;
-                //     background-position: 0, 1px 1px;
-                //     background-image: radial-gradient(circle, #404040, rgba(255, 255, 255, 0) 60%), radial-gradient(circle, #404040, rgba(255, 255, 255, 0) 60%);
-                //     mix-blend-mode: multiply;
-                // }
+                &::after {
+                z-index: 60;
+                content: ' ';
+                display: block;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                background-size: 0.6px 1px, 1px 1px;
+                background-position: 0, 1px 1px;
+                background-image: radial-gradient(circle, #404040, rgba(255, 255, 255, 0) 60%), radial-gradient(circle, #1f1f1f11, rgba(255, 255, 255, 0) 60%);
+                mix-blend-mode: multiply;
+
+
+                @media (max-width: 1200px) {
+                    background-size: 0.2px 0.1px, 0.1px 0.2px;
+                    background-position: 0, 1px 1px;
+                }
+            }
 
 
                 .herobanner {
@@ -121,8 +141,7 @@
                     height: 100%;
                     width: 100%;
                     object-fit: cover;
-                    // aspect-ratio: 1/1;
-                    // border-radius: 100%;
+
                     user-select: none;
                     pointer-events: none;
 

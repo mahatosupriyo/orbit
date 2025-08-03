@@ -20,9 +20,9 @@ function Lander() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 20 })
 
   // Transform from tilted to straight
-  const rotateY = useTransform(smoothProgress, [0, 1], [25, 0])
-  const rotateX = useTransform(smoothProgress, [0, 1], [-12, 0])
-  const scale = useTransform(smoothProgress, [0, 1], [1.1, 1])
+  const rotateY = useTransform(smoothProgress, [0, 1], [15, 10])
+  const rotateX = useTransform(smoothProgress, [0, 1], [0,0])
+  const scale = useTransform(smoothProgress, [0, 1], [1.1, 1.3])
 
 
   const launchmessage = `you’re here. 
@@ -95,7 +95,7 @@ make something that feels like you.`;
 
           <div className={styles.bannerwraper}>
             <motion.img
-              src="https://ik.imagekit.io/ontheorbit/Essentials/orbitessential.png?updatedAt=1752058018637"
+              src="https://ik.imagekit.io/ontheorbit/Essentials/WEBOPTIM.png?updatedAt=1754198766413"
               draggable="false"
               className={styles.herobanner}
               style={{

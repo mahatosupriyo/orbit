@@ -1,7 +1,19 @@
 .wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
+  // max-width: 1200px;
+  // margin: 0 auto;
   padding: 2rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 200rem;
 }
 
 .heading {

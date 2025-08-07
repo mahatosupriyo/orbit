@@ -39,7 +39,7 @@ export default function Footer() {
                                 <Icon name='instagram' fill={'#fff'} size={34} />
                             </Link>
 
-                            <Link target="_blank" draggable="false" href="https://www.youtube.com/@weareontheorbit" className={styles.socialmedialink}>
+                            <Link target="_blank" draggable="false" href="https://www.x.com/@weareontheorbit" className={styles.socialmedialink}>
                                 <Icon name='x' fill={'#fff'} size={34} />
                             </Link>
                         </div>

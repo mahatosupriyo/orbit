@@ -4,11 +4,11 @@ import { db } from "@/server/db";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import { Prisma } from "@prisma/client";
 import OpenAI from "openai";
-import { redis } from "@/utils/redis"; // using your setup
+import { redis } from "@/utils/redis"; // your redis setup
 
-const MAX_QUERY_LENGTH = 100; // Limit user input length
+const MAX_QUERY_LENGTH = 100; // Max input length
 const RATE_LIMIT_WINDOW = 60; // seconds
-const RATE_LIMIT_MAX = 20; // Max searches per user per window
+const RATE_LIMIT_MAX = 20; // max requests per window
 
 const cloudfrontEnv = {
   keyPairId: process.env.ORBIT_CLOUDFRONT_KEY_PAIR_ID!,
@@ -81,13 +81,13 @@ async function checkRateLimit(identifier: string) {
 export async function searchGaragePosts(
   userInput: string,
   userIp?: string,
-  cursor?: number // NEW
+  cursor?: number // for pagination
 ) {
   try {
     const q = (userInput || "").trim();
 
-    // 1) Input validation
-    if (!q) return [];
+    // 1) Validate input
+    if (!q) return { posts: [], hasMore: false, nextCursor: null };
     if (q.length > MAX_QUERY_LENGTH) {
       throw new Error("Search query too long");
     }
@@ -99,35 +99,39 @@ export async function searchGaragePosts(
 
     // 3) Extract keywords
     const keywords = await extractKeywords(q);
-    if (keywords.length === 0) return [];
+    if (keywords.length === 0)
+      return { posts: [], hasMore: false, nextCursor: null };
 
-    // 4) Build Prisma query
-    const searchConditions: Prisma.GaragePostWhereInput[] = keywords.map((keyword) => ({
-      OR: [
-        { title: { contains: keyword, mode: "insensitive" } },
-        { caption: { contains: keyword, mode: "insensitive" } },
-      ],
-    }));
+    // 4) Build search conditions
+    const searchConditions: Prisma.GaragePostWhereInput[] = keywords.map(
+      (keyword) => ({
+        OR: [
+          { title: { contains: keyword, mode: "insensitive" } },
+          { caption: { contains: keyword, mode: "insensitive" } },
+        ],
+      })
+    );
 
-    // 5) Fetch posts (pagination with cursor)
+    // 5) Fetch posts with user included
     const posts = await db.garagePost.findMany({
       where: {
         OR: searchConditions,
-        ...(cursor && { id: { lt: cursor } }), // fetch posts older than last one
+        ...(cursor && { id: { lt: cursor } }), // pagination: older than cursor
       },
       include: {
+        createdBy: true, // get user info including username
         images: { orderBy: { order: "asc" } },
         makingOf: true,
       },
       orderBy: { createdAt: "desc" },
-      take: 11, // fetch one extra to check if there's more
+      take: 11, // fetch 1 extra to check if more exist
     });
 
-    // 6) Prepare result
+    // 6) Prepare pagination info
     const hasMore = posts.length > 10;
     const data = hasMore ? posts.slice(0, 10) : posts;
 
-    // 7) Sign CloudFront URLs
+    // 7) Sign CloudFront URLs for images
     const postsWithSignedUrls = await Promise.all(
       data.map(async (post) => {
         const signedImages = await Promise.all(
@@ -138,7 +142,9 @@ export async function searchGaragePosts(
                 url,
                 keyPairId: cloudfrontEnv.keyPairId,
                 privateKey: cloudfrontEnv.privateKey,
-                dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+                dateLessThan: new Date(
+                  Date.now() + 1000 * 60 * 60 * 24
+                ).toISOString(),
               });
               return { id: image.id, url: signedUrl, order: image.order };
             } catch (err) {
@@ -149,12 +155,20 @@ export async function searchGaragePosts(
         );
 
         return {
-          ...post,
-          images: signedImages.filter(Boolean) as Array<{
-            id: number;
-            url: string;
-            order: number | null;
-          }>,
+          id: post.id,
+          title: post.title,
+          caption: post.caption ?? "",
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt,
+          createdBy: {
+            id: post.createdBy.id,
+            name: post.createdBy.name ?? "",
+            username: post.createdBy.username ?? "Unknown",
+            image: post.createdBy.image ?? null,
+          },
+          images: signedImages.filter(Boolean),
+          makingOf: post.makingOf,
+          assetId: post.assetId,
         };
       })
     );
@@ -162,11 +176,12 @@ export async function searchGaragePosts(
     return {
       posts: postsWithSignedUrls,
       hasMore,
-      nextCursor: hasMore ? postsWithSignedUrls[postsWithSignedUrls.length - 1].id : null,
+      nextCursor: hasMore
+        ? postsWithSignedUrls[postsWithSignedUrls.length - 1].id
+        : null,
     };
   } catch (error) {
     console.error("[SEARCH ERROR]:", error);
     return { posts: [], hasMore: false, nextCursor: null };
   }
 }
-

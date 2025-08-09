@@ -1,13 +1,34 @@
-import MuxUploader from './muxUploader'  // adjust import path if needed
-import { auth } from "@/auth"; // or your auth method to get userId
-import styles from './test.module.scss'
+'use client'
 
-export default async function TestPage() {
-  const session = await auth();
-  const userId = session?.user?.id;
+import { useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 
-  if (!userId) return <div>Please login to upload videos</div>;
 
-  // Render the uploader with userId passed in
-  return <MuxUploader userId={userId} />;
+export default function Navbar() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const trimmed = searchTerm.trim()
+    if (!trimmed) return
+    router.push(`/astra?q=${encodeURIComponent(trimmed)}`)
+  }
+
+  return (
+    <nav>
+
+      <form onSubmit={onSubmit} style={{ display: 'inline-flex', gap: '0.5rem' }}>
+        <input
+          type="search"
+          placeholder="Search garage posts..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          aria-label="Search garage posts"
+        />
+        <button type="submit">Search</button>
+      </form>
+    </nav>
+  )
 }

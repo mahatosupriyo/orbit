@@ -1,30 +1,59 @@
 'use client'
 
-import { useState, useTransition } from 'react'
-import { searchGaragePosts } from './experiment' // updated path
+import { useState, useTransition, useEffect } from 'react'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { searchGaragePosts } from './astrasearch' // adjust path if needed
 import CapsuleCard from '@/components/molecules/capsules/capsule'
 import { z } from 'zod'
-import styles from './experiment.module.scss'
+import styles from './astrasearch.module.scss'
 
 const SearchSchema = z.object({
   query: z.string().min(1).max(100),
 })
 
-export default function SearchPage() {
-  const [query, setQuery] = useState('')
+export default function AstraSearch() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+  const urlQuery = searchParams.get('q') || ''
+
+  const [query, setQuery] = useState(urlQuery)
   const [results, setResults] = useState<any[]>([])
   const [nextCursor, setNextCursor] = useState<number | null>(null)
   const [isPending, startTransition] = useTransition()
 
-  const handleSearch = () => {
-    const parse = SearchSchema.safeParse({ query })
+  // Run search automatically on initial load or when urlQuery changes
+  useEffect(() => {
+    if (!urlQuery) {
+      setResults([])
+      setNextCursor(null)
+      setQuery('')
+      return
+    }
+
+    const parse = SearchSchema.safeParse({ query: urlQuery })
     if (!parse.success) return
 
     startTransition(async () => {
-      const { posts, hasMore, nextCursor } = await searchGaragePosts(query)
+      const { posts, hasMore, nextCursor } = await searchGaragePosts(urlQuery)
       setResults(posts)
       setNextCursor(hasMore ? nextCursor : null)
+      setQuery(urlQuery)
     })
+  }, [urlQuery])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value)
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const trimmedQuery = query.trim()
+    const parse = SearchSchema.safeParse({ query: trimmedQuery })
+    if (!parse.success) return
+
+    // Update URL and trigger new search via useEffect
+    router.push(`/astra?q=${encodeURIComponent(trimmedQuery)}`)
   }
 
   const loadMore = () => {
@@ -38,27 +67,27 @@ export default function SearchPage() {
 
   return (
     <div className={styles.wrapper}>
-
       <div className={styles.container}>
-        <div className={styles.inputBox}>
+        <form onSubmit={handleSubmit} className={styles.inputBox}>
           <input
             type="text"
             placeholder="Search garage posts..."
             className={styles.input}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={handleInputChange}
             disabled={isPending}
           />
           <button
-            onClick={handleSearch}
+            type="submit"
             disabled={isPending}
             className={styles.button}
           >
             {isPending ? 'Searching...' : 'Search'}
           </button>
-        </div>
+        </form>
 
-        {results.length === 0 && !isPending && (
+        {/* Only show "No posts found" on /astra route */}
+        {pathname === '/astra' && results.length === 0 && !isPending && (
           <p className={styles.nothing}>No posts found.</p>
         )}
 
@@ -80,8 +109,6 @@ export default function SearchPage() {
           </div>
         )}
       </div>
-
-
     </div>
   )
 }

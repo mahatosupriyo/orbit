@@ -2,16 +2,16 @@
   width: 100%;
 
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
 }
 
 .container {
   display: flex;
   flex-direction: column;
+
   width: 100%;
   // max-width: 200rem;
-  width: 100%;
   padding: 2rem;
   margin-top: 8rem;
 }
@@ -19,28 +19,23 @@
 .inputBox {
   display: flex;
   gap: 1rem;
-  margin: 2rem 0rem;
+  margin: 1.6rem 0rem;
   // max-width: 600px;
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-radius: 2rem;
+  border-radius: 18rem;
 
   border: 2px solid hsl(0, 0%, 20%);
   transition: border-color 0.2s ease;
 
-  // &:hover {
-  //   border: 2px solid transparent;
-  //   background-image:
-  //     linear-gradient(hsl(0, 0%, 8%), hsl(0, 0%, 8%)),
-  //     linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
-
-  //   background-origin: border-box;
-  //   background-clip: padding-box, border-box;
-  // }
 
   &:hover {
-    border: 2px solid hsl(0, 0%, 40%);
+    border: 2px solid hsl(0, 0%, 30%);
+
+    .searchicon {
+      fill: hsl(0, 0%, 90%);
+    }
   }
 
   &:focus-within {
@@ -52,8 +47,8 @@
 
 .input {
   flex: 1;
-  padding: 2.2rem;
-  border-radius: 1.6rem;
+  padding: 2rem;
+  border-radius: 1rem;
 
   font-size: 1.5rem;
   background-color: transparent;
@@ -168,7 +163,7 @@
 /* Input inside */
 .astrainput {
   display: flex;
-  padding: 2.3rem 2.4rem;
+  padding: 2rem 2.4rem;
   color: hsl(0, 0%, 90%);
   font-size: 1.56rem;
   font-weight: 400;
@@ -180,10 +175,10 @@
 
 /* Button inside */
 .astrabutton {
-  border-radius: 1.4rem;
-  height: 4.6rem;
+  border-radius: 14rem;
+  // height: 4.6rem;
   // width: 4.6rem;
-  margin-right: 1.6rem;
+  margin-right: 0.4rem;
   background: none;
   cursor: pointer;
 
@@ -191,6 +186,9 @@
   flex-direction: row;
   align-items: center;
   gap: 0.2rem;
+
+  background-color: hsl(0, 0%, 12%);
+  padding: 1rem;
 }
 
 /* Icon */

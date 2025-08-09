@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { deleteGaragePost } from "@/app/(main)/garage/deleteGaragePost";
 import { useTransition } from "react";

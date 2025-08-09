@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "./capsule.module.scss";
 import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";

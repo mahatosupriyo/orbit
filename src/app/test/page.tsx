@@ -1,12 +1,10 @@
-'use client'
-
+import { Suspense } from 'react'
 import AstraSearch from '../astra/page'
 
-
-export default function NavBar() {
+export default function AstraPage() {
   return (
-    <>
-      <AstraSearch/>
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <AstraSearch />
+    </Suspense>
   )
 }

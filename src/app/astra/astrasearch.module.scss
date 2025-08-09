@@ -29,14 +29,22 @@
   border: 2px solid hsl(0, 0%, 20%);
   transition: border-color 0.2s ease;
 
-  &:hover {
-    border: 2px solid transparent;
-    background-image:
-      linear-gradient(hsl(0, 0%, 8%), hsl(0, 0%, 8%)),
-      linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
+  // &:hover {
+  //   border: 2px solid transparent;
+  //   background-image:
+  //     linear-gradient(hsl(0, 0%, 8%), hsl(0, 0%, 8%)),
+  //     linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
 
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
+  //   background-origin: border-box;
+  //   background-clip: padding-box, border-box;
+  // }
+
+  &:hover {
+    border: 2px solid hsl(0, 0%, 40%);
+  }
+
+  &:focus-within {
+    border: 2px solid #007aff;
   }
 
   transition: 0.4s cubic-bezier(.51, .92, .24, 1.15);

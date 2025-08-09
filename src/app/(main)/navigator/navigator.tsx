@@ -24,7 +24,29 @@ const Navigator: React.FC = () => {
 
   return (
     <nav className={styles.mainnavigatorcontainer} aria-label="Main Navigation">
+
+      <motion.div
+        whileTap={{ opacity: 0.6, scale: 0.96 }}
+      >
+        <Link
+          href="/astra"
+          className={`${styles.pagebtn} ${isActive("/astra") ? styles.active : ""}`}
+          aria-current={isActive("/astra") ? "page" : undefined}
+          tabIndex={0}
+        >
+          <Icon
+            name="activesearch"
+            size={28}
+            fill={isActive("/astra") ? "#fafafa" : "#666"}
+            aria-label="Astra"
+          />
+        </Link>
+      </motion.div>
+
       {/* Garage Page Link */}
+
+
+
       <motion.div
         whileTap={{ opacity: 0.6, scale: 0.96 }}
       >
@@ -43,7 +65,7 @@ const Navigator: React.FC = () => {
         </Link>
       </motion.div>
 
-      
+
 
       {/* Garage Page Link */}
       {session?.user.role === "ADMIN" && (

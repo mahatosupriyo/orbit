@@ -5,6 +5,7 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { searchGaragePosts } from './astrasearch' // adjust path if needed
 import CapsuleCard from '@/components/molecules/capsules/capsule'
 import { z } from 'zod'
+import { motion } from 'framer-motion'
 import styles from './astrasearch.module.scss'
 
 const SearchSchema = z.object({
@@ -65,11 +66,18 @@ export default function AstraSearch() {
 
     return (
         <>
-            <form onSubmit={handleSubmit} className={styles.inputBox}>
+            <motion.form
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2, ease: [0.785, 0.135, 0.15, 0.86] }}
+                onSubmit={handleSubmit} 
+                className={styles.inputBox}
+                >
                 <input
                     type="text"
                     className={styles.input}
                     value={query}
+                    placeholder='Search anything'
                     onChange={handleInputChange}
                     disabled={isPending}
                 />
@@ -87,7 +95,7 @@ export default function AstraSearch() {
                     </span>
                     {/* {isPending ? 'Searching...' : 'Search'} */}
                 </button>
-            </form>
+            </motion.form>
 
             {pathname === '/astra' && results.length === 0 && !isPending && (
                 <p className={styles.nothing}>No posts found.</p>

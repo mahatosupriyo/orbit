@@ -5,6 +5,7 @@ import styles from './home.module.scss';
 import Link from 'next/link';
 import { motion, AnimatePresence, delay, stagger } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import AstraSearchBox from './astra/astrasearchbox';
 
 const transition = {
   duration: 0.2,
@@ -79,8 +80,11 @@ export default function OrbitNavigator() {
 
 
             </motion.div>
-
           </div>
+
+          <motion.div whileTap={{ scale: 0.99 }} className={styles.astrawraper} variants={childVariants}>
+            <AstraSearchBox />
+          </motion.div>
         </AnimatePresence>
       </div>
     </div>

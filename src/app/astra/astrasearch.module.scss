@@ -1,7 +1,4 @@
 .wrapper {
-  // max-width: 1200px;
-  // margin: 0 auto;
-  padding: 2rem;
   width: 100%;
 
   display: flex;
@@ -9,11 +6,12 @@
   flex-direction: column;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 200rem;
+  // max-width: 200rem;
+  width: 100%;
 }
 
 .heading {
@@ -26,7 +24,8 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  max-width: 600px;
+  // max-width: 600px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -40,6 +39,7 @@
   transition: border-color 0.2s ease;
   background-color: transparent;
   color: #fff;
+  width: 100%;
 
   &:focus {
     outline: none;
@@ -170,4 +170,69 @@
   padding: 2rem;
   // background: #f7fafc;
   border-radius: 12px;
+}
+
+
+.astraform {
+  display: flex;
+  width: 100%;
+  // max-width: 50rem;
+  background-color: hsl(0, 0%, 8%);
+  color: hsl(0, 0%, 90%);
+  border-radius: 16rem;
+  align-items: center;
+  flex-direction: row;
+  padding: 0.16rem;
+  cursor: text;
+
+  /* Gradient border */
+  border: 1.6px solid transparent;
+  background-image:
+    linear-gradient(hsl(0, 0%, 8%), hsl(0, 0%, 8%)),
+    linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+
+  transition: all 0.3s ease;
+}
+
+.astraform:hover {
+  background-image:
+    linear-gradient(hsl(0, 0%, 10%), hsl(0, 0%, 10%)),
+    linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
+  // box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+/* Input inside */
+.astrainput {
+  display: flex;
+  padding: 3rem 2.4rem;
+  color: hsl(0, 0%, 90%);
+  font-size: 1.56rem;
+  font-weight: 400;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+/* Button inside */
+.astrabutton {
+  border-radius: 1.4rem;
+  height: 4.6rem;
+  width: 4.6rem;
+  margin: 0.16rem 1rem;
+  background: none;
+  cursor: pointer;
+}
+
+/* Icon */
+.searchicon {
+  transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+  height: 2.8rem;
+  fill: hsl(0, 0%, 100%, 0.36);
+}
+
+.astraform:hover .searchicon {
+  fill: #fff;
 }

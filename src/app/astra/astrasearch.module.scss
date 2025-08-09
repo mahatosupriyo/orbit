@@ -29,8 +29,8 @@
   border-radius: 20rem;
   gap: 1rem;
 
-  border: 2px solid hwb(0 30% 70%);
-  background-color: hsl(0, 0%, 9%);
+  border: 2px solid transparent;
+  background-color: hsl(0, 0%, 12%);
   transition: border-color 0.2s ease;
   margin-top: 14rem;
 
@@ -39,7 +39,7 @@
   }
 
   &:hover {
-    border: 2px solid hsl(0, 0%, 40%);
+    border: 2px solid hsl(0, 0%, 20%);
 
     .searchicon {
       // fill: hsl(0, 0%, 90%);
@@ -64,7 +64,7 @@
   &:focus-within {
     border: 2px solid hsl(0, 0%, 40%);
     border: 2px solid transparent;
-    background-color: hsl(0, 0%, 22%);
+    background-color: hsl(0, 0%, 15%);
 
     .astrabutton {
 

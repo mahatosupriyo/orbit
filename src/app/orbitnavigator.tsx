@@ -82,9 +82,9 @@ export default function OrbitNavigator() {
             </motion.div>
           </div>
 
-          <motion.div whileTap={{ scale: 0.99 }} className={styles.astrawraper} variants={childVariants}>
+          <div className={styles.astrawraper}>
             <AstraSearchBox />
-          </motion.div>
+          </div>
         </AnimatePresence>
       </div>
     </div>

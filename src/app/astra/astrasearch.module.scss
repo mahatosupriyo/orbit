@@ -12,31 +12,42 @@
   width: 100%;
   // max-width: 200rem;
   width: 100%;
-}
-
-.heading {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+  padding: 2rem;
+  margin-top: 8rem;
 }
 
 .inputBox {
   display: flex;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin: 2rem 0rem;
   // max-width: 600px;
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 2rem;
+
+  border: 2px solid hsl(0, 0%, 20%);
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border: 2px solid transparent;
+    background-image:
+      linear-gradient(hsl(0, 0%, 8%), hsl(0, 0%, 8%)),
+      linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
+
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  transition: 0.4s cubic-bezier(.51, .92, .24, 1.15);
 }
 
 .input {
   flex: 1;
-  padding: 1.6rem;
-  border: 2px solid hsl(0, 0%, 20%);
-  border-radius: 12px;
+  padding: 2.6rem;
+  border-radius: 2rem;
+
   font-size: 1.5rem;
-  transition: border-color 0.2s ease;
   background-color: transparent;
   color: #fff;
   width: 100%;
@@ -84,39 +95,15 @@
   border: 1px solid #fecaca;
 }
 
-.aiMessage {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin: 2rem 0;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(240, 147, 251, 0.3);
-
-  p {
-    margin: 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    display: none;
-  }
-}
-
-.aiIcon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
 
 .results {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 6rem;
 }
 
 .card {
-  // background: white;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -128,39 +115,6 @@
   }
 }
 
-.thumbnail {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-}
-
-.content {
-  padding: 1.5rem;
-}
-
-.title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  // margin: 0 0 0.5rem 0;
-  color: #2d3748;
-}
-
-.caption {
-  color: #718096;
-  line-height: 1.6;
-  // margin: 0 0 1rem 0;
-}
-
-.similarity {
-  display: inline-block;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
 
 .nothing {
   text-align: center;
@@ -176,37 +130,35 @@
 .astraform {
   display: flex;
   width: 100%;
-  // max-width: 50rem;
   background-color: hsl(0, 0%, 8%);
   color: hsl(0, 0%, 90%);
-  border-radius: 16rem;
+  border-radius: 2rem;
   align-items: center;
   flex-direction: row;
   padding: 0.16rem;
   cursor: text;
+  border: 0.16rem solid hsl(0, 0%, 18%);
 
-  /* Gradient border */
-  border: 1.6px solid transparent;
-  background-image:
-    linear-gradient(hsl(0, 0%, 8%), hsl(0, 0%, 8%)),
-    linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  // /* Gradient border */
 
-  transition: all 0.3s ease;
-}
 
-.astraform:hover {
-  background-image:
-    linear-gradient(hsl(0, 0%, 10%), hsl(0, 0%, 10%)),
-    linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
-  // box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+  &:hover {
+    border: 1.6px solid transparent;
+    background-image:
+      linear-gradient(hsl(0, 0%, 8%), hsl(0, 0%, 8%)),
+      linear-gradient(90deg, #ff6b6b, #f8e71c, #4cd964, #5ac8fa, #007aff, #ff2d55);
+
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  transition: 0.4s cubic-bezier(.51, .92, .24, 1.15);
 }
 
 /* Input inside */
 .astrainput {
   display: flex;
-  padding: 3rem 2.4rem;
+  padding: 2.3rem 2.4rem;
   color: hsl(0, 0%, 90%);
   font-size: 1.56rem;
   font-weight: 400;
@@ -220,10 +172,15 @@
 .astrabutton {
   border-radius: 1.4rem;
   height: 4.6rem;
-  width: 4.6rem;
-  margin: 0.16rem 1rem;
+  // width: 4.6rem;
+  margin-right: 1.6rem;
   background: none;
   cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.2rem;
 }
 
 /* Icon */
@@ -235,4 +192,35 @@
 
 .astraform:hover .searchicon {
   fill: #fff;
+}
+
+.key {
+  // font-family: Consolas;
+  display: flex;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: hsl(0, 0%, 40%);
+  border: 0.1rem solid hsl(0, 0%, 12%);
+  transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+  box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
+  background-color: hsl(0, 0%, 16%);
+}
+
+.morebutton {
+  background-color: hsl(0, 0%, 14%);
+  padding: 4rem 4rem;
+  width: 100%;
+  border-radius: 100rem;
+  cursor: pointer;
+  margin-top: 6rem;
+  margin-bottom: 10rem;
+  border: 1.6px solid transparent;
+  transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+
+  &:hover {
+    background-color: hsl(0, 0%, 16%);
+
+  }
 }

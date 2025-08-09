@@ -19,30 +19,52 @@
 .inputBox {
   display: flex;
   gap: 1rem;
-  margin: 1.6rem 0rem;
+  padding: 1.6rem 0rem;
   // max-width: 600px;
   width: 100%;
 
-  height: 8rem;
+  height: 6.6rem;
   flex-direction: row;
   align-items: center;
-  border-radius: 2rem;
+  border-radius: 20rem;
+  gap: 1rem;
 
-  border: 2px solid hsl(0, 0%, 30%);
-  background-color: #333;
+  border: 2px solid hwb(0 30% 70%);
+  background-color: hsl(0, 0%, 9%);
   transition: border-color 0.2s ease;
-  margin-top: 4rem;
+  margin-top: 14rem;
+
+  .searchicon {
+    margin-left: 1.6rem;
+  }
 
   &:hover {
     border: 2px solid hsl(0, 0%, 40%);
 
     .searchicon {
-      fill: hsl(0, 0%, 90%);
+      // fill: hsl(0, 0%, 90%);
+
+      /* Use mask so the background gradient fills the icon shape */
+      background: linear-gradient(90deg,
+          #f8e71c,
+          #4cd964,
+          #5ac8fa,
+          #ff6b6b,
+          #007aff,
+          #ff2d55);
+      background-size: 100% auto;
+
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 39 39'%3E%3Cpath d='M25.8762 23.8695C27.1206 22.2102 27.8545 20.1538 27.8545 17.9273C27.8545 12.4531 23.4015 8 17.9273 8C12.4531 8 8 12.4531 8 17.9273C8 23.4015 12.4531 27.8545 17.9273 27.8545C20.1538 27.8545 22.2102 27.1171 23.8695 25.8762L28.2694 30.2761C28.5459 30.5526 28.9075 30.6909 29.2727 30.6909C29.6379 30.6909 29.9995 30.5526 30.2761 30.2761C30.8292 29.723 30.8292 28.826 30.2761 28.2694L25.8762 23.8695ZM17.9273 25.0182C14.0166 25.0182 10.8364 21.8379 10.8364 17.9273C10.8364 14.0166 14.0166 10.8364 17.9273 10.8364C21.8379 10.8364 25.0182 14.0166 25.0182 17.9273C25.0182 21.8379 21.8379 25.0182 17.9273 25.0182Z'/%3E%3C/svg%3E") no-repeat center;
+      -webkit-mask-size: cover;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 39 39'%3E%3Cpath d='M25.8762 23.8695C27.1206 22.2102 27.8545 20.1538 27.8545 17.9273C27.8545 12.4531 23.4015 8 17.9273 8C12.4531 8 8 12.4531 8 17.9273C8 23.4015 12.4531 27.8545 17.9273 27.8545C20.1538 27.8545 22.2102 27.1171 23.8695 25.8762L28.2694 30.2761C28.5459 30.5526 28.9075 30.6909 29.2727 30.6909C29.6379 30.6909 29.9995 30.5526 30.2761 30.2761C30.8292 29.723 30.8292 28.826 30.2761 28.2694L25.8762 23.8695ZM17.9273 25.0182C14.0166 25.0182 10.8364 21.8379 10.8364 17.9273C10.8364 14.0166 14.0166 10.8364 17.9273 10.8364C21.8379 10.8364 25.0182 14.0166 25.0182 17.9273C25.0182 21.8379 21.8379 25.0182 17.9273 25.0182Z'/%3E%3C/svg%3E") no-repeat center;
+      mask-size: cover;
     }
   }
 
   &:focus-within {
     border: 2px solid hsl(0, 0%, 40%);
+    border: 2px solid transparent;
+    background-color: hsl(0, 0%, 22%);
 
     .astrabutton {
 
@@ -61,8 +83,8 @@
 
 .input {
   flex: 1;
-  padding: 2rem 2.4rem;
-
+  padding: 2rem 0rem;
+  user-select: none;
   font-size: 1.56rem;
   background-color: transparent;
   color: #fff;
@@ -118,7 +140,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .card {
@@ -211,10 +233,8 @@
   gap: 0.2rem;
 
 
-  background-color: hsl(0, 0%, 7%);
+  background-color: hsl(0, 0%, 8%);
   padding: 1rem;
-
-
 
 }
 
@@ -241,6 +261,7 @@
   transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
   box-shadow: hsla(0, 0%, 11%, 0.2) 0px 0.4px 4px;
   background-color: hsl(0, 0%, 16%);
+
 }
 
 .morebutton {

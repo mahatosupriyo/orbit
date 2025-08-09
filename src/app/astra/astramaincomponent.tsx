@@ -68,7 +68,6 @@ export default function AstraSearch() {
             <form onSubmit={handleSubmit} className={styles.inputBox}>
                 <input
                     type="text"
-                    placeholder="Search anything"
                     className={styles.input}
                     value={query}
                     onChange={handleInputChange}

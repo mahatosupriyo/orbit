@@ -24,14 +24,15 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-radius: 18rem;
+  border-radius: 1.8rem;
 
-  border: 2px solid hsl(0, 0%, 20%);
+  border: 2px solid hsl(0, 0%, 30%);
+  background-color: #333;
   transition: border-color 0.2s ease;
 
 
   &:hover {
-    border: 2px solid hsl(0, 0%, 30%);
+    border: 2px solid hsl(0, 0%, 40%);
 
     .searchicon {
       fill: hsl(0, 0%, 90%);
@@ -39,7 +40,7 @@
   }
 
   &:focus-within {
-    border: 2px solid #007aff;
+    border: 2px solid hsl(0, 0%, 40%);
   }
 
   transition: 0.4s cubic-bezier(.51, .92, .24, 1.15);
@@ -50,10 +51,11 @@
   padding: 2rem;
   border-radius: 1rem;
 
-  font-size: 1.5rem;
+  font-size: 1.56rem;
   background-color: transparent;
   color: #fff;
   width: 100%;
+  font-weight: 400;
 
   &:focus {
     outline: none;
@@ -64,6 +66,7 @@
     opacity: 0.6;
     cursor: not-allowed;
   }
+
 }
 
 .button {
@@ -163,7 +166,7 @@
 /* Input inside */
 .astrainput {
   display: flex;
-  padding: 2rem 2.4rem;
+  padding: 2rem 2rem;
   color: hsl(0, 0%, 90%);
   font-size: 1.56rem;
   font-weight: 400;
@@ -171,11 +174,16 @@
   border: none;
   outline: none;
   flex: 1;
+
+  &::placeholder {
+    color: hsl(0, 0%, 80%);
+    font-weight: 400;
+  }
 }
 
 /* Button inside */
 .astrabutton {
-  border-radius: 14rem;
+  border-radius: 1.4rem;
   // height: 4.6rem;
   // width: 4.6rem;
   margin-right: 0.4rem;

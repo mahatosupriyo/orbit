@@ -43,7 +43,7 @@ export default function OdysseyPage() {
                         variants={containerVariants}
                         className={styles.playercontainer}>
                         <motion.div variants={itemVariants} className={styles.playersection}>
-                            <motion.div style={{ width: '100%', overflow: 'hidden' }}>
+                            <motion.div style={{ width: '100%', borderRadius: '1.2rem', overflow: 'hidden' }}>
                                 <Video className={styles.playercomp} style={{ width: '100%', userSelect: 'none', pointerEvents: 'none', height: '100%' }}
                                     playbackId='I00sgVOUCVQLklE5mtWQF4vsuumi00ZODzfMEjzVeOL900'
                                     poster="https://image.mux.com/I00sgVOUCVQLklE5mtWQF4vsuumi00ZODzfMEjzVeOL900/thumbnail.webp"
@@ -70,7 +70,7 @@ export default function OdysseyPage() {
                             animate="animate"
                             exit="exit"
                         >
-                            <motion.h1 variants={itemVariants} className={styles.wraperheader}>Made for you</motion.h1>
+                            {/* <motion.h1 variants={itemVariants} className={styles.wraperheader}>Made for you</motion.h1> */}
 
                             <motion.div variants={itemVariants}>
 

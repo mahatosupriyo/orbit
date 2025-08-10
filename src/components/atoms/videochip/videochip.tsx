@@ -30,17 +30,7 @@ export default function VideoChip({ videourl, imageBanner, label, title, premium
                     className={styles.videobanner}
                     alt={title}
                 />
-                <div className={styles.videoinfo}>
-                    <div className={styles.detailwraper}>
-                        {/* Video label and title */}
-                        <p className={styles.label}>{label}</p>
-                        <h3 className={styles.videotitle}>{title}</h3>
-                    </div>
-                    <div className={styles.iconwraper}>
-                        {/* Lock icon for premium videos */}
-                        {premium && <Icon fill='#fff' size={20} name='lock' />}
-                    </div>
-                </div>
+                
             </Link>
         </div>
     );

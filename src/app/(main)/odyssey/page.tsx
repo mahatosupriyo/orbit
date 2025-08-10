@@ -45,8 +45,8 @@ export default function OdysseyPage() {
                         <motion.div variants={itemVariants} className={styles.playersection}>
                             <motion.div style={{ width: '100%', borderRadius: '1.2rem', overflow: 'hidden' }}>
                                 <Video className={styles.playercomp} style={{ width: '100%', userSelect: 'none', pointerEvents: 'none', height: '100%' }}
-                                    playbackId='I00sgVOUCVQLklE5mtWQF4vsuumi00ZODzfMEjzVeOL900'
-                                    poster="https://image.mux.com/I00sgVOUCVQLklE5mtWQF4vsuumi00ZODzfMEjzVeOL900/thumbnail.webp"
+                                    playbackId='GG2jd7sJNUWWRtl8KIuHh400doNT028dFl1frVv00EoWL4'
+                                    poster="https://image.mux.com/GG2jd7sJNUWWRtl8KIuHh400doNT028dFl1frVv00EoWL4/thumbnail.webp"
                                 />
                             </motion.div>
 

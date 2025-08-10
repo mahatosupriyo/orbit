@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import styles from './astrasearch.module.scss' // optional styling
-import Icon from '@/components/atoms/icons'
 
 export default function AstraSearchBox() {
     const router = useRouter()

@@ -8,6 +8,7 @@ import {
     ListObjectsV2Command,
     DeleteObjectsCommand,
 } from "@aws-sdk/client-s3";
+import { checkUserSubscription } from "@/utils/hassubscription";
 
 const s3 = new S3Client({
     region: process.env.ORBIT_AWS_REGION!,
@@ -45,7 +46,15 @@ export async function deleteAccount() {
     const session = await auth();
     const userId = session?.user?.id;
 
-    if (!userId) return { success: false, message: "You must be logged in." };
+    if (!userId) {
+        return { success: false, message: "You must be logged in." };
+    }
+
+    // 🚫 Block deletion if subscription is active
+    const hasSubscription = await checkUserSubscription(userId);
+    if (hasSubscription) {
+        return { success: false, message: "You have an active subscription. Please cancel it before deleting your account." };
+    }
 
     try {
         const user = await db.user.findUnique({
@@ -78,8 +87,8 @@ export async function deleteAccount() {
                 if (asset.playbackID) {
                     try {
                         await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: asset.playbackID }));
-                    } catch {}
-                    await db.asset.delete({ where: { id: asset.id } }).catch(() => {});
+                    } catch { }
+                    await db.asset.delete({ where: { id: asset.id } }).catch(() => { });
                 }
             }
 
@@ -88,12 +97,12 @@ export async function deleteAccount() {
                 if (makingOfAsset?.playbackID) {
                     try {
                         await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: makingOfAsset.playbackID }));
-                    } catch {}
-                    await db.asset.delete({ where: { id: post.assetId } }).catch(() => {});
+                    } catch { }
+                    await db.asset.delete({ where: { id: post.assetId } }).catch(() => { });
                 }
             }
 
-            await db.garagePost.delete({ where: { id: post.id } }).catch(() => {});
+            await db.garagePost.delete({ where: { id: post.id } }).catch(() => { });
         }
 
         // Delete Courses, Lessons, and video assets
@@ -102,29 +111,29 @@ export async function deleteAccount() {
                 if (lesson.video?.playbackID) {
                     try {
                         await s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: lesson.video.playbackID }));
-                    } catch {}
-                    await db.asset.delete({ where: { id: lesson.video.id } }).catch(() => {});
+                    } catch { }
+                    await db.asset.delete({ where: { id: lesson.video.id } }).catch(() => { });
                 }
             }
 
-            await db.lesson.deleteMany({ where: { courseId: course.id } }).catch(() => {});
-            await db.course.delete({ where: { id: course.id } }).catch(() => {});
+            await db.lesson.deleteMany({ where: { courseId: course.id } }).catch(() => { });
+            await db.course.delete({ where: { id: course.id } }).catch(() => { });
         }
 
         // Delete Posts
-        await db.post.deleteMany({ where: { createdById: userId } }).catch(() => {});
+        await db.post.deleteMany({ where: { createdById: userId } }).catch(() => { });
 
         // Delete Payments
-        await db.payment.deleteMany({ where: { userId } }).catch(() => {});
+        await db.payment.deleteMany({ where: { userId } }).catch(() => { });
 
         // Delete Follows
-        await db.follow.deleteMany({ where: { followerId: userId } }).catch(() => {});
-        await db.follow.deleteMany({ where: { followingId: userId } }).catch(() => {});
+        await db.follow.deleteMany({ where: { followerId: userId } }).catch(() => { });
+        await db.follow.deleteMany({ where: { followingId: userId } }).catch(() => { });
 
         // Delete Verification Tokens
-        await db.verificationToken.deleteMany({ where: { identifier: user.email ?? "" } }).catch(() => {});
+        await db.verificationToken.deleteMany({ where: { identifier: user.email ?? "" } }).catch(() => { });
 
-        // Wipe sensitive user fields (optional defense-in-depth)
+        // Wipe sensitive user fields
         await db.user.update({
             where: { id: userId },
             data: {
@@ -138,7 +147,7 @@ export async function deleteAccount() {
         await deleteS3Folder(`garage/${userId}/`);
         await deleteS3Folder(`avatar/${userId}/`);
 
-        // Final user deletion (cascades to sessions, accounts, etc.)
+        // Final user deletion
         await db.user.delete({ where: { id: userId } });
 
         return { success: true, message: "Account deleted successfully." };

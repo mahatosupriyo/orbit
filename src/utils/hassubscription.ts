@@ -1,4 +1,3 @@
-// /lib/check-subscription.ts
 import { db } from "@/server/db";
 
 export async function checkUserSubscription(userId: string) {

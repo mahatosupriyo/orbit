@@ -51,9 +51,9 @@ const Navigator: React.FC = () => {
         whileTap={{ opacity: 0.6, scale: 0.96 }}
       >
         <Link
-          href="/garage"
-          className={`${styles.pagebtn} ${isActive("/garage") ? styles.active : ""}`}
-          aria-current={isActive("/garage") ? "page" : undefined}
+          href="/"
+          className={`${styles.pagebtn} ${isActive("/") ? styles.active : ""}`}
+          aria-current={isActive("/") ? "page" : undefined}
           tabIndex={0}
         >
           <Icon

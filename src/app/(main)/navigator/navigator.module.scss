@@ -21,8 +21,11 @@
     user-select: none;
     cursor: pointer;
     transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
+
+
     outline: 0.2rem solid hsl(0, 0%, 18%);
     outline-offset: 0.16rem;
+    
     position: relative;
 
     &:hover {

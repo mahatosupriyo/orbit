@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition, useEffect } from 'react'
+import { useState, useTransition, useEffect, useRef } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { searchGaragePosts } from './astrasearch' // adjust path if needed
 import CapsuleCard from '@/components/molecules/capsules/capsule'
@@ -24,6 +24,9 @@ export default function AstraSearch() {
   const [results, setResults] = useState<any[]>([])
   const [nextCursor, setNextCursor] = useState<number | null>(null)
   const [isPending, startTransition] = useTransition()
+
+  // 🔹 Ref for focusing input
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (!urlQuery) {
@@ -54,6 +57,28 @@ export default function AstraSearch() {
       }
     })
   }, [urlQuery, router])
+
+
+  // 🔹 Keyboard shortcut for focusing search with "/"
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if typing in an input/textarea
+      const target = e.target as HTMLElement
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        return
+      }
+
+      if (e.key === '/') {
+        e.preventDefault() // Prevent browser quick find
+        inputRef.current?.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
@@ -102,6 +127,8 @@ export default function AstraSearch() {
         </svg>
 
         <input
+          ref={inputRef} // 🔹 link ref
+
           type="text"
           className={styles.input}
           value={query}
@@ -111,7 +138,7 @@ export default function AstraSearch() {
         />
 
         <span className={styles.key} style={{ marginRight: '2rem' }}>
-          ↵
+          /
         </span>
       </motion.form>
 

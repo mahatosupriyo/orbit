@@ -89,7 +89,7 @@ export default function AstraSearch() {
   }
 
   return (
-    <>
+    <div className={styles.searchContainer}>
       <motion.form
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -130,7 +130,8 @@ export default function AstraSearch() {
 
       {nextCursor && (
         <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-          <button
+          <motion.button
+            whileTap={{ scale: 0.96, opacity: 0.8 }}
             onClick={loadMore}
             disabled={isPending}
             className={styles.morebutton}
@@ -141,9 +142,9 @@ export default function AstraSearch() {
               <path d="M97.5672 95.5452V68.9273L35.9101 128.469L49.2961 142.331L97.5672 95.5452Z" />
             </svg>
             {/* {isPending ? 'Loading...' : 'Load More'} */}
-          </button>
+          </motion.button>
         </div>
       )}
-    </>
+    </div>
   )
 }

@@ -87,13 +87,14 @@
   user-select: none;
   font-size: 1.56rem;
   background-color: transparent;
-  color: #fff;
+  color: hsl(0, 0%, 60%);
   width: 100%;
-  font-weight: 400;
+  font-weight: 500;
 
   &:focus {
     outline: none;
     border-color: #636363;
+    color: hsl(0, 0%, 90%);
   }
 
   &:disabled {
@@ -281,7 +282,7 @@
   }
 }
 
-.wraper{
+.wraper {
   display: flex;
   align-items: center;
   flex-direction: column;

@@ -105,7 +105,7 @@ export default function AstraSearch() {
           type="text"
           className={styles.input}
           value={query}
-          placeholder="Search anything"
+          // placeholder="Search anything"
           onChange={handleInputChange}
           disabled={isPending}
         />

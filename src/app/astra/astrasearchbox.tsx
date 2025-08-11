@@ -24,7 +24,7 @@ export default function AstraSearchBox() {
         <form onSubmit={handleSubmit} className={styles.astraform}>
             <input
                 type="text"
-                placeholder="Search"
+                // placeholder="Search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className={styles.astrainput}

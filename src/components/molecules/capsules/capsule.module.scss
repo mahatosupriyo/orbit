@@ -405,7 +405,7 @@
     border-radius: 1.2rem;
     overflow: hidden;
     background-color: #000;
-    pointer-events: auto; // Explicitly allow pointer events
+    // pointer-events: auto; // Explicitly allow pointer events
     position: relative; // Needed for z-index to work
     z-index: 1; // Ensure it's above any potential sibling overlays within the content
 }

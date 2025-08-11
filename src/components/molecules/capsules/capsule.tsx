@@ -240,7 +240,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                                 controls
                                                             />
                                                         ) : (
-                                                            <p>Loading video...</p>
+                                                            <p>Loading video</p>
                                                         )}
 
                                                     </div>

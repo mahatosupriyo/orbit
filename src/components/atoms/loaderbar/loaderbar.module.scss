@@ -15,7 +15,7 @@
     background-size: 400% 100%;
     animation: animateGradient 6s ease-in-out infinite alternate;
     filter: blur(26px); 
-    z-index: 100;
+    z-index: 1000;
 }
 
 .gradientLine {
@@ -34,7 +34,7 @@
             hsl(0, 90%, 60%));
     background-size: 400% 100%;
     animation: animateGradient 6s ease-in-out infinite alternate;
-    z-index: 200;
+    z-index: 1200;
 }
 
 @keyframes animateGradient {

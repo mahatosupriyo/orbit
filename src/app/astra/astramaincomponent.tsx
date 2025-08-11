@@ -126,7 +126,7 @@ export default function AstraSearch() {
       </div>
 
       {isPending && <LoaderBar />}
-
+      {/* <LoaderBar /> */}
 
       {nextCursor && (
         <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>

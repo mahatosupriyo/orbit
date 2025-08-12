@@ -5,7 +5,7 @@
 
     width: 100%;
 
-    background-color: #E6E3DC;
+    // background-color: hsl(0, 0%, 8%);
     background-color: #fff;
     // background-color: #000;
 
@@ -61,7 +61,7 @@
                 text-align: center;
                 font-family: 'Instrument Serif', serif;
 
-                color: #fff;
+                color: #222;
 
                 @media (max-width: 1000px) {
                     font-size: 12rem;
@@ -81,7 +81,7 @@
                 color: hsl(0, 0%, 40%);
 
                 .highlight {
-                    color: #fff;
+                    color: #222;
                 }
             }
 

@@ -32,10 +32,24 @@ $fill: $dark;
         justify-content: space-between;
         align-items: center;
 
-        .logo {
-            user-select: none;
-            pointer-events: none;
+        .mainleft {
+            // user-select: none;
+            // pointer-events: none;
             fill: $dark;
+            display: flex;
+            flex-direction: row;
+            gap: 10rem;
+            align-items: center;
+
+            .navlinks {
+                display: flex;
+                gap: 3rem;
+                .navlink{
+                    font-size: 1.4rem;
+                    font-weight: 400;
+                    color: $color;
+                }
+            }
         }
 
         .cta {
@@ -44,7 +58,7 @@ $fill: $dark;
             color: $dark;
             text-decoration: none;
 
-            padding: 2.1rem 1.8rem;
+            padding: 2rem 2rem;
             border-radius: 10rem;
             background-color: #0061EF;
             color: #fff;

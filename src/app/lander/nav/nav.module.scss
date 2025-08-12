@@ -16,31 +16,38 @@ $fill: $dark;
 
     width: 100%;
 
-    background-color: $background;
+    // background-color: $background;
 
     .navbar {
         width: 100%;
         max-width: 200rem;
-        padding: 3rem 4rem;
+        padding: 2rem 10rem;
 
         @media (max-width: 800px) {
             padding: 2rem 2rem;
         }
 
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
         align-items: center;
 
         .logo {
             user-select: none;
             pointer-events: none;
+            fill: $dark;
         }
 
         .cta {
-            font-size: 1.8rem;
+            font-size: 1.46rem;
             font-weight: 500;
-            color: #fff;
+            color: $dark;
             text-decoration: none;
+
+            padding: 2.1rem 1.8rem;
+            border-radius: 10rem;
+            background-color: #0061EF;
+            color: #fff;
         }
     }
 }

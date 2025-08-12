@@ -1,6 +1,9 @@
 @use "../../../app/styles/essentials";
 @import "../../../app/styles/essentials";
 
+$background: #44423F;
+$color: #44423F;
+
 .footer {
     display: flex;
     align-items: center;
@@ -10,7 +13,7 @@
     .footerwraper {
         width: 100%;
         max-width: 200rem;
-        background-color: hsl(0, 0%, 4%);
+        background-color: $background;
         display: flex;
         flex-direction: column;
         border-top: 0.1rem solid hsl(0, 0%, 10%);
@@ -18,7 +21,7 @@
         .footercontent {
             width: 100%;
             padding: 6rem 4rem;
-            color: hsl(0, 0%, 90%);
+            color: $color;
 
             @media (max-width: 800px) {
                 padding: 6rem 2rem;
@@ -45,14 +48,14 @@
                 .passiontxt {
                     font-size: 1.2rem;
                     font-weight: 400;
-                    color: hsl(0, 0%, 60%);
+                    color: hsl(0, 0%, 100%, 0.7);
                     margin-bottom: 1rem;
                 }
 
                 .copyrighttxt {
                     font-size: 1.16rem;
                     font-weight: 400;
-                    color: hsl(0, 0%, 40%);
+                    color: hsl(0, 0%, 100%, 0.4);
                 }
             }
 
@@ -104,7 +107,7 @@
                         content: '/';
                         font-size: inherit;
                         font-weight: 300;
-                        color: hsl(0, 0%, 26%);
+                        color: hsl(0, 0%, 100%, 0.3);
                         margin-right: 1rem;
                     }
                 }
@@ -127,7 +130,7 @@
                         display: inline-flex;
                         align-items: center;
                         justify-content: center;
-                        background: hsl(0, 0%, 12%);
+                        background: hsl(36, 4%, 20%);
                         border-radius: 0.4rem;
                         padding: 2rem;
                         border-radius: 6rem;
@@ -135,7 +138,7 @@
 
                         &:hover {
                             border-radius: 2.8rem;
-                            background: hsl(0, 0%, 24%);
+                            background: hsl(36, 4%, 16%);
                         }
                     }
                 }

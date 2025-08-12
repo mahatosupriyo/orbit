@@ -59,7 +59,7 @@ const Navigator: React.FC = () => {
           <Icon
             name="garage"
             size={28}
-            fill={isActive("/garage") ? "#fafafa" : "#666"}
+            fill={isActive("/") ? "#fafafa" : "#666"}
             aria-label="Garage"
           />
         </Link>

@@ -32,15 +32,15 @@ export default function Footer() {
 
                         <div className={styles.socials}>
                             <Link target="_blank" draggable="false" href="https://www.linkedin.com/company/weareontheorbit" className={styles.socialmedialink}>
-                                <Icon name='linkedin' fill={'#fff'} size={34} />
+                                <Icon name='linkedin' fill={'#ccc'} size={34} />
                             </Link>
 
                             <Link target="_blank" draggable="false" href="https://www.instagram.com/weareontheorbit/" className={styles.socialmedialink}>
-                                <Icon name='instagram' fill={'#fff'} size={34} />
+                                <Icon name='instagram' fill={'#ccc'} size={34} />
                             </Link>
 
                             <Link target="_blank" draggable="false" href="https://www.x.com/@weareontheorbit" className={styles.socialmedialink}>
-                                <Icon name='x' fill={'#fff'} size={34} />
+                                <Icon name='x' fill={'#ccc'} size={34} />
                             </Link>
                         </div>
                     </div>

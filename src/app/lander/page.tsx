@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { startTransition, useEffect } from 'react'
 import styles from './lander.module.scss'
 import NavBarLander from './nav/nav'
 import Footer from '@/components/molecules/footer/footer'
@@ -8,6 +8,8 @@ import { useRef } from 'react'
 import AnimatedTextReveal from './revealtxt/revealtext'
 import Testimonial from './testimonial/testimonial'
 import Pricingtable from './pricingtable/pricingtable'
+import Icon from '@/components/atoms/icons'
+import FAQSection from './faq/faq'
 
 function Lander() {
   const ref = useRef(null)
@@ -75,6 +77,8 @@ make something that feels like you.`;
     <div className={styles.wraper} ref={ref}>
       <NavBarLander />
       <div className={styles.container}>
+
+
         <div className={styles.hero}>
           <motion.p
             initial={{ opacity: 0, y: 40 }}
@@ -111,15 +115,70 @@ make something that feels like you.`;
             />
           </div>
         </div>
-        <div className={styles.revealtextcontainer}>
-          <AnimatedTextReveal text={launchmessage} />
+
+        <div className={styles.testimonialcontainer}>
+          <div className={styles.testimonialheader}>
+            <h1 className={styles.testimonialheader}>
+
+            </h1>
+            <p className={styles.testimonialdescription}>
+
+            </p>
+          </div>
+
+          <div className={styles.testimonialwraper}>
+            <div className={styles.testimonial}>
+
+              <h3 className={styles.testimonialtext}>
+                "I was one of the first members. Orbit teaches you taste. That’s what we need in the post AI era."
+                <span className={styles.by}>
+                  Ambika, from season one. Found her passion and made her business.
+                </span>
+              </h3>
+            </div>
+
+            <a
+              href='https://www.instagram.com/p/DMqPVTGThXE/'
+              target='_blank'
+              draggable="false"
+              className={styles.testimonial}>
+
+              <div className={styles.instalogo}>
+                <Icon name="instagram" size={44} fill="white" />
+              </div>
+              <img
+                className={styles.banner}
+                src="https://ik.imagekit.io/ontheorbit/Essentials/testimonial/IMG_20250728_161644753.jpg?updatedAt=1754992486787"
+                draggable="false"
+              />
+            </a>
+
+            <div className={styles.testimonial}>
+              <h3 className={styles.testimonialtext}>
+                "The future of design learning doesn’t look like school. It looks like this."
+                <span className={styles.by}>
+                  Ayush Singh, Co Founder at Second Brain Labs.
+                </span>
+              </h3>
+            </div>
+          </div>
         </div>
-        <Testimonial />
+
+        <div className={styles.faqwraper}>
+          <span></span>
+          <FAQSection />
+        </div>
+
+
+        {/* <div className={styles.revealtextcontainer}>
+          <AnimatedTextReveal text={launchmessage} />
+        </div> */}
+        {/* <Testimonial /> */}
 
 
 
 
-        <Pricingtable />
+        {/* <Pricingtable /> */}
 
         {/* <div className={styles.benefits}>
           <div className={styles.benefitgrid}>

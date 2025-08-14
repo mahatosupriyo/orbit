@@ -18,6 +18,17 @@ $fill: $dark;
 
     // background-color: $background;
 
+    .notification{
+        padding: 2rem;
+        background-color: hsl(216, 100%, 47%);
+        color: #fff;
+        width: 100%;
+        font-size: 1.36rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .navbar {
         width: 100%;
         max-width: 200rem;
@@ -44,7 +55,8 @@ $fill: $dark;
             .navlinks {
                 display: flex;
                 gap: 3rem;
-                .navlink{
+
+                .navlink {
                     font-size: 1.4rem;
                     font-weight: 400;
                     color: $color;
@@ -60,8 +72,13 @@ $fill: $dark;
 
             padding: 2rem 2rem;
             border-radius: 10rem;
-            background-color: #0061EF;
+            background-color: hsl(216, 100%, 47%);
             color: #fff;
+
+            transition: 0.2s ease-in-out;
+            &:hover {
+                background-color: hsl(216, 100%, 40%);
+            }
         }
     }
 }

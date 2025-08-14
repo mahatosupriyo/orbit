@@ -97,6 +97,7 @@ make something that feels like you.`;
             we do.
           </motion.h1>
 
+
           <div className={styles.bannerwraper} draggable="false">
             <motion.img
               src="https://ik.imagekit.io/ontheorbit/Essentials/WEBOPTIM.png?updatedAt=1754198766413"
@@ -117,14 +118,6 @@ make something that feels like you.`;
         </div>
 
         <div className={styles.testimonialcontainer}>
-          <div className={styles.testimonialheader}>
-            <h1 className={styles.testimonialheader}>
-
-            </h1>
-            <p className={styles.testimonialdescription}>
-
-            </p>
-          </div>
 
           <div className={styles.testimonialwraper}>
             <div className={styles.testimonial}>
@@ -165,7 +158,7 @@ make something that feels like you.`;
         </div>
 
         <div className={styles.faqwraper}>
-          <span></span>
+          {/* <span></span> */}
           <FAQSection />
         </div>
 

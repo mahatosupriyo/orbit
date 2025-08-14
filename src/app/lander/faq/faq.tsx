@@ -12,38 +12,103 @@ interface FAQItem {
 const faqData: Record<string, FAQItem[]> = {
     "Getting started": [
         {
-            question: "How does it work?",
-            answer:
-                "On the Orbit is your AI-powered learning platform for designers. Access curated lessons, personalized tools, and community interaction – all tailored to your creative journey."
-        },
-        {
             question: "How do I sign up?",
             answer:
                 "Simply create an account, choose your subscription plan, and you’re ready to start learning. You can access your dashboard instantly."
+        },
+        {
+            question: "Who is Orbit for?",
+            answer:
+                "If you’re a designer, creative, or just someone who knows they have ideas but don’t know how to bring them to life — Orbit’s for you. Beginners, switchers, dreamers, all welcome."
+        },
+        {
+            question: "Do I need to know design before joining?",
+            answer:
+                "Nope. You just need curiosity, a laptop, and the patience to learn. We’ll handle the tools, the guidance, and the kick in the right direction."
+        },
+        {
+            question: "How do I start?",
+            answer:
+                "Sign up on ontheorbit.com, choose your plan, and boom — you’re in. You’ll get access to Garage, Odyssey, and all your tools right away."
+        },
+        {
+            question: "Can I build my own brand here?",
+            answer:
+                "Yes. We’ll even give you a free .com domain so you can make it happen from day one."
+        },
+        {
+            question: "Do I get to talk to mentors directly?",
+            answer:
+                "Yes. Orbit isn’t some faceless “course platform.” Our mentors are real humans who’ve done the work — and they’re here to guide you."
         }
     ],
     Subscription: [
         {
             question: "What subscription plans do you offer?",
             answer:
-                "We offer flexible plans including monthly, yearly, and lifetime options. Each plan unlocks premium AI tools, lessons, and community perks."
+                "We offer flexible plans including quarterly and yearly options. Each plan unlocks premium AI tools, lessons, and community perks."
         },
         {
             question: "Can I cancel anytime?",
             answer:
                 "Yes, you can cancel your subscription anytime from your account settings without any hidden fees."
+        },
+        {
+            question: "What’s included in my subscription?",
+            answer:
+                "Everything you actually need: Adobe Creative Cloud, Garage, Odyssey, onsite workshops, and a 1-year .com domain."
+        },
+        {
+            question: "Will I keep my .com domain after the year?",
+            answer:
+                "Yes, you can renew it yourself after the free year ends."
+        },
+        {
+            question: "Can I upgrade my subscription later?",
+            answer:
+                "Absolutely. You can start small and go bigger when you’re ready."
+        },
+        {
+            question: "Is there a refund policy?",
+            answer:
+                "Yes, we have one which is within 1 month — but only if you genuinely haven’t used the platform. We’re building for committed learners, not dabblers."
         }
     ],
     Features: [
         {
-            question: "What makes On the Orbit different?",
+            question: "What is Garage?",
             answer:
-                "We blend AI-driven personalization with expert-led design education, helping you learn what you want, how you want."
+                "Your self-learning playground. Font pairing guides, design inspiration, visual effects, tips — everything you need to tinker and explore."
         },
         {
-            question: "Do you provide support beyond lessons?",
+            question: "What is Odyssey?",
             answer:
-                "Yes! Get access to AI-powered guidance, design critiques, and community feedback 24/7."
+                "Your guided adventure. Exclusive episodes, handpicked mentors, and structured lessons designed to make you industry-ready."
+        },
+        {
+            question: "Do I get Adobe Creative Cloud?",
+            answer:
+                "Yes, from day one. Photoshop, Illustrator, Premiere Pro, After Effects — all yours."
+        },
+        {
+            question: "What are onsite workshops?",
+            answer:
+                "We take you into the real world. Work on local brands, see how ideas become campaigns, and get your hands dirty with live projects."
+        },
+        {
+            question: "How will I build my portfolio here?",
+            answer:
+                "Every project you do in Orbit is practical, relevant, and industry-ready. By the end, you’ll have work you’re proud to show off."
+        },
+        {
+            question: "Can I get feedback on my work?",
+            answer:
+                "Yes, from mentors and peers. No more guessing if your design is “good enough.”"
+        },
+        {
+            question: "What’s the deal with the free .com domain?",
+            answer:
+                "We give it so you can start building your online presence right now — whether it’s your portfolio, personal blog, or your first brand site."
         }
     ]
 };
@@ -62,16 +127,17 @@ export default function FAQSection() {
             <div className={styles.tabSelector}>
                 {Object.keys(faqData).map((tab) => (
                     <motion.button
-                    whileTap={{scale: 0.96}}
+                        whileTap={{ scale: 0.96 }}
                         key={tab}
-                        className={`${styles.tabButton} ${activeTab === tab ? styles.activeTab : ""
-                            }`}
+                        className={`${styles.tabButton} ${activeTab === tab ? styles.activeTab : ""}`}
                         onClick={() => {
                             setActiveTab(tab as keyof typeof faqData);
                             setOpenIndex(null);
                         }}
                     >
-                        {(activeTab === tab) && <span style={{ display: 'flex', borderRadius: '4rem', height: '0.6rem', width: '0.6rem', background: '#fff' }}></span>}
+                        {activeTab === tab && (
+                            <span style={{ display: 'flex', borderRadius: '4rem', height: '0.6rem', width: '0.6rem', background: '#fff' }}></span>
+                        )}
                         {tab}
                     </motion.button>
                 ))}

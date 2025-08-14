@@ -127,8 +127,8 @@
     padding: 4rem 10rem;
     width: 100%;
     // gap: 4rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    display: flex;
+    // grid-template-columns: 1fr 2fr;
 
     @media (max-width: 900px) {
         display: flex;

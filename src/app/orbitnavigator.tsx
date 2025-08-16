@@ -3,16 +3,16 @@
 import NavBar from '@/components/molecules/navbar/navbar';
 import styles from './home.module.scss';
 import Link from 'next/link';
-import { motion, AnimatePresence, delay, stagger } from 'framer-motion';
+import { motion, AnimatePresence, cubicBezier, Variants } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import AstraSearchBox from './astra/astrasearchbox';
 
 const transition = {
   duration: 0.2,
-  ease: [0.785, 0.135, 0.15, 0.86],
+  ease: cubicBezier(0.785, 0.135, 0.15, 0.86), // ✅ FIXED
 };
 
-const containerVariants = {
+const containerVariants: Variants = {
   initial: {},
   exit: { opacity: 0, y: 20, transition },
 
@@ -23,7 +23,7 @@ const containerVariants = {
   },
 };
 
-const childVariants = {
+const childVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   exit: { opacity: 0, y: 20, transition },
 
@@ -32,11 +32,10 @@ const childVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: [0.785, 0.135, 0.15, 0.86],
+      ease: cubicBezier(0.785, 0.135, 0.15, 0.86), // ✅ FIXED
     },
   },
 };
-
 
 export default function OrbitNavigator() {
   const pathname = usePathname();
@@ -64,7 +63,6 @@ export default function OrbitNavigator() {
                   />
                   Garage
                 </Link>
-
               </motion.div>
 
               <motion.div whileTap={{ scale: 0.99 }} variants={childVariants}>
@@ -77,8 +75,6 @@ export default function OrbitNavigator() {
                   Odyssey
                 </Link>
               </motion.div>
-
-
             </motion.div>
           </div>
 

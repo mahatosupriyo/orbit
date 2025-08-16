@@ -3,19 +3,22 @@
 import styles from './garage.module.scss';
 import NavBar from '@/components/molecules/navbar/navbar';
 import CapsuleCard from '@/components/molecules/capsules/capsule';
-import { motion } from 'framer-motion';
+import { motion, Variants, cubicBezier } from 'framer-motion';
 
-const containerVariants = {
+const containerVariants: Variants = {
   initial: {},
   animate: { transition: { staggerChildren: 0.2 } },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.785, 0.135, 0.15, 0.86] },
+    transition: {
+      duration: 0.5,
+      ease: cubicBezier(0.785, 0.135, 0.15, 0.86), 
+    },
   },
 };
 

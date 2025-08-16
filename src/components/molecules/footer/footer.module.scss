@@ -1,14 +1,29 @@
 @use "../../../app/styles/essentials";
 @import "../../../app/styles/essentials";
 
-$background: #44423F;
-$color: #44423F;
+$background: hsl(0, 0%, 10%);
+$color: hsl(0, 0%, 26%);
+$themefont: "helvetica-neue-lt-pro";
+
 
 .footer {
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+
+    position: relative;
+
+    .logo {
+        position: absolute;
+        top: 6rem;
+        right: 4rem;
+        // padding: 4rem;
+
+        @media (max-width: 900px) {
+            display: none;
+        }
+    }
 
     .footerwraper {
         width: 100%;
@@ -18,9 +33,11 @@ $color: #44423F;
         flex-direction: column;
         border-top: 0.1rem solid hsl(0, 0%, 10%);
 
+
+
         .footercontent {
             width: 100%;
-            padding: 6rem 10rem;
+            padding: 6rem 4rem;
             color: $color;
 
             @media (max-width: 800px) {
@@ -28,13 +45,10 @@ $color: #44423F;
             }
 
             &:nth-child(1) {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 4rem;
+                display: flex;
+                gap: 1rem;
 
-                @media (max-width: 800px) {
-                    grid-template-columns: 1fr;
-                }
+                padding: 6rem 4rem 0rem 4rem;
             }
 
             &:nth-child(2) {
@@ -50,10 +64,14 @@ $color: #44423F;
                     font-weight: 400;
                     color: hsl(0, 0%, 100%, 0.7);
                     margin-bottom: 1rem;
+                    font-family: $themefont;
+
                 }
 
                 .copyrighttxt {
                     font-size: 1.16rem;
+                    font-family: $themefont;
+
                     font-weight: 400;
                     color: hsl(0, 0%, 100%, 0.4);
                 }
@@ -63,14 +81,18 @@ $color: #44423F;
                 display: inline-flex;
                 align-items: flex-start;
                 font-size: 1.8rem;
-                font-weight: 500;
+                font-weight: 400;
                 color: hsl(0, 0%, 70%);
                 margin-bottom: 1rem;
+                font-family: $themefont;
+
 
                 .curious {
                     display: inline-flex;
                     gap: 0.3rem;
                     align-items: center;
+
+
                 }
             }
 
@@ -92,11 +114,13 @@ $color: #44423F;
                 .linkitem {
                     text-decoration: none;
                     color: #fff;
-                    font-size: 1.8rem;
+                    font-size: 1.6rem;
                     font-weight: 400;
                     // text-wrap: nowrap;
                     @include smooth;
                     padding: 0rem 0rem;
+                    font-family: $themefont;
+
 
                     &:hover {
                         opacity: 1;
@@ -109,6 +133,8 @@ $color: #44423F;
                         font-weight: 300;
                         color: hsl(0, 0%, 100%, 0.3);
                         margin-right: 1rem;
+                        font-family: $themefont;
+
                     }
                 }
 
@@ -117,7 +143,7 @@ $color: #44423F;
             .socialscontainer {
                 width: 100%;
                 display: flex;
-                gap: 3rem;
+                gap: 2rem;
                 flex-direction: column;
                 align-items: flex-start;
 
@@ -130,7 +156,7 @@ $color: #44423F;
                         display: inline-flex;
                         align-items: center;
                         justify-content: center;
-                        background: hsl(36, 4%, 20%);
+                        background: hsl(0, 0%, 19%);
                         border-radius: 0.4rem;
                         padding: 2rem;
                         border-radius: 6rem;
@@ -138,12 +164,65 @@ $color: #44423F;
 
                         &:hover {
                             border-radius: 2.8rem;
-                            background: hsl(36, 4%, 16%);
+                            background: hsl(0, 0%, 16%);
                         }
                     }
                 }
             }
         }
 
+    }
+}
+
+
+
+.legalwraper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    align-items: center;
+    font-family: $themefont;
+    font-weight: 400;
+    padding: 4rem 0rem;
+    user-select: none;
+
+
+    .inlinewraper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        position: relative;
+        padding: 0.4rem 0rem;
+        overflow-y: hidden;
+        cursor: pointer;
+
+        &:hover {
+            &:after {
+                transform: translateX(0%);
+            }
+        }
+
+        &::after {
+            transition: 0.2s ease-in-out;
+
+            content: '';
+            position: absolute;
+            bottom: 0rem;
+
+            width: 100%;
+            height: 0.1rem;
+            background-color: hsl(0, 0%, 90%);
+            transform: translateX(-101%);
+        }
+
+        .linksinline {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2rem;
+            font-family: $themefont;
+            font-weight: 400;
+
+        }
     }
 }

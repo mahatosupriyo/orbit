@@ -123,7 +123,7 @@ export default function AccountForm({ user }: { user: User }) {
                     {/* Email (read-only) */}
                     <motion.div className={styles.email} variants={itemVariants}>
                         <label className={styles.emaillabel}>
-                            email (can't change)
+                            email*
                             <div className={styles.emailinput} style={{ textTransform: 'lowercase' }}>
                                 {user.email}
                             </div>

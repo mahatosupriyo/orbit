@@ -20,11 +20,11 @@
 
 
             .option {
-                padding: 1rem 1rem;
-                font-size: 1.46rem;
+                padding: 1.06rem 1rem;
+                font-size: 1.7rem;
                 width: 100%;
                 line-height: 100%;
-                font-weight: 500;
+                font-weight: 600;
 
                 display: flex;
                 gap: 1rem;
@@ -52,9 +52,9 @@
             .logout {
                 color: #e74c3c;
 
-                padding: 1.3rem 1.6rem;
-                font-size: 1.5rem;
-                font-weight: 500;
+                padding: 1.4rem 1.6rem;
+                font-size: 1.7rem;
+                font-weight: 600;
                 width: 100%;
 
                 line-height: 100%;
@@ -191,11 +191,12 @@
 
 .key {
     // font-family: Consolas;
-    display: flex;
-    padding: 0.2rem 0.3rem;
+    // display: inline-flex;
+    padding: 0.4rem 0.5rem;
     border-radius: 0.6rem;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 500;
+    line-height: 100%;
     color: hsl(0, 0%, 100%);
     transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
     box-shadow: hsl(240, 100%, 54%, 0.2) 0px 0px 20px;

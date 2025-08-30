@@ -60,7 +60,7 @@
                 user-select: none;
 
                 .emaillabel {
-                    font-size: 1.36rem;
+                    font-size: 1.5rem;
                     user-select: none;
                     font-weight: 400;
                     color: hsl(0, 0%, 30%);
@@ -73,8 +73,8 @@
 
                     .emailinput {
                         color: hsl(0, 0%, 30%);
-                        padding: 0.6rem 0rem 0.2rem 0rem;
-                        font-size: 1.6rem;
+                        padding: 0rem 0rem 0.2rem 0rem;
+                        font-size: 1.8rem;
                         font-weight: 500;
                     }
                 }
@@ -138,7 +138,7 @@
 }
 
 .label {
-    font-size: 1.36rem;
+    font-size: 1.56rem;
     user-select: none;
     font-weight: 400;
     color: hsl(0, 0%, 40%);
@@ -165,9 +165,9 @@
 }
 
 .input {
-    padding: 0.6rem 0rem 0.2rem 0rem;
-    font-size: 1.6rem;
-    font-weight: 500;
+    padding: 0rem 0rem 0.2rem 0rem;
+    font-size: 1.8rem;
+    font-weight: 600;
     background-color: none;
     background: none;
     color: hsl(0, 0%, 60%);
@@ -193,8 +193,8 @@
     padding: 3rem 2rem;
     width: 100%;
     border-radius: 1rem;
-    font-size: 1.56rem;
-    font-weight: 500;
+    font-size: 1.7rem;
+    font-weight: 600;
     cursor: pointer;
     align-items: center;
     user-select: none;

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Footer from '@/components/molecules/footer/footer'
 import Testimonial from '../lander/testimonial/testimonial'
 import { motion } from 'framer-motion'
+import Icon from '@/components/atoms/icons'
 
 
 
@@ -180,6 +181,14 @@ export default function Test() {
           >
           </video>
         </div>
+      </div>
+
+      <div className={styles.faq}>
+        FAQs
+        {/* <Icon name='downarrow' /> */}
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 48 48" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M39.719 13L24.1099 28.6091L8.50326 13L4.99902 16.5092L24.1099 35.6226L43.2257 16.5092L39.719 13Z" fill="white" />
+        </svg>
       </div>
 
       <Footer />

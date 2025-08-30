@@ -30,16 +30,7 @@ export default function AuthPage() {
     return (
         <div className={styles.authwraper}>
             <div className={styles.authcontainer}>
-
-                {/* Header with logo and title */}
-                <div className={styles.authheader}>
-                    <Icon name='oto' size={24} />
-                    <h1 className={styles.headertxt}>
-                        <span className={styles.low}>get started with</span>
-                        <br />
-                        on the orbit
-                    </h1>
-                </div>
+                <Icon name='oto' size={40} />
 
                 {/* Sign-in button for Google (calls GitHub provider, update if needed) */}
                 <div className={styles.btnwraper}>
@@ -65,8 +56,8 @@ export default function AuthPage() {
                 {/* Footer with terms and privacy links */}
                 <p className={styles.authfooter}>
                     By continuing, you agree to our{' '}
-                    <Link className={styles.linkinline} href="/">Terms</Link> and{' '}
-                    <Link className={styles.linkinline} href="/">Privacy Policy</Link>.
+                    <a target='_blank' className={styles.linkinline} href="/">Terms</a> and{' '}
+                    <a target='_blank' className={styles.linkinline} href="/">Privacy Policy</a>.
                 </p>
             </div>
         </div>

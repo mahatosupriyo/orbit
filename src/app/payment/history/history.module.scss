@@ -80,7 +80,7 @@ $height: 12rem;
 .title {
   font-size: 2.4rem;
   font-weight: 600;
-  color: #333;
+  color: hsl(0, 0%, 10%);
 }
 
 .table {
@@ -90,36 +90,16 @@ $height: 12rem;
 }
 
 .tablecontainer {
-  background-color: #088569;
+  background-color: hsl(0, 0%, 90%);
   border-radius: 1rem;
   transition: box-shadow 0.3s ease;
   border-radius: 1.6rem;
   padding: 0.4rem;
 
-
 }
 
-
-.failedcontainertable {
-  background-color: hsl(18, 100%, 61%);
-}
-
-
-.failedtablehead {
-  background-color: hsl(18, 100%, 61%);
-
-  &:hover {
-    background-color: hsl(18, 100%, 71%);
-  }
-}
-
-.paidtablehead{
-  background-color: hsl(167, 73%, 74%);
-
-
-  &:hover {
-    background-color: hsl(167, 73%, 84%);
-  }
+.rupee {
+  font-weight: 300;
 }
 
 .tablehead {
@@ -134,7 +114,8 @@ $height: 12rem;
   padding: 1.8rem 1rem 1.8rem 1.5rem;
   cursor: pointer;
   @include smooth;
-
+  background-color: hsl(0, 0%, 80%);
+  color: hsl(0, 0%, 0%);
 
   .leftportion {
     display: flex;
@@ -144,9 +125,9 @@ $height: 12rem;
 
     .plan {
       font-size: 1.8rem;
-
+      user-select: none;
       font-weight: 600;
-      color: hsl(0, 0%, 10%);
+      color: hsl(0, 0%, 0%);
     }
   }
 
@@ -164,6 +145,7 @@ $height: 12rem;
       padding: 2rem;
       border-radius: 1.6rem;
       background-color: #fff;
+      user-select: none;
 
       .paymentstatus {
         font-size: 1.5rem;

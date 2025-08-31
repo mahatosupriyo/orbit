@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Collapse } from "react-collapse";
 import styles from "./history.module.scss";
 import Icon from "@/components/atoms/icons";
+import { motion } from "framer-motion";
 
 // Type definitions for each payment entry
 interface Payment {
@@ -21,9 +22,6 @@ interface Payment {
 interface PaymentTableProps {
   payments: Payment[];
 }
-
-
-
 
 /**
  * PaymentTable displays a list of user payments with expandable detail view.
@@ -70,28 +68,14 @@ export default function PaymentTable({ payments }: PaymentTableProps) {
           {payments.map(payment => {
             const isOpen = expandedId === payment.id;
 
-            let classNames = styles.tablehead;
-
-            if (payment.status === "paid") {
-              classNames += ` ${styles.paidtablehead}`;
-            } else if (payment.status === "failed") {
-              classNames += ` ${styles.failedtablehead}`;
-            }
-
             return (
-              <div
-                key={payment.id}
-                className={
-                  payment.status === "paid"
-                    ? styles.tablecontainer
-                    : `${styles.tablecontainer} ${styles.failedcontainertable}`
-                }
-              >
+              <div key={payment.id} className={styles.tablecontainer}>
                 {/* Summary row */}
-                <div
+                <motion.div
+                  whileTap={{ background: '#888' }}
+                  className={styles.tablehead}
                   onClick={() => toggleCard(payment.id)}
                   style={{ cursor: "pointer" }}
-                  className={classNames}
                 >
 
                   <div className={styles.leftportion}>
@@ -127,7 +111,7 @@ export default function PaymentTable({ payments }: PaymentTableProps) {
                     </div>
                   </div>
 
-                </div>
+                </motion.div>
 
                 {/* Expandable Details */}
                 <Collapse isOpened={isOpen}>

@@ -153,20 +153,20 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                             <div
                                                 style={{
                                                     display: 'flex',
-                                                    flexDirection: 'column',
+                                                    flexDirection: 'row',
+                                                    width: '100%',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'space-between',
                                                     gap: '0.2rem',
                                                 }}
                                             >
-                                                <span style={{
-                                                    fontSize: '1.5rem',
-                                                    fontWeight: 400,
-                                                    opacity: 0.6
-                                                }}>
-                                                </span>
                                                 <span className={styles.labelauthor}>
                                                     {post.createdBy.username}
                                                     <Icon name="verified" fill="#00aaff" size={10} />
                                                 </span>
+                                                <div className={styles.mobhide}>
+                                                <Icon name="external" fill="#FF753A" />
+                                                </div>
                                             </div>
                                         </Link>
                                     )}

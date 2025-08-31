@@ -126,19 +126,18 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                 {hasMultipleImages && (
                                     <div>
                                         <motion.button
-                                            whileTap={{ scale: 0.9 }}
+                                            whileTap={{ scale: 0.9, borderRadius: '10rem' }}
                                             className={`custom-prev ${styles.customNavBtn} ${styles.customPrevBtn}`} aria-label="Previous image">
                                             <Icon name="leftarrow" size={24} fill="#fff" />
                                         </motion.button>
                                         <motion.button
-                                            whileTap={{ scale: 0.9 }}
+                                            whileTap={{ scale: 0.9, borderRadius: '10rem' }}
                                             className={`custom-next ${styles.customNavBtn} ${styles.customNextBtn}`} aria-label="Next image">
                                             <Icon name="rightarrow" size={24} fill="#fff" />
                                         </motion.button>
                                     </div>
                                 )}
                             </div>
-
 
                             <div className={styles.postDetails}>
                                 <div className={styles.postdetailsinner}>
@@ -166,7 +165,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                 </span>
                                                 <span className={styles.labelauthor}>
                                                     {post.createdBy.username}
-                                                    <Icon name="verified" fill="#00aaff" size={12} />
+                                                    <Icon name="verified" fill="#00aaff" size={10} />
                                                 </span>
                                             </div>
                                         </Link>

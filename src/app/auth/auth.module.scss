@@ -123,35 +123,13 @@
             font-size: 1.6rem;
             line-height: 140%;
             font-weight: 500;
-            color: hsl(0, 0%, 60%);
+            color: hsl(0, 0%, 50%);
 
 
             .linkinline {
                 display: inline-flex;
                 color: #fff;
                 position: relative;
-                overflow-x: hidden;
-
-
-                &:hover {
-                    &::after {
-                        transform: translateX(101%);
-                    }
-                }
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    bottom: 0.7;
-                    display: flex;
-                    background-color: #fff;
-                    width: 100%;
-                    height: 0.1rem;
-                    transition: 0.2s cubic-bezier(1, 0, 0, 1);
-
-                }
             }
         }
     }
@@ -169,7 +147,7 @@
     .authtxt {
         transform: translateY(6rem);
         opacity: 0;
-        font-weight: 600;
+        font-weight: 500;
         transition: transform 0.3s cubic-bezier(1, 0, 0, 1), opacity 0.3s cubic-bezier(1, 0, 0, 1);
 
         &:nth-child(1) {

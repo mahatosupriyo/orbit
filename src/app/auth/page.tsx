@@ -56,8 +56,8 @@ export default function AuthPage() {
                 {/* Footer with terms and privacy links */}
                 <p className={styles.authfooter}>
                     By continuing, you agree to our{' '}
-                    <a target='_blank' className={styles.linkinline} href="/">Terms</a> and{' '}
-                    <a target='_blank' className={styles.linkinline} href="/">Privacy Policy</a>.
+                    <a target='_blank' className={styles.linkinline} href="/">Legal terms</a> and{' '}
+                    <a target='_blank' className={styles.linkinline} href="/">Privacy policy</a>.
                 </p>
             </div>
         </div>

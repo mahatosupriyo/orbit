@@ -22,6 +22,9 @@ interface PaymentTableProps {
   payments: Payment[];
 }
 
+
+
+
 /**
  * PaymentTable displays a list of user payments with expandable detail view.
  */
@@ -67,6 +70,14 @@ export default function PaymentTable({ payments }: PaymentTableProps) {
           {payments.map(payment => {
             const isOpen = expandedId === payment.id;
 
+            let classNames = styles.tablehead;
+
+            if (payment.status === "paid") {
+              classNames += ` ${styles.paidtablehead}`;
+            } else if (payment.status === "failed") {
+              classNames += ` ${styles.failedtablehead}`;
+            }
+
             return (
               <div
                 key={payment.id}
@@ -80,12 +91,7 @@ export default function PaymentTable({ payments }: PaymentTableProps) {
                 <div
                   onClick={() => toggleCard(payment.id)}
                   style={{ cursor: "pointer" }}
-
-                  className={
-                    payment.status === "paid"
-                      ? styles.tablehead
-                      : `${styles.tablehead} ${styles.failedtablehead}`
-                  }
+                  className={classNames}
                 >
 
                   <div className={styles.leftportion}>

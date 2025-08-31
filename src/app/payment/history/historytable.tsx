@@ -60,10 +60,6 @@ export default function PaymentTable({ payments }: PaymentTableProps) {
   return (
     <div className={styles.paymentwraper}>
       <div className={styles.portion}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Payments</h1>
-        </div>
-
         <div className={styles.table}>
           {payments.map(payment => {
             const isOpen = expandedId === payment.id;

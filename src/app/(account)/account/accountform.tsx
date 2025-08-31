@@ -73,11 +73,6 @@ export default function AccountForm({ user }: { user: User }) {
             initial="initial"
             animate="animate"
         >
-            <div className={styles.header}>
-                <div className={styles.headerdata}>
-                    <h1 className={styles.title}>Account core</h1>
-                </div>
-            </div>
 
             <form action={handleSubmit} className={styles.formlayout} autoComplete="off">
                 <motion.div className={styles.userInfo} variants={containerVariants}>

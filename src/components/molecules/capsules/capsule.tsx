@@ -150,6 +150,8 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     className={styles.postAuthorImage}
                                                 />
                                             )}
+
+
                                             <div
                                                 style={{
                                                     display: 'flex',
@@ -164,9 +166,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     {post.createdBy.username}
                                                     <Icon name="verified" fill="#00aaff" size={10} />
                                                 </span>
-                                                <div className={styles.mobhide}>
-                                                <Icon name="external" fill="#FF753A" />
-                                                </div>
+
                                             </div>
                                         </Link>
                                     )}

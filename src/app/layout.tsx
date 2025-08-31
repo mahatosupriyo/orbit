@@ -85,9 +85,10 @@ export default function RootLayout({
               height: '5.4rem',
               paddingLeft: '1.3rem',
               display: 'flex',
+              lineHeight: '90%',
               alignItems: 'center',
               fontWeight: 400,
-              fontSize: '1.56rem',
+              fontSize: '1.8rem',
               borderRadius: '10rem'
             },
           }}

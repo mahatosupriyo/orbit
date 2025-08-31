@@ -14,11 +14,6 @@ function GoodBye() {
                 <div className={styles.layoutgrid}>
                     <AccountNav />
                     <div className={styles.content}>
-                        <div className={styles.header}>
-                            <div className={styles.headerdata}>
-                                <h1 className={styles.title}>Data privacy</h1>
-                            </div>
-                        </div>
                         <DeleteAccountButton />
                         <p className={styles.warning}>
                             * This action is permanent and cannot be undone.

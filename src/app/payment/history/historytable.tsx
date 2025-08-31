@@ -68,12 +68,24 @@ export default function PaymentTable({ payments }: PaymentTableProps) {
             const isOpen = expandedId === payment.id;
 
             return (
-              <div key={payment.id} className={styles.tablecontainer}>
+              <div
+                key={payment.id}
+                className={
+                  payment.status === "paid"
+                    ? styles.tablecontainer
+                    : `${styles.tablecontainer} ${styles.failedcontainertable}`
+                }
+              >
                 {/* Summary row */}
                 <div
-                  className={styles.tablehead}
                   onClick={() => toggleCard(payment.id)}
                   style={{ cursor: "pointer" }}
+
+                  className={
+                    payment.status === "paid"
+                      ? styles.tablehead
+                      : `${styles.tablehead} ${styles.failedtablehead}`
+                  }
                 >
 
                   <div className={styles.leftportion}>

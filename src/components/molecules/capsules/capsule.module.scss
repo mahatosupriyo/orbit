@@ -207,7 +207,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border-radius: 0rem;
+                border-radius: 2rem;
 
                 &:hover {
                     background-color: hsl(0, 0%, 24%);
@@ -239,14 +239,14 @@
                 @media only screen and (max-width: 1000px) {
                     position: relative;
                     padding: 0rem;
-
-
-                    font-size: 2rem;
+                    
+                    font-size: 1.8rem;
                     display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
+                    flex-direction: row;
+                    gap: 1rem;
+                    align-items: center;
                     width: 100%;
-                    padding: 2.4rem 2rem 1.8rem 2rem;
+                    padding: 2rem 2rem 1.8rem 2rem;
                 }
 
 
@@ -257,7 +257,7 @@
                     position: relative;
                     align-items: center;
                     justify-content: center;
-                    padding-bottom: 0.4rem;
+                    padding-bottom: 0.2rem;
                     overflow: hidden;
                     gap: 0.4rem;
 
@@ -298,10 +298,9 @@
                     border-radius: 40rem;
                     border: 0.14rem solid hsl(0, 0%, 20%);
 
-
-                    @media only screen and (max-width: 1000px) {
-                        width: 10rem;
-                        height: 10rem;
+                    @media only screen and (max-width: 1000px){
+                        height: 6rem;
+                        width: 6rem;
                     }
                 }
             }
@@ -317,38 +316,6 @@
                 padding: 1.6rem 0rem;
                 // font-family: Instrument Serif;
                 user-select: text; // Explicitly enable text selection
-            }
-
-            .dateBadge {
-                display: inline-flex;
-                flex-direction: column;
-                color: hsl(0, 0%, 100%);
-                align-items: center;
-                padding-top: 2rem;
-                font-size: 1.3rem;
-                align-items: flex-start;
-                opacity: 0.4;
-                font-weight: 300;
-
-                .monthYear {
-                    font-size: 1.56rem;
-                    font-weight: 500;
-                    position: relative;
-
-                    .year {
-                        position: absolute;
-                        right: -1.2rem;
-                        font-weight: 300;
-                        font-size: 1rem;
-                    }
-                }
-
-                .day {
-                    font-size: 1.56rem;
-                    font-weight: 500;
-                    margin-right: 0.4rem;
-                    // font-family: Instrument Serif;
-                }
             }
         }
     }

@@ -158,7 +158,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                 }}
                                             >
                                                 <span style={{
-                                                    fontSize: '1.26rem',
+                                                    fontSize: '1.5rem',
                                                     fontWeight: 400,
                                                     opacity: 0.6
                                                 }}>
@@ -199,7 +199,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                         <Icon name="external" fill="#fff" />
                                     </a>
                                 )}
-
 
 
                                 {/* Nested Drawer */}

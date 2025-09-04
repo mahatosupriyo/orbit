@@ -92,6 +92,7 @@ export default function AccountForm({ user }: { user: User }) {
                                 aria-label="Name"
                                 autoComplete="off"
                                 autoCorrect="off"
+                                spellCheck="false"
                             />
                         </label>
                     </motion.div>
@@ -110,6 +111,7 @@ export default function AccountForm({ user }: { user: User }) {
                                 aria-label="ontheorbit.com/username"
                                 autoCorrect="off"
                                 autoComplete="off"
+                                spellCheck="false"
                                 style={{ textTransform: 'lowercase' }}
                             />
                         </label>

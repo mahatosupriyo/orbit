@@ -28,13 +28,16 @@
 
 .title {
     font-size: 2rem;
-    font-weight: 600;
+    font-variation-settings: "ROUN" 100, "wght" 700;
+
     margin-bottom: 0.6rem;
 }
 
 .description {
     font-size: 1.7rem;
     font-weight: 500;
+    font-variation-settings: "ROUN" 100, "wght" 500;
+
     color: hsl(0, 0%, 47%);
 }
 
@@ -51,6 +54,7 @@
     color: white;
     font-weight: 700;
     padding: 3rem 1.2rem;
+    font-variation-settings: "ROUN" 100, "wght" 700;
 
     // background-color: hsl(0, 0%, 22%);
     border-radius: 1rem;
@@ -76,6 +80,7 @@
     border-radius: 1rem;
     color: hsl(0, 0%, 70%);
     font-weight: 700;
+    font-variation-settings: "ROUN" 100, "wght" 700;
 
     cursor: pointer;
     user-select: none;

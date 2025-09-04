@@ -45,6 +45,7 @@
 .label {
     font-size: 1.56rem;
     user-select: none;
-    font-weight: 400;
+    font-variation-settings: "ROUN" 100, "wght" 400;
+
     color: hsl(0, 0%, 40%);
 }

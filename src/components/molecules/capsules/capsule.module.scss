@@ -234,7 +234,7 @@
                 top: 0;
                 padding: 2rem;
 
-                .postAuthorImage{
+                .postAuthorImage {
                     // z-index: 10;
                     position: relative;
                 }
@@ -460,7 +460,9 @@
     margin: 2rem;
     gap: 0.6rem;
     font-size: 1.7rem;
-    font-weight: 600;
+    
+    font-variation-settings: "ROUN" 100, "wght" 700;
+
     cursor: pointer;
     transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);
 
@@ -480,7 +482,8 @@
         border-radius: 0.6rem;
         font-size: 1.4rem;
         line-height: 100%;
-        font-weight: 600;
+        font-variation-settings: "ROUN" 100, "wght" 700;
+
         color: hsl(0, 0%, 40%);
         border: 0.1rem solid hsl(0, 0%, 12%);
         transition: 0.2s cubic-bezier(.51, .92, .24, 1.15);

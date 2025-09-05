@@ -46,7 +46,7 @@ export default function NavBar() {
     <Link href="/">
 
 
-      <Icon name='oto' size={24} fill="#fff"/>
+      <Icon name='oto' size={30} fill="#fff"/>
     </Link>
   );
 

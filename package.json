@@ -30,6 +30,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@google/generative-ai": "^0.24.1",
     "@mux/mux-node": "^12.3.0",
+    "@number-flow/react": "^0.5.10",
     "@prisma/client": "^6.5.0",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@t3-oss/env-nextjs": "^0.12.0",

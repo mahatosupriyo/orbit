@@ -21,7 +21,7 @@ export default function Test() {
           <motion.nav
             className={styles.navbar}
           >
-            <Icon name='oto' size={26} />
+            <Icon name='oto' size={34} />
 
             <Link href="/" className={styles.cta}>
               GET STARTED
@@ -185,7 +185,7 @@ export default function Test() {
         FAQs
         {/* <Icon name='downarrow' /> */}
         <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 48 48" fill="none">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M39.719 13L24.1099 28.6091L8.50326 13L4.99902 16.5092L24.1099 35.6226L43.2257 16.5092L39.719 13Z" fill="white" />
+          <path fillRule="evenodd" clipRule="evenodd" d="M39.719 13L24.1099 28.6091L8.50326 13L4.99902 16.5092L24.1099 35.6226L43.2257 16.5092L39.719 13Z" fill="white" />
         </svg>
       </div>
 

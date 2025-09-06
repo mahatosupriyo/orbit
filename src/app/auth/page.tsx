@@ -56,8 +56,8 @@ export default function AuthPage() {
                 {/* Footer with terms and privacy links */}
                 <p className={styles.authfooter}>
                     By continuing, you agree to our{' '}
-                    <a target='_blank' className={styles.linkinline} href="/">Legal terms</a> and{' '}
-                    <a target='_blank' className={styles.linkinline} href="/">Privacy policy</a>.
+                    <a target='_blank' className={styles.linkinline} href="https://www.ontheorbit.com/company/legals">Legal terms</a> and{' '}
+                    <a target='_blank' className={styles.linkinline} href="https://www.ontheorbit.com/company/legals">Privacy policy</a>.
                 </p>
             </div>
         </div>

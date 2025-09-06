@@ -38,11 +38,11 @@ export default function Footer() {
 
                     <div className={styles.legalwraper}>
                         <div className={styles.inlinewraper}>
-                            <Link className={styles.linksinline} href="/">Privacy Policy</Link>
+                            <a target='_blank' className={styles.linksinline} href="https://www.ontheorbit.com/company/legals">Privacy Policy</a>
                         </div>
                         &
                         <div className={styles.inlinewraper}>
-                            <Link className={styles.linksinline} href="/">Legal Terms</Link>
+                            <a target='_blank' className={styles.linksinline} href="https://www.ontheorbit.com/company/legals">Legal Terms</a>
                         </div>
                     </div>
                     <h4 className={styles.passiontxt}>

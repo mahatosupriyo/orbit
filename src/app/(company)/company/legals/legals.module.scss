@@ -47,9 +47,10 @@
             margin-bottom: 2rem;
 
             .header {
-                font-family: 'Instrument Serif', serif;
-                font-size: 16rem;
-                font-weight: 400;
+                // font-family: 'Instrument Serif', serif;
+                font-size: 6rem;
+                letter-spacing: -0.2rem;
+                font-weight: 700;
                 color: hsl(0, 0%, 20%);
 
                 @media (max-width: 1000px) {

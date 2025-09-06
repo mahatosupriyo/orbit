@@ -95,7 +95,7 @@ If you have questions, contact us at: support@ontheorbit.com`;
     return (
         <div className={styles.legalswraper}>
             <div className={styles.container}>
-                <Icon name="oto" size={36} fill="#444" />
+                <Icon name="oto" size={40} fill="#444" />
                 <div className={styles.secwraper}>
                     <header className={styles.headercontainer}>
                         <h1 className={styles.header}>Legals</h1>

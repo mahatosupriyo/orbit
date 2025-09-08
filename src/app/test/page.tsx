@@ -77,6 +77,21 @@ export default function Test() {
 
       </div>
 
+
+      <div className={styles.pro}>
+        <img
+          src="https://ik.imagekit.io/ontheorbit/Essentials/orbit%20pro%20box.png?updatedAt=1757342197517"
+          className={styles.probanner}
+          draggable="false" />
+
+        <Link href="/" className={styles.procta}>
+          <div className={styles.ctacontent}>
+            Be Pro
+            <Icon name='rightarrow' fill='#fff' size={10} />
+          </div>
+        </Link>
+      </div>
+
       <div className={styles.team}>
         <img
           src="https://ik.imagekit.io/ontheorbit/Essentials/Firefly_Flux_a%20group%20of%20eight%20young%20indian%20adults,%20six%20boys%20and%20two%20girls,%20standing%20in%20a%20tight%20for%20220988%202.png?updatedAt=1757248194447"
@@ -103,45 +118,6 @@ export default function Test() {
             <Icon name='rightarrow' fill='#fff' size={10} />
           </div>
         </Link>
-      </div>
-
-
-      <div className={styles.pro}>
-        <img
-          src="https://ik.imagekit.io/ontheorbit/Essentials/orbit%20pro%20box.png?updatedAt=1757342197517"
-          className={styles.probanner}
-          draggable="false" />
-
-        <Link href="/" className={styles.procta}>
-          <div className={styles.ctacontent}>
-            Be Pro
-            <Icon name='rightarrow' fill='#fff' size={10} />
-          </div>
-        </Link>
-      </div>
-
-      <div className={styles.motto}>
-        <span></span>
-
-        <div className={styles.mottoheader}>
-          <h4 className={styles.subhead}>
-            Starting out
-          </h4>
-
-          <h1 className={styles.mottoheadline}>
-            <span className={styles.highlight}>
-              Here you are. Maybe unsure. Maybe excited. Maybe both.
-              <br /> But something inside you knows — you want to Build.
-            </span>
-            <br />
-            <br />
-            Permission is the first step. The next is making. Things that feel real. Things with feeling. That&apos;s how your taste is born.
-          </h1>
-        </div>
-        <div className={styles.mottowraper}>
-
-        </div>
-
       </div>
 
       <Footer />

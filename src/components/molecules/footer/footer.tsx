@@ -40,9 +40,12 @@ export default function Footer() {
                         <div className={styles.inlinewraper}>
                             <a target='_blank' className={styles.linksinline} href="https://www.ontheorbit.com/company/legals">Privacy Policy</a>
                         </div>
-                        &
+                        {/* & */}
                         <div className={styles.inlinewraper}>
                             <a target='_blank' className={styles.linksinline} href="https://www.ontheorbit.com/company/legals">Legal Terms</a>
+                        </div>
+                        <div className={styles.inlinewraper}>
+                            <a target='_blank' className={styles.linksinline} href="https://www.ontheorbit.com/contact">Contact</a>
                         </div>
                     </div>
                     <h4 className={styles.passiontxt}>

@@ -172,10 +172,11 @@ $color: hsl(0, 0%, 26%);
 
 .legalwraper {
     display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.6rem;
-    align-items: center;
-    font-weight: 400;
+    gap: 1.6rem;
+    font-weight: 600;
     padding: 4rem 0rem;
     user-select: none;
 
@@ -212,8 +213,8 @@ $color: hsl(0, 0%, 26%);
         .linksinline {
             text-decoration: none;
             color: #fff;
-            font-size: 1.6rem;
-            font-weight: 400;
+            font-size: 1.7rem;
+            font-weight: 500;
 
         }
     }

@@ -207,22 +207,21 @@
 
 
             .title {
-                font-size: 10rem;
                 font-weight: 700;
-                font-size: 14rem;
-                letter-spacing: -0.26rem;
+                font-size: 8rem;
+                letter-spacing: -0.16rem;
                 font-family: Quantify;
                 text-transform: lowercase;
                 color: #222;
 
-                line-height: 90%;
+                line-height: 94%;
             }
 
             .subtitle {
                 color: #222;
                 font-size: 2.2rem;
                 font-weight: 500;
-                margin-top: 4rem;
+                margin-top: 2.8rem;
             }
 
             .minitext {
@@ -421,6 +420,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 200rem;
     padding: 4rem 4rem;
     background-color: #B5B197;
     position: relative;

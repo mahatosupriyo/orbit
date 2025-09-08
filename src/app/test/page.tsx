@@ -36,7 +36,7 @@ export default function Test() {
             <div className={styles.headlinecontainer}>
               <p className={styles.minitext} style={{ marginTop: '2rem', marginBottom: '2rem' }}>In the Post AI Era</p>
               <h2 className={styles.title}>
-                Future belongs <br /> to Design Engineers.
+                Future Belongs <br /> to Design Engineers
               </h2>
 
               <h6 className={styles.subtitle}>Edge that separates the top one percent from the rest.</h6>

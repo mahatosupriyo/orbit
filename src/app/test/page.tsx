@@ -1,11 +1,10 @@
 "use client"
-import React, { useRef } from 'react'
+import React from 'react'
 import styles from './test.module.scss'
 import Link from 'next/link'
 import Footer from '@/components/molecules/footer/footer'
 import { motion } from 'framer-motion'
 import Icon from '@/components/atoms/icons'
-import ScrollStack, { ScrollStackItem } from './scrollstack/scrollstack'
 
 
 export default function Test() {
@@ -42,7 +41,7 @@ export default function Test() {
               <h6 className={styles.subtitle}>Edge that separates the top one percent from the rest.</h6>
 
 
-              <p className={styles.minitext}>Ecosystem trusted by creators and brands, is now open for you.</p>
+              <p className={styles.minitext}>Trusted by creators and brands, is now open for you.</p>
 
               <div style={{ marginTop: '4rem' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 256 25" fill="none">

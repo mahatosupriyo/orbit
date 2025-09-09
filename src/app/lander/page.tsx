@@ -22,7 +22,7 @@ export default function LandingPage() {
             <Link draggable="false" href="/auth" className={styles.cta}>
               <div className={styles.ctacontent}>
                 Get started
-                <Icon name='rightarrow' fill='#fff' size={10} />
+                <Icon name='rightarrowbig' fill='#fff' size={10} />
               </div>
             </Link>
 
@@ -61,7 +61,7 @@ export default function LandingPage() {
                 <Link href="/" className={styles.herocta}>
                   <div className={styles.ctacontent}>
                     Start your story
-                    <Icon name='rightarrow' fill='#fff' size={10} />
+                    <Icon name='rightarrowbig' fill='#fff' size={10} />
                   </div>
                 </Link>
               </div>
@@ -84,7 +84,7 @@ export default function LandingPage() {
         <Link href="/" className={styles.procta}>
           <div className={styles.ctacontent}>
             Be Pro
-            <Icon name='rightarrow' fill='#fff' size={10} />
+            <Icon name='rightarrowbig' fill='#fff' size={10} />
           </div>
         </Link>
       </div>
@@ -112,7 +112,7 @@ export default function LandingPage() {
         <Link draggable="false" href="/" className={styles.cta}>
           <div className={styles.ctacontent}>
             Get started
-            <Icon name='rightarrow' fill='#fff' size={10} />
+            <Icon name='rightarrowbig' fill='#fff' size={10} />
           </div>
         </Link>
       </div>

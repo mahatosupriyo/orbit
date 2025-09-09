@@ -6,7 +6,7 @@ export type IconProps = {
     'instagram' |
     'upload' |
     'external' |
-    'rightarrow' |
+    'rightarrowbig' |
     'breakdown' |
     'save' |
     'multiplepost' |
@@ -71,7 +71,7 @@ export default function Icon({ name, size = 24, fill = 'currentColor' }: IconPro
                 </svg>
             )
 
-        case 'rightarrow':
+        case 'rightarrowbig':
             return (
                 <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 18 13" fill={fill}>
                     <path d="M0.263 7.66211L0.263 5.25423L16.2571 5.25423V7.66211L0.263 7.66211Z" />

@@ -19,7 +19,7 @@ export default function LandingPage() {
           >
             <Icon name='oto' fill='#222' size={40} />
 
-            <Link draggable="false" href="/" className={styles.cta}>
+            <Link draggable="false" href="/auth" className={styles.cta}>
               <div className={styles.ctacontent}>
                 Get started
                 <Icon name='rightarrow' fill='#fff' size={10} />

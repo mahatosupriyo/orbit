@@ -43,10 +43,8 @@ export default function NavBar() {
   const useStagger = isStaggeredRoute(pathname);
 
   const Logo = (
-    <Link href="/">
-
-
-      <Icon name='oto' size={30} fill="#fff"/>
+    <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', justifyContent: 'center' }}>
+      <Icon name='oto' size={32} fill="#fff"/>
     </Link>
   );
 

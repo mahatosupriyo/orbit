@@ -39,7 +39,23 @@ export default function LandingPage() {
               <h6 className={styles.subtitle}>Edge that separates the top one percent from the rest.</h6>
 
 
-              <p className={styles.minitext}>Trusted by creators and brands, is now open for you.</p>
+              <div className={styles.minitext}>
+
+                <img draggable="false" src="https://ik.imagekit.io/ontheorbit/Essentials/testimonial/tests.png?updatedAt=1758384186496" className={styles.miniso} />
+
+                <div className={styles.minisoText}>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="10" viewBox="0 0 69 12" fill="none">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M7.73172 3.79607L11.8966 4.31958L8.83579 7.19039L9.62468 11.3123L5.94852 9.28839L2.27237 11.3123L3.06126 7.19039L0 4.31908L4.16483 3.79557L5.94852 0L7.73172 3.79607Z" fill="#FFC132" />
+                    <path fillRule="evenodd" clipRule="evenodd" d="M22.0076 3.79607L26.1724 4.31958L23.1117 7.19039L23.9005 11.3123L20.2244 9.28839L16.5482 11.3123L17.3371 7.19039L14.2759 4.31908L18.4407 3.79557L20.2244 0L22.0076 3.79607Z" fill="#FFC132" />
+                    <path fillRule="evenodd" clipRule="evenodd" d="M36.2834 3.79607L40.4483 4.31958L37.3875 7.19039L38.1764 11.3123L34.5002 9.28839L30.8241 11.3123L31.613 7.19039L28.5517 4.31908L32.7166 3.79557L34.5002 0L36.2834 3.79607Z" fill="#FFC132" />
+                    <path fillRule="evenodd" clipRule="evenodd" d="M50.5593 3.79607L54.7241 4.31958L51.6634 7.19039L52.4523 11.3123L48.7761 9.28839L45.1 11.3123L45.8888 7.19039L42.8276 4.31908L46.9924 3.79557L48.7761 0L50.5593 3.79607Z" fill="#FFC132" />
+                    <path fillRule="evenodd" clipRule="evenodd" d="M64.8352 3.79607L69 4.31958L65.9392 7.19039L66.7281 11.3123L63.052 9.28839L59.3758 11.3123L60.1647 7.19039L57.1035 4.31908L61.2683 3.79557L63.052 0L64.8352 3.79607Z" fill="#FFC132" />
+                  </svg>
+                  <p>
+                    Trusted by 5K+ Designers and Brands.
+                  </p>
+                </div>
+              </div>
 
               <div style={{ marginTop: '4rem' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 256 25" fill="none">

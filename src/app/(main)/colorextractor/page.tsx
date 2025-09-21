@@ -4,7 +4,7 @@
 
 import { useState, useRef } from "react";
 import ColorThief from "colorthief";
-import styles from "./test.module.scss";
+import styles from "./colorextractor.module.scss";
 import NavBar from "@/components/molecules/navbar/navbar";
 import { toast } from "react-hot-toast";
 

@@ -141,8 +141,9 @@
     background: hsla(0, 0%, 16);
     font-size: 1.6rem;
     line-height: 100%;
+    font-variation-settings: "ROUN" 100, "wght" 600;
+
     user-select: none;
-    font-weight: 600;
     color: hsl(0, 0%, 60%);
 
     display: flex;

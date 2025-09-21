@@ -110,6 +110,7 @@ export default function ColorExtractor() {
       <NavBar />
       <div className={styles.wrapper}>
         {/* Drag & Drop Zone */}
+        <div className={styles.dropper}>
         <div
           className={`${styles.dropZone} ${dragActive ? styles.active : ""}`}
           onDragEnter={handleDrag}
@@ -130,6 +131,7 @@ export default function ColorExtractor() {
             style={{ display: "none" }}
             aria-label="Image file input"
           />
+        </div>
         </div>
 
         {/* Image Preview and Color Palette */}

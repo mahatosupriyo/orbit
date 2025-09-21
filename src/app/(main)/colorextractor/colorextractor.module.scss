@@ -5,7 +5,7 @@
     justify-content: space-between;
     width: 100%;
     gap: 1.5rem;
-    padding: 10rem 10rem;
+    padding: 10rem 2rem;
     //   background: #000;
     min-height: 100vh;
     //   margin-top: 10rem;
@@ -19,16 +19,29 @@
     }
 }
 
-.upload {
-    margin-bottom: 1rem;
 
-    input[type="file"] {
-        background: #fff;
-        color: #000;
-        border: none;
-        border-radius: 2rem;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
+.dropper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+    .upload {
+        width: 100%;
+        max-width: 50%;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        input[type="file"] {
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
     }
 }
 
@@ -39,15 +52,21 @@
     background-color: #fff;
     border-radius: 2rem;
     padding: 1rem;
+    width: 100%;
+    max-width: 50%;
+
+    @media only screen and (max-width: 1000px){
+        max-width: 100%;
+    }
 
     img {
-        margin: 2rem;
+        // margin: 2rem;
         width: 100%;
-        max-width: 14rem;
-        aspect-ratio: 1/1;
+        // max-width: 14rem;
+        aspect-ratio: 16/9;
         object-fit: cover;
-        margin-bottom: 1rem;
-        border-radius: 10rem;
+        // margin-bottom: 1rem;
+        border-radius: 1.4rem;
         user-select: none;
         pointer-events: none;
         margin-bottom: 3rem;
@@ -97,7 +116,7 @@
 
 
 .dropZone {
-    border: 0.16rem dashed hsl(0, 0%, 27%);
+    border: 0.16rem dotted hsl(0, 0%, 47%);
 
     border-radius: 100rem;
     height: 100%;
@@ -109,7 +128,7 @@
 
     text-align: center;
     cursor: pointer;
-    background: transparent;
+    background: hsla(0, 0%, 16);
     font-size: 1.6rem;
     line-height: 100%;
     user-select: none;
@@ -143,7 +162,7 @@
 .colors {
     border-radius: 1.4rem;
     background-color: hsl(0, 0%, 0%, 0.6);
-    border-radius: 1.4rem;
+    border-radius: 14rem;
     overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }

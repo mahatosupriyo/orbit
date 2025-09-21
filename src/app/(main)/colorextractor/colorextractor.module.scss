@@ -1,31 +1,41 @@
 .wrapper {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+
     width: 100%;
     gap: 1.5rem;
     padding: 10rem 2rem;
     //   background: #000;
-    min-height: 100vh;
     //   margin-top: 10rem;
     max-width: 200rem;
     color: #fff;
 
-    @media only screen and (max-width: 1000px) {
-        flex-direction: column;
-        padding: 10rem 2rem;
-        gap: 3rem;
+
+
+    .subcontainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        width: 100%;
+
+        @media only screen and (max-width: 1000px) {
+            flex-direction: column;
+            padding: 10rem 0rem;
+            gap: 3rem;
+        }
     }
 }
 
 
-.dropper{
+.dropper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     width: 50%;
+
     .upload {
         width: 100%;
         max-width: 50%;
@@ -33,7 +43,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    
+
         input[type="file"] {
             background: #fff;
             color: #000;
@@ -55,7 +65,7 @@
     width: 100%;
     max-width: 50%;
 
-    @media only screen and (max-width: 1000px){
+    @media only screen and (max-width: 1000px) {
         max-width: 100%;
     }
 

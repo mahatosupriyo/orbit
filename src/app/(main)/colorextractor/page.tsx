@@ -141,7 +141,7 @@ export default function ColorExtractor() {
                     {imageSrc && (
                         <div
                             className={styles.imageWrapper}
-                            style={{ backgroundColor: dominant || "#fff" }}
+                            style={{ backgroundColor: dominant || "#121212" }}
                         >
                             <img
                                 ref={imgRef}

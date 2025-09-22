@@ -8,6 +8,7 @@ import styles from "./colorextractor.module.scss";
 import NavBar from "@/components/molecules/navbar/navbar";
 import { toast } from "react-hot-toast";
 import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn";
+import { motion } from "framer-motion";
 
 export default function ColorExtractor() {
     // State for dominant color, palette, image source, and drag state
@@ -114,7 +115,8 @@ export default function ColorExtractor() {
                 <div className={styles.subcontainer}>
                     {/* Drag & Drop Zone */}
                     <div className={styles.dropper}>
-                        <div
+                        <motion.div
+                            whileTap={{ outlineColor: '#05b4d2' }}
                             className={`${styles.dropZone} ${dragActive ? styles.active : ""}`}
                             onDragEnter={handleDrag}
                             onDragOver={handleDrag}
@@ -134,7 +136,7 @@ export default function ColorExtractor() {
                                 style={{ display: "none" }}
                                 aria-label="Image file input"
                             />
-                        </div>
+                        </motion.div>
                     </div>
 
                     {/* Image Preview and Color Palette */}

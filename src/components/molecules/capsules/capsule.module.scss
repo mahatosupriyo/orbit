@@ -197,6 +197,9 @@
             flex-direction: column;
             gap: 1.2rem;
 
+
+
+
             @media only screen and (max-width: 1000px) {
                 // width: 100%;
                 // max-width: 50rem;
@@ -220,7 +223,7 @@
                 flex-direction: row;
                 font-size: 1.9rem;
                 align-items: center;
-                font-weight: 700;
+
                 // font-family: Instrument Serif;
                 color: hsl(0, 0%, 90%);
                 text-transform: lowercase;
@@ -233,6 +236,14 @@
                 left: 0;
                 top: 0;
                 padding: 2rem;
+
+
+                transition: 0.1s ease-in-out;
+
+
+                &:hover {
+                    opacity: 0.4;
+                }
 
                 .postAuthorImage {
                     // z-index: 10;
@@ -263,7 +274,7 @@
                     position: relative;
                     align-items: center;
                     justify-content: center;
-                    padding-bottom: 0.2rem;
+                    // padding-bottom: 0.2rem;
                     font-variation-settings: "ROUN" 100, "wght" 600;
 
                     overflow: hidden;
@@ -273,35 +284,38 @@
                         display: none;
                     }
 
-
-                    &:hover {
-                        &::after {
-                            transform: translateX(0%);
-                        }
-                    }
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        bottom: 0;
-                        height: 0.12rem;
-                        width: 100%;
-
-                        transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-                        background-color: #fff;
-                        transform: translateX(-101%);
+                    transition: 0.1s ease-in-out;
 
 
-                    }
+
+                    // &:hover {
+                    //     &::after {
+                    //         transform: translateX(0%);
+                    //     }
+                    // }
+
+                    // &::after {
+                    //     content: "";
+                    //     position: absolute;
+                    //     bottom: 0;
+                    //     height: 0.12rem;
+                    //     width: 100%;
+
+                    //     transition: all 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+                    //     background-color: #fff;
+                    //     transform: translateX(-101%);
+
+
+                    // }
                 }
 
-                &:hover {
-                    .labelauthor {
-                        &::after {
-                            transform: translateX(0%);
-                        }
-                    }
-                }
+                // &:hover {
+                //     .labelauthor {
+                //         &::after {
+                //             transform: translateX(0%);
+                //         }
+                //     }
+                // }
 
                 .postAuthorImage {
                     width: 4rem;

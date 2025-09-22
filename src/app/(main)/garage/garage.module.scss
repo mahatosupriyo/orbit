@@ -27,35 +27,45 @@
             .gridhead {
                 display: flex;
                 flex-direction: row;
-                align-items: center;
+                // align-items: center;
                 height: 100%;
                 font-size: 1.6rem;
                 font-variation-settings: "ROUN" 100, "wght" 600;
 
-
-                .gridcapsule {
+                .linkwraper {
                     display: flex;
+                    align-items: center;
+                    height: 100%;
                     background-color: #212121;
-                    padding: 2rem;
-                    cursor: pointer;
-                    border-radius: 9rem;
-                    transition: all 0.14s cubic-bezier(1, 0, 0, 1);
-                    position: relative;
 
-                    border: 0.1rem solid transparent;
+                    width: 100%;
+                    border-radius: 10rem;
+                    overflow: hidden;
+                    height: 10rem;
+                    width: 10rem;
+
+                    justify-content: center;
 
 
-                    .linkwraper{
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
 
                     &:hover {
                         background-color: hsl(0, 0%, 30%);
-                        background-color: #808080;
+                    }
+
+                    .gridcapsule {
+                        display: flex;
+
+                        cursor: pointer;
+                        transition: all 0.14s cubic-bezier(1, 0, 0, 1);
+                        position: relative;
+                        border: 0.1rem solid transparent;
+
+
+
                     }
                 }
+
+
             }
 
             .deengineering {

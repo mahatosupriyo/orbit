@@ -549,3 +549,22 @@
 .swiperwraper {
     position: relative;
 }
+
+
+
+.dateposted {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.4rem;
+    margin-left: 0.4rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: hsl(0, 0%, 50%);
+
+    .dot {
+        font-size: 1rem;
+        font-weight: 300;
+        color: hsl(0, 0%, 50%);
+    }
+}

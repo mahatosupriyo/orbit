@@ -41,14 +41,24 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
     const firstImage = post.images[0];
     const hasMultipleImages = post.images.length > 1;
 
-    const dateObj = new Date(post.createdAt);
+    // Format createdAt as relative time: days (<90d), weeks (<90w), years (>=90w)
+    const createdAtDate = new Date(post.createdAt.replace(" ", "T")); // Ensure valid ISO format
+    const now = new Date();
+    const diffMs = now.getTime() - createdAtDate.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    let createdAtDisplay = "";
 
-    const day = dateObj.getDate();
-    const month = dateObj.toLocaleString("default", { month: "short" });
-    const year = dateObj.getFullYear().toString().slice(-2);
+    if (diffDays < 90) {
+        createdAtDisplay = `${diffDays}d`;
+    } else if (diffDays < 90 * 7) {
+        const diffWeeks = Math.floor(diffDays / 7);
+        createdAtDisplay = `${diffWeeks}w`;
+    } else {
+        const diffYears = Math.floor(diffDays / 365);
+        createdAtDisplay = `${diffYears}y`;
+    }
 
     const signedUrls = post.signedMux ?? null;
-
 
     return (
         <div className={styles.capsulewraper}>
@@ -167,7 +177,17 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                     <Icon name="verified" fill="#00aaff" size={10} />
                                                 </span>
 
+                                                <p className={styles.dateposted}>
+                                                    <span className={styles.dot}>
+                                                        •
+                                                    </span>
+                                                    {createdAtDisplay}
+                                                </p>
+
                                             </div>
+
+
+
                                         </Link>
                                     )}
 

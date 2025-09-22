@@ -23,6 +23,41 @@
                 padding: 10rem 2rem;
             }
 
+
+            .gridhead {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                height: 100%;
+                font-size: 1.6rem;
+                font-variation-settings: "ROUN" 100, "wght" 600;
+
+
+                .gridcapsule {
+                    display: flex;
+                    background-color: #212121;
+                    padding: 2rem;
+                    cursor: pointer;
+                    border-radius: 9rem;
+                    transition: all 0.14s cubic-bezier(1, 0, 0, 1);
+                    position: relative;
+
+                    border: 0.1rem solid transparent;
+
+
+                    .linkwraper{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    &:hover {
+                        background-color: hsl(0, 0%, 30%);
+                        background-color: #808080;
+                    }
+                }
+            }
+
             .deengineering {
                 display: flex;
                 padding: 10rem 0rem;

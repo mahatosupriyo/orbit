@@ -41,14 +41,16 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
     const firstImage = post.images[0];
     const hasMultipleImages = post.images.length > 1;
 
-    // Format createdAt as relative time: days (<90d), weeks (<90w), years (>=90w)
+    // Format createdAt as relative time: "today", days (<90d), weeks (<90w), years (>=90w)
     const createdAtDate = new Date(post.createdAt.replace(" ", "T")); // Ensure valid ISO format
     const now = new Date();
     const diffMs = now.getTime() - createdAtDate.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
     let createdAtDisplay = "";
 
-    if (diffDays < 90) {
+    if (diffDays === 0) {
+        createdAtDisplay = "today";
+    } else if (diffDays < 90) {
         createdAtDisplay = `${diffDays}d`;
     } else if (diffDays < 90 * 7) {
         const diffWeeks = Math.floor(diffDays / 7);

@@ -5,13 +5,10 @@
     width: 100%;
     gap: 1.5rem;
     padding: 10rem 2rem;
-    //   background: #000;
-    //   margin-top: 10rem;
+
     min-height: 10dvh;
     max-width: 200rem;
     color: #fff;
-
-
 
     .subcontainer {
         display: flex;
@@ -35,15 +32,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // aspect-ratio: 1/1;
     height: 100%;
-
     width: 50%;
 
     .upload {
         width: 100%;
         max-width: 50%;
         margin-bottom: 1rem;
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -74,12 +70,9 @@
     }
 
     img {
-        // margin: 2rem;
         width: 100%;
-        // max-width: 14rem;
         aspect-ratio: 16/9;
         object-fit: cover;
-        // margin-bottom: 1rem;
         border-radius: 1.4rem;
         user-select: none;
         pointer-events: none;
@@ -107,7 +100,6 @@
         max-width: 10rem;
         max-height: 10rem;
         aspect-ratio: 1/1;
-        // border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -115,7 +107,6 @@
         font-size: 0.75rem;
         color: #fff;
         cursor: pointer;
-        // border: 2px solid #111;
         transition: transform 0.16s ease-in-out;
 
         &:hover {
@@ -130,7 +121,8 @@
 
 
 .dropZone {
-    border: 0.16rem dotted hsl(0, 0%, 47%);
+    outline: 0.16rem dotted #4D4D4D;
+    outline-offset: 0.6rem;
 
     border-radius: 100rem;
     height: 100%;
@@ -142,7 +134,7 @@
 
     text-align: center;
     cursor: pointer;
-    background: hsla(0, 0%, 16);
+    background: #212121;
     font-size: 1.6rem;
     line-height: 100%;
     font-variation-settings: "ROUN" 100, "wght" 600;
@@ -157,13 +149,12 @@
     transition: border-color 0.3s ease, background 0.3s ease;
 
     &:hover {
-        border-color: #fff;
+        outline-color: hsl(0, 0%, 60%);
         background: #1a1a1a;
     }
 
     &.active {
-        border-color: #0af;
-        // background: #222;
+        outline-color: #0af;
         color: #fff;
 
         background: radial-gradient(62.5% 62.5% at 50% 50%, #000 0%, #1d1d1d 100%);

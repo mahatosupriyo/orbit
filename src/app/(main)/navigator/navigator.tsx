@@ -25,7 +25,7 @@ const Navigator: React.FC = () => {
   return (
     <nav className={styles.mainnavigatorcontainer} aria-label="Main Navigation">
 
-      <motion.div
+      {/* <motion.div
         whileTap={{ opacity: 0.6, scale: 0.96 }}
       >
         <Link
@@ -41,7 +41,7 @@ const Navigator: React.FC = () => {
             aria-label="Astra"
           />
         </Link>
-      </motion.div>
+      </motion.div> */}
 
       {/* Garage Page Link */}
 

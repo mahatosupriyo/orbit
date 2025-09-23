@@ -116,7 +116,7 @@ export default function ColorExtractor() {
                     {/* Drag & Drop Zone */}
                     <div className={styles.dropper}>
                         <motion.div
-                            whileTap={{ outlineColor: '#05b4d2' }}
+                            whileTap={{ outlineColor: '#1D75DE' }}
                             className={`${styles.dropZone} ${dragActive ? styles.active : ""}`}
                             onDragEnter={handleDrag}
                             onDragOver={handleDrag}

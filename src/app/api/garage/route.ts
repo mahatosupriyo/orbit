@@ -7,10 +7,10 @@ import { redis } from "@/utils/redis"
 import { enforceRateLimit } from "@/utils/rate-limit"
 
 // Constants
-const FREE_POSTS_LIMIT = 10 // free users see only 10 posts
-const PAGE_LIMIT = 20 // number of posts per page for subscribed users
-const MAX_TAKE = PAGE_LIMIT // hard ceiling to avoid unexpected large queries
-const CACHE_TTL_SECONDS = 300 // 5 minutes cache to avoid hot-spot load
+const FREE_POSTS_LIMIT = 10 // Free users see only 10 posts total
+const PAGE_LIMIT = 10 // Number of posts per page for subscribed users
+const MAX_TAKE = PAGE_LIMIT
+const CACHE_TTL_SECONDS = 300 // 5 minutes cache
 const PLACEHOLDER_AVATAR = "https://ontheorbit.com/placeholder.png"
 
 // Security: Ensure envs exist
@@ -26,21 +26,14 @@ function assertEnv() {
   }
 }
 
-// Allowlist for http(s) avatars or image URLs if already absolute.
-// If a URL is not in this list, we fall back to a placeholder to avoid SSRF/leaks.
-const ALLOWED_ABSOLUTE_URL_PREFIXES = [
-  // your CDN origin
-  process.env.ORBIT_CLOUDFRONT_URL ?? "",
-  // add any explicitly trusted domains if required
-]
+// Allowlist for http(s) avatars or image URLs
+const ALLOWED_ABSOLUTE_URL_PREFIXES = [process.env.ORBIT_CLOUDFRONT_URL ?? ""]
 
-// Guard and sign CloudFront resource
+// Sign CloudFront resource
 async function signUrl(keyOrUrl: string | null): Promise<string> {
   assertEnv()
-
   if (!keyOrUrl) return PLACEHOLDER_AVATAR
 
-  // Allow only known-safe absolute URLs; otherwise treat as key for CloudFront
   if (/^https?:\/\//i.test(keyOrUrl)) {
     const isAllowed = ALLOWED_ABSOLUTE_URL_PREFIXES.some((p) => p && keyOrUrl.startsWith(p))
     return isAllowed ? keyOrUrl : PLACEHOLDER_AVATAR
@@ -55,17 +48,16 @@ async function signUrl(keyOrUrl: string | null): Promise<string> {
   })
 }
 
-// Validate and normalize cursor
+// Parse cursor
 function parseCursor(value: string | null): number | null {
   if (!value) return null
-  // Only allow positive integers
   if (!/^\d+$/.test(value)) return null
   const n = Number(value)
   if (!Number.isSafeInteger(n) || n <= 0) return null
   return n
 }
 
-// Build consistent security headers
+// Security headers
 function securityHeaders(extra?: Record<string, string>) {
   return {
     "X-Content-Type-Options": "nosniff",
@@ -77,40 +69,26 @@ function securityHeaders(extra?: Record<string, string>) {
   }
 }
 
-// Read from cache if available
+// Redis cache helpers
 async function tryGetCachedResponse(cacheKey: string) {
   const cached = await redis.get<string>(cacheKey)
   if (!cached) return null
-  try {
-    return JSON.parse(cached)
-  } catch {
-    return null
-  }
+  try { return JSON.parse(cached) } catch { return null }
 }
 
 async function setCache(cacheKey: string, value: unknown, ttlSeconds: number) {
-  try {
-    await redis.set(cacheKey, JSON.stringify(value), { ex: ttlSeconds })
-  } catch {
-    // best effort; ignore cache set errors
-  }
+  try { await redis.set(cacheKey, JSON.stringify(value), { ex: ttlSeconds }) } catch {}
 }
 
+// GET handler
 export async function GET(req: NextRequest) {
   try {
-    // Early generic rate limit (before any DB work)
-    const preflight = await enforceRateLimit({
-      req,
-      userId: null,
-      windowSeconds: 60,
-      max: 60, // 60 req/min per IP for generic preflight
-      namespace: "garage-pre",
-    })
-
+    // Generic preflight rate limit
+    const preflight = await enforceRateLimit({ req, userId: null, windowSeconds: 60, max: 60, namespace: "garage-pre" })
     if (!preflight.allowed) {
       return new NextResponse(JSON.stringify({ error: "Too Many Requests" }), {
         status: 429,
-        headers: {
+        headers: { 
           ...securityHeaders({
             "Retry-After": String(preflight.retryAfter ?? 60),
             "X-RateLimit-Limit": String(preflight.limit),
@@ -122,20 +100,17 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    // Auth and subscription
+    // Auth & subscription
     const session = await auth()
     const userId = session?.user?.id ?? null
     const isSubscribed = userId ? await checkUserSubscription(userId) : false
 
-    // Apply user-level rate limiting (subscribers get higher allowance)
+    // User-level rate limit
     const rl = await enforceRateLimit({
-      req,
-      userId,
-      windowSeconds: 60,
-      max: isSubscribed ? 120 : 40, // tighter for free users
+      req, userId, windowSeconds: 60,
+      max: isSubscribed ? 120 : 40,
       namespace: "garage",
     })
-
     if (!rl.allowed) {
       return new NextResponse(JSON.stringify({ error: "Too Many Requests" }), {
         status: 429,
@@ -155,26 +130,44 @@ export async function GET(req: NextRequest) {
     const cursorRaw = searchParams.get("cursor")
     const cursor = parseCursor(cursorRaw)
 
-    const takeUnbounded = isSubscribed ? PAGE_LIMIT : FREE_POSTS_LIMIT
-    const take = Math.min(takeUnbounded, MAX_TAKE)
+    // For free users: ignore pagination, always return first 10 posts
+    if (!isSubscribed) {
+      const freeCacheKey = "garage:feed:free:first"
+      const cached = await tryGetCachedResponse(freeCacheKey)
+      if (cached) return NextResponse.json(cached, { status: 200, headers: securityHeaders() })
 
-    // Cache key varies by subscription and cursor
-    const cacheKey = `garage:feed:${isSubscribed ? "pro" : "free"}:${cursor ?? "first"}`
-
-    // Attempt cache read
-    const cached = await tryGetCachedResponse(cacheKey)
-    if (cached) {
-      return NextResponse.json(cached, {
-        status: 200,
-        headers: securityHeaders({
-          "X-RateLimit-Limit": String(rl.limit),
-          "X-RateLimit-Remaining": String(rl.remaining),
-          "X-RateLimit-Reset": String(rl.reset),
-        }),
+      const freePosts = await db.garagePost.findMany({
+        where: { createdBy: { verified: true } },
+        include: {
+          images: { orderBy: { order: "asc" } },
+          makingOf: true,
+          createdBy: { select: { username: true, image: true } },
+        },
+        orderBy: { createdAt: "desc" },
+        take: FREE_POSTS_LIMIT,
       })
+
+      const signedPosts = await Promise.all(freePosts.map(async (post) => {
+        const signedImages = await Promise.all(post.images.map(async (img) => ({
+          id: img.id,
+          url: await signUrl(img.playbackID),
+          order: img.order,
+        })))
+        const signedAvatar = await signUrl(post.createdBy.image)
+        return { ...post, createdAt: post.createdAt.toISOString(), images: signedImages, createdBy: { ...post.createdBy, image: signedAvatar } }
+      }))
+
+      const payload = { posts: signedPosts, isSubscribed, nextCursor: null, hasMore: false }
+      await setCache(freeCacheKey, payload, CACHE_TTL_SECONDS)
+      return NextResponse.json(payload, { status: 200, headers: securityHeaders() })
     }
 
-    // Query posts
+    // For subscribed users: normal paginated logic
+    const take = Math.min(PAGE_LIMIT, MAX_TAKE)
+    const cacheKey = `garage:feed:pro:${cursor ?? "first"}`
+    const cached = await tryGetCachedResponse(cacheKey)
+    if (cached) return NextResponse.json(cached, { status: 200, headers: securityHeaders() })
+
     const posts = await db.garagePost.findMany({
       where: { createdBy: { verified: true } },
       include: {
@@ -183,54 +176,28 @@ export async function GET(req: NextRequest) {
         createdBy: { select: { username: true, image: true } },
       },
       orderBy: { createdAt: "desc" },
-      take: take + 1, // fetch extra to check if more pages exist
+      take: take + 1,
       ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
     })
 
     const hasMore = posts.length > take
     const sliced = posts.slice(0, take)
 
-    // Sign URLs safely
-    const signedPosts = await Promise.all(
-      sliced.map(async (post: any) => {
-        const signedImages = await Promise.all(
-          post.images.map(async (img: any) => ({
-            id: img.id,
-            url: await signUrl(img.playbackID),
-            order: img.order,
-          })),
-        )
-        const signedAvatar = await signUrl(post.createdBy.image)
+    const signedPosts = await Promise.all(sliced.map(async (post) => {
+      const signedImages = await Promise.all(post.images.map(async (img) => ({
+        id: img.id,
+        url: await signUrl(img.playbackID),
+        order: img.order,
+      })))
+      const signedAvatar = await signUrl(post.createdBy.image)
+      return { ...post, createdAt: post.createdAt.toISOString(), images: signedImages, createdBy: { ...post.createdBy, image: signedAvatar } }
+    }))
 
-        return {
-          ...post,
-          createdAt: post.createdAt.toISOString(),
-          images: signedImages,
-          createdBy: { ...post.createdBy, image: signedAvatar },
-        }
-      }),
-    )
-
-    const payload = {
-      posts: signedPosts,
-      isSubscribed,
-      nextCursor: hasMore ? sliced[sliced.length - 1].id : null,
-      hasMore,
-    }
-
-    // Cache the payload for a short duration
+    const payload = { posts: signedPosts, isSubscribed, nextCursor: hasMore ? sliced[sliced.length - 1].id : null, hasMore }
     await setCache(cacheKey, payload, CACHE_TTL_SECONDS)
+    return NextResponse.json(payload, { status: 200, headers: securityHeaders() })
 
-    return NextResponse.json(payload, {
-      status: 200,
-      headers: securityHeaders({
-        "X-RateLimit-Limit": String(rl.limit),
-        "X-RateLimit-Remaining": String(rl.remaining),
-        "X-RateLimit-Reset": String(rl.reset),
-      }),
-    })
   } catch (err) {
-    // Avoid leaking internals
     console.error("[garage] API error:", (err as Error)?.message)
     return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500, headers: securityHeaders() })
   }

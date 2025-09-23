@@ -1,5 +1,7 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+"use client";
+
+// import { auth } from "@/auth";
+// import { redirect } from "next/navigation";
 import GarageFeed from "./garagefeed";
 import { Metadata } from "next";
 
@@ -8,12 +10,12 @@ export const metadata: Metadata = {
   title: "Garage",
 };
 
-export default async function GaragePage() {
-  const session = await auth();
+export default function GaragePage() {
+  // const session = await auth();
 
-  if (!session?.user?.id) {
-    redirect("/auth");
-  }
+  // if (!session?.user?.id) {
+  //   redirect("/auth");
+  // }
 
   return <GarageFeed />;
 }

@@ -5,10 +5,10 @@
 import GarageFeed from "./garagefeed";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://ontheorbit.com"),
-  title: "Garage",
-};
+// export const metadata: Metadata = {
+//   metadataBase: new URL("https://ontheorbit.com"),
+//   title: "Garage",
+// };
 
 export default function GaragePage() {
   // const session = await auth();

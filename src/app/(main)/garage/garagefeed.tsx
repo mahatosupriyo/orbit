@@ -8,6 +8,7 @@ import CapsuleCard from "@/components/molecules/capsules/capsule";
 import { motion, Variants, cubicBezier } from "framer-motion";
 import Link from "next/link";
 import Icon from "@/components/atoms/icons";
+import OrbitLoader from "@/components/atoms/lotties/loader";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -38,7 +39,7 @@ export default function GarageFeed() {
   const { data, size, setSize, isValidating } = useSWRInfinite(getKey, fetcher);
 
   const posts = data ? data.flatMap((page) => page.posts) : [];
-  
+
   // Determine if we should keep fetching more
   const hasMore = data ? data[data.length - 1].hasMore : true;
 
@@ -49,7 +50,7 @@ export default function GarageFeed() {
     const handleScroll = () => {
       if (
         window.innerHeight + window.scrollY >=
-          document.body.offsetHeight - 300 &&
+        document.body.offsetHeight - 300 &&
         !isValidating &&
         hasMore
       ) {
@@ -115,7 +116,9 @@ export default function GarageFeed() {
         </div>
 
         {isValidating && hasMore && (
-          <p className={styles.loading}>Loading...</p>
+          <div className={styles.drops} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <OrbitLoader/>
+          </div>
         )}
       </div>
     </div>

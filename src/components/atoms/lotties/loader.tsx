@@ -3,12 +3,12 @@ import React from 'react'
 import Lottie from 'lottie-react'
 import animationData from '../../../../public/Essentials/lottie/loader.json'
 
-const BurnerLoader = () => {
+const OrbitLoader = () => {
     return (
         <>
-            <Lottie animationData={animationData} style={{ height: '30px', padding: '4rem', boxSizing: 'content-box', width: '96px' }} autoplay />
+            <Lottie animationData={animationData} style={{ height: '200px', padding: '4rem', boxSizing: 'content-box' }} autoplay />
         </>
     )
 }
 
-export default BurnerLoader
+export default OrbitLoader

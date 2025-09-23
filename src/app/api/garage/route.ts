@@ -1,10 +1,12 @@
+// app/api/garage/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { db } from "@/server/db";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import { checkUserSubscription } from "@/utils/hassubscription";
 
-const FREE_POSTS_LIMIT = 10;
+const FREE_POSTS_LIMIT = 10; // Free users see only 10 posts per scroll
+const SUBSCRIBED_POSTS_LIMIT = 10; // Subscribed users fetch 10 per scroll (infinite scroll)
 const PLACEHOLDER_AVATAR = "https://ontheorbit.com/placeholder.png";
 
 const cloudfrontEnv = {
@@ -28,17 +30,21 @@ async function signUrl(keyOrUrl: string | null): Promise<string> {
 
 export async function GET(req: NextRequest) {
   try {
-    // ✅ Get logged-in user
+    // 1️⃣ Get logged-in user
     const session = await auth();
     const userId = session?.user?.id;
 
-    // 1️⃣ Check subscription first
+    // 2️⃣ Check subscription
     const isSubscribed = userId ? await checkUserSubscription(userId) : false;
 
-    // 2️⃣ Decide number of posts to fetch
-    const take = isSubscribed ? undefined : FREE_POSTS_LIMIT;
+    // 3️⃣ Decide how many posts per request
+    const POSTS_PER_PAGE = isSubscribed ? SUBSCRIBED_POSTS_LIMIT : FREE_POSTS_LIMIT;
 
-    // 3️⃣ Fetch posts
+    // 4️⃣ Get cursor from query
+    const { searchParams } = new URL(req.url);
+    const cursorId = searchParams.get("cursor"); // last post ID from previous page
+
+    // 5️⃣ Fetch posts
     const posts = await db.garagePost.findMany({
       where: { createdBy: { verified: true } },
       include: {
@@ -47,12 +53,17 @@ export async function GET(req: NextRequest) {
         createdBy: { select: { username: true, image: true } },
       },
       orderBy: { createdAt: "desc" },
-      ...(take ? { take } : {}),
+      take: POSTS_PER_PAGE + 1, // fetch one extra to check if more posts exist
+      ...(cursorId ? { skip: 1, cursor: { id: Number(cursorId) } } : {}),
     });
 
-    // 4️⃣ Sign URLs
+    // 6️⃣ Determine if more posts exist
+    const hasMore = posts.length > POSTS_PER_PAGE;
+    const sliced = posts.slice(0, POSTS_PER_PAGE);
+
+    // 7️⃣ Sign images and avatars
     const signedPosts = await Promise.all(
-      posts.map(async (post) => {
+      sliced.map(async (post) => {
         const signedImages = await Promise.all(
           post.images.map(async (img) => ({
             id: img.id,
@@ -61,6 +72,7 @@ export async function GET(req: NextRequest) {
           }))
         );
         const signedAvatar = await signUrl(post.createdBy.image);
+
         return {
           ...post,
           createdAt: post.createdAt.toISOString(),
@@ -70,10 +82,12 @@ export async function GET(req: NextRequest) {
       })
     );
 
+    // 8️⃣ Return response
     return NextResponse.json({
       posts: signedPosts,
       isSubscribed,
-      hasMore: false, // fetch all for subscribed, limited for free
+      nextCursor: hasMore ? sliced[sliced.length - 1].id : null,
+      hasMore,
     });
   } catch (err) {
     console.error("Garage API error:", err);

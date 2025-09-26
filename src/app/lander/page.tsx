@@ -6,6 +6,7 @@ import Footer from '@/components/molecules/footer/footer'
 import { motion } from 'framer-motion'
 import Icon from '@/components/atoms/icons'
 import ProBadge from '@/components/pro/pro'
+import FoundingTeamCo from '@/components/atoms/foundingteamco'
 
 
 export default function LandingPage() {
@@ -124,6 +125,10 @@ export default function LandingPage() {
           <p className={styles.role}>COMMUNICATION DESIGNER</p>
           <p className={styles.role}>MOTION DESIGNER</p>
           <p className={styles.role}>DESIGN ENGINEER</p>
+        </div>
+
+        <div className={styles.co}>
+          <FoundingTeamCo />
         </div>
 
       </div>

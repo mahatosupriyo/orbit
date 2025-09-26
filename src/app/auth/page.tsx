@@ -1,38 +1,64 @@
 "use client"
-import React from 'react'
+
+import React, { useEffect } from 'react'
 import styles from './auth.module.scss'
-import Icon from '@/components/atoms/icons';
-import Link from 'next/link';
+import Icon from '@/components/atoms/icons'
 import { motion } from 'framer-motion'
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 /**
  * AuthPage component
- * - Renders the authentication UI for signing in with a provider.
- * - Handles sign-in logic and error reporting.
- * - Shows branding, sign-in button, and legal link.
+ * - Handles authentication UI with Google as provider.
+ * - Redirects authenticated users to the homepage.
+ * - Displays loading state while session is being verified.
  */
 export default function AuthPage() {
+    const { data: session, status } = useSession()
+    const router = useRouter()
 
     /**
-     * Handles sign-in with the given provider.
-     * @param providerName The name of the auth provider (e.g., 'github')
+     * Redirect user to "/" if already authenticated.
+     * Runs whenever `status` changes.
+     */
+    useEffect(() => {
+        if (status === "authenticated") {
+            router.replace("/") // safe redirect to homepage
+        }
+    }, [status, router])
+
+    /**
+     * Handle provider sign-in.
+     * @param providerName - name of the auth provider (e.g., "google")
      */
     const handleSignIn = async (providerName: string) => {
         try {
-            await signIn(providerName, { callbackUrl: '/' });
+            await signIn(providerName, { callbackUrl: '/' })
         } catch (error) {
-            // Log error for debugging
-            console.error('Failed to sign in:', error);
+            // Log error for monitoring/debugging
+            console.error('Sign-in failed:', error)
         }
-    };
+    }
+
+    /**
+     * Show loader while session state is being determined
+     * Prevents UI flicker before redirect or sign-in screen display.
+     */
+    if (status === "loading") {
+        return (
+            <div className={styles.authwraper}>
+                <div className={styles.authcontainer}>Checking session.</div>
+            </div>
+        )
+    }
 
     return (
         <div className={styles.authwraper}>
             <div className={styles.authcontainer}>
+                {/* Branding logo */}
                 <Icon name='oto' size={40} />
 
-                {/* Sign-in button for Google (calls GitHub provider, update if needed) */}
+                {/* Google Sign-In Button */}
                 <div className={styles.btnwraper}>
                     <motion.button
                         whileTap={{ opacity: 0.6 }}
@@ -53,13 +79,28 @@ export default function AuthPage() {
                     </motion.button>
                 </div>
 
-                {/* Footer with terms and privacy links */}
+                {/* Legal and privacy notice */}
                 <p className={styles.authfooter}>
                     By continuing, you agree to our{' '}
-                    <a target='_blank' className={styles.linkinline} href="https://www.ontheorbit.com/company/legals">Legal terms</a> and{' '}
-                    <a target='_blank' className={styles.linkinline} href="https://www.ontheorbit.com/company/legals">Privacy policy</a>.
+                    <a
+                        target='_blank'
+                        rel="noopener noreferrer"
+                        className={styles.linkinline}
+                        href="https://www.ontheorbit.com/company/legals"
+                    >
+                        Legal terms
+                    </a>{' '}
+                    and{' '}
+                    <a
+                        target='_blank'
+                        rel="noopener noreferrer"
+                        className={styles.linkinline}
+                        href="https://www.ontheorbit.com/company/legals"
+                    >
+                        Privacy policy
+                    </a>.
                 </p>
             </div>
         </div>
-    );
+    )
 }

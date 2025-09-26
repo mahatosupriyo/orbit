@@ -21,7 +21,7 @@ export default function LandingPage() {
 
             <Link draggable="false" href="/auth" className={styles.cta}>
               <div className={styles.ctacontent}>
-                Get started
+                Login
                 <Icon name='rightarrowbig' fill='#fff' size={10} />
               </div>
             </Link>
@@ -99,7 +99,7 @@ export default function LandingPage() {
 
         <Link href="/" className={styles.procta}>
           <div className={styles.ctacontent}>
-            Be Pro
+            Book your seat
             <Icon name='rightarrowbig' fill='#fff' size={10} />
           </div>
         </Link>
@@ -125,12 +125,6 @@ export default function LandingPage() {
           <p className={styles.role}>DESIGN ENGINEER</p>
         </div>
 
-        <Link draggable="false" href="/" className={styles.cta}>
-          <div className={styles.ctacontent}>
-            Get started
-            <Icon name='rightarrowbig' fill='#fff' size={10} />
-          </div>
-        </Link>
       </div>
 
       <Footer />

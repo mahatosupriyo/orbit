@@ -128,7 +128,7 @@ export default function LandingPage() {
 
       </div>
 
-      <div style={{ padding: '4rem', width: '100%', background: 'hsl(0,0%,80%)' }}>
+      <div style={{ padding: '4rem', display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%', background: 'hsl(0,0%,100%)' }}>
         <ProBadge />
       </div>
 

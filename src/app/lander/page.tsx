@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Footer from '@/components/molecules/footer/footer'
 import { motion } from 'framer-motion'
 import Icon from '@/components/atoms/icons'
+import ProBadge from '@/components/pro/pro'
 
 
 export default function LandingPage() {
@@ -125,6 +126,10 @@ export default function LandingPage() {
           <p className={styles.role}>DESIGN ENGINEER</p>
         </div>
 
+      </div>
+
+      <div style={{ padding: '4rem', width: '100%', background: 'hsl(0,0%,80%)' }}>
+        <ProBadge />
       </div>
 
       <Footer />

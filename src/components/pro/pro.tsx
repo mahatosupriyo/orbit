@@ -5,6 +5,7 @@ import styles from './pro.module.scss'
 export default function ProBadge() {
     return (
         <div className={styles.probadge}>
+            <span className={styles.tnc}>*No conditions. No gimmicks. Claim anytime.</span>
             <div className={styles.prowraper}>
 
                 <motion.button

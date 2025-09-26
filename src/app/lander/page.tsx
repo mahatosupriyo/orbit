@@ -100,7 +100,7 @@ export default function LandingPage() {
 
         <Link href="/" className={styles.procta}>
           <div className={styles.ctacontent}>
-            Book your seat
+            See inside
             <Icon name='rightarrowbig' fill='#fff' size={10} />
           </div>
         </Link>

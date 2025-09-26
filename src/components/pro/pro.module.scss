@@ -14,6 +14,17 @@
     justify-content: center;
     flex-direction: column;
     gap: 3rem;
+    position: relative;
+
+    .tnc{
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 4rem 4rem;
+        opacity: 0.5;
+        font-size: 1.1rem;
+        font-weight: 400;
+    }
 
     .prowraper {
         width: 100%;
@@ -71,7 +82,7 @@
 
     .probtn {
         display: flex;
-        padding: 4rem 4.6rem;
+        padding: 4rem 4rem;
         border-radius: 10rem;
         margin: 10rem 2rem;
         cursor: pointer;

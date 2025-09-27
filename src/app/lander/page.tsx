@@ -127,14 +127,22 @@ export default function LandingPage() {
           <p className={styles.role}>DESIGN ENGINEER</p>
         </div>
 
-        <div className={styles.co}>
+        {/* <div className={styles.co} >
           <FoundingTeamCo />
-        </div>
+        </div> */}
 
       </div>
 
       <div style={{ padding: '4rem', display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%', background: 'hsl(0,0%,100%)' }}>
         <ProBadge />
+      </div>
+
+      <div className={styles.footnote}>
+        *Adobe, Spotify, and GoDaddy benefits are available for one year and can be claimed anytime during your active subscription. Each benefit is activated on your personal email and limited to one activation per subscriber. Benefits cannot be transferred or exchanged. Service availability depends on the respective providers’ terms and may change without notice.
+        <br /><br />
+        **Brand trips will be announced at a later date. Trips start and end in Kolkata; travel to Kolkata is your responsibility. From Kolkata onward, transportation and stays are covered by On the Orbit. Destinations may vary based on availability and scheduling.
+        <br /><br />
+        Subscriptions automatically renew until cancelled. Restrictions and other terms apply.*
       </div>
 
       <Footer />

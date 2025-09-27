@@ -56,7 +56,7 @@ export default function ProBadge() {
                             <path d="M73.1 30.7016C71.1 30.7016 69.5 32.3016 69.5 34.3016V64.8016C69.5 66.8016 71.1 68.4016 73.1 68.4016C75.1 68.4016 76.7 66.8016 76.7 64.8016V34.3016C76.7 32.3016 75.1 30.7016 73.1 30.7016Z" fill="black" />
                         </svg>
                         <p className={styles.label}>
-                            Brand Trip Inc.
+                            Brand Trip** Inc.
                         </p>
                     </div>
                 </div>

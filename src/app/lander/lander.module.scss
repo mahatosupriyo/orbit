@@ -470,3 +470,22 @@
         min-height: 10rem;
     }
 }
+
+.footnote {
+    display: flex;
+    width: 100%;
+    max-width: 200rem;
+    color: hsl(0, 0%, 50%);
+    font-size: 1.5rem;
+    line-height: 140%;
+    font-weight: 400;
+    padding: 6rem 8rem;
+
+    @media only screen and (max-width: 1000px){
+        padding: 4rem 4rem;
+    }
+
+     @media only screen and (max-width: 800px){
+        padding: 4rem 2rem;
+     }
+}

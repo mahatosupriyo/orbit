@@ -1,5 +1,5 @@
 import React from 'react'
-import Lander from './lander/page'
+import Lander from '@/components/layout/lander/lander'
 // import OrbitNavigator from './orbitnavigator'
 import { auth } from '@/auth'
 import GaragePage from './(main)/garage/page';

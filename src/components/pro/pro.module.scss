@@ -47,6 +47,7 @@
             @media only screen and (max-width: 1000px) {
                 grid-template-columns: 1fr 1fr;
                 gap: 4rem;
+                padding: 3rem 2rem;
             }
 
 
@@ -65,6 +66,8 @@
 
                 .proicon {
                     height: 2.4rem;
+                    user-select: none;
+                    pointer-events: none;
                 }
 
                 .label {
@@ -82,12 +85,20 @@
 
     .probtn {
         display: flex;
-        padding: 4rem 4rem;
+        // padding: 4rem 4rem;
         border-radius: 10rem;
-        margin: 10rem 2rem;
+        margin: 14rem 2rem;
         cursor: pointer;
 
-        font-size: 4rem;
+        align-items: center;
+        justify-content: center;
+
+        height: 20rem;
+        width: 20rem;
+
+        user-select: none;
+
+        font-size: 3.4rem;
         outline: 0.2rem solid hsl(0, 0%, 100%);
 
         font-weight: 700;

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef } from "react";
@@ -6,7 +7,7 @@ import { motion } from "framer-motion";
 import Icon from "@/components/atoms/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import 'swiper/css/navigation';
+import "swiper/css/navigation";
 import { Scrollbar, Keyboard, Navigation } from "swiper/modules";
 import "swiper/css/scrollbar";
 import { Drawer } from "vaul";
@@ -36,13 +37,13 @@ interface GaragePostCardProps {
 }
 
 export default function GaragePostCard({ post }: GaragePostCardProps) {
-    const prevRef = useRef<HTMLButtonElement>(null)
-    const nextRef = useRef<HTMLButtonElement>(null)
+    const prevRef = useRef<HTMLButtonElement>(null);
+    const nextRef = useRef<HTMLButtonElement>(null);
     const firstImage = post.images[0];
     const hasMultipleImages = post.images.length > 1;
 
-    // Format createdAt as relative time: "today", days (<90d), weeks (<90w), years (>=90w)
-    const createdAtDate = new Date(post.createdAt.replace(" ", "T")); // Ensure valid ISO format
+    // Format createdAt into relative time
+    const createdAtDate = new Date(post.createdAt.replace(" ", "T"));
     const now = new Date();
     const diffMs = now.getTime() - createdAtDate.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
@@ -60,7 +61,11 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
         createdAtDisplay = `${diffYears}y`;
     }
 
-    const signedUrls = post.signedMux ?? null;
+    const signedUrls =
+        post.signedMux ??
+        (post.makingOf && (post.makingOf as any).signedVideoUrl
+            ? (post.makingOf as any)
+            : null);
 
     return (
         <div className={styles.capsulewraper}>
@@ -88,16 +93,25 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                         {post.makingOf && (
                             <div className={styles.makingIcon}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className={styles.orbitoriginal} viewBox="0 0 138 231" fill="none">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={styles.orbitoriginal}
+                                    viewBox="0 0 138 231"
+                                    fill="none"
+                                >
                                     <path d="M0 0H138V231L69 208.5L0 231V0Z" fill="#1414FF" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M69.1426 135.861C73.1293 135.861 76.3611 132.629 76.3611 128.643C76.3611 124.656 73.1293 121.424 69.1426 121.424C65.1559 121.424 61.924 124.656 61.924 128.643C61.924 132.629 65.1559 135.861 69.1426 135.861ZM69.1426 176.285C95.4548 176.285 116.785 154.955 116.785 128.643C116.785 102.33 95.4548 81 69.1426 81C42.8303 81 21.5 102.33 21.5 128.643C21.5 154.955 42.8303 176.285 69.1426 176.285Z" fill="white" />
+                                    <path
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
+                                        d="M69.1426 135.861C73.1293 135.861 76.3611 132.629 76.3611 128.643C76.3611 124.656 73.1293 121.424 69.1426 121.424C65.1559 121.424 61.924 124.656 61.924 128.643C61.924 132.629 65.1559 135.861 69.1426 135.861ZM69.1426 176.285C95.4548 176.285 116.785 154.955 116.785 128.643C116.785 102.33 95.4548 81 69.1426 81C42.8303 81 21.5 102.33 21.5 128.643C21.5 154.955 42.8303 176.285 69.1426 176.285Z"
+                                        fill="white"
+                                    />
                                 </svg>
                             </div>
                         )}
 
                         {hasMultipleImages && (
-                            <div className={styles.imageCount}>
-                            </div>
+                            <div className={styles.imageCount}></div>
                         )}
                     </motion.button>
                 </Drawer.Trigger>
@@ -106,7 +120,9 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                     <Drawer.Overlay className={styles.drawerOverlay} />
                     <Drawer.Content className={styles.drawerContent}>
                         <div className={styles.drawerInner}>
-                            <Drawer.Title className={styles.drawerTitle}>{post.title}</Drawer.Title>
+                            <Drawer.Title className={styles.drawerTitle}>
+                                {post.title}
+                            </Drawer.Title>
                             <div aria-hidden className={styles.drawerHandle} />
 
                             <div className={styles.swiperwraper}>
@@ -134,17 +150,20 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     ))}
                                 </Swiper>
 
-                                {/* Custom Navigation Buttons */}
                                 {hasMultipleImages && (
                                     <div>
                                         <motion.button
-                                            whileTap={{ scale: 0.9, borderRadius: '10rem' }}
-                                            className={`custom-prev ${styles.customNavBtn} ${styles.customPrevBtn}`} aria-label="Previous image">
+                                            whileTap={{ scale: 0.9, borderRadius: "10rem" }}
+                                            className={`custom-prev ${styles.customNavBtn} ${styles.customPrevBtn}`}
+                                            aria-label="Previous image"
+                                        >
                                             <Icon name="leftarrow" size={24} fill="#fff" />
                                         </motion.button>
                                         <motion.button
-                                            whileTap={{ scale: 0.9, borderRadius: '10rem' }}
-                                            className={`custom-next ${styles.customNavBtn} ${styles.customNextBtn}`} aria-label="Next image">
+                                            whileTap={{ scale: 0.9, borderRadius: "10rem" }}
+                                            className={`custom-next ${styles.customNavBtn} ${styles.customNextBtn}`}
+                                            aria-label="Next image"
+                                        >
                                             <Icon name="rightarrow" size={24} fill="#fff" />
                                         </motion.button>
                                     </div>
@@ -153,9 +172,11 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
 
                             <div className={styles.postDetails}>
                                 <div className={styles.postdetailsinner}>
-
                                     {post.createdBy.username && (
-                                        <Link href={`/${post.createdBy.username}`} className={styles.postAuthor}>
+                                        <Link
+                                            href={`/${post.createdBy.username}`}
+                                            className={styles.postAuthor}
+                                        >
                                             {post.createdBy.image && (
                                                 <img
                                                     src={post.createdBy.image}
@@ -163,15 +184,14 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                 />
                                             )}
 
-
                                             <div
                                                 style={{
-                                                    display: 'flex',
-                                                    flexDirection: 'row',
-                                                    width: '100%',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'space-between',
-                                                    gap: '0.2rem',
+                                                    display: "flex",
+                                                    flexDirection: "row",
+                                                    width: "100%",
+                                                    alignItems: "center",
+                                                    justifyContent: "space-between",
+                                                    gap: "0.2rem",
                                                 }}
                                             >
                                                 <span className={styles.labelauthor}>
@@ -180,35 +200,22 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                 </span>
 
                                                 <p className={styles.dateposted}>
-                                                    <span className={styles.dot}>
-                                                        •
-                                                    </span>
+                                                    <span className={styles.dot}>•</span>
                                                     {createdAtDisplay}
                                                 </p>
-
                                             </div>
-
-
-
                                         </Link>
                                     )}
 
-                                    {/* Add close functionality */}
                                     <Drawer.Close asChild>
                                         <button
                                             className={styles.closebtn}
                                             aria-label="Close"
                                         >
                                             Close
-                                            <span className={styles.key}>
-                                                Esc
-                                            </span>
+                                            <span className={styles.key}>Esc</span>
                                         </button>
                                     </Drawer.Close>
-
-                                    {/* {post.title && <h1 className={styles.postTitle}>{post.title}</h1>} */}
-
-                                    {/* {post.caption && <p className={styles.postCaption}>{post.caption}</p>} */}
                                 </div>
 
                                 {post.externalUrl && (
@@ -222,8 +229,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                     </a>
                                 )}
 
-
-                                {/* Nested Drawer */}
                                 {post.makingOf && (
                                     <Drawer.NestedRoot>
                                         <Drawer.Trigger asChild>
@@ -233,25 +238,26 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                         </Drawer.Trigger>
                                         <Drawer.Portal>
                                             <Drawer.Overlay className={styles.overlaynested} />
-                                            <Drawer.Content className={styles.overlaycontentnested}>
+                                            <Drawer.Content
+                                                className={styles.overlaycontentnested}
+                                            >
                                                 <div className={styles.nestedDrawerInner}>
-
                                                     <Drawer.Close asChild>
                                                         <button
                                                             className={styles.closebtn}
                                                             aria-label="Close"
                                                         >
                                                             Close
-                                                            <span className={styles.key}>
-                                                                Esc
-                                                            </span>
+                                                            <span className={styles.key}>Esc</span>
                                                         </button>
                                                     </Drawer.Close>
                                                     <div className={styles.drawerHandle} />
-                                                    <Drawer.Title className={styles.nestedDrawerTitle}>Breakdown</Drawer.Title>
+                                                    <Drawer.Title
+                                                        className={styles.nestedDrawerTitle}
+                                                    >
+                                                        Breakdown
+                                                    </Drawer.Title>
                                                     <div className={styles.videoWrapper}>
-
-
                                                         {signedUrls ? (
                                                             <Video
                                                                 autoPlay
@@ -262,7 +268,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                                         ) : (
                                                             <p>Loading video</p>
                                                         )}
-
                                                     </div>
                                                 </div>
                                             </Drawer.Content>
@@ -274,6 +279,6 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                     </Drawer.Content>
                 </Drawer.Portal>
             </Drawer.Root>
-        </div >
+        </div>
     );
 }

@@ -26,7 +26,6 @@ export default function ProPage() {
 
                     </motion.nav>
 
-
                 </div>
 
             </div>

@@ -1,3 +1,4 @@
+
 import { type NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import { db } from "@/server/db"
@@ -5,6 +6,7 @@ import { getSignedUrl } from "@aws-sdk/cloudfront-signer"
 import { checkUserSubscription } from "@/utils/hassubscription"
 import { redis } from "@/utils/redis"
 import { enforceRateLimit } from "@/utils/rate-limit"
+import { generateSignedMuxUrls } from "@/utils/signedmuxurl"
 
 // Constants
 const FREE_POSTS_LIMIT = 10 // Free users see only 10 posts total
@@ -154,7 +156,20 @@ export async function GET(req: NextRequest) {
           order: img.order,
         })))
         const signedAvatar = await signUrl(post.createdBy.image)
-        return { ...post, createdAt: post.createdAt.toISOString(), images: signedImages, createdBy: { ...post.createdBy, image: signedAvatar } }
+
+        // sign makingOf video if present
+        let signedMakingOf = null
+        if (post.makingOf?.playbackID) {
+          signedMakingOf = await generateSignedMuxUrls(post.makingOf.playbackID)
+        }
+
+        return {
+          ...post,
+          createdAt: post.createdAt.toISOString(),
+          images: signedImages,
+          createdBy: { ...post.createdBy, image: signedAvatar },
+          makingOf: signedMakingOf,
+        }
       }))
 
       const payload = { posts: signedPosts, isSubscribed, nextCursor: null, hasMore: false }
@@ -190,7 +205,20 @@ export async function GET(req: NextRequest) {
         order: img.order,
       })))
       const signedAvatar = await signUrl(post.createdBy.image)
-      return { ...post, createdAt: post.createdAt.toISOString(), images: signedImages, createdBy: { ...post.createdBy, image: signedAvatar } }
+
+      // sign makingOf video if present
+      let signedMakingOf = null
+      if (post.makingOf?.playbackID) {
+        signedMakingOf = await generateSignedMuxUrls(post.makingOf.playbackID)
+      }
+
+      return {
+        ...post,
+        createdAt: post.createdAt.toISOString(),
+        images: signedImages,
+        createdBy: { ...post.createdBy, image: signedAvatar },
+        makingOf: signedMakingOf,
+      }
     }))
 
     const payload = { posts: signedPosts, isSubscribed, nextCursor: hasMore ? sliced[sliced.length - 1].id : null, hasMore }

@@ -1,4 +1,3 @@
-
 "use client"
 
 import useSWRInfinite from "swr/infinite"
@@ -29,6 +28,7 @@ const fetcher = async (url: string) => {
   if (!res.ok) {
     let message = "Request failed"
     try {
+      // Try to parse server-provided error
       const text = await res.text()
       message = text || message
     } catch {
@@ -40,32 +40,6 @@ const fetcher = async (url: string) => {
   }
 
   return res.json()
-}
-
-// New: helper to attach signed video URLs if makingOf is present
-const enrichPostsWithSignedUrls = async (posts: any[]) => {
-  return Promise.all(
-    posts.map(async (post) => {
-      if (post.makingOf) {
-        try {
-          const res = await fetch(`/api/garage/signed-video?postId=${post.id}`)
-          if (res.ok) {
-            const json = await res.json()
-            return {
-              ...post,
-              makingOf: {
-                signedVideoUrl: json.signedVideoUrl,
-                signedPosterUrl: json.signedPosterUrl,
-              },
-            }
-          }
-        } catch {
-          // fallback: just return post without signed video
-        }
-      }
-      return post
-    })
-  )
 }
 
 const containerVariants: Variants = {
@@ -87,7 +61,6 @@ export default function GarageFeed() {
   const [rateLimitedUntil, setRateLimitedUntil] = useState<number | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [nowTick, setNowTick] = useState<number>(Date.now())
-  const [enrichedPosts, setEnrichedPosts] = useState<any[]>([])
 
   useEffect(() => {
     if (!rateLimitedUntil) return
@@ -96,7 +69,10 @@ export default function GarageFeed() {
   }, [rateLimitedUntil])
 
   const getKey = (pageIndex: number, previousPageData: any) => {
+    // Stop fetching if rate-limited
     if (rateLimitedUntil && Date.now() < rateLimitedUntil) return null
+
+    // Stop fetching if no more data or free user has reached limit
     if (previousPageData && !previousPageData.hasMore) return null
     if (pageIndex === 0) return `/api/garage`
     return `/api/garage?cursor=${previousPageData.nextCursor}`
@@ -112,7 +88,7 @@ export default function GarageFeed() {
       if (err?.status === 429) {
         const until = Date.now() + (err?.retryAfter ?? 60) * 1000
         setRateLimitedUntil(until)
-        setErrorMsg("You're making requests too quickly. Please wait again.")
+        setErrorMsg("You're making requests too quickly. Please wait and try again.")
       } else {
         setErrorMsg(err?.message || "Something went wrong fetching the feed.")
       }
@@ -121,19 +97,7 @@ export default function GarageFeed() {
 
   const posts = data ? data.flatMap((page) => page.posts) : []
 
-  // Enrich posts with signed video URLs
-  useEffect(() => {
-    if (posts.length === 0) return
-    let ignore = false
-    ;(async () => {
-      const enriched = await enrichPostsWithSignedUrls(posts)
-      if (!ignore) setEnrichedPosts(enriched)
-    })()
-    return () => {
-      ignore = true
-    }
-  }, [posts])
-
+  // Determine if we should keep fetching more
   const hasMore = data ? data[data.length - 1].hasMore : true
 
   useEffect(() => {
@@ -142,16 +106,17 @@ export default function GarageFeed() {
         const res = await fetch("/api/subscription/status")
         const json = await res.json()
         setHasSubscription(json.active)
-      } catch {
+      } catch (e) {
         setHasSubscription(false)
       }
     }
     fetchSubStatus()
   }, [])
 
+  // Infinite scroll
   useEffect(() => {
-    if (!hasMore) return
-    if (rateLimitedUntil && Date.now() < rateLimitedUntil) return
+    if (!hasMore) return // stop listening if no more posts
+    if (rateLimitedUntil && Date.now() < rateLimitedUntil) return // stop while blocked
 
     const handleScroll = () => {
       if (
@@ -168,14 +133,13 @@ export default function GarageFeed() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [size, setSize, isValidating, hasMore, rateLimitedUntil])
 
-  const remainingSeconds = rateLimitedUntil
-    ? Math.max(0, Math.ceil((rateLimitedUntil - nowTick) / 1000))
-    : 0
+  const remainingSeconds = rateLimitedUntil ? Math.max(0, Math.ceil((rateLimitedUntil - nowTick) / 1000)) : 0
 
   return (
     <div className={styles.wraper}>
       <NavBar />
       <div className={styles.container}>
+        {/* Rate limit banner */}
         {rateLimitedUntil && remainingSeconds > 0 && (
           <div
             role="status"
@@ -186,23 +150,16 @@ export default function GarageFeed() {
           </div>
         )}
 
+        {/* Error banner (hidden while rate-limited) */}
         {!rateLimitedUntil && errorMsg && (
-          <div
-            role="alert"
-            className="mb-4 rounded-md border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm"
-          >
+          <div role="alert" className="mb-4 rounded-md border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm">
             {errorMsg}
           </div>
         )}
 
         <div className={styles.capsulegrid}>
           <div className={styles.gridhead}>
-            <Link
-              draggable="false"
-              className={styles.linkwraper}
-              href="/colorextractor"
-              aria-label="Color"
-            >
+            <Link draggable="false" className={styles.linkwraper} href="/colorextractor" aria-label="Color">
               <div className={styles.gridcapsule}>
                 <Icon name="colorextractor" size={46} fill="#fff" />
               </div>
@@ -210,13 +167,8 @@ export default function GarageFeed() {
           </div>
 
           <div className={styles.deengineering}>
-            <motion.div
-              className={styles.drops}
-              variants={containerVariants}
-              initial="initial"
-              animate="animate"
-            >
-              {enrichedPosts.map((post: any, index: number) => (
+            <motion.div className={styles.drops} variants={containerVariants} initial="initial" animate="animate">
+              {posts.map((post: any, index: number) => (
                 <motion.div
                   key={post.id}
                   className={styles.dropcard}
@@ -233,16 +185,12 @@ export default function GarageFeed() {
         {isValidating && hasMore && !(rateLimitedUntil && remainingSeconds > 0) && (
           <div
             className={styles.drops}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-            }}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
           >
             <OrbitLoader />
           </div>
         )}
+        
       </div>
     </div>
   )

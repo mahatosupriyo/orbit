@@ -5,8 +5,7 @@ import Link from 'next/link'
 import Footer from '@/components/molecules/footer/footer'
 import { motion } from 'framer-motion'
 import Icon from '@/components/atoms/icons'
-import ProBadge from '@/components/pro/pro'
-import FoundingTeamCo from '@/components/atoms/foundingteamco'
+import ProBadge from '@/components/probadge/probadge'
 
 
 export default function LandingPage() {
@@ -53,8 +52,8 @@ export default function LandingPage() {
                     <path fillRule="evenodd" clipRule="evenodd" d="M50.5593 3.79607L54.7241 4.31958L51.6634 7.19039L52.4523 11.3123L48.7761 9.28839L45.1 11.3123L45.8888 7.19039L42.8276 4.31908L46.9924 3.79557L48.7761 0L50.5593 3.79607Z" fill="#FFC132" />
                     <path fillRule="evenodd" clipRule="evenodd" d="M64.8352 3.79607L69 4.31958L65.9392 7.19039L66.7281 11.3123L63.052 9.28839L59.3758 11.3123L60.1647 7.19039L57.1035 4.31908L61.2683 3.79557L63.052 0L64.8352 3.79607Z" fill="#FFC132" />
                   </svg>
-                  <p>
-                    Trusted by 5K+ Designers and Brands.
+                  <p style={{fontSize: '1.4rem'}}>
+                    Trusted by 2K+ Designers and Brands.
                   </p>
                 </div>
               </div>
@@ -127,13 +126,9 @@ export default function LandingPage() {
           <p className={styles.role}>DESIGN ENGINEER</p>
         </div>
 
-        {/* <div className={styles.co} >
-          <FoundingTeamCo />
-        </div> */}
-
       </div>
 
-      <div style={{ padding: '4rem', display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%', background: 'hsl(0,0%,100%)' }}>
+      <div style={{ padding: '2rem', display: 'flex', alignItems: 'center', flexDirection: 'column', width: '100%', background: 'hsl(0,0%,100%)' }}>
         <ProBadge />
       </div>
 

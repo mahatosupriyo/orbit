@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion'
-import Icon from '../atoms/icons'
-import styles from './pro.module.scss'
+import styles from './probadge.module.scss'
 
 export default function ProBadge() {
     return (
         <div className={styles.probadge}>
-            <span className={styles.tnc}>*No conditions, claim anytime.</span>
+            <span className={styles.tnc}>*Claim anytime.</span>
             <div className={styles.prowraper}>
 
                 <motion.button

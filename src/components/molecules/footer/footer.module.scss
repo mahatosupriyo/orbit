@@ -48,6 +48,10 @@ $color: hsl(0, 0%, 26%);
                 gap: 1rem;
 
                 padding: 6rem 4rem 0rem 4rem;
+
+                @media only screen and (max-width: 800px) {
+                    padding: 6rem 2rem 0rem 2rem;
+                }
             }
 
             &:nth-child(2) {

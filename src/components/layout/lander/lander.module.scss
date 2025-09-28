@@ -17,14 +17,6 @@
     }
 }
 
-.faqwraper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 100%;
-    width: 100%;
-    background-color: #F0F0EE;
-}
-
 .hero {
     width: 100%;
 
@@ -82,9 +74,6 @@
     }
 }
 
-
-
-
 .navbar {
     width: 100%;
     display: flex;
@@ -118,6 +107,13 @@
         z-index: 10;
         user-select: none;
         pointer-events: none;
+
+
+        @media only screen and (max-width: 800px) {
+            aspect-ratio: 4/5;
+            object-position: center;
+            object-fit: cover;
+        }
     }
 
     .cta {
@@ -144,6 +140,10 @@
         text-transform: uppercase;
         color: #222;
         opacity: 0.5;
+
+        @media only screen and (max-width: 800px) {
+            padding-top: 4rem;
+        }
     }
 
     .co {
@@ -228,8 +228,8 @@
 
             .subtitle {
                 color: #222;
-                font-size: 2rem;
-                font-weight: 500;
+                font-size: 1.6rem;
+                font-weight: 400;
                 margin-top: 2.8rem;
             }
 
@@ -343,11 +343,7 @@
 
 }
 
-
-
-
 .headlinemini {
-    // padding: 2rem 1rem;
     font-size: 1.46rem;
     color: hsl(0, 0%, 40%);
 }
@@ -355,11 +351,6 @@
 
 .bigtxtcontainer {
     width: 100%;
-
-    // display: flex;
-    // flex-direction: column;
-    // align-items: flex-start;
-    // justify-content: center;
     gap: 2rem;
     font-size: 3.4rem;
 
@@ -393,6 +384,10 @@
     background-color: #B5B197;
     position: relative;
 
+    @media only screen and (max-width: 800px) {
+        padding: 2rem;
+    }
+
     .probanner {
         width: 100%;
         user-select: none;
@@ -402,6 +397,10 @@
         aspect-ratio: 16/5.5;
         object-fit: cover;
         object-position: center;
+
+        @media only screen and (max-width: 800px) {
+            aspect-ratio: 4/5;
+        }
     }
 
     .procta {
@@ -419,6 +418,13 @@
         position: absolute;
         right: 8rem;
         bottom: 8rem;
+
+
+        @media only screen and (max-width: 800px) {
+            position: absolute;
+            right: 4rem;
+            bottom: 4rem;
+        }
 
         &:hover {
             &::after {
@@ -481,11 +487,12 @@
     font-weight: 400;
     padding: 6rem 8rem;
 
-    @media only screen and (max-width: 1000px){
+    @media only screen and (max-width: 1000px) {
         padding: 4rem 4rem;
     }
 
-     @media only screen and (max-width: 800px){
-        padding: 4rem 2rem;
-     }
+    @media only screen and (max-width: 800px) {
+        padding: 4rem 4rem;
+        font-size: 1.36rem;
+    }
 }

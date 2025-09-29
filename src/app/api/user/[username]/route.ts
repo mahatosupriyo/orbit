@@ -7,34 +7,30 @@ import { generateSignedMuxUrls } from "@/utils/signedmuxurl";
 
 const { ORBIT_CLOUDFRONT_KEY_PAIR_ID, ORBIT_CLOUDFRONT_PRIVATE_KEY, ORBIT_CLOUDFRONT_URL } = process.env;
 
-if (!ORBIT_CLOUDFRONT_KEY_PAIR_ID || !ORBIT_CLOUDFRONT_PRIVATE_KEY || !ORBIT_CLOUDFRONT_URL) {
-  // We don't throw at module init for resilience, but warn so you don't miss it in logs.
-  console.warn("Missing CloudFront env vars: ORBIT_CLOUDFRONT_* may be undefined in this environment.");
-}
-
 const cloudfrontEnv = {
   keyPairId: ORBIT_CLOUDFRONT_KEY_PAIR_ID ?? "",
   privateKey: (ORBIT_CLOUDFRONT_PRIVATE_KEY ?? "").replace(/\\n/g, "\n"),
   cloudfrontUrl: ORBIT_CLOUDFRONT_URL ?? "",
 };
 
+// NOTE: params is a Promise in Next.js v15+; type it accordingly and await.
 export async function GET(
-  _request: Request,
-  { params }: { params: { username: string } }
+  _req: Request,
+  { params }: { params: Promise<{ username: string }> } // <-- important: Promise<{ username: string }>
 ) {
   try {
-    const session = await auth();
+    const { username } = await params; // await the params promise
 
-    // If you intend this endpoint to be public, remove this guard.
+    const session = await auth();
     if (!session?.user?.id) {
       return NextResponse.json({ message: "Not found" }, { status: 404 });
     }
 
-    const username = params.username;
     if (!username) {
       return NextResponse.json({ message: "Missing username" }, { status: 400 });
     }
 
+    // ... rest of your code unchanged (use `username` variable here)
     const user = await db.user.findUnique({
       where: { username },
       select: { id: true, username: true, name: true, image: true },
@@ -55,18 +51,15 @@ export async function GET(
       posts.map(async (post) => {
         const signedImages = await Promise.all(
           post.images.map(async (image) => {
-            // Ensure playbackID / path is correct shape for your CloudFront distribution
+            if (!image.playbackID) return null;
             const url = `${cloudfrontEnv.cloudfrontUrl.replace(/\/$/, "")}/${image.playbackID}`;
-
             try {
               const signedUrl = getSignedUrl({
                 url,
                 keyPairId: cloudfrontEnv.keyPairId,
                 privateKey: cloudfrontEnv.privateKey,
-                // pass a Date object; here we sign for 24 hours
                 dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24),
               });
-
               return { id: image.id, url: signedUrl, order: image.order };
             } catch (err) {
               console.error(`Error signing image URL for image ${image.id}:`, err);

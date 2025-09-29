@@ -6,12 +6,14 @@ import styles from "./username.module.scss";
 
 export default function Loading() {
     return (
-        <div className={styles.wraper}>
-            <NavBar />
-            <div className={styles.container}>
+        <div>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '6rem'
+            }}>
                 <BackBtn />
 
-                {/* Avatar + Username */}
                 <div className={styles.userProfile}>
                     <ShimmerLoader height="100px" width="100px" borderRadius="50rem" />
                 </div>

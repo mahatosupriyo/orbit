@@ -6,7 +6,14 @@ import styles from "./username.module.scss";
 
 export default function Loading() {
     return (
-        <div>
+        <div
+            style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+            }}
+        >
+            <NavBar />
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',

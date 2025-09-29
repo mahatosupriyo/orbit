@@ -1,27 +1,36 @@
-// app/api/user/[username]/route.ts
+// src/app/api/user/[username]/route.ts
 import { NextResponse } from "next/server";
 import { db } from "@/server/db";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import { auth } from "@/auth";
 import { generateSignedMuxUrls } from "@/utils/signedmuxurl";
 
+const { ORBIT_CLOUDFRONT_KEY_PAIR_ID, ORBIT_CLOUDFRONT_PRIVATE_KEY, ORBIT_CLOUDFRONT_URL } = process.env;
+
+if (!ORBIT_CLOUDFRONT_KEY_PAIR_ID || !ORBIT_CLOUDFRONT_PRIVATE_KEY || !ORBIT_CLOUDFRONT_URL) {
+  // We don't throw at module init for resilience, but warn so you don't miss it in logs.
+  console.warn("Missing CloudFront env vars: ORBIT_CLOUDFRONT_* may be undefined in this environment.");
+}
+
 const cloudfrontEnv = {
-    keyPairId: process.env.ORBIT_CLOUDFRONT_KEY_PAIR_ID!,
-    privateKey: process.env.ORBIT_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, "\n"),
-    cloudfrontUrl: process.env.ORBIT_CLOUDFRONT_URL!,
+  keyPairId: ORBIT_CLOUDFRONT_KEY_PAIR_ID ?? "",
+  privateKey: (ORBIT_CLOUDFRONT_PRIVATE_KEY ?? "").replace(/\\n/g, "\n"),
+  cloudfrontUrl: ORBIT_CLOUDFRONT_URL ?? "",
 };
 
 export async function GET(
-  _req: Request,
-  context: { params: Record<string, string> }
+  _request: Request,
+  { params }: { params: { username: string } }
 ) {
   try {
     const session = await auth();
+
+    // If you intend this endpoint to be public, remove this guard.
     if (!session?.user?.id) {
       return NextResponse.json({ message: "Not found" }, { status: 404 });
     }
 
-    const username = context.params.username;
+    const username = params.username;
     if (!username) {
       return NextResponse.json({ message: "Missing username" }, { status: 400 });
     }
@@ -46,13 +55,16 @@ export async function GET(
       posts.map(async (post) => {
         const signedImages = await Promise.all(
           post.images.map(async (image) => {
-            const url = `${cloudfrontEnv.cloudfrontUrl}/${image.playbackID}`;
+            // Ensure playbackID / path is correct shape for your CloudFront distribution
+            const url = `${cloudfrontEnv.cloudfrontUrl.replace(/\/$/, "")}/${image.playbackID}`;
+
             try {
               const signedUrl = getSignedUrl({
                 url,
                 keyPairId: cloudfrontEnv.keyPairId,
                 privateKey: cloudfrontEnv.privateKey,
-                dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+                // pass a Date object; here we sign for 24 hours
+                dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24),
               });
 
               return { id: image.id, url: signedUrl, order: image.order };
@@ -94,4 +106,3 @@ export async function GET(
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }
-

@@ -70,7 +70,6 @@ export default function UserPage({ params }: { params: Promise<{ username: strin
     };
   }, [username]);
 
-  // Loading / error UI (keeps overall structure from your original server page)
   if (loading) {
     return (
       <div className={styles.wraper}>

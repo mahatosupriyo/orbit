@@ -1,6 +1,4 @@
 import React from "react";
-import NavBar from "@/components/molecules/navbar/navbar";
-import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn";
 import ShimmerLoader from "@/components/atoms/loading/loadingbox";
 import styles from "./username.module.scss";
 
@@ -11,6 +9,7 @@ export default function LoadingUser() {
                 width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
+                padding: '2rem',
             }}
         >
             {/* <NavBar /> */}

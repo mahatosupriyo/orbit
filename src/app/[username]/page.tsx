@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import NavBar from "@/components/molecules/navbar/navbar";
 import AvatarImageForUser from "@/components/atoms/avatar/useravatar";
@@ -15,27 +15,54 @@ type GaragePostWithSignedMux = GaragePost & {
   signedMux?: { signedVideoUrl: string; signedPosterUrl: string } | null;
 };
 
-type Props =
-  | { params: { username: string } }
-  | { params: Promise<{ username: string }> };
-
 /**
- * This component uses React.use(params) to safely unwrap a possible Promise `params`
- * and therefore avoids the Next.js warning about direct access to `params.username`.
- *
- * Note: using `use(params)` may suspend if params is a Promise. That's expected per Next.js
- * guidance. NavBar is memoized to avoid visible remount/flashing while this component
- * suspends or fetches data.
+ * NOTE:
+ * - Accept params as `any` to avoid the PageProps/Promise typing mismatch in prod.
+ * - Resolve params at runtime (works when params is an object or a Promise).
  */
-export default function UserPage({ params }: Props) {
-  // Unwrap `params` safely with React.use() as required by Next.js migration guidance.
-  // This avoids direct `params.username` access which triggers the warning.
-  // `use()` will synchronously return the object if it's not a Promise, or suspend
-  // while it resolves if it is a Promise.
-  const resolvedParams = (use as unknown as (p: any) => any)(params);
-  const username: string = resolvedParams && typeof resolvedParams === "object"
-    ? String((resolvedParams as any).username ?? "")
-    : "";
+export default function UserPage({ params }: { params: any }) {
+  // initial sync username if params is already an object with username
+  const initialUsername =
+    params && typeof params.username === "string" ? params.username : "";
+
+  const [username, setUsername] = useState<string>(initialUsername);
+
+  // If params is a Promise (server-provided), resolve it once and set username.
+  useEffect(() => {
+    let mounted = true;
+
+    // If we already have username from the initial sync check, ensure state synced.
+    if (initialUsername) {
+      if (mounted) setUsername(initialUsername);
+      return () => {
+        mounted = false;
+      };
+    }
+
+    // If params looks like a Promise, unwrap it.
+    if (params && typeof params.then === "function") {
+      params
+        .then((p: { username?: string }) => {
+          if (!mounted) return;
+          if (p && typeof p.username === "string") {
+            setUsername(p.username);
+          }
+        })
+        .catch((err: any) => {
+          // swallow — username stays blank and fetch will not run
+          console.warn("Failed to resolve params promise:", err);
+        });
+    } else if (params && typeof params.username === "string") {
+      // fallback: params was passed as plain object later
+      setUsername(params.username);
+    }
+
+    return () => {
+      mounted = false;
+    };
+    // depend on params so client-side Link navigations providing new params re-run this.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
   const { data: session } = useSession();
 
@@ -47,8 +74,7 @@ export default function UserPage({ params }: Props) {
   // Abort controller for current fetch
   const abortRef = useRef<AbortController | null>(null);
 
-  // Fetch when username changes. Using username derived from resolvedParams avoids
-  // direct property access warning.
+  // Fetch when username changes:
   useEffect(() => {
     if (!username) {
       // params not available — reset to skeleton state
@@ -59,6 +85,7 @@ export default function UserPage({ params }: Props) {
       return;
     }
 
+    // cancel previous outstanding fetch if any
     if (abortRef.current) {
       abortRef.current.abort();
     }
@@ -123,7 +150,7 @@ export default function UserPage({ params }: Props) {
     };
   }, [username]);
 
-  // Keep NavBar stable across renders to avoid flashing while this page suspends/fetches.
+  // Keep NavBar stable across renders to avoid flashing while this page fetches.
   const MemoNavBar = useMemo(() => <NavBar />, []);
 
   const loggedInUserId = session?.user?.id;

@@ -4,7 +4,7 @@ import BackBtn from "@/components/atoms/(buttons)/backbtn/backbtn";
 import ShimmerLoader from "@/components/atoms/loading/loadingbox";
 import styles from "./username.module.scss";
 
-export default function Loading() {
+export default function LoadingUser() {
     return (
         <div
             style={{
@@ -13,13 +13,13 @@ export default function Loading() {
                 flexDirection: 'column',
             }}
         >
-            <NavBar />
+            {/* <NavBar /> */}
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '6rem'
             }}>
-                <BackBtn />
+                {/* <BackBtn /> */}
 
                 <div className={styles.userProfile}>
                     <ShimmerLoader height="100px" width="100px" borderRadius="50rem" />

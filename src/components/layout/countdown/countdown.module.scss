@@ -8,18 +8,32 @@
 }
 
 .heading {
-    font-size: 1.4rem;
-    font-weight: 500;
+    font-size: 1.46rem;
+    font-weight: 600;
     margin-bottom: 1.5rem;
-    color: #222;
+    color: hsl(12, 100%, 48%);
     padding: 2rem 2rem 0rem 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+
+    &::before{
+        display: flex;
+        content: '';
+        height: 0.6rem;
+        width: 0.6rem;
+        border-radius: 100%;
+        background-color: #FF3906;
+    }
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 3rem;
-    padding: 2rem 2rem;
+    padding: 0.4rem 2rem;
+    margin-bottom: 1rem;
 }
 
 .timeBox {

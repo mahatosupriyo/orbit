@@ -62,11 +62,6 @@ body {
     color: hsl(0, 0%, 100%);
 }
 
-body {
-    scroll-behavior: auto !important;
-    overflow: hidden; // prevents native scroll fighting lenis
-}
-
 .swiper-scrollbar-drag {
     background-color: #fff;
 }

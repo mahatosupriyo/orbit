@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import Icon from '@/components/atoms/icons'
 import ProBadge from '@/components/probadge/probadge'
 import Countdown from '../countdown/countdown'
+import LenisSmoothScroll from '@/utils/smoothscroll'
 
 
 export default function LandingPage() {
@@ -14,6 +15,7 @@ export default function LandingPage() {
     <div
       className={styles.wraper}
     >
+      <LenisSmoothScroll />
       <div className={styles.container}>
         <div className={styles.hero}>
           <motion.nav

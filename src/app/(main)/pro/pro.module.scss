@@ -6,7 +6,8 @@
 
     height: 100%;
     width: 100%;
-    background-color: #fff;
+    background-color: #000;
+
 
     .container {
         display: flex;
@@ -14,18 +15,63 @@
         width: 100%;
         height: 100%;
         max-width: 200rem;
-
+        min-height: 100dvh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: hsl(0, 0%, 0%);
+        background-image: url('https://ik.imagekit.io/ontheorbit/Baclground.png?updatedAt=1759747087562');
+        
+        
         .hero {
             display: flex;
             flex-direction: column;
             padding: 4rem;
-
+            
             gap: 2rem;
-            background-color: hsl(0, 0%, 98%);
             overflow: hidden;
 
             @media only screen and (max-width: 800px) {
                 padding: 4rem 2rem;
+            }
+
+
+            .gridcontainer {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                width: 100%;
+                padding: 4rem 0;
+
+                .griditem{
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    font-size: 2rem;
+                    font-weight: 400;
+                    max-width: 50%;
+                }
+            }
+        }
+
+        .headwraper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10rem 24rem;
+
+            .headline {
+                // text-align: center;
+                color: #fff;
+                font-size: 12rem;
+                text-align: center;
+                text-transform: lowercase;
+                // font-family: Quantify;
+                line-height: 100%;
+                font-weight: 700;
+                display: none;
             }
         }
     }
@@ -35,10 +81,9 @@
 .navbar {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
-    justify-content: space-between;
-
+    justify-content: flex-start;
 
     .logo {
         .logoicon {

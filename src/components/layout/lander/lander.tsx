@@ -96,7 +96,7 @@ export default function LandingPage() {
 
         <Link href="/" className={styles.procta}>
           <div className={styles.ctacontent}>
-            See inside
+            Brochure
             <Icon name='rightarrowbig' fill='#fff' size={10} />
           </div>
         </Link>

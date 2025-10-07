@@ -2,7 +2,7 @@
 
 // ColorExtractor: Extracts dominant and palette colors from uploaded images.
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import ColorThief from "colorthief";
 import styles from "./colorextractor.module.scss";
 import NavBar from "@/components/molecules/navbar/navbar";
@@ -76,6 +76,23 @@ export default function ColorExtractor() {
             imgRef.current.onload = () => processImage(colorThief);
         }
     };
+
+    useEffect(() => {
+        const handlePaste = (e: ClipboardEvent) => {
+            if (!e.clipboardData) return;
+            const items = e.clipboardData.items;
+            for (const item of items) {
+                if (item.type.startsWith("image/")) {
+                    const file = item.getAsFile();
+                    if (file) handleFiles(file);
+                    break;
+                }
+            }
+        };
+
+        window.addEventListener("paste", handlePaste);
+        return () => window.removeEventListener("paste", handlePaste);
+    }, []);
 
     // Process image to get dominant and palette colors
     const processImage = (colorThief: ColorThief) => {

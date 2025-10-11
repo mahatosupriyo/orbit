@@ -1,187 +1,100 @@
-"use client";
+'use client';
+import { useScroll, useTransform, motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import Lenis from 'lenis';
 
-// ColorExtractor: Extracts dominant and palette colors from uploaded images.
+export default function Home() {
 
-import { useState, useRef } from "react";
-import ColorThief from "colorthief";
-import styles from "./test.module.scss";
-import NavBar from "@/components/molecules/navbar/navbar";
-import { toast } from "react-hot-toast";
+  const container = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start start", "end end"]
+  }) 
 
-export default function ColorExtractor() {
-  // State for dominant color, palette, image source, and drag state
-  const [dominant, setDominant] = useState<string | null>(null);
-  const [palette, setPalette] = useState<string[]>([]);
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [dragActive, setDragActive] = useState(false);
+  useEffect(() => {
+    const lenis = new Lenis();
 
-  // Refs for image and file input
-  const imgRef = useRef<HTMLImageElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Handle file selection and read as DataURL
-  const handleFiles = (file: File) => {
-    if (!file.type.startsWith("image/")) {
-      toast.error("Please upload a valid image file.");
-      return;
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImageSrc(reader.result as string);
-      setDominant(null);
-      setPalette([]);
-    };
-    reader.readAsDataURL(file);
-  };
 
-  // Handle file input change
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      handleFiles(e.target.files[0]);
-    }
-  };
-
-  // Handle drag events for drag-and-drop UI
-  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  // Handle file drop
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFiles(e.dataTransfer.files[0]);
-    }
-  };
-
-  // Extract colors using ColorThief after image loads
-  const extractColors = () => {
-    if (!imgRef.current) return;
-    const colorThief = new ColorThief();
-
-    // Ensure image is loaded before processing
-    if (imgRef.current.complete) {
-      processImage(colorThief);
-    } else {
-      imgRef.current.onload = () => processImage(colorThief);
-    }
-  };
-
-  // Process image to get dominant and palette colors
-  const processImage = (colorThief: ColorThief) => {
-    if (!imgRef.current) return;
-    try {
-      const dominantColor = colorThief.getColor(imgRef.current);
-      const paletteColors = colorThief.getPalette(imgRef.current, 4);
-
-      setDominant(rgbToHex(dominantColor[0], dominantColor[1], dominantColor[2]));
-      setPalette(
-        paletteColors.map(([r, g, b]: [number, number, number]) =>
-          rgbToHex(r, g, b)
-        )
-      );
-    } catch (error) {
-      toast.error("Failed to extract colors. Try another image.");
-    }
-  };
-
-  // Convert RGB to HEX
-  const rgbToHex = (r: number, g: number, b: number) =>
-    "#" +
-    [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
-
-  // Copy HEX color to clipboard
-  const copyToClipboard = (hex: string) => {
-    navigator.clipboard.writeText(hex);
-    toast.success(`Copied ${hex}`);
-  };
+    requestAnimationFrame(raf);
+  }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }  }>
-      {/* Navigation Bar */}
-      <NavBar />
-      <div className={styles.wrapper}>
-        {/* Drag & Drop Zone */}
-        <div
-          className={`${styles.dropZone} ${dragActive ? styles.active : ""}`}
-          onDragEnter={handleDrag}
-          onDragOver={handleDrag}
-          onDragLeave={handleDrag}
-          onDrop={handleDrop}
-          onClick={() => fileInputRef.current?.click()}
-          tabIndex={0}
-          role="button"
-          aria-label="Upload image by clicking or dragging"
-        >
-          <p>Drag and Drop</p>
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            onChange={handleUpload}
-            style={{ display: "none" }}
-            aria-label="Image file input"
-          />
-        </div>
-
-        {/* Image Preview and Color Palette */}
-        {imageSrc && (
-          <div
-            className={styles.imageWrapper}
-            style={{ backgroundColor: dominant || "#fff" }}
-          >
-            <img
-              ref={imgRef}
-              src={imageSrc}
-              crossOrigin="anonymous"
-              alt="Uploaded preview"
-              onLoad={extractColors}
-              className={styles.previewImage}
-            />
-
-            <div className={styles.colors}>
-              {(dominant || palette.length > 0) && (
-                <div className={styles.section}>
-                  <div className={styles.palette}>
-                    {/* Dominant Color */}
-                    {dominant && (
-                      <button
-                        key="dominant"
-                        onClick={() => copyToClipboard(dominant)}
-                        className={styles.circleSmall}
-                        style={{ backgroundColor: dominant }}
-                        title="Dominant Color"
-                        aria-label={`Copy dominant color ${dominant}`}
-                        type="button"
-                      />
-                    )}
-                    {/* Palette Colors */}
-                    {palette.map((hex, i) => (
-                      <button
-                        key={i}
-                        onClick={() => copyToClipboard(hex)}
-                        className={styles.circleSmall}
-                        style={{ backgroundColor: hex }}
-                        title={`Palette Color ${hex}`}
-                        aria-label={`Copy palette color ${hex}`}
-                        type="button"
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    <main ref={container} className="relative h-[200vh]">
+      <Section1 scrollYProgress={scrollYProgress}/>
+      <Section2 scrollYProgress={scrollYProgress}/>
+    </main>
   );
+}
+
+interface SectionProps {
+  scrollYProgress: import("framer-motion").MotionValue<number>;
+}
+
+const Section1 = ({ scrollYProgress }: SectionProps) => {
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, -5])
+  return (
+    <motion.div
+      style={{
+      scale,
+      rotate,
+      background: "#C72626",
+      color: "white",
+      paddingBottom: "10vh",
+      position: "sticky",
+      top: 0,
+      height: "100vh",
+      fontSize: "3.5vw",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 0,
+      }}
+      className="text-[3.5vw] flex flex-col items-center justify-center pb-[10vh]"
+    >
+      <p>Scroll Perspective</p>
+      <div style={{ display: "flex", gap: "1rem" }}>
+      <p>Section</p>
+      <div style={{ position: "relative", width: "12.5vw" }}>
+        <img
+        src="https://images.unsplash.com/photo-1759852909538-57985f691821?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=60&w=700"
+        alt="img"
+        style={{ width: "100%", height: "auto" }}
+        />
+      </div>
+      <p>Transition</p>
+      </div>
+    </motion.div>
+  )
+}
+
+const Section2 = ({ scrollYProgress }: SectionProps) => {
+
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [5, 0])
+
+  return (
+    <motion.div
+      style={{
+      scale,
+      rotate,
+      boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
+      overflow: "hidden",
+      aspectRatio: '16/9'
+      }}
+      
+      className="relative h-screen"
+    >
+      <img
+      src="https://images.unsplash.com/photo-1760015131516-a348939b0275?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyNHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=60&w=700"
+      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      />
+    </motion.div>
+  )
 }

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './lander.module.scss'
 import Link from 'next/link'
 import Footer from '@/components/molecules/footer/footer'
@@ -7,9 +7,21 @@ import { motion } from 'framer-motion'
 import Icon from '@/components/atoms/icons'
 import ProBadge from '@/components/probadge/probadge'
 import Countdown from '../countdown/countdown'
+import Lenis from 'lenis'
 
 
 export default function LandingPage() {
+
+    useEffect(() => {
+    const lenis = new Lenis();
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  }, []);
   return (
     <div
       className={styles.wraper}

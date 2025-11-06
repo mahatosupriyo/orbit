@@ -1,0 +1,144 @@
+$archivo: 'Archivo';
+
+
+.formcontainer {
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 2rem;
+
+    .txtinput {
+        background-color: transparent;
+        background: transparent;
+
+        width: 100%;
+        padding: 1.2rem 0.8rem;
+        line-height: 140%;
+        font-size: 1.6rem;
+        font-family: $archivo;
+        font-weight: 400;
+        color: hsl(0, 0, 100%);
+        resize: none;
+        height: 100%;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &::placeholder {
+            color: hsl(0, 0, 30%);
+        }
+    }
+
+
+
+    .bottomlayer {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .imageinput {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            user-select: none;
+            cursor: pointer;
+
+            overflow: hidden;
+            position: relative;
+            // border-radius: 1rem;
+            // padding: 0.4rem 0.4rem;
+
+            &:hover {
+                opacity: 0.6;
+                // background-color: hsl(0, 0, 30%);
+            }
+
+
+            .hiddeninput {
+                position: absolute;
+                display: flex;
+                opacity: 0;
+                height: 100%;
+                width: 100%;
+                transform: scale(200%);
+                cursor: pointer;
+            }
+
+        }
+
+        .useract {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1.2rem;
+        }
+    }
+}
+
+
+/* preview wrapper styles */
+.previewWrapper {
+    position: relative;
+    width: 72px;
+    /* adjust to taste */
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.previewImg {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* small remove button (top-right of preview) */
+.removeImageBtn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* upload button shown when no preview */
+.uploadBtn {
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+
+    .label {
+        font-family: $archivo;
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding-right: 0.8rem;
+    }
+}
+
+/* hidden file input */
+.hiddeninput {
+    display: none;
+}

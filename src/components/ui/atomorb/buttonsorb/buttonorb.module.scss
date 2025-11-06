@@ -1,0 +1,118 @@
+$archivo: 'Archivo';
+@import '../../../../app/styles/essentials';
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2rem 1.8rem;
+    border-radius: 6rem;
+
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-wrap: nowrap;
+    cursor: pointer;
+    line-height: 100%;
+    user-select: none;
+
+    @media only screen and (max-width: 800px) {
+        max-width: 100%;
+    }
+
+    background-color: hsl(0, 0%, 100%);
+
+    &:hover {
+        background-color: hsl(0, 0%, 80%);
+    }
+
+    &:focus {
+        outline: 0.16rem solid #1d75de;
+        outline-offset: 0.3rem;
+    }
+
+    @include protectmedia();
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+}
+
+.default {
+    background-color: hsl(0, 0%, 100%);
+
+    &:hover {
+        background-color: hsl(0, 0%, 80%);
+    }
+
+    &:hover:not(:disabled) {
+        background-color: hsl(0, 0%, 80%);
+    }
+}
+
+.disabled {
+    color: hsl(0, 0%, 20%);
+    background-color: hsl(0, 0%, 60%);
+
+    &:hover:not(:disabled) {
+        background-color: #565e64;
+    }
+}
+
+
+.fullWidth {
+    width: 100%;
+}
+
+.orbbutton {
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    user-select: none;
+    border: none;
+    fill: #fff;
+}
+
+.iconic {
+    display: inline-flex;
+    background-color: #fff;
+
+    padding: 1.8rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    fill: #000;
+
+    border-radius: 2.8rem;
+    background: #252525;
+
+    &:hover {
+        background-color: #313131;
+    }
+}
+
+.active {
+    fill: #000;
+    background-color: #fff;
+    display: inline-flex;
+    background-color: #fff;
+
+    padding: 1.8rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    fill: #000;
+
+    border-radius: 2.8rem;
+    font-family: $archivo;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #fff;
+    }
+}

@@ -1,0 +1,43 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10rem;
+    justify-content: flex-end;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+}
+
+.modal {
+    background: #222;
+    color: #fff;
+    border-radius: 2.4rem;
+    padding: 1rem;
+    width: 90%;
+    max-width: 50rem;
+    position: relative;
+    // box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(1, 0, 0, 1);
+}
+
+.closeBtn {
+    position: absolute;
+    top: 1.4rem;
+    left: 1.4rem;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #252525;
+    transition: transform 0.2s ease;
+    // background-color: #313131;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 1.4rem;
+}

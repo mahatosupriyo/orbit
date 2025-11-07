@@ -265,7 +265,7 @@ export default function OrbColorPalette(): JSX.Element {
             {!imageSrc && (
                 <Lottie
                     animationData={animationData}
-                    style={{ height: '400px', padding: '4rem', boxSizing: 'content-box' }}
+                    style={{ height: '100%', maxWidth: '80rem', boxSizing: 'content-box' }}
                     autoplay
                 />
             )}

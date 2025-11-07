@@ -8,6 +8,9 @@ export default function HomePage() {
   return (
     <div className={styles.wraper}>
       <OrbPost />
+      <OrbPost />
+      <OrbPost />
+      <OrbPost />
       <OrbNavigator />
     </div>
   );

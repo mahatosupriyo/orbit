@@ -166,7 +166,7 @@ export default function OrbColorPalette(): JSX.Element {
     // computed style for gradient using dominant color
     const computeBackground = (hex: string | null) => {
         if (!hex) return undefined;
-        const dark = darkenHex(hex, 0.86);
+        const dark = darkenHex(hex, 0.6);
         return `${dark}`;
     };
 
@@ -251,10 +251,10 @@ export default function OrbColorPalette(): JSX.Element {
 
                 <span className={styles.subwraper}>
                     <OrbIcons name="image" size={36} fill="#fff" />
-                    <div className={styles.keycombo}>
+                    {/* <div className={styles.keycombo}>
                         <span className={styles.key}>ctrl</span>
                         <span className={styles.key}>v</span>
-                    </div>
+                    </div> */}
                 </span>
                 <h2 className={styles.mainlabel}>
                     {dragActive ? 'Drop here +' : 'Drag and Drop'}

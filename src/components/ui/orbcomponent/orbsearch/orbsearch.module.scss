@@ -40,7 +40,7 @@ $archivo: 'Archivo';
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
 
         .imageinput {
             display: flex;
@@ -52,12 +52,9 @@ $archivo: 'Archivo';
 
             overflow: hidden;
             position: relative;
-            // border-radius: 1rem;
-            // padding: 0.4rem 0.4rem;
 
             &:hover {
                 opacity: 0.6;
-                // background-color: hsl(0, 0, 30%);
             }
 
 
@@ -89,7 +86,7 @@ $archivo: 'Archivo';
     width: 72px;
     /* adjust to taste */
     height: 72px;
-    border-radius: 8px;
+    border-radius: 1.2rem;
     overflow: hidden;
     display: inline-block;
 }

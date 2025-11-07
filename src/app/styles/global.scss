@@ -28,6 +28,9 @@ a {
     text-decoration: none;
 }
 
+::-webkit-scrollbar{
+    display: none;
+}
 
 ::-webkit-scrollbar-track {
     background: transparent;
@@ -48,8 +51,8 @@ a {
 }
 
 body {
-    background-color: #141414;
     background-color: hsl(0, 0%, 8%);
+    background-color: #1A1A1A;
 
     color: hsl(0, 0%, 100%);
 }

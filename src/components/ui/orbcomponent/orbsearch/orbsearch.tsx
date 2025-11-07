@@ -180,7 +180,7 @@ export default function OrbSearchComponent() {
                                     className={styles.uploadBtn}
                                     onClick={triggerFilePicker}
                                 >
-                                    <OrbIcons name="image" size={30} fill="#fff" />
+                                    <OrbIcons name="image" size={36} fill="#fff" />
                                 </button>
                             )}
                         </div>

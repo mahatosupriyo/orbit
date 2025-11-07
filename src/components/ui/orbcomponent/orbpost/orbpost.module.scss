@@ -119,6 +119,14 @@ $archivo: 'Archivo';
                 background-color: none;
                 background: none;
                 cursor: pointer;
+
+                font-size: 1.46rem;
+                font-weight: 600;
+                align-items: center;
+                font-family: $archivo;
+                color: #929292;
+                gap: 0.4rem;
+                line-height: 100%;
             }
         }
     }

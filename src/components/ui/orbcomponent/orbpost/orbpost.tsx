@@ -51,7 +51,8 @@ export default function OrbPost() {
                     <motion.button
                         whileTap={{ scale: 0.96, opacity: 0.6 }}
                         className={styles.moreicon}>
-                        <OrbIcons name='more' fill='#fff' size={30} />
+                            more
+                        {/* <OrbIcons name='more' fill='#fff' size={30} /> */}
                     </motion.button>
                 </div>
             </div>

@@ -2,7 +2,8 @@
 import React, { JSX, useEffect, useRef, useState } from "react";
 import OrbIcons from "../../atomorb/orbicons";
 import styles from "./orbcolorpallete.module.scss";
-
+import Lottie from "lottie-react";
+import animationData from '../../../../../public/Essentials/lottie/orbcolors.json'
 
 /**
  * OrbColorPalette (TypeScript)
@@ -260,6 +261,16 @@ export default function OrbColorPalette(): JSX.Element {
                     {dragActive ? 'Drop here +' : 'Drag and Drop'}
                 </h2>
             </div>
+
+            {!imageSrc && (
+                <Lottie
+                    animationData={animationData}
+                    style={{ height: '400px', padding: '4rem', boxSizing: 'content-box' }}
+                    autoplay
+                />
+            )}
+
+            {/* <Lottie animationData={animationData} style={{ height: '400px', padding: '4rem', boxSizing: 'content-box' }} autoplay /> */}
 
             {/* Preview: apply gradient if we have dominant color */}
             {imageSrc && (

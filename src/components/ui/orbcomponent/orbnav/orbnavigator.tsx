@@ -4,6 +4,7 @@ import LnkOrbButton from "../../atomorb/buttonsorb/lnkbtnorb";
 import OrbIcons from "../../atomorb/orbicons";
 import OrbSearchComponent from "../orbsearch/orbsearch";
 import { JSX } from "react";
+import OrbAddPostModal from "../orbaddpost/orbaddpost";
 
 /**
  * OrbNavigator Component
@@ -48,14 +49,7 @@ export default function OrbNavigator(): JSX.Element {
             </LnkOrbButton>
 
             <OrbSearchComponent />
-
-            <LnkOrbButton variant='iconic' href='/add' aria-label="Add new">
-                <OrbIcons
-                    fill={pathname === '/add' ? ACTIVE_FILL : DEFAULT_FILL}
-                    name='add'
-                    size={ICON_SIZE}
-                />
-            </LnkOrbButton>
+            <OrbAddPostModal/>
 
             <LnkOrbButton variant='iconic' href='/colorextractor' aria-label="Color settings">
                 <OrbIcons

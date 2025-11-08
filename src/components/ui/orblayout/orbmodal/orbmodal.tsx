@@ -2,7 +2,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './orbmodal.module.scss';
 import { ReactNode, useEffect, useRef } from 'react';
-import OrbIcons from '../../atomorb/orbicons';
 
 interface OrbModalProps {
   isOpen: boolean;

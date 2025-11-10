@@ -1,5 +1,3 @@
-$archivo: 'Archivo';
-
 .overlay {
     position: fixed;
     inset: 0;
@@ -108,7 +106,6 @@ $archivo: 'Archivo';
     padding: 1.2rem 0.8rem;
     line-height: 140%;
     font-size: 1.6rem;
-    font-family: $archivo;
     font-weight: 400;
     color: hsl(0, 0, 100%);
     resize: none;
@@ -202,7 +199,6 @@ $archivo: 'Archivo';
     cursor: pointer;
 
     .label {
-        font-family: $archivo;
         font-size: 1.5rem;
         font-weight: 600;
     }

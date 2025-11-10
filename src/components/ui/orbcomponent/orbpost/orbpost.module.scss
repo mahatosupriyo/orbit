@@ -1,5 +1,3 @@
-$archivo: 'Archivo';
-
 .orbpost {
     display: flex;
     flex-direction: column;
@@ -46,14 +44,14 @@ $archivo: 'Archivo';
                     font-size: 1.7rem;
                     font-weight: 700;
                     align-items: center;
-                    font-family: $archivo;
+                    
                     color: #fff;
                     gap: 0.4rem;
                     line-height: 100%;
                 }
 
                 .poststory {
-                    font-family: $archivo;
+                    
                     display: inline-flex;
                     font-size: 1.6rem;
                     font-weight: 400;
@@ -71,7 +69,7 @@ $archivo: 'Archivo';
                     justify-content: space-between;
 
                     .postedtime {
-                        font-family: $archivo;
+                        
                         font-size: 1.3rem;
                         font-weight: 500;
                         color: hsl(0, 0%, 40%);
@@ -92,7 +90,7 @@ $archivo: 'Archivo';
                 font-size: 1.46rem;
                 font-weight: 600;
                 align-items: center;
-                font-family: $archivo;
+                
                 color: #929292;
                 gap: 0.4rem;
                 line-height: 100%;
@@ -119,7 +117,7 @@ $archivo: 'Archivo';
     // margin: 0rem;
     background: none;
     // color: #929292;
-    font-family: $archivo;
+    
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 600;

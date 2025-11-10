@@ -169,25 +169,30 @@ export default function OrbAddPostModal() {
     function onTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         let val = e.target.value;
 
-        // normalize CRLF -> LF
+        // Normalize CRLF → LF
         val = val.replace(/\r\n/g, '\n');
 
-        // enforce max lines (hard cap for UI height)
-        const lines = val.split(/\n/);
-        if (lines.length > MAX_LINES) val = lines.slice(0, MAX_LINES).join('\n');
+        // Enforce max chars
+        if (val.length > MAX_CHARS) {
+            val = val.slice(0, MAX_CHARS);
+        }
 
-        // enforce max chars
-        if (val.length > MAX_CHARS) val = val.slice(0, MAX_CHARS);
+        // Enforce max lines, but DO NOT remove blank ones here — only cap total count
+        const lines = val.split('\n');
+        if (lines.length > MAX_LINES) {
+            val = lines.slice(0, MAX_LINES).join('\n');
+        }
 
-        // collapse more than one blank line into a single blank line (i.e. allow at most one empty line between paragraphs)
-        // replace 3+ newlines with exactly two; then replace 2+ with two (safety)
-        val = val.replace(/\n{3,}/g, '\n\n').replace(/\n{2,}/g, '\n\n');
+        // Collapse *3+* newlines into exactly 2 — allow one blank line between paragraphs
+        val = val.replace(/\n{3,}/g, '\n\n');
 
-        // remove leading / trailing blank lines
-        val = val.replace(/^\s*\n+/, '').replace(/\n+\s*$/, '');
+        // IMPORTANT:
+        // Do NOT trim leading/trailing blank lines here
+        // Let the user type naturally — we clean at submission time.
 
         setText(val);
     }
+
 
     // helper: convert dataURL -> File
     async function dataUrlToFile(dataUrl: string, filename = 'image.png') {

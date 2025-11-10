@@ -30,20 +30,41 @@ const WEBP_QUALITY = 85
 function normalizePostText(text: string) {
     if (!text) return ""
 
-    // Normalize line endings
+    // Normalize line endings to LF
     text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n")
 
-    // Remove leading/trailing whitespace
-    text = text.trim()
+    // Remove only leading blank lines (preserve other leading whitespace inside first line)
+    text = text.replace(/^\s*\n+/, "")
 
-    // Collapse more than 1 blank line → 1 blank line
+    // Remove only trailing blank lines (do not strip a single final newline inside content)
+    text = text.replace(/\n+\s*$/, "")
+
+    // Collapse 3+ newlines into exactly two (so maximum one empty line / paragraph separator)
     text = text.replace(/\n{3,}/g, "\n\n")
 
-    // Wrap URLs: #^#example.com#^#
-    const urlPattern =
-        /(?:https?:\/\/[^\s#]+|www\.[^\s#]+|[a-z0-9.-]+\.[a-z]{2,}(?:\/[^\s#]*)?)/gi
+    // Collapse more than two consecutive blank lines to two (safety, same as above but explicit)
+    text = text.replace(/\n{2,}/g, "\n\n")
 
-    text = text.replace(urlPattern, (match) => `#^#${match}#^#`)
+    // URL pattern: matches http(s)://..., www...., or domain.tld[/...]
+    const urlPattern = /(?:https?:\/\/[^\s#]+|www\.[^\s#]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s#]*)?)/gi
+
+    // Replace URLs with wrapper #^#...#^#, but avoid double-wrapping if already wrapped.
+    text = text.replace(urlPattern, function (match: string, offset: number, str: string) {
+        // Make sure offset is a number (it should be when used by replace)
+        const start = typeof offset === "number" ? offset : str.indexOf(match)
+        const end = start + match.length
+
+        // Find nearest preceding marker and next following marker
+        const before = str.lastIndexOf("#^#", start - 1)
+        const after = str.indexOf("#^#", end)
+
+        // If both markers exist and they enclose this match, skip wrapping
+        if (before !== -1 && after !== -1 && before < start && after > end) {
+            return match
+        }
+
+        return `#^#${match}#^#`
+    })
 
     return text
 }
@@ -66,7 +87,7 @@ export async function uploadGaragePost(formData: FormData): Promise<{ success: b
         const externalUrl = formData.get("externalUrl")?.toString() || null
         const makingOfPlaybackID = formData.get("makingOf")?.toString() || null
 
-        // Apply server text normalization
+        // Apply server text normalization (preserves paragraphs, trims leading/trailing blank lines)
         title = normalizePostText(title)
         if (caption) caption = normalizePostText(caption)
 

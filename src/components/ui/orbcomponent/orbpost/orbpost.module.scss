@@ -55,14 +55,12 @@ $archivo: 'Archivo';
                 .poststory {
                     font-family: $archivo;
                     display: inline-flex;
-                    font-size: 1.8rem;
+                    font-size: 1.5rem;
                     font-weight: 300;
-                    line-height: 130%;
+                    line-height: 136%;
                     flex-direction: column;
                     align-items: flex-start;
                     color: hsl(0, 0%, 80);
-
-
                 }
 
                 .usercontrols {

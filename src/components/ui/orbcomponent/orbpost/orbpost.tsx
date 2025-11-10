@@ -39,6 +39,19 @@ const urlRegex =
  * - Inside paragraph: detect url matches and render anchors
  * - Convert single newline to <br/>
  */
+
+function prettyUrl(raw: string) {
+    try {
+        const clean = raw.replace(/^https?:\/\//, "").replace(/^www\./, "");
+        const parts = clean.split("/");
+        if (parts.length <= 1) return clean; // just domain
+        return `${parts[0]}/…`; // domain + ellipsis
+    } catch {
+        return raw;
+    }
+}
+
+
 function renderContent(text: string): React.ReactNode {
     if (!text) return null;
 
@@ -79,7 +92,7 @@ function renderContent(text: string): React.ReactNode {
                     rel="noopener noreferrer"
                     className={styles.inlineLink}
                 >
-                    {match}
+                    {prettyUrl(match)}
                 </a>
             );
 
@@ -127,6 +140,8 @@ function makeHref(raw: string) {
     // Otherwise treat as domain or path => prefix https://
     return `https://${raw}`;
 }
+
+
 
 export default function OrbPost({
     username,

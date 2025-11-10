@@ -128,12 +128,14 @@ $archivo: 'Archivo';
     }
 }
 
+.poststory,
 .postParagraph {
-    font-family: $archivo;
+  overflow-wrap: break-word;     // allow natural wrap
+  word-break: break-word;        // break long domains
+  white-space: wrap;         // keep line breaks from text
 }
 
-.inlinelink {
-    text-decoration: none;
-    color: #1B90D6;
-    font-family: $archivo;
+.inlineLink {
+//   max-width: 20rem;
+  display: inline-block;
 }

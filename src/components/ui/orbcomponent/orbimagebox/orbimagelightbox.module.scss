@@ -31,9 +31,9 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 .lightboxPreview {
     display: inline-block;
     cursor: pointer;
-    border-radius: 0.6rem;
+    // border-radius: 0.6rem;
     overflow: hidden;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4/5;
     width: 100%;
     max-width: 80%;
     margin-top: 1rem;
@@ -281,13 +281,16 @@ $thumb-radius: 0.6rem;
 
 /* ---------- PREVIEW GRID ---------- */
 /* container */
+
+
+
 .previewGrid {
   display: grid;
   gap: $thumb-gap;
   width: 100%;
   align-items: stretch;
   justify-items: stretch;
-  margin-top: 0.4rem;
+  margin-top: 1rem;
   /* quick fallback layout */
   grid-template-columns: 1fr;
   padding-right: 2rem;
@@ -335,6 +338,68 @@ $thumb-radius: 0.6rem;
     grid-template-columns: 2fr 1fr 1fr;
   }
 }
+
+
+
+
+.previewGrid.layout1 {
+  grid-template-columns: 1fr;
+}
+.previewGrid.layout1 .thumbBtn {
+  border-radius: 2rem;
+}
+
+.previewGrid.layout2 {
+  grid-template-columns: 1fr 1fr;
+}
+.previewGrid.layout2 .thumbBtn:nth-child(1) {
+  border-radius: 2rem 0 0 2rem;
+}
+.previewGrid.layout2 .thumbBtn:nth-child(2) {
+  border-radius: 0 2rem 2rem 0;
+}
+
+.previewGrid.layout3 {
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.previewGrid.layout3 .thumbBtn:nth-child(1) {
+  border-radius: 2rem 0 0 2rem;
+}
+.previewGrid.layout3 .thumbBtn:nth-child(2) {
+  border-radius: 0 2rem 0 0;
+}
+.previewGrid.layout3 .thumbBtn:nth-child(3) {
+  border-radius: 0 0 2rem 0;
+}
+
+.previewGrid.layout4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.previewGrid.layout4 .thumbBtn:nth-child(1) {
+  border-radius: 2rem 0 0 0;
+}
+.previewGrid.layout4 .thumbBtn:nth-child(2) {
+  border-radius: 0 2rem 0 0;
+}
+.previewGrid.layout4 .thumbBtn:nth-child(3) {
+  border-radius: 0 0 0 2rem;
+}
+.previewGrid.layout4 .thumbBtn:nth-child(4) {
+  border-radius: 0 0 2rem 0;
+}
+
+.previewGrid.layout5plus {
+  grid-template-columns: 2fr 1fr;
+}
+.previewGrid.layout5plus .thumbBtn:nth-child(1) {
+  border-radius: 2rem 0 0 2rem;
+}
+.previewGrid.layout5plus .thumbBtn:nth-child(5) {
+  border-radius: 0 0 2rem 0;
+}
+
 
 
 /* Thumbnail button (image wrapper) */

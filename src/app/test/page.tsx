@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import PostItem from "./component/component";
 import styles from "./test.module.scss";
+import OrbNavigator from "@/components/ui/orbcomponent/orbnav/orbnavigator";
 
 type GaragePost = {
   id: number;
@@ -81,17 +82,20 @@ export default function Feed() {
 
   return (
     <div className={styles.wraper}>
-    <div className={styles.feed}>
-      {posts.map((post) => (
-        <div key={post.id} className={styles.postWrapper}>
-          <PostItem post={post} />
-        </div>
-      ))}
+      <div className={styles.feed}>
+        {posts.map((post) => (
+          <div key={post.id} className={styles.postWrapper}>
+            <PostItem post={post} />
+          </div>
+        ))}
 
-      <div ref={sentinelRef} />
+        <div ref={sentinelRef} />
 
-      {!hasMore && <div className={styles.end}>No more posts</div>}
-    </div>
+        {!hasMore && <div className={styles.end}>No more posts</div>}
+      </div>
+
+      <OrbNavigator />
+
     </div>
   );
 }

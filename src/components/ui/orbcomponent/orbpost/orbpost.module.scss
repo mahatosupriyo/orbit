@@ -3,10 +3,11 @@ $archivo: 'Archivo';
 .orbpost {
     display: flex;
     flex-direction: column;
-    padding: 1.8rem 1.4rem 1.4rem 1.4rem;
-    border-bottom: 0.1rem solid hsl(0, 0%, 16%);
+    padding: 2.8rem 2rem 1.4rem 2rem;
+    border-bottom: 0.1rem solid hsl(0, 0%, 20%);
     width: 100%;
-    max-width: 40rem;
+    background-color: hsl(0, 0%, 14%);
+    max-width: 50rem;
 
     .orbpostwraper {
         display: flex;
@@ -59,7 +60,7 @@ $archivo: 'Archivo';
                     line-height: 140%;
                     flex-direction: column;
                     align-items: flex-start;
-                    color: hsl(0, 0%, 100);
+                    color: hsl(0, 0%, 80);
                 }
 
                 .usercontrols {
@@ -104,11 +105,11 @@ $archivo: 'Archivo';
 .likebtn {
     cursor: pointer;
     display: inline-flex;
-    margin: -0.8rem;
+    // margin: 0rem;
     background: none;
     // color: #929292;
     font-family: $archivo;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 600;
     line-height: 100%;
@@ -128,16 +129,6 @@ $archivo: 'Archivo';
 
         .hearticon {
             stroke: #F91880;
-        }
-    }
-
-    &:focus {
-        background-color: #501632;
-        color: #F91880;
-
-        .hearticon {
-            stroke: #F91880;
-            fill: #F91880;
         }
     }
 }
@@ -165,8 +156,8 @@ $like-fg-contrast: #fff;
     // svg heart base
     .hearticon,
     svg {
-        width: 1.4rem;
-        height: 1.4rem;
+        width: 1.8rem;
+        height: 1.8rem;
         display: inline-block;
         stroke: currentColor;
         /* fallback to current text color */
@@ -184,13 +175,13 @@ $like-fg-contrast: #fff;
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 3px #f918801f;
+        // box-shadow: 0 0 0 3px #f918801f;
     }
 }
 
 /* liked state */
 .liked {
-    background: $like-bg;
+    // background: $like-bg;
     color: $like-color; // this cascades into svg stroke via currentColor
 
     .hearticon,

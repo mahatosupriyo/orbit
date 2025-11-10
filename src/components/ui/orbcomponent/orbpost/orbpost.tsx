@@ -220,7 +220,8 @@ export default function OrbPost({
                         aria-label="More options"
                         type="button"
                     >
-                        <OrbIcons name="more" size={30} />
+                        {/* <OrbIcons name="more" size={30} /> */}
+                        more
                     </motion.button>
                 </div>
             </div>

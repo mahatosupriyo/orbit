@@ -198,6 +198,7 @@ export default function OrbPost({
                                 </svg>
                                 <span className={styles.liketext}>{likes}</span>
                             </motion.button>
+                            
                         </div>
                     </div>
 

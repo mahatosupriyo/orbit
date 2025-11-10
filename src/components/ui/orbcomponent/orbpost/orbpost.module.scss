@@ -63,49 +63,7 @@ $archivo: 'Archivo';
                 }
 
                 .usercontrols {
-                    margin-top: 0.8rem;
-
-                    .likebtn {
-                        cursor: pointer;
-                        display: inline-flex;
-                        padding: 0.7rem 0.8rem;
-                        margin: -0.8rem;
-                        background: none;
-                        color: #929292;
-                        font-family: $archivo;
-                        font-size: 1.4rem;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: 100%;
-                        gap: 0.4rem;
-                        border-radius: 10rem;
-                        align-items: center;
-                        user-select: none;
-
-                        .hearticon {
-                            stroke: #929292;
-                            height: 1.4rem;
-                            width: auto;
-                        }
-
-                        &:hover {
-                            background-color: #313131;
-
-                            .hearticon {
-                                stroke: #F91880;
-                            }
-                        }
-
-                        &:focus {
-                            background-color: #501632;
-                            color: #F91880;
-
-                            .hearticon {
-                                stroke: #F91880;
-                                fill: #F91880;
-                            }
-                        }
-                    }
+                    margin-top: 1rem;
                 }
             }
 
@@ -133,12 +91,115 @@ $archivo: 'Archivo';
 
 .poststory,
 .postParagraph {
-  overflow-wrap: break-word;     // allow natural wrap
-  word-break: break-word;        // break long domains
-  white-space: wrap;         // keep line breaks from text
+    overflow-wrap: break-word; // allow natural wrap
+    word-break: break-word; // break long domains
+    white-space: wrap; // keep line breaks from text
 }
 
 .inlineLink {
-//   max-width: 20rem;
-  display: inline-block;
+    //   max-width: 20rem;
+    display: inline-block;
+}
+
+.likebtn {
+    cursor: pointer;
+    display: inline-flex;
+    margin: -0.8rem;
+    background: none;
+    // color: #929292;
+    font-family: $archivo;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%;
+    gap: 0.4rem;
+    border-radius: 10rem;
+    align-items: center;
+    user-select: none;
+
+    .hearticon {
+        // stroke: #929292;
+        height: 1.4rem;
+        width: auto;
+    }
+
+    &:hover {
+        background-color: #313131;
+
+        .hearticon {
+            stroke: #F91880;
+        }
+    }
+
+    &:focus {
+        background-color: #501632;
+        color: #F91880;
+
+        .hearticon {
+            stroke: #F91880;
+            fill: #F91880;
+        }
+    }
+}
+
+
+// top of orbpost.module.scss — add variables here
+$like-color: #F91880; // heart / like text color
+$like-bg: #501632; // liked button background
+$like-fg-contrast: #fff;
+
+// Like button base styles (keep them near your existing .likebtn)
+.likebtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 3.2rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 10rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 160ms ease, transform 120ms ease, color 160ms ease;
+    color: #929292;
+
+    // svg heart base
+    .hearticon,
+    svg {
+        width: 1.4rem;
+        height: 1.4rem;
+        display: inline-block;
+        stroke: currentColor;
+        /* fallback to current text color */
+        fill: transparent;
+        transition: fill 160ms ease, stroke 160ms ease, transform 160ms ease;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .liketext {
+        font-weight: 600;
+        font-size: 1.4rem;
+        color: inherit;
+        transition: color 160ms ease;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px #f918801f;
+    }
+}
+
+/* liked state */
+.liked {
+    background: $like-bg;
+    color: $like-color; // this cascades into svg stroke via currentColor
+
+    .hearticon,
+    svg {
+        fill: $like-color; // filled heart
+        // stroke: $like-color; // ensure stroke matches
+    }
+
+    .liketext {
+        color: $like-color;
+    }
 }

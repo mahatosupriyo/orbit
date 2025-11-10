@@ -354,9 +354,8 @@ $thumb-radius: 0.6rem;
   will-change: transform, box-shadow;
 
   &:hover {
-    transform: translateY(-4px);
-    // box-shadow: 0 10px 10px hsla(0, 0%, 0%, 0.2);
-    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    box-shadow: 0 10px 10px hsla(0, 0%, 0%, 0.2);
+    // box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
   }
 }
 

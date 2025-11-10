@@ -1,10 +1,9 @@
-:root {
     /* valid HSLA syntax (alpha last) — use whichever you prefer */
-    --overlay-bg: #222;
+    $overlay-bg: #222;
     /* or: --overlay-bg: hsl(0 0% 14% / 0.55); */
-    --bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
-    --bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+    $bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
+    $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
+
 
 /* overlay base (semi-transparent backdrop) */
 .overlay {
@@ -18,7 +17,7 @@
     justify-content: center;
 
     /* <--- set the background to the variable (was transparent before) */
-    background: var(--overlay-bg);
+    background: $overlay-bg;
 
     /* optional: gentle blur behind overlay (enable if you want) */
     /* -webkit-backdrop-filter: blur(5px);
@@ -46,7 +45,7 @@
         display: block;
         user-select: none;
         -webkit-user-drag: none;
-        transition: transform 160ms var(--bezier-fast), opacity 240ms linear;
+        transition: transform 160ms $bezier-fast, opacity 240ms linear;
         will-change: transform, opacity;
     }
 
@@ -253,7 +252,7 @@
     align-items: center;
     justify-content: center;
     //   width: 5.2rem;
-    
+
     //   height: 5.2rem;
     // border-radius: 10rem;
     background-color: none;
@@ -262,14 +261,14 @@
     // border: 1px solid rgba(255, 255, 255, 0.06);
     color: #fff;
     cursor: pointer;
-    transition: transform 160ms var(--bezier-fast), background 140ms ease, opacity 160ms ease;
+    transition: transform 160ms $bezier-fast, background 140ms ease, opacity 160ms ease;
     -webkit-tap-highlight-color: transparent;
     padding: 1.8rem;
     backdrop-filter: blur(4px);
     /* subtle glass */
 }
 
-.page{
+.page {
     font-size: 1.4rem;
     font-weight: 400;
 }

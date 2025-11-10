@@ -17,6 +17,7 @@ export interface OrbPostProps {
     likes?: number;
     isLiked?: boolean;
     onLike?: () => void;
+    postedAt?: string; 
 }
 
 const FALLBACK_AVATAR = "https://ontheorbit.com/placeholder.png";
@@ -151,6 +152,7 @@ export default function OrbPost({
     username,
     avatarUrl = FALLBACK_AVATAR,
     content,
+    postedAt,
     href = "/",
     images = [],
     likes = 0,
@@ -211,6 +213,9 @@ export default function OrbPost({
                                     </span>
                                 )}
                             </motion.button>
+                            <span className={styles.postedtime}>
+                                {postedAt ?? "Posted now"}
+                            </span>
                         </div>
                     </div>
 

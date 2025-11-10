@@ -3,6 +3,7 @@
 import React from "react";
 import OrbPost from "@/components/ui/orbcomponent/orbpost/orbpost";
 import { useGaragePostLike } from "@/server/hooks/useGaragePostLike"; // adjust if your hook lives elsewhere
+import { formatTime } from "@/utils/time";
 
 type ApiPost = {
   id: number;
@@ -29,6 +30,7 @@ export default function PostItem({ post }: { post: ApiPost }) {
       likes={likeCount}
       isLiked={isLiked}
       onLike={toggle}
+      postedAt={formatTime(post.createdAt)}
     />
   );
 }

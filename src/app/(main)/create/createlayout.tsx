@@ -1,7 +1,7 @@
 
 "use client"
 import type React from "react"
-import { useState, type FormEvent, useCallback, useEffect } from "react"
+import { useState, type FormEvent, useCallback } from "react"
 import { uploadGaragePost } from "./create"
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core"
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"

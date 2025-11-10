@@ -62,10 +62,7 @@ $archivo: 'Archivo';
                     align-items: flex-start;
                     color: hsl(0, 0%, 80);
 
-                    .inlinelink {
-                        color: #1B90D6;
-                        font-family: $archivo;
-                    }
+
                 }
 
                 .usercontrols {
@@ -131,4 +128,14 @@ $archivo: 'Archivo';
             }
         }
     }
+}
+
+.postParagraph {
+    font-family: $archivo;
+}
+
+.inlinelink {
+    text-decoration: none;
+    color: #1B90D6;
+    font-family: $archivo;
 }

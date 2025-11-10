@@ -57,6 +57,7 @@
     "react-collapse": "^5.1.1",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
+    "react-intersection-observer": "^10.0.0",
     "react-parallax-tilt": "^1.7.300",
     "sass": "^1.89.0",
     "scss": "^0.2.4",

@@ -12,7 +12,9 @@
     border-radius: 1.6rem;
     overflow: hidden;
     cursor: pointer;
+
     transition: 0.3s cubic-bezier(.51, .92, .24, 1.15);
+   
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,8 +75,6 @@
     align-items: center;
     justify-content: center;
     aspect-ratio: 4/5;
-
-
 }
 
 .save {

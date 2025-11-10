@@ -1,0 +1,293 @@
+:root {
+    /* valid HSLA syntax (alpha last) — use whichever you prefer */
+    --overlay-bg: #222;
+    /* or: --overlay-bg: hsl(0 0% 14% / 0.55); */
+    --bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
+    --bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* overlay base (semi-transparent backdrop) */
+.overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* <--- set the background to the variable (was transparent before) */
+    background: var(--overlay-bg);
+
+    /* optional: gentle blur behind overlay (enable if you want) */
+    /* -webkit-backdrop-filter: blur(5px);
+     backdrop-filter: blur(5px); */
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* Preview thumbnail */
+.lightboxPreview {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-width: 40rem;
+    margin-top: 1rem;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        user-select: none;
+        -webkit-user-drag: none;
+        transition: transform 160ms var(--bezier-fast), opacity 240ms linear;
+        will-change: transform, opacity;
+    }
+
+    &:active img {
+        transform: scale(0.995);
+    }
+}
+
+/* modal shell (content) */
+.shell {
+    //   width: 100%;
+
+
+    //   max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    pointer-events: auto;
+    padding: 1rem;
+}
+
+.toplayer {
+    display: flex;
+    flex-direction: grid;
+    padding: 1rem;
+    position: fixed;
+    align-items: center;
+    top: 0;
+    width: 100%;
+    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.closeBtn {
+    //   position: fixed;
+    //   right: 0;
+    //   top: 0;
+    //   margin: 2rem;
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10rem;
+    transition: all 140ms ease, transform 140ms ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        background-color: rgba(255, 255, 255, 0.04);
+    }
+}
+
+/* swiper area */
+.swiperWrapper {
+    //   width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    height: 100%;
+    max-height: 80dvh;
+    //   width: 100%;
+    //   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+
+
+}
+
+.swiper {
+    display: flex;
+    aspect-ratio: 4/5;
+    // max-width: 50rem;
+    height: auto;
+    height: 80dvh;
+
+    @media only screen and (max-width: 800px) {
+        max-height: auto;
+        height: auto;
+        width: 100%;
+        // max-width: 30rem;
+    }
+
+    @media only screen and (min-width: 160rem) {
+        margin-top: 6rem;
+    }
+}
+
+
+.swiper-slide {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4/5;
+}
+
+.swiper {
+    position: relative;
+}
+
+.swiperwraper {
+    position: relative;
+}
+
+/* expanded image */
+.slideImg {
+    // width: 100%;
+    // max-height: 80dvh;
+    // object-fit: contain;
+    // aspect-ratio: 4/5;
+    // user-select: none;
+    // pointer-events: none;
+
+    height: auto;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4/5;
+    display: flex;
+    object-fit: cover;
+    object-position: center;
+    user-select: none;
+    pointer-events: none;
+    // scale: 100.5%;
+}
+
+
+
+@media (max-width: 720px) {
+
+    /* Shell fills whole viewport and removes padding so image can be edge-to-edge */
+    .shell {
+        padding: 0;
+        width: 100vw;
+        max-width: 100vdw;
+        // align-items: stretch;
+    }
+
+    .toplayer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 0.5rem 1rem;
+        z-index: 10002;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.36), transparent);
+    }
+
+    .swiperWrapper {
+        width: 100vw;
+        height: 100vh;
+        /* allow image to take full available height if needed */
+        max-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+        padding: 1rem;
+    }
+
+    .slideImg {
+        width: 100vw;
+        /* EDGE TO EDGE */
+        height: auto;
+        max-height: 100vh;
+        object-fit: cover;
+        /* fill horizontally, crop vertically if needed */
+        border-radius: 0;
+        aspect-ratio: auto;
+        /* let height adjust */
+    }
+
+    /* make swiper controls larger/touch-friendly if needed */
+    .swiper-button-next,
+    .swiper-button-prev {
+        --swiper-navigation-size: 36px;
+    }
+}
+
+/* Larger screens adjustments */
+@media (min-width: 1200px) {
+    .slideImg {
+        max-width: 880px;
+    }
+}
+
+
+// Buttons Left Right Starts
+
+/* Custom nav buttons (positioned inside .swiperWrapper) */
+.customNavBtn {
+    position: absolute;
+    //   top: 50%;
+    //   transform: translateY(-50%);
+    z-index: 10005;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //   width: 5.2rem;
+    
+    //   height: 5.2rem;
+    // border-radius: 10rem;
+    background-color: none;
+    background: none;
+    background: hsla(0, 0%, 16%);
+    // border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 160ms var(--bezier-fast), background 140ms ease, opacity 160ms ease;
+    -webkit-tap-highlight-color: transparent;
+    padding: 1.8rem;
+    backdrop-filter: blur(4px);
+    /* subtle glass */
+}
+
+.page{
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+/* left / right placement */
+.customPrevBtn {
+    left: 1rem;
+}
+
+.customNextBtn {
+    right: 1rem;
+}
+
+/* Make nav buttons larger on small screens for touch */
+@media (max-width: 720px) {
+    .customNavBtn {
+        display: none;
+    }
+}
+
+// Buttons Left Right Ends

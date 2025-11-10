@@ -15,7 +15,7 @@ $archivo: 'Archivo';
     display: flex;
     flex-direction: column;
 
-    gap: 1rem;
+    // gap: 1rem;
 }
 
 .modal {
@@ -45,7 +45,7 @@ $archivo: 'Archivo';
     display: flex;
     gap: 0.5rem;
     overflow-x: auto;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
     scroll-behavior: smooth;
 }
 

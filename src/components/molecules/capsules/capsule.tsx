@@ -131,7 +131,7 @@ export default function GaragePostCard({ post }: GaragePostCardProps) {
                                         nextEl: ".custom-next",
                                         prevEl: ".custom-prev",
                                     }}
-                                    scrollbar={{ hide: false }}
+                                    scrollbar={{ hide: true }}
                                     keyboard={{ enabled: true }}
                                     spaceBetween={10}
                                     modules={[Scrollbar, Keyboard, Navigation]}

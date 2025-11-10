@@ -188,8 +188,8 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     .swiperWrapper {
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100dvh;
         /* allow image to take full available height if needed */
         max-height: 100vh;
         display: flex;
@@ -277,7 +277,7 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 
 
 $thumb-gap: 0.4rem;
-$thumb-radius: 1rem;
+$thumb-radius: 0.6rem;
 
 /* ---------- PREVIEW GRID ---------- */
 /* container */
@@ -290,6 +290,7 @@ $thumb-radius: 1rem;
   margin-top: 0.4rem;
   /* quick fallback layout */
   grid-template-columns: 1fr;
+  padding-right: 2rem;
 }
 
 /* single image */
@@ -367,6 +368,8 @@ $thumb-radius: 1rem;
   display: block;
   user-select: none;
   -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
   border-radius: inherit;
   transition: transform 220ms $bezier-open, opacity 160ms linear;
 }

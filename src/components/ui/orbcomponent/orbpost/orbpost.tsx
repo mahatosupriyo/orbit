@@ -86,7 +86,8 @@ function renderContent(text: string): React.ReactNode {
                     href={href}
                     style={{
                         textDecoration: 'none',
-                        color: '#1B90D6'
+                        color: '#1B90D6',
+                        fontWeight: 500,
                     }}
                     target="_blank"
                     rel="noopener noreferrer"

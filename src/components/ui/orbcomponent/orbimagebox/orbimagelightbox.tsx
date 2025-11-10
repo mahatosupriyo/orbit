@@ -195,17 +195,19 @@ export default function ImageLightbox({
                         >
                             <div className={styles.swiperWrapper}>
                                 {/* prev */}
-                                <motion.button
-                                    whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '1rem' }} initial={{ opacity: 0, borderRadius: '0.2rem' }} animate={{ opacity: 1, borderRadius: '2.8rem' }} transition={{ delay: 0.4, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                                    className={`${styles.customNavBtn} ${styles.customPrevBtn}`}
-                                    aria-label="Previous image"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        prev();
-                                    }}
-                                >
-                                    <OrbIcons name="left" size={30} fill="#fff" />
-                                </motion.button>
+                                {active > 0 && (
+                                    <motion.button
+                                        whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '1rem' }} initial={{ opacity: 0, borderRadius: '0.2rem' }} animate={{ opacity: 1, borderRadius: '2.8rem' }} transition={{ delay: 0.4, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                                        className={`${styles.customNavBtn} ${styles.customPrevBtn}`}
+                                        aria-label="Previous image"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            prev();
+                                        }}
+                                    >
+                                        <OrbIcons name="left" size={30} fill="#fff" />
+                                    </motion.button>
+                                )}
 
                                 {/* Swiper viewer */}
                                 <Swiper
@@ -235,17 +237,23 @@ export default function ImageLightbox({
                                 </Swiper>
 
                                 {/* next */}
-                                <motion.button
-                                    whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '1rem' }} initial={{ opacity: 0, borderRadius: '0.2rem' }} animate={{ opacity: 1, borderRadius: '2.8rem' }} transition={{ delay: 0.4, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                                    className={`${styles.customNavBtn} ${styles.customNextBtn}`}
-                                    aria-label="Next image"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        next();
-                                    }}
-                                >
-                                    <OrbIcons name="right" size={30} fill="#fff" />
-                                </motion.button>
+                                {active < images.length - 1 && (
+                                    <motion.button
+                                        whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '1rem' }}
+                                        initial={{ opacity: 0, borderRadius: '0.2rem' }}
+                                        animate={{ opacity: 1, borderRadius: '2.8rem' }}
+                                        exit={{ opacity: 0, filter: 'blur(100px)' }}
+                                        transition={{ delay: 0.4, duration: 0.02, ease: [0.22, 1, 0.36, 1] }}
+                                        className={`${styles.customNavBtn} ${styles.customNextBtn}`}
+                                        aria-label="Next image"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            next();
+                                        }}
+                                    >
+                                        <OrbIcons name="right" size={30} fill="#fff" />
+                                    </motion.button>
+                                )}
                             </div>
                         </motion.div>
                     </motion.div>

@@ -422,7 +422,7 @@ export default function OrbAddPostModal() {
                                 type="button"
                                 className={styles.uploadBtn}
                                 onClick={() => void handleSubmit()}
-                                disabled={uploading || (!text && images.length === 0)}
+                                disabled={uploading || text.trim().length === 0 || images.length === 0}
                                 style={{ padding: '1rem', borderRadius: '2rem' }}
                                 variant="active"
                             >

@@ -1,8 +1,8 @@
-    /* valid HSLA syntax (alpha last) — use whichever you prefer */
-    $overlay-bg: #222;
-    /* or: --overlay-bg: hsl(0 0% 14% / 0.55); */
-    $bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
-    $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
+/* valid HSLA syntax (alpha last) — use whichever you prefer */
+$overlay-bg: #222;
+/* or: --overlay-bg: hsl(0 0% 14% / 0.55); */
+$bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
+$bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 
 
 /* overlay base (semi-transparent backdrop) */
@@ -56,10 +56,6 @@
 
 /* modal shell (content) */
 .shell {
-    //   width: 100%;
-
-
-    //   max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,7 +119,6 @@
 .swiper {
     display: flex;
     aspect-ratio: 4/5;
-    // max-width: 50rem;
     height: auto;
     height: 80dvh;
 
@@ -131,7 +126,6 @@
         max-height: auto;
         height: auto;
         width: 100%;
-        // max-width: 30rem;
     }
 
     @media only screen and (min-width: 160rem) {
@@ -159,12 +153,6 @@
 
 /* expanded image */
 .slideImg {
-    // width: 100%;
-    // max-height: 80dvh;
-    // object-fit: contain;
-    // aspect-ratio: 4/5;
-    // user-select: none;
-    // pointer-events: none;
 
     height: auto;
     width: 100%;
@@ -176,7 +164,6 @@
     object-position: center;
     user-select: none;
     pointer-events: none;
-    // scale: 100.5%;
 }
 
 
@@ -188,7 +175,6 @@
         padding: 0;
         width: 100vw;
         max-width: 100vdw;
-        // align-items: stretch;
     }
 
     .toplayer {
@@ -245,20 +231,14 @@
 /* Custom nav buttons (positioned inside .swiperWrapper) */
 .customNavBtn {
     position: absolute;
-    //   top: 50%;
-    //   transform: translateY(-50%);
     z-index: 10005;
     display: flex;
     align-items: center;
     justify-content: center;
-    //   width: 5.2rem;
 
-    //   height: 5.2rem;
-    // border-radius: 10rem;
     background-color: none;
     background: none;
     background: hsla(0, 0%, 16%);
-    // border: 1px solid rgba(255, 255, 255, 0.06);
     color: #fff;
     cursor: pointer;
     transition: transform 160ms $bezier-fast, background 140ms ease, opacity 160ms ease;

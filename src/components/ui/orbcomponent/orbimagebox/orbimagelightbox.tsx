@@ -134,7 +134,7 @@ export default function ImageLightbox({
                     >
                         {/* top bar */}
                         <div className={styles.toplayer}>
-                            <div style={{ width: "4.2rem" }} />
+                            <div style={{ width: "5.2rem" }} />
                             <p className={styles.page}>
                                 {active + 1} of {images.length}
                             </p>
@@ -172,7 +172,7 @@ export default function ImageLightbox({
                                     modules={[Navigation, Keyboard, Scrollbar]}
                                     navigation={false} // we use our own controls
                                     className={styles.swiper}
-                                    loop={true}
+                                    // loop={true}
                                     keyboard={{ enabled: true }}
                                     scrollbar={{ draggable: true }}
                                     onSwiper={(s) => (swiperRef.current = s)}

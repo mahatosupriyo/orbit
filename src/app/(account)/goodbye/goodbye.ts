@@ -119,17 +119,6 @@ export async function deleteAccount() {
             await db.lesson.deleteMany({ where: { courseId: course.id } }).catch(() => { });
             await db.course.delete({ where: { id: course.id } }).catch(() => { });
         }
-
-        // Delete Posts
-        await db.post.deleteMany({ where: { createdById: userId } }).catch(() => { });
-
-        // Delete Payments
-        await db.payment.deleteMany({ where: { userId } }).catch(() => { });
-
-        // Delete Follows
-        await db.follow.deleteMany({ where: { followerId: userId } }).catch(() => { });
-        await db.follow.deleteMany({ where: { followingId: userId } }).catch(() => { });
-
         // Delete Verification Tokens
         await db.verificationToken.deleteMany({ where: { identifier: user.email ?? "" } }).catch(() => { });
 

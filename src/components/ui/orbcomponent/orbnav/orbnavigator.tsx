@@ -26,13 +26,14 @@ export default function OrbNavigator(): JSX.Element {
     // Memoize the style object to prevent unnecessary re-renders
     const navStyle = {
         display: 'flex',
+        flexDirection: 'column',
         position: 'fixed',
-        width: '100%',
+        // width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        bottom: '0',
+        top: '0',
         left: 0,
-        right: 0,
+        // right: 0,
         gap: '0.2rem',
         padding: '1rem',
         zIndex: 99999,

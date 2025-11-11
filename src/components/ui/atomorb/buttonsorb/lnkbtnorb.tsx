@@ -62,7 +62,7 @@ export default function LnkOrbButton({
             whileTap={{
                 scale: 0.96,
                 overflow: 'hidden',
-                opacity: 0.8
+                // opacity: 0.8
             }}
             style={{
                 display: "inline-flex",

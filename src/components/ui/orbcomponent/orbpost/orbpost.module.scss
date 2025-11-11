@@ -2,10 +2,10 @@
     display: flex;
     flex-direction: column;
     padding: 2.6rem 2rem 1.4rem 2rem;
-    border-bottom: 0.1rem solid hsl(0, 0%, 20%);
+    border-bottom: 0.1rem solid hsl(0, 0%, 10%);
     width: 100%;
     // background-color: hsl(0, 0%, 14%);
-    max-width: 50rem;
+    max-width: 64rem;
 
     .orbpostwraper {
         display: flex;
@@ -71,7 +71,7 @@
                     .postedtime {
                         
                         font-size: 1.3rem;
-                        font-weight: 500;
+                        font-weight: 400;
                         color: hsl(0, 0%, 40%);
                     }
                 }
@@ -134,7 +134,7 @@
     }
 
     &:hover {
-        background-color: #313131;
+        // background-color: #313131;
 
         .hearticon {
             stroke: #F91880;
@@ -159,7 +159,7 @@ $like-fg-contrast: #fff;
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: background 160ms ease, transform 120ms ease, color 160ms ease;
+    transition: all 160ms ease, transform 120ms ease, color 160ms ease;
     color: #929292;
 
     // svg heart base
@@ -184,7 +184,6 @@ $like-fg-contrast: #fff;
 
     &:focus {
         outline: none;
-        // box-shadow: 0 0 0 3px #f918801f;
     }
 }
 

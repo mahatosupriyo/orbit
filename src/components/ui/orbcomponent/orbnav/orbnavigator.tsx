@@ -33,7 +33,7 @@ export default function OrbNavigator(): JSX.Element {
         bottom: '0',
         left: 0,
         right: 0,
-        gap: '0.4rem',
+        gap: '0.2rem',
         padding: '1rem',
         zIndex: 99999,
     } as const;

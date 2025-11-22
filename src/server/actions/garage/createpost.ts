@@ -46,6 +46,7 @@ function normalizePostText(text: string) {
     text = text.replace(/\n{2,}/g, "\n\n")
 
     // URL pattern: matches http(s)://..., www...., or domain.tld[/...]
+    // This preserves the full path and query (does not trim anything from the match).
     const urlPattern = /(?:https?:\/\/[^\s#]+|www\.[^\s#]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s#]*)?)/gi
 
     // Replace URLs with wrapper #^#...#^#, but avoid double-wrapping if already wrapped.
@@ -91,18 +92,27 @@ export async function uploadGaragePost(formData: FormData): Promise<{ success: b
         title = normalizePostText(title)
         if (caption) caption = normalizePostText(caption)
 
-        if (!title) {
-            return { success: false, message: "Post text/title cannot be empty" }
-        }
-
-        // Files validation
+        // Files validation (allow zero files — text-only posts are valid).
         const files = formData.getAll("images").filter(f => f instanceof File) as File[]
-        if (files.length === 0) return { success: false, message: "At least one image is required" }
         if (files.length > MAX_IMAGES) return { success: false, message: "You can upload up to 5 images only" }
 
         for (const file of files) {
-            if (!ALLOWED_IMAGE_TYPES.includes(file.type)) return { success: false, message: "Unsupported image format" }
+            // If file.type is empty or unknown, be permissive but still check size.
+            if (file.type && !ALLOWED_IMAGE_TYPES.includes(file.type)) {
+                return { success: false, message: "Unsupported image format" }
+            }
             if (file.size > MAX_IMAGE_SIZE) return { success: false, message: "Image exceeds size limit (10MB)" }
+        }
+
+        // --------- Minimal addition: require title/text when images are provided ----------
+        if (files.length > 0 && (!title || title.trim().length === 0)) {
+            return { success: false, message: "A title/text is required when uploading images" }
+        }
+        // -------------------------------------------------------------------------------
+
+        // If both title empty and no files, reject as empty post.
+        if ((!title || title.trim().length === 0) && files.length === 0) {
+            return { success: false, message: "Post text/title cannot be empty" }
         }
 
         // Create DB post
@@ -115,7 +125,7 @@ export async function uploadGaragePost(formData: FormData): Promise<{ success: b
             },
         })
 
-        // Upload images to S3
+        // Upload images to S3 (only if files exist)
         const uploadedAssets = await Promise.all(
             files.map(async (file, index) => {
                 const fileBuffer = Buffer.from(await file.arrayBuffer())
@@ -140,10 +150,13 @@ export async function uploadGaragePost(formData: FormData): Promise<{ success: b
             })
         )
 
-        await db.garagePost.update({
-            where: { id: newPost.id },
-            data: { images: { connect: uploadedAssets.map(a => ({ id: a.id })) } },
-        })
+        // Connect images relation only if any assets were created
+        if (uploadedAssets.length > 0) {
+            await db.garagePost.update({
+                where: { id: newPost.id },
+                data: { images: { connect: uploadedAssets.map(a => ({ id: a.id })) } },
+            })
+        }
 
         // If making-of video exists
         if (makingOfPlaybackID) {
@@ -157,7 +170,13 @@ export async function uploadGaragePost(formData: FormData): Promise<{ success: b
             })
         }
 
-        revalidatePath("/test")
+        // revalidate relevant path(s)
+        try {
+            revalidatePath("/test")
+        } catch (e) {
+            // don't fail the whole flow if revalidation fails
+            console.warn("Revalidate path failed:", e)
+        }
 
         return { success: true, message: "Post uploaded successfully" }
 

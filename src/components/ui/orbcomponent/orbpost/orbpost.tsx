@@ -261,47 +261,6 @@ export default function OrbPost({
 
                     </motion.div>
 
-                    {/* Particles — render only when playAnimation is true */}
-                    {playAnimation && particles.map((particle) => {
-                      const angle = (particle.angle * Math.PI) / 180;
-                      const distance = 48; // px
-                      const x = Math.cos(angle) * distance;
-                      const y = Math.sin(angle) * distance;
-
-                      return (
-                        <motion.div
-                          key={particle.id}
-                          style={{
-                            position: 'absolute',
-                            left: '50%',
-                            top: '50%',
-                            width: 12,
-                            height: 12,
-                            marginLeft: -6,
-                            marginTop: -6,
-                            pointerEvents: 'none',
-                          }}
-                          initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
-                          animate={{
-                            x,
-                            y,
-                            scale: [0, 1, 0],
-                            opacity: [1, 1, 0],
-                          }}
-                          transition={{ duration: 0.6, ease: "easeOut" }}
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91 80" fill="none" style={{ width: '100%', height: '100%' }}>
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M44.151 79.3089C36.2565 74.4534 18.381 63.8709 8.06504 48.0389C-1.22796 33.7769 -1.67326 21.1439 2.60804 12.4299C6.00254 5.51969 12.4244 0.945891 20.014 0.128891C28.2249 -0.750019 37.576 2.81639 45.209 12.3559C52.8418 2.82069 62.193 -0.749109 70.404 0.128891C77.9978 0.945301 84.42 5.51949 87.81 12.4299C92.0873 21.1447 91.6459 33.7779 82.353 48.0349C72.029 63.8789 54.123 74.4799 46.24 79.3239C45.576 79.7341 44.7673 79.6989 44.1502 79.3083L44.151 79.3089Z"
-                              fill="#ec4899"
-                            />
-                          </svg>
-                        </motion.div>
-                      );
-                    })}
-
                   </motion.button>
 
                   {/* Floating hearts — only show when playAnimation is true */}

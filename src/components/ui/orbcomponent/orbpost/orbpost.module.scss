@@ -173,6 +173,7 @@ $like-fg-contrast: #fff;
 // Like button base styles (keep them near your existing .likebtn)
 .likebtn {
     display: flex;
+    user-select: none;
     align-items: center;
     justify-content: center;
     // gap: 0.5rem;
@@ -211,6 +212,7 @@ $like-fg-contrast: #fff;
     font-weight: 700;
     font-size: 1.56rem;
     color: inherit;
+    user-select: none;
     transition: color 160ms ease;
 }
 

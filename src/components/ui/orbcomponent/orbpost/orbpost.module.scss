@@ -123,7 +123,7 @@
 
 .likebtn {
     cursor: pointer;
-    display: inline-flex;
+    display: flex;
     // margin: 0rem;
     background: none;
     // color: #929292;
@@ -135,6 +135,7 @@
     gap: 0.4rem;
     border-radius: 10rem;
     align-items: center;
+    justify-content: center;
     user-select: none;
     box-sizing: content-box;
     padding: 1rem;
@@ -152,14 +153,20 @@
         // background-color: #313131;
 
         .hearticon {
-            stroke: #F91880;
+            stroke: #ec4899;
         }
     }
 }
 
+.heartContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 // top of orbpost.module.scss — add variables here
-$like-color: #F91880; // heart / like text color
+$like-color: #ec4899; // heart / like text color
 $like-bg: #501632; // liked button background
 $like-fg-contrast: #fff;
 
@@ -168,7 +175,7 @@ $like-fg-contrast: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    // gap: 0.5rem;
     height: 1.4rem;
     width: 1.4rem;
     // padding: 0.4rem 0.8rem 0.2rem 0.8rem;
@@ -182,18 +189,17 @@ $like-fg-contrast: #fff;
     // svg heart base
     .hearticon,
     svg {
-        transform: translateY(0.1rem);
-        display: inline-block;
+        // transform: translateY(0.1rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         stroke: currentColor;
         height: 1.6rem;
         /* fallback to current text color */
         fill: transparent;
         transition: fill 160ms ease, stroke 160ms ease, transform 160ms ease;
         vector-effect: non-scaling-stroke;
-    }
-
-    &:hover {
-        background-color: hsl(0, 0%, 16%);
     }
 
     &:focus {

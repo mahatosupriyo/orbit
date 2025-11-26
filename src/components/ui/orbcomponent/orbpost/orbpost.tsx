@@ -358,7 +358,7 @@ export default function OrbPost({
             type="button"
           >
             {/* more */}
-            <OrbIcons name="more" size={22} fill="#929292" />
+            <OrbIcons name="more" size={28} fill="#929292" />
           </motion.button>
         </div>
       </div>

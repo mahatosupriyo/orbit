@@ -92,7 +92,7 @@
 
                     display: inline-flex;
                     font-size: 1.6rem;
-                    font-weight: 400;
+                    font-weight: 500;
                     line-height: 146%;
                     flex-direction: column;
                     align-items: flex-start;
@@ -109,7 +109,7 @@
                     .postedtime {
                         margin-right: 0rem;
                         font-size: 1.3rem;
-                        font-weight: 400;
+                        font-weight: 500;
                         color: hsl(0, 0%, 40%);
                     }
                 }
@@ -242,7 +242,7 @@ $like-fg-contrast: #fff;
 }
 
 .liketext {
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1.2rem;
     color: inherit;
     user-select: none;

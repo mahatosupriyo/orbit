@@ -76,6 +76,7 @@
                 width: 100%;
 
                 .username {
+                    user-select: none;
                     text-transform: lowercase;
                     display: inline-flex;
                     font-size: 1.72rem;
@@ -110,6 +111,7 @@
                         margin-right: 0rem;
                         font-size: 1.3rem;
                         font-weight: 500;
+                        user-select: none;
                         color: hsl(0, 0%, 40%);
                     }
                 }
@@ -165,13 +167,13 @@
     font-style: normal;
     font-weight: 600;
     line-height: 100%;
-    gap: 0.4rem;
+    gap: 1rem;
     border-radius: 10rem;
     align-items: center;
     justify-content: center;
     user-select: none;
     box-sizing: content-box;
-    padding: 1rem;
+    padding: 0.3rem;
     overflow: visible;
 
     .hearticon {
@@ -267,9 +269,11 @@ $like-fg-contrast: #fff;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.2rem;
+    gap: 0.6rem;
+    margin: 1rem 0rem;
 }
 
 .liketext {
     color: #fff;
+    font-weight: 500;
 }

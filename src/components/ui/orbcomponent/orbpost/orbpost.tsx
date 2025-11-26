@@ -22,8 +22,7 @@ export interface OrbPostProps {
 
 const FALLBACK_AVATAR = "https://ontheorbit.com/placeholder.png";
 
-const urlRegex =
-  /((https?:\/\/[^\s<>]+)|(www\.[^\s<>]+)|([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s<>]*)?))/ig;
+const urlRegex = /((https?:\/\/[^\s<>]+)|(www\.[^\s<>]+)|([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s<>]*)?))/ig;
 
 function prettyUrl(raw: string) {
   try {
@@ -132,6 +131,28 @@ export default function OrbPost({
   const heartControls = useAnimationControls();
   const cleanupTimerRef = useRef<number | null>(null);
 
+  // Audio ref for the pop sound
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // initialize audio once
+    const audio = new Audio('/Essentials/bubblepop.mp3');
+    audio.preload = 'auto';
+    // default volume — tweak as needed (0.0 - 1.0)
+    audio.volume = 0.8;
+    audioRef.current = audio;
+
+    return () => {
+      // cleanup: stop audio and release ref
+      try {
+        audio.pause();
+      } catch (e) {
+        /* ignore */
+      }
+      audioRef.current = null;
+    };
+  }, []);
+
   useEffect(() => {
     return () => {
       // cleanup any pending timers on unmount
@@ -153,6 +174,17 @@ export default function OrbPost({
     }
 
     if (newLiked) {
+      // play pop audio immediately (user-initiated click — should be allowed by browsers)
+      if (audioRef.current) {
+        try {
+          audioRef.current.currentTime = 0;
+          // use void to intentionally ignore the returned promise
+          void audioRef.current.play();
+        } catch (e) {
+          // ignore playback errors (e.g., if browser prevents play)
+        }
+      }
+
       // mark we should play the animation (only for this click)
       setPlayAnimation(true);
 

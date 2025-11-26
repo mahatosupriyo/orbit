@@ -170,7 +170,7 @@ export default function ImageLightbox({
                         <div className={styles.toplayer}>
                             <div style={{ width: "5.2rem" }} />
                             <p className={styles.page}>
-                                {active + 1} of {images.length}
+                               You’re on {active + 1} of {images.length}
                             </p>
                             <button
                                 className={styles.closeBtn}

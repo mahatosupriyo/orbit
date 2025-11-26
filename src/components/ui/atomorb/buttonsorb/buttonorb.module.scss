@@ -77,7 +77,6 @@
 
 .iconic {
     display: inline-flex;
-    background-color: #fff;
 
     padding: 1.8rem;
     justify-content: center;
@@ -86,10 +85,10 @@
     fill: #000;
 
     border-radius: 2.8rem;
-    background: hsl(0, 0%, 8%);
+    background: #222;
 
     &:hover {
-        background-color: #313131;
+        background-color: #707070;
     }
 }
 

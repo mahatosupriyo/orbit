@@ -5,11 +5,22 @@
     border-bottom: 0.1rem solid hsl(0, 0%, 10%);
     width: 100%;
     // background-color: hsl(0, 0%, 14%);
-    max-width: 54rem;
-    transition: 0.4s ease-in-out;
+    max-width: 80rem;
+    overflow: hidden;
+    transition: 0.2s ease-in-out;
 
     &:hover {
-        background-color: hsl(0, 0%, 6%);
+        background-color: #222222;
+
+        .orbpostwraper{
+            .layer{
+                .avatarwraper{
+                    .line {
+                        background-color: hsl(0, 0%, 20%);
+                    }
+                }
+            }
+        }
     }
 
     .orbpostwraper {
@@ -25,17 +36,38 @@
             width: 100%;
             position: relative;
 
+            .avatarwraper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                position: relative;
+                height: 100%;
 
-            .avatar {
-                height: 3.8rem;
+                .avatar {
+                    height: 3.8rem;
 
-                aspect-ratio: 1/1;
-                border-radius: 10rem;
+                    aspect-ratio: 1/1;
+                    border-radius: 10rem;
 
-                pointer-events: none;
-                user-select: none;
-                object-fit: cover;
+                    pointer-events: none;
+                    user-select: none;
+                    object-fit: cover;
+                    z-index: 99;
+                }
+
+                .line {
+                    z-index: 10;
+                    position: absolute;
+                    top: 4.4rem;
+                    width: 0.16rem;
+                    height: 100%;
+                    // flex-grow: 1;
+                    transition: all 0.2s ease-in-out;
+                    background-color: hsl(0, 0%, 10%);
+                }
             }
+
 
             .postcontent {
                 display: flex;
@@ -47,34 +79,35 @@
                     text-transform: lowercase;
                     display: inline-flex;
                     font-size: 1.72rem;
-                    font-weight: 760;
+                    font-weight: 600;
                     align-items: center;
 
                     color: #fff;
                     gap: 0.4rem;
                     line-height: 100%;
+                    margin: 0rem 0rem 1.6rem 0rem;
                 }
 
                 .poststory {
 
                     display: inline-flex;
-                    font-size: 1.66rem;
+                    font-size: 1.6rem;
                     font-weight: 400;
-                    line-height: 140%;
+                    line-height: 146%;
                     flex-direction: column;
                     align-items: flex-start;
-                    color: hsl(0, 0%, 100%);
+                    color: hsl(0, 0%, 60%);
                 }
 
                 .usercontrols {
-                    margin-top: 1rem;
+                    margin: 0.4rem 0.8rem 0rem 0rem;
                     display: flex;
                     flex-direction: row;
                     align-items: center;
                     justify-content: space-between;
 
                     .postedtime {
-
+                        margin-right: 0rem;
                         font-size: 1.3rem;
                         font-weight: 400;
                         color: hsl(0, 0%, 40%);
@@ -99,7 +132,7 @@
                 color: #929292;
                 gap: 0.4rem;
                 line-height: 100%;
-                display: none;
+                // display: none;
             }
         }
     }
@@ -209,8 +242,8 @@ $like-fg-contrast: #fff;
 }
 
 .liketext {
-    font-weight: 700;
-    font-size: 1.56rem;
+    font-weight: 400;
+    font-size: 1.2rem;
     color: inherit;
     user-select: none;
     transition: color 160ms ease;

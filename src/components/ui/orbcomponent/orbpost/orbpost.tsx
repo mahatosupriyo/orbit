@@ -189,18 +189,21 @@ export default function OrbPost({
     <article className={styles.orbpost} aria-label={`Post by ${username}`}>
       <div className={styles.orbpostwraper}>
         <div className={styles.layer}>
-          <img
-            draggable={false}
-            src={avatarUrl || FALLBACK_AVATAR}
-            alt={`${username} avatar`}
-            className={styles.avatar}
-          />
+          <div className={styles.avatarwraper}>
+            <img
+              draggable={false}
+              src={avatarUrl || FALLBACK_AVATAR}
+              alt={`${username} avatar`}
+              className={styles.avatar}
+            />
+            <div className={styles.line}></div>
+          </div>
 
           <div className={styles.postcontent}>
             <div>
               <Link draggable={false} href={href} className={styles.username}>
                 {username}
-                <OrbIcons name="verified" size={10} />
+                <OrbIcons name="verified" size={12} />
               </Link>
             </div>
 
@@ -213,13 +216,13 @@ export default function OrbPost({
             )}
 
             <div className={styles.usercontrols}>
-              <div className={styles.likecontrol} style={{display: 'flex', justifyContent: 'center', alignItems: "center"}}>
+              <div className={styles.likecontrol} style={{ display: 'flex', justifyContent: 'center', alignItems: "center" }}>
 
                 {/* wrapper to position particles absolutely relative to the button */}
-                <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
                   <motion.button
-                    whileTap={{ scale: 0.8 }}
+                    // whileTap={{ scale: 0.8 }}
                     className={`${styles.likebtn} ${localLiked ? styles.liked : ""}`}
                     aria-pressed={localLiked}
                     onClick={handleLike}
@@ -248,13 +251,13 @@ export default function OrbPost({
                           className={styles.likePing}
                           initial={{ scale: 1, opacity: 0.8 }}
                           animate={{ scale: 1.8, opacity: 0 }}
-                          transition={{ duration: 0.6, ease: "easeOut" }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
                           style={{
                             position: 'absolute',
                             inset: 0,
                             borderRadius: '9999px',
                             pointerEvents: 'none',
-                            background: 'radial-gradient(circle, rgba(236,72,153,0.32) 0%, transparent 70%)'
+                            background: 'radial-gradient(circle, hsla(330, 81%, 60%, 0.32) 0%, transparent 70%)'
                           }}
                         />
                       )}
@@ -285,7 +288,7 @@ export default function OrbPost({
                             opacity: [0, 1, 0],
                             scale: [0, 1, 0.5],
                           }}
-                          transition={{ duration: 1.2, delay: i * 0.15, ease: "easeOut" }}
+                          transition={{ duration: 0.8, delay: i * 0.1, ease: "easeOut" }}
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91 80" fill="none" style={{ width: '100%', height: '100%' }}>
                             <path
@@ -322,7 +325,8 @@ export default function OrbPost({
             aria-label="More options"
             type="button"
           >
-            more
+            {/* more */}
+            <OrbIcons name="more" size={22} fill="#929292" />
           </motion.button>
         </div>
       </div>

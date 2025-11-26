@@ -65,6 +65,8 @@
                     height: 100%;
                     transition: all 0.2s ease-in-out;
                     background-color: hsl(0, 0%, 20%);
+
+                    display: none;
                 }
             }
 
@@ -179,7 +181,7 @@
     .hearticon {
         stroke-width: 0.8rem;
         box-sizing: border-box;
-        height: 1.4rem;
+        height: 2rem;
         width: auto;
         overflow: visible;
     }
@@ -231,7 +233,7 @@ $like-fg-contrast: #fff;
         justify-content: center;
         align-items: center;
         stroke: currentColor;
-        height: 1.6rem;
+        height: 1.7rem;
         /* fallback to current text color */
         fill: transparent;
         transition: fill 160ms ease, stroke 160ms ease, transform 160ms ease;

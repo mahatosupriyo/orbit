@@ -8,13 +8,14 @@
     max-width: 80rem;
     overflow: hidden;
     transition: 0.2s ease-in-out;
+    border-radius: 2rem;
 
     &:hover {
         background-color: #222222;
 
-        .orbpostwraper{
-            .layer{
-                .avatarwraper{
+        .orbpostwraper {
+            .layer {
+                .avatarwraper {
                     .line {
                         background-color: hsl(0, 0%, 20%);
                     }

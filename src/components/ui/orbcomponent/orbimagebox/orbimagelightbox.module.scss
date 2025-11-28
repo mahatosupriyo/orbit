@@ -35,8 +35,8 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   overflow: hidden;
   aspect-ratio: 4/5;
   width: 100%;
-  max-width: 80%;
-  margin-top: 1rem;
+  max-width: 100%;
+  // margin-top: 2rem;
 
   img {
     width: 100%;
@@ -59,9 +59,11 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   pointer-events: auto;
   padding: 1rem;
+  width: 100%;
 }
 
 .toplayer {
@@ -77,10 +79,6 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .closeBtn {
-  //   position: fixed;
-  //   right: 0;
-  //   top: 0;
-  //   margin: 2rem;
   background: transparent;
   border: none;
   color: #fff;
@@ -100,7 +98,6 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 
 /* swiper area */
 .swiperWrapper {
-  //   width: 100%;
   flex: 1;
   display: flex;
   align-items: center;
@@ -109,11 +106,9 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   aspect-ratio: 4/5;
   overflow: hidden;
   height: 100%;
-  max-height: 80dvh;
-  //   width: 100%;
-  //   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-
-
+  // max-height: 80dvh;
+  width: auto;
+  width: 100%;
 }
 
 .swiper {
@@ -355,6 +350,7 @@ $thumb-radius: 0.6rem;
   grid-auto-rows: minmax(100px, 1fr);
 
   .thumbBtn {
+
     /* FIRST IMAGE → big one on the left */
     &:nth-child(1) {
       grid-column: 1 / span 1;
@@ -378,7 +374,8 @@ $thumb-radius: 0.6rem;
     grid-auto-rows: 1fr;
 
     .thumbBtn:nth-child(1) {
-      grid-row: 1 / span 4; /* stays tall */
+      grid-row: 1 / span 4;
+      /* stays tall */
     }
   }
 }

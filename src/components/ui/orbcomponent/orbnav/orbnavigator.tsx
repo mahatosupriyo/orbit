@@ -28,15 +28,18 @@ export default function OrbNavigator(): JSX.Element {
         display: 'flex',
         flexDirection: 'column',
         position: 'fixed',
+        height: '100%',
         // width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         top: '0',
+        backgroundColor: 'hsl(0, 0%, 16%)',
         left: 0,
         // right: 0,
         gap: '0.2rem',
-        padding: '1rem',
+        padding: '1rem 0.4rem',
         zIndex: 99999,
+        borderRight: '0.16rem solid hsl(0, 0%, 20%)',
     } as const;
 
     return (

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, easeInOut } from "framer-motion";
 import styles from "./orbimagelightbox.module.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -148,6 +148,8 @@ export default function ImageLightbox({
             </div>
 
             {/* overlay (full viewer) */}
+
+
             <AnimatePresence>
                 {open && (
                     <motion.div
@@ -168,11 +170,12 @@ export default function ImageLightbox({
                     >
                         {/* top bar */}
                         <div className={styles.toplayer}>
-                            <div style={{ width: "5.2rem" }} />
+                            {/* <div style={{ width: "5.2rem" }} /> */}
                             <p className={styles.page}>
-                               You’re on {active + 1} of {images.length}
+                                You’re on {active + 1} out of {images.length}
                             </p>
-                            <button
+                            <motion.button
+                                whileTap={{ scale: 0.9 }}
                                 className={styles.closeBtn}
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -180,8 +183,11 @@ export default function ImageLightbox({
                                 }}
                                 aria-label="Close viewer"
                             >
+                                <span className={styles.key}>
+                                    Esc
+                                </span>
                                 <OrbIcons name="close" size={20} />
-                            </button>
+                            </motion.button>
                         </div>
 
                         {/* shell */}
@@ -197,7 +203,7 @@ export default function ImageLightbox({
                                 {/* prev */}
                                 {active > 0 && (
                                     <motion.button
-                                        whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '1rem' }} initial={{ opacity: 0, borderRadius: '0.2rem' }} animate={{ opacity: 1, borderRadius: '2.8rem' }} transition={{ delay: 0.4, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                                        whileTap={{ scale: 0.9, opacity: '0.6', borderRadius: '10rem', transition: { duration: 0.1, ease: easeInOut } }} initial={{ opacity: 0, borderRadius: '0.2rem' }} animate={{ opacity: 1, borderRadius: '2.8rem' }} transition={{ delay: 0.4, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                                         className={`${styles.customNavBtn} ${styles.customPrevBtn}`}
                                         aria-label="Previous image"
                                         onClick={(e) => {
@@ -239,7 +245,7 @@ export default function ImageLightbox({
                                 {/* next */}
                                 {active < images.length - 1 && (
                                     <motion.button
-                                        whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '1rem' }}
+                                        whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '10rem', transition: { duration: 0.1, ease: easeInOut } }}
                                         initial={{ opacity: 0, borderRadius: '0.2rem' }}
                                         animate={{ opacity: 1, borderRadius: '2.8rem' }}
                                         exit={{ opacity: 0, filter: 'blur(100px)' }}
@@ -259,6 +265,7 @@ export default function ImageLightbox({
                     </motion.div>
                 )}
             </AnimatePresence>
+
         </>
     );
 }

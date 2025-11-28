@@ -1,5 +1,5 @@
 /* valid HSLA syntax (alpha last) — use whichever you prefer */
-$overlay-bg: #222;
+$overlay-bg: hsla(0, 0%, 10%, 0.7);
 /* or: --overlay-bg: hsl(0 0% 14% / 0.55); */
 $bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
 $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -8,6 +8,9 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 /* overlay base (semi-transparent backdrop) */
 .overlay {
   position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -15,6 +18,8 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(4rem);
+  // max-width: 200rem;
 
   /* <--- set the background to the variable (was transparent before) */
   background: $overlay-bg;
@@ -64,12 +69,14 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   pointer-events: auto;
   padding: 1rem;
   width: 100%;
+  overflow: hidden;
 }
 
 .toplayer {
   display: flex;
-  flex-direction: grid;
-  padding: 1rem;
+  // flex-direction: grid;
+
+  padding: 1rem 1rem 0rem 2rem;
   position: fixed;
   align-items: center;
   top: 0;
@@ -87,12 +94,29 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10rem;
+  gap: 0.4rem;
+
+  border-radius: 20rem;
+  // corner-shape: squircle;
   transition: all 140ms ease, transform 140ms ease;
+  // margin: 1rem;
+
+  .key {
+    font-size: 1.32rem;
+    font-weight: 600;
+    line-height: 120%;
+    display: flex;
+    border-radius: 0.6rem;
+    color: hsl(0, 0, 80%);
+    padding: 0.3rem 0.4rem;
+    background-color: hsl(0, 0, 20%);
+    -webkit-text-stroke: 0.01rem hsl(0, 0%, 36%);
+    outline: 0.16rem solid hsl(0, 0%, 28%);
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    background-color: rgba(255, 255, 255, 0.04);
+    // transform: translateY(-2px);
+    background-color: hsl(0, 0%, 20%);
   }
 }
 
@@ -114,7 +138,7 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 .swiper {
   display: flex;
   aspect-ratio: 4/5;
-  height: auto;
+  // height: auto;
   height: 80dvh;
 
   @media only screen and (max-width: 800px) {
@@ -233,7 +257,7 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 
   background-color: none;
   background: none;
-  background: hsla(0, 0%, 16%);
+  background: hsla(0, 0%, 24%);
   color: #fff;
   cursor: pointer;
   transition: transform 160ms $bezier-fast, background 140ms ease, opacity 160ms ease;
@@ -245,7 +269,8 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 
 .page {
   font-size: 1.4rem;
-  font-weight: 500;
+  // margin-top: 2rem;
+  font-weight: 600;
 }
 
 /* left / right placement */

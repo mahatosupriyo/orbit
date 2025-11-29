@@ -259,7 +259,7 @@ export default function OrbPost({
                     aria-pressed={localLiked}
                     onClick={handleLike}
                     type="button"
-                    style={{zIndex: 9999}}
+                    // style={{zIndex: 9}}
                     aria-label={localLiked ? "Unlike" : "Like"}
                   >
                     <motion.div animate={heartControls} className={styles.heartContainer}>

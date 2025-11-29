@@ -10,6 +10,10 @@
     position: relative;
     overflow: hidden;
 
+    @media (max-width: 900px) {
+        display: none;
+    }
+
     // extracted swatches row
     .swatchesRow {
         display: flex;
@@ -127,7 +131,7 @@
             object-fit: cover;
             user-select: none;
             pointer-events: none;
-            z-index: 2;
+            // z-index: 2;
         }
     }
 }

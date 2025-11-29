@@ -79,19 +79,12 @@ export default function Feed() {
     if (page === 1) return;
     void fetchPage(page);
   }, [page, fetchPage]);
+  
 
   return (
     <div className={styles.wraper}>
       <div className={styles.feed}>
-        <div className={styles.ctacontainer}>
-          <button className={styles.ctas}>
-            Garage
-          </button>
 
-          <button className={styles.ctas}>
-            Voyage
-          </button>
-        </div>
         {posts.map((post) => (
           <div key={post.id} className={styles.postWrapper}>
             <PostItem post={post} />

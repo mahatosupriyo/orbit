@@ -252,10 +252,6 @@ export default function OrbColorPalette(): JSX.Element {
 
                 <span className={styles.subwraper}>
                     <OrbIcons name="image" size={36} fill="#fff" />
-                    {/* <div className={styles.keycombo}>
-                        <span className={styles.key}>ctrl</span>
-                        <span className={styles.key}>v</span>
-                    </div> */}
                 </span>
                 <h2 className={styles.mainlabel}>
                     {dragActive ? 'Drop here +' : 'Drag and Drop'}

@@ -86,7 +86,8 @@
     background: none;
 
     border-radius: 2.8rem;
-    background: hsl(0, 0%, 24%);
+    // border: 0.1rem solid hsl(0, 0%, 20%);
+    background: hsl(0, 0%, 14%);
 
     &:hover {
         background-color: #707070;
@@ -98,6 +99,8 @@
     background-color: #fff;
     display: inline-flex;
     background-color: #fff;
+    border: 0.1rem solid hsl(0, 0%, 100%);
+
 
     padding: 1.8rem;
     justify-content: center;

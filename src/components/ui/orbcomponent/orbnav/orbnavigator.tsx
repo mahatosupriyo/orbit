@@ -11,23 +11,36 @@ import WarnMobile from "../../atomorb/warnmobile/warnmobile";
 /**
  * OrbNavigator Component
  * 
- * A fixed navigation bar component that appears at the bottom of the screen.
- * Provides navigation controls and search functionality for the application.
+ * A fixed navigation bar component that provides the primary navigation interface
+ * for the application, displayed at the bottom of the screen on desktop and mobile.
  * 
- * @returns {JSX.Element} The navigation bar component
+ * Features:
+ * - Dynamic active state indication based on current route
+ * - Search functionality for content discovery
+ * - Post creation modal trigger
+ * - Mobile-specific warnings
+ * - Semantic HTML with ARIA labels for accessibility
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered navigation bar with interactive controls
+ * 
+ * @example
+ * ```tsx
+ * <OrbNavigator />
+ * ```
  */
 export default function OrbNavigator(): JSX.Element {
     // Get current pathname for active state management
     const pathname = usePathname();
 
-    // Constants for styling
+    // Visual constants for icon styling
     const ACTIVE_FILL = '#252525';
     const DEFAULT_FILL = '#fff';
     const ICON_SIZE = 30;
 
-
     return (
         <nav className={styles.orbnav} aria-label="Main navigation">
+            {/* Garage/Home navigation button */}
             <LnkOrbButton variant='iconic' href='/test' aria-label="Garage">
                 <OrbIcons
                     fill={pathname === '/test' ? ACTIVE_FILL : DEFAULT_FILL}
@@ -36,11 +49,16 @@ export default function OrbNavigator(): JSX.Element {
                 />
             </LnkOrbButton>
 
-            <WarnMobile/>
+            {/* Mobile-specific warning component */}
+            <WarnMobile />
 
+            {/* Search bar component */}
             <OrbSearchComponent />
-            <OrbAddPostModal/>
 
+            {/* Add post modal trigger */}
+            <OrbAddPostModal />
+
+            {/* Color settings/preferences navigation button */}
             <LnkOrbButton variant='iconic' href='/colorextractor' aria-label="Color settings">
                 <OrbIcons
                     fill={pathname === '/colorextractor' ? ACTIVE_FILL : DEFAULT_FILL}

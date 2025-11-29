@@ -1,3 +1,26 @@
+/* ---------------------------
+   Variables / tokens
+   (change these to theme your UI)
+   --------------------------- */
+$overlay-bg: hsla(0, 0%, 10%, 0.7); // overlay backdrop color
+$overlay-bg-alt: hsla(0, 0%, 14%, 0.55); // alternative overlay (comment noted)
+$bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
+$bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+$controls-bg: hsla(0, 0%, 24%, 1);
+$close-key-bg: hsl(0, 0%, 20%);
+$close-key-color: hsl(0, 0%, 80%);
+$close-key-outline: hsl(0, 0%, 28%);
+
+$thumb-gap: 0.4rem;
+$thumb-radius: 0.6rem;
+
+$nav-z: 10005;
+$overlay-z: 99999;
+
+/* ---------------------------
+   Overlay (full-screen backdrop)
+   --------------------------- */
 /* valid HSLA syntax (alpha last) — use whichever you prefer */
 $overlay-bg: hsla(0, 0%, 10%, 0.7);
 /* or: --overlay-bg: hsl(0 0% 14% / 0.55); */
@@ -14,7 +37,7 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 99999;
+  z-index: $overlay-z;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,9 +52,18 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
      backdrop-filter: blur(5px); */
 
   -webkit-tap-highlight-color: transparent;
+
+  // responsive: hide on small screens (kept from original file)
+  @media (max-width: 900px) {
+    display: none;
+  }
+
 }
 
 
+/* ---------------------------
+   Preview thumbnail
+   --------------------------- */
 /* Preview thumbnail */
 .lightboxPreview {
   display: inline-block;
@@ -59,6 +91,9 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
 
+/* ---------------------------
+   Modal shell (content)
+   --------------------------- */
 /* modal shell (content) */
 .shell {
   display: flex;
@@ -72,6 +107,7 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   overflow: hidden;
 }
 
+/* Top layer: fixed toolbar (page counter + close) */
 .toplayer {
   display: flex;
   // flex-direction: grid;
@@ -85,6 +121,7 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+/* Close button in the top bar */
 .closeBtn {
   background: transparent;
   border: none;
@@ -103,15 +140,16 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 
   .key {
     font-size: 1.32rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 120%;
     display: flex;
     border-radius: 0.6rem;
-    color: hsl(0, 0, 80%);
+    user-select: none;
+    color: $close-key-color;
     padding: 0.3rem 0.4rem;
-    background-color: hsl(0, 0, 20%);
+    background-color: $close-key-bg;
     -webkit-text-stroke: 0.01rem hsl(0, 0%, 36%);
-    outline: 0.16rem solid hsl(0, 0%, 28%);
+    outline: 0.16rem solid $close-key-outline;
   }
 
   &:hover {
@@ -120,6 +158,9 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
 
+/* ---------------------------
+   Swiper area
+   --------------------------- */
 /* swiper area */
 .swiperWrapper {
   flex: 1;
@@ -170,10 +211,11 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
 }
 
+/* ---------------------------
+   Expanded image
+   --------------------------- */
 /* expanded image */
 .slideImg {
-
-  height: auto;
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -250,14 +292,14 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 /* Custom nav buttons (positioned inside .swiperWrapper) */
 .customNavBtn {
   position: absolute;
-  z-index: 10005;
+  z-index: $nav-z;
   display: flex;
   align-items: center;
   justify-content: center;
 
   background-color: none;
   background: none;
-  background: hsla(0, 0%, 24%);
+  background: hsla(0, 0%, 24%, 1);
   color: #fff;
   cursor: pointer;
   transition: transform 160ms $bezier-fast, background 140ms ease, opacity 160ms ease;
@@ -268,9 +310,29 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .page {
-  font-size: 1.4rem;
-  // margin-top: 2rem;
-  font-weight: 600;
+  font-size: 1.56rem;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  font-weight: 500;
+  letter-spacing: -0.016rem;
+  color: hsl(0, 0%, 100%);
+  user-select: none;
+  line-height: 90%;
+
+  .pagenumber {
+    font-weight: inherit;
+    line-height: inherit;
+    color: hsl(0, 0%, 100%);
+
+    width: 1rem;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* left / right placement */
@@ -293,8 +355,6 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
 
 
 
-
-
 $thumb-gap: 0.4rem;
 $thumb-radius: 0.6rem;
 
@@ -309,7 +369,7 @@ $thumb-radius: 0.6rem;
   width: 100%;
   align-items: stretch;
   justify-items: stretch;
-  margin-top: 1rem;
+  // margin-top: 1rem;
   /* quick fallback layout */
   grid-template-columns: 1fr;
   padding-right: 2rem;

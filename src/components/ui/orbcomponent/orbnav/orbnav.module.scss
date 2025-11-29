@@ -1,29 +1,40 @@
+/**
+ * OrbNav Component Styles
+ * 
+ * Main navigation container with responsive layout.
+ * Desktop: Vertical sidebar on the left
+ * Mobile: Horizontal bar at the top
+ */
 .orbnav {
+    // Layout
     display: flex;
     flex-direction: column;
-
-    position: fixed;
-    height: 100%;
     align-items: center;
     justify-content: center;
-    // justifyContent: 'center',
-    top: 0;
-    // background-color: hsl(0, 0%, 16%);
-    left: 0;
     gap: 0.2rem;
-    padding: 1rem 0.4rem;
-    z-index: 999;
-    // border-radius: 0.16rem solid hsl(0, 0%, 20%);
 
+    // Positioning
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 999;
+
+    // Spacing
+    padding: 1rem 0.4rem;
+
+    /**
+     * Mobile Responsive Layout
+     * Converts vertical sidebar to horizontal top navigation bar
+     * 
+     * @media (max-width: 900px)
+     */
     @media (max-width: 900px) {
         flex-direction: row;
         height: auto;
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        position: fixed;
         max-height: 10rem;
+        justify-content: center;
+        align-items: center;
     }
 }

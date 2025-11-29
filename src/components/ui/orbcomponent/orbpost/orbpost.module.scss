@@ -1,287 +1,303 @@
+// orbpost.module.scss
+// ---------------------------------------------------------
+// OrbPost styles (refactored / documented)
+// - Single source of truth for colors and spacing (variables)
+// - Reused placeholders/mixins to remove repetition
+// - Comments explain purposes and accessibility considerations
+// - Keep class names unchanged so JS/TS imports continue to work
+// ---------------------------------------------------------
+
+// ----------------------------
+// Theme / variables
+// ----------------------------
+$bg-hover: #222222;
+$line-default: hsl(0, 0%, 20%);
+$text-muted: hsl(0, 0%, 60%);
+$text-subtle: hsl(0, 0%, 40%);
+$white: #fff;
+
+$like-color: #ec4899; // heart / like color
+$like-bg: #501632; // liked button background (kept if needed)
+$transition-fast: 160ms;
+$transition-default: 0.2s;
+
+$avatar-size: 3.8rem;
+$avatar-line-top: 4.4rem;
+
+// ----------------------------
+// Reusable placeholders & mixins
+// ----------------------------
+%text-wrap {
+  overflow-wrap: break-word; // allow natural wrap
+  word-break: break-word;    // break long domains
+  white-space: wrap;         // preserve line breaks inserted as <br/>
+}
+
+@mixin flex-it($dir: row, $jc: center, $ai: center) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jc;
+  align-items: $ai;
+}
+
+// ----------------------------
+// Component: orbpost
+// ----------------------------
 .orbpost {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 1rem 1rem 1.6rem;
-    border-bottom: 0.16rem solid hsl(0, 0%, 20%);
-    width: 100%;
-    // background-color: hsl(0, 0%, 14%);
-    max-width: 70rem;
-    overflow: hidden;
-    transition: 0.2s ease-in-out;
-    // border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem 1.6rem 1.6rem;
+  border-bottom: 0.16rem solid $line-default;
+  width: 100%;
+  max-width: 70rem;
+  overflow: hidden;
+  transition: $transition-default;
+  // background-color: hsl(0, 0%, 14%); // keep if dark bg needed
 
-    &:hover {
-        background-color: #222222;
-
-        .orbpostwraper {
-            .layer {
-                .avatarwraper {
-                    .line {
-                        background-color: hsl(0, 0%, 20%);
-                    }
-                }
-            }
-        }
-    }
+  // Hover behaviour for whole post
+  &:hover {
+    background-color: $bg-hover;
 
     .orbpostwraper {
+      .layer {
+        .avatarwraper {
+          .line {
+            background-color: $line-default;
+          }
+        }
+      }
+    }
+  }
+
+  // ----------------------------
+  // Layout wrapper
+  // ----------------------------
+  .orbpostwraper {
+    display: flex;
+    width: 100%;
+
+    .layer {
+      @include flex-it(row, space-between, flex-start);
+
+      gap: 1.2rem;
+      width: 100%;
+      position: relative;
+
+      // ----------------------------
+      // Avatar / Vertical line
+      // ----------------------------
+      .avatarwraper {
+        @include flex-it(column, center, center);
+        gap: 1rem;
+        position: relative;
+
+        .avatar {
+          height: $avatar-size;
+          aspect-ratio: 1/1;
+          border-radius: 10rem;
+          pointer-events: none;
+          user-select: none;
+          object-fit: cover;
+          display: inline-flex;
+        }
+      }
+
+      // ----------------------------
+      // Post content column
+      // ----------------------------
+      .postcontent {
         display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
         width: 100%;
 
-        .layer {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1.2rem;
-            width: 100%;
-            position: relative;
+        .username {
+          user-select: none;
+          text-transform: lowercase;
+          display: inline-flex;
+          font-size: 1.72rem;
+          font-weight: 600;
+          align-items: center;
+          color: $white;
+          gap: 0.4rem;
+          line-height: 100%;
+          margin: 0 0 1.6rem 0;
+          transition: all 0.1s ease-in-out;
 
-            .avatarwraper {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                position: relative;
-                height: 100%;
-
-                .avatar {
-                    height: 3.8rem;
-
-                    aspect-ratio: 1/1;
-                    border-radius: 10rem;
-
-                    pointer-events: none;
-                    user-select: none;
-                    object-fit: cover;
-                    // z-index: 9;
-                }
-
-                .line {
-                    z-index: 10;
-                    position: absolute;
-                    top: 4.4rem;
-                    width: 0.1rem;
-                    height: 100%;
-                    transition: all 0.2s ease-in-out;
-                    background-color: hsl(0, 0%, 20%);
-
-                    display: none;
-                }
-            }
-
-
-            .postcontent {
-                display: flex;
-                flex-direction: column;
-                gap: 0.4rem;
-                width: 100%;
-
-                .username {
-                    user-select: none;
-                    text-transform: lowercase;
-                    display: inline-flex;
-                    font-size: 1.72rem;
-                    font-weight: 600;
-                    align-items: center;
-
-                    color: #fff;
-                    gap: 0.4rem;
-                    line-height: 100%;
-                    margin: 0rem 0rem 1.6rem 0rem;
-
-                    transition: all 0.1s ease-in-out;
-
-                    &:hover{
-                        color: hsl(0, 0%, 60%);
-                    }
-                }
-
-                .poststory {
-
-                    display: inline-flex;
-                    font-size: 1.6rem;
-                    font-weight: 500;
-                    line-height: 146%;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    color: hsl(0, 0%, 60%);
-                }
-
-                .usercontrols {
-                    margin: 0.4rem 0.8rem 0rem 0rem;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: space-between;
-
-                    .postedtime {
-                        margin-right: 0rem;
-                        font-size: 1.3rem;
-                        font-weight: 500;
-                        user-select: none;
-                        color: hsl(0, 0%, 40%);
-                    }
-                }
-            }
-
-            .moreicon {
-                display: inline-flex;
-                background-color: none;
-                background: none;
-                cursor: pointer;
-
-                position: absolute;
-                top: 0;
-                right: 0;
-
-                font-size: 1.46rem;
-                font-weight: 600;
-                align-items: center;
-
-                color: #929292;
-                gap: 0.4rem;
-                line-height: 100%;
-                // display: none;
-            }
+          &:hover {
+            color: hsl(0, 0%, 60%);
+          }
         }
+
+        // Post body / parsed content (reused text-wrap placeholder)
+        .poststory {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: flex-start;
+          font-size: 1.6rem;
+          font-weight: 500;
+          line-height: 146%;
+          color: $text-muted;
+
+          // paragraphs inside content renderer
+          p,
+          .postParagraph {
+            @extend %text-wrap;
+            margin: 0 0 0.8rem 0; // small spacing between paragraphs
+          }
+        }
+
+        // Controls row (like + time + other actions)
+        .usercontrols {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+
+          .postedtime {
+            margin-right: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            user-select: none;
+            color: $text-subtle;
+          }
+        }
+      }
+
+      // ----------------------------
+      // "More" button (kept absolute to top-right of layer)
+      // ----------------------------
+      .moreicon {
+        @include flex-it(row, center, center);
+        background: none;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1.46rem;
+        font-weight: 600;
+        align-items: center;
+        color: #929292;
+        gap: 0.4rem;
+        line-height: 100%;
+      }
     }
+  }
 }
 
-.poststory,
-.postParagraph {
-    overflow-wrap: break-word; // allow natural wrap
-    word-break: break-word; // break long domains
-    white-space: wrap; // keep line breaks from text
-}
-
+// ----------------------------
+// Inline links and text utilities
+// ----------------------------
 .inlineLink {
-    //   max-width: 20rem;
-    display: inline-block;
-    overflow-wrap: break-word; // allow natural wrap
-    word-break: break-word; // break long domains
-    text-wrap: wrap;
-    white-space: wrap; // keep line breaks from text
+  display: inline-block;
+  @extend %text-wrap;
+  text-wrap: wrap; // best-effort; keep for legacy support
+  color: #1B90D6; // default inline link color (JS may override)
+  text-decoration: none;
+  font-weight: 500;
 }
 
+// also keep a generic rule for .postParagraph in case other components use it
+.postParagraph {
+  @extend %text-wrap;
+}
+
+// ----------------------------
+// Like / Heart styles
+// - Consolidated duplicate .likebtn rules into a single block
+// ----------------------------
 .likebtn {
-    cursor: pointer;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  user-select: none;
+  box-sizing: content-box;
+  padding: 0.3rem;
+  overflow: visible;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 100%;
+  gap: 1rem;
+  border-radius: 10rem;
+  transition: all $transition-fast, transform 120ms ease, color $transition-fast;
+  color: #929292;
+
+  // Svg / heart icon base
+  .hearticon,
+  svg {
     display: flex;
-    // margin: 0rem;
-    background: none;
-    // color: #929292;
+    height: 1.7rem;
+    width: auto;
+    fill: transparent; // default: unfilled
+    stroke: currentColor;
+    transition: fill $transition-fast, stroke $transition-fast, transform $transition-fast;
+    vector-effect: non-scaling-stroke;
+  }
 
-    font-size: 1.5rem;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%;
-    gap: 1rem;
-    border-radius: 10rem;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    box-sizing: content-box;
-    padding: 0.3rem;
-    overflow: visible;
-
+  &:hover {
     .hearticon {
-        stroke-width: 0.8rem;
-        box-sizing: border-box;
-        height: 2rem;
-        width: auto;
-        overflow: visible;
+      stroke: $like-color;
     }
+  }
 
-    &:hover {
-        // background-color: #313131;
+  &:focus {
+    outline: none;
+  }
+}
 
-        .hearticon {
-            stroke: #ec4899;
-        }
-    }
+// liked state (applies when .liked is added to parent/button)
+.liked {
+  color: $like-color;
+
+  .hearticon,
+  svg {
+    fill: $like-color;
+  }
 }
 
 .heartContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-
-// top of orbpost.module.scss — add variables here
-$like-color: #ec4899; // heart / like text color
-$like-bg: #501632; // liked button background
-$like-fg-contrast: #fff;
-
-// Like button base styles (keep them near your existing .likebtn)
-.likebtn {
-    display: flex;
-    user-select: none;
-    align-items: center;
-    justify-content: center;
-    // gap: 0.5rem;
-    height: 1.4rem;
-    width: 1.4rem;
-    // padding: 0.4rem 0.8rem 0.2rem 0.8rem;
-    border-radius: 1.2rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: all 160ms ease, transform 120ms ease, color 160ms ease;
-    color: #929292;
-
-    // svg heart base
-    .hearticon,
-    svg {
-        // transform: translateY(0.1rem);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        stroke: currentColor;
-        height: 1.7rem;
-        /* fallback to current text color */
-        fill: transparent;
-        transition: fill 160ms ease, stroke 160ms ease, transform 160ms ease;
-        vector-effect: non-scaling-stroke;
-    }
-
-    &:focus {
-        outline: none;
-    }
-}
-
-.liketext {
-    font-weight: 500;
-    font-size: 1.4rem;
-    color: inherit;
-    user-select: none;
-    transition: color 160ms ease;
-}
-
-/* liked state */
-.liked {
-    // background: $like-bg;
-    color: $like-color; // this cascades into svg stroke via currentColor
-
-    .hearticon,
-    svg {
-        fill: $like-color; // filled heart
-        // stroke: $like-color; // ensure stroke matches
-    }
-
-
-}
-
+// ----------------------------
+// Like control layout
+// ----------------------------
 .likecontrol {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.6rem;
-    margin: 1rem 0rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1rem 0 0 0;
 }
 
 .liketext {
-    color: #fff;
-    font-weight: 500;
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: inherit; // inherits color from parent (.liked or default)
+  user-select: none;
+  transition: color $transition-fast;
 }
+
+// ----------------------------
+// Small utilities / animation-related elements
+// ----------------------------
+.likePing {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  /* background is controlled inline in React (gradient) */
+}
+
+// ----------------------------
+// Accessibility notes (docs only — not processed by SCSS)
+// ----------------------------
+// - Use aria-pressed on like button to indicate toggle state.
+// - Provide accessible labels for interactive icons (aria-label).
+// - Keep color contrast checks in mind; adjust $like-color or background if failing checks.
+// ---------------------------------------------------------

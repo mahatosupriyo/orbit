@@ -1,3 +1,19 @@
+/**
+ * Modal Overlay Component Styles
+ * 
+ * Provides styling for a modal dialog component with backdrop blur effect.
+ * Positions modal at the bottom of the viewport with smooth animations.
+ */
+
+/**
+ * Overlay Container
+ * 
+ * Full-screen backdrop layer that covers the entire viewport.
+ * Features:
+ * - Semi-transparent dark background with blur effect
+ * - Flexbox layout for modal centering and bottom positioning
+ * - High z-index to appear above other content
+ */
 .overlay {
     position: fixed;
     inset: 0;
@@ -11,18 +27,36 @@
     backdrop-filter: blur(6px);
 }
 
+/**
+ * Modal Dialog Box
+ * 
+ * Main container for modal content.
+ * Features:
+ * - Dark theme with white text
+ * - Responsive width with max-width constraint
+ * - Smooth CSS transitions for all property changes
+ * - Rounded corners for modern appearance
+ */
 .modal {
-    background: #222;    
+    background: #222;
     color: #fff;
     border-radius: 2.4rem;
     padding: 1rem;
     width: 90%;
     max-width: 40rem;
     position: relative;
-    // box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.3s cubic-bezier(1, 0, 0, 1);
 }
 
+/**
+ * Close Button
+ * 
+ * Icon button for dismissing the modal.
+ * Features:
+ * - Positioned in top-left corner of modal
+ * - Circular button with hover transform effect
+ * - Accessible size and spacing (1rem padding)
+ */
 .closeBtn {
     position: absolute;
     top: 1.4rem;
@@ -33,8 +67,6 @@
     cursor: pointer;
     color: #252525;
     transition: transform 0.2s ease;
-    // background-color: #313131;
-
     display: flex;
     justify-content: center;
     align-items: center;

@@ -21,33 +21,47 @@ export default function Feed() {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [hasMore, setHasMore] = useState<boolean>(true);
+
   const loadingRef = useRef(false);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  // fetch page (kept stable via useCallback)
-  const fetchPage = useCallback(async (p: number) => {
-    if (loadingRef.current) return;
-    loadingRef.current = true;
-    try {
-      const res = await fetch(`/api/server/fetchposts?page=${p}&limit=${limit}`, {
-        cache: "no-store",
-      });
-      const data = await res.json();
-      if (!data?.success) {
+  // keep refs to latest values so observer callback doesn't use stale closures
+  const hasMoreRef = useRef(hasMore);
+  useEffect(() => {
+    hasMoreRef.current = hasMore;
+  }, [hasMore]);
+
+  // observer instance ref so we can disconnect it explicitly
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const fetchPage = useCallback(
+    async (p: number) => {
+      if (loadingRef.current) return;
+      loadingRef.current = true;
+      try {
+        const res = await fetch(`/api/server/fetchposts?page=${p}&limit=${limit}`, {
+          cache: "no-store",
+        });
+        const data = await res.json();
+        if (!data?.success) {
+          // no more or error -> ensure we stop observing
+          setHasMore(false);
+          return;
+        }
+
+        const next: GaragePost[] = data.posts ?? [];
+        setPosts((prev) => (p === 1 ? next : [...prev, ...next]));
+        setHasMore(Boolean(data.hasMore));
+      } catch (err) {
+        console.error("feed fetch error:", err);
         setHasMore(false);
-        return;
+      } finally {
+        loadingRef.current = false;
       }
-
-      const next: GaragePost[] = data.posts ?? [];
-      setPosts((prev) => (p === 1 ? next : [...prev, ...next]));
-      setHasMore(Boolean(data.hasMore));
-    } catch (err) {
-      console.error("feed fetch error:", err);
-      setHasMore(false);
-    } finally {
-      loadingRef.current = false;
-    }
-  }, [limit]);
+    },
+    [limit]
+  );
 
   // initial load
   useEffect(() => {
@@ -56,22 +70,57 @@ export default function Feed() {
 
   // observe sentinel to load next page
   useEffect(() => {
-    if (!sentinelRef.current) return;
-    if (!hasMore) return;
+    const root = wrapperRef.current;
+    const node = sentinelRef.current;
+
+    // cleanup any previous observer
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
+
+    if (!node || !root) return;
+    if (!hasMoreRef.current) return;
 
     const io = new IntersectionObserver(
       (entries) => {
         const e = entries[0];
         if (!e.isIntersecting) return;
+        // double-check latest flags from refs
         if (loadingRef.current) return;
+        if (!hasMoreRef.current) {
+          // safety: stop observing if no more items
+          if (observerRef.current) {
+            observerRef.current.disconnect();
+            observerRef.current = null;
+          }
+          return;
+        }
         // increment page which triggers fetch side-effect below
         setPage((p) => p + 1);
       },
-      { root: null, rootMargin: "240px", threshold: 0.1 }
+      {
+        root,
+        rootMargin: "240px",
+        threshold: 0.1,
+      }
     );
 
-    io.observe(sentinelRef.current);
-    return () => io.disconnect();
+    observerRef.current = io;
+    io.observe(node);
+
+    return () => {
+      io.disconnect();
+      observerRef.current = null;
+    };
+  }, [/* no hasMore here: we rely on hasMoreRef to avoid re-creating observer unnecessarily */]);
+
+  // whenever hasMore becomes false, disconnect observer immediately
+  useEffect(() => {
+    if (!hasMore && observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
   }, [hasMore]);
 
   // fetch when page increments (page 1 already fetched by initial load)
@@ -79,26 +128,22 @@ export default function Feed() {
     if (page === 1) return;
     void fetchPage(page);
   }, [page, fetchPage]);
-  
 
   return (
     <div className={styles.wraper}>
-      <div className={styles.feed}>
-
+      <div className={styles.feed} ref={wrapperRef}>
         {posts.map((post) => (
           <div key={post.id} className={styles.postWrapper}>
             <PostItem post={post} />
           </div>
         ))}
 
-        <div ref={sentinelRef} />
+        <div ref={sentinelRef} style={{ width: "100%", height: 1 }} />
 
         {!hasMore && <div className={styles.end}>No more posts</div>}
       </div>
 
       <OrbNavigator />
-
-
     </div>
   );
 }

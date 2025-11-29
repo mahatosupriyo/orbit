@@ -7,6 +7,7 @@ import styles from "./orbpost.module.scss";
 import Link from "next/link";
 import ImageLightbox from "../orbimagebox/orbimagelightbox";
 import NumberFlow from "@number-flow/react";
+import useHeartStore from "@/app/store/heartStore"; // keep your import
 
 export interface OrbPostProps {
   username: string;
@@ -131,27 +132,8 @@ export default function OrbPost({
   const heartControls = useAnimationControls();
   const cleanupTimerRef = useRef<number | null>(null);
 
-  // Audio ref for the pop sound
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    // initialize audio once
-    const audio = new Audio('/Essentials/bubblepop.mp3');
-    audio.preload = 'auto';
-    // default volume — tweak as needed (0.0 - 1.0)
-    audio.volume = 0.8;
-    audioRef.current = audio;
-
-    return () => {
-      // cleanup: stop audio and release ref
-      try {
-        audio.pause();
-      } catch (e) {
-        /* ignore */
-      }
-      audioRef.current = null;
-    };
-  }, []);
+  // --- AUDIO: use zustand store's play method (lazy-load + reuse) ---
+  const playSound = useHeartStore((s) => s.play);
 
   useEffect(() => {
     return () => {
@@ -174,16 +156,8 @@ export default function OrbPost({
     }
 
     if (newLiked) {
-      // play pop audio immediately (user-initiated click — should be allowed by browsers)
-      if (audioRef.current) {
-        try {
-          audioRef.current.currentTime = 0;
-          // use void to intentionally ignore the returned promise
-          void audioRef.current.play();
-        } catch (e) {
-          // ignore playback errors (e.g., if browser prevents play)
-        }
-      }
+      // play pop audio via zustand store (will lazy-load on first call and reuse after)
+      void playSound("bubblepop", "/Essentials/bubblepop.mp3");
 
       // mark we should play the animation (only for this click)
       setPlayAnimation(true);

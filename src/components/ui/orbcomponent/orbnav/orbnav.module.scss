@@ -1,0 +1,28 @@
+.orbnav {
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    height: 100%;
+    align-items: center;
+    // justifyContent: 'center',
+    top: 0;
+    background-color: hsl(0, 0%, 16%);
+    left: 0;
+    gap: 0.2rem;
+    padding: 1rem 0.4rem;
+    z-index: 99999;
+    border-radius: 0.16rem solid hsl(0, 0%, 20%);
+
+    @media (max-width: 900px) {
+        flex-direction: row;
+        height: auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: fixed;
+        max-height: 10rem;
+    }
+}

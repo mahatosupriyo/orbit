@@ -5,8 +5,14 @@
     position: relative;
     border-radius: 2rem;
     overflow: hidden;
-    
+    // z-index: 10;
+
+    @media (max-width: 900px) {
+        // margin-top: 10rem;
+        margin: 10rem 1rem;
+    }
 }
+
 
 .wraper {
     display: flex;

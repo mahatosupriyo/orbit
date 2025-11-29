@@ -5,6 +5,8 @@ import OrbIcons from "../../atomorb/orbicons";
 import OrbSearchComponent from "../orbsearch/orbsearch";
 import { JSX } from "react";
 import OrbAddPostModal from "../orbaddpost/orbaddpost";
+import styles from './orbnav.module.scss';
+import WarnMobile from "../../atomorb/warnmobile/warnmobile";
 
 /**
  * OrbNavigator Component
@@ -23,27 +25,9 @@ export default function OrbNavigator(): JSX.Element {
     const DEFAULT_FILL = '#fff';
     const ICON_SIZE = 30;
 
-    // Memoize the style object to prevent unnecessary re-renders
-    const navStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'fixed',
-        height: '100%',
-        // width: '100%',
-        alignItems: 'center',
-        // justifyContent: 'center',
-        top: '0',
-        backgroundColor: 'hsl(0, 0%, 16%)',
-        left: 0,
-        // right: 0,
-        gap: '0.2rem',
-        padding: '1rem 0.4rem',
-        zIndex: 99999,
-        borderRight: '0.16rem solid hsl(0, 0%, 20%)',
-    } as const;
 
     return (
-        <nav style={navStyle} aria-label="Main navigation">
+        <nav className={styles.orbnav} aria-label="Main navigation">
             <LnkOrbButton variant='iconic' href='/test' aria-label="Garage">
                 <OrbIcons
                     fill={pathname === '/test' ? ACTIVE_FILL : DEFAULT_FILL}
@@ -51,6 +35,8 @@ export default function OrbNavigator(): JSX.Element {
                     size={ICON_SIZE}
                 />
             </LnkOrbButton>
+
+            <WarnMobile/>
 
             <OrbSearchComponent />
             <OrbAddPostModal/>

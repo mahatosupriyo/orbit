@@ -1,0 +1,39 @@
+.icondesktop{
+    display: flex;
+    height: 3rem;
+    fill: hsl(0, 0%, 10%);
+}
+
+.wraper{
+    background: #D6D6D6;
+
+    z-index: 99999999;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100dvh;
+
+    align-items: center;
+    justify-content: center;
+
+    display: none;
+
+     @media (max-width: 990px){
+        display: flex;
+     }
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1rem;
+        max-height: 40rem;
+
+        .warning{
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: hsl(0, 0%, 10%);
+            text-align: center;
+        }
+    }
+}

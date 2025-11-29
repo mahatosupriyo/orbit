@@ -1,7 +1,7 @@
 export function formatTime(date: string | Date): string {
     const now = new Date();
     const created = new Date(date);
-    const diff = (now.getTime() - created.getTime()) / 1000; // seconds
+    const diff = (now.getTime() - created.getTime()) / 1000;
 
     if (diff < 60) return "now";
 

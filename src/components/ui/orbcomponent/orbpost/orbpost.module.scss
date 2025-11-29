@@ -10,7 +10,7 @@
 // ----------------------------
 // Theme / variables
 // ----------------------------
-$bg-hover: #222222;
+$bg-hover: hsl(0, 0%, 10%);
 $line-default: hsl(0, 0%, 20%);
 $text-muted: hsl(0, 0%, 60%);
 $text-subtle: hsl(0, 0%, 40%);
@@ -47,7 +47,7 @@ $avatar-line-top: 4.4rem;
   display: flex;
   flex-direction: column;
   padding: 2rem 1rem 1.6rem 1.6rem;
-  border-bottom: 0.16rem solid $line-default;
+  border-bottom: 0.1rem solid $line-default;
   width: 100%;
   max-width: 70rem;
   overflow: hidden;
@@ -55,9 +55,8 @@ $avatar-line-top: 4.4rem;
   // background-color: hsl(0, 0%, 14%); // keep if dark bg needed
 
   // Hover behaviour for whole post
+  background-color: $bg-hover;
   &:hover {
-    background-color: $bg-hover;
-
     .orbpostwraper {
       .layer {
         .avatarwraper {
@@ -160,6 +159,7 @@ $avatar-line-top: 4.4rem;
             font-weight: 600;
             user-select: none;
             color: $text-subtle;
+            display: none;
           }
         }
       }

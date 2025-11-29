@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: hsl(0, 0%, 6%);
+    background-color: hsl(0, 0%, 0%);
 
 
     .authcontainer {
@@ -21,6 +21,7 @@
         align-items: center;
         gap: 6rem;
         padding: 10rem 2rem;
+        position: relative;
 
 
 
@@ -88,28 +89,28 @@
                 }
 
                 &:hover {
-                    background-color: hsl(0, 0%, 20%);
+                    background-color: hsl(0, 0%, 14%);
 
-                    .providericon {
-                        opacity: 0;
-                        transform: translateY(-6rem);
-                    }
+                    // .providericon {
+                    //     opacity: 0;
+                    //     transform: translateY(-6rem);
+                    // }
 
-                    .authtextcontainer {
-                        transform: translateY(0);
+                    // .authtextcontainer {
+                    //     transform: translateY(0);
 
-                        .authtxt {
-                            transform: translateY(0);
-                            opacity: 1;
-                        }
-                    }
+                    //     .authtxt {
+                    //         transform: translateY(0);
+                    //         opacity: 1;
+                    //     }
+                    // }
                 }
 
 
                 .authtextcontainer {
                     display: flex;
                     color: #fff;
-                    font-size: 2rem;
+                    font-size: 1.6rem;
                     position: absolute;
                     font-weight: 500;
 
@@ -120,10 +121,15 @@
         }
 
         .authfooter {
-            font-size: 1.6rem;
+            font-size: 1.26rem;
             line-height: 140%;
             font-weight: 500;
             color: hsl(0, 0%, 50%);
+
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 4rem;
+            padding: 0rem 2rem;
 
 
             .linkinline {

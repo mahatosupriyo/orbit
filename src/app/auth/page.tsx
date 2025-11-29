@@ -71,11 +71,11 @@ export default function AuthPage() {
                             draggable="false"
                             alt="Google Provider"
                         />
-                        <div className={styles.authtextcontainer}>
+                        {/* <div className={styles.authtextcontainer}>
                             <span className={styles.authtxt}>Continue</span>
                             <span className={styles.authtxt}>with</span>
                             <span className={styles.authtxt}>Google</span>
-                        </div>
+                        </div> */}
                     </motion.button>
                 </div>
 

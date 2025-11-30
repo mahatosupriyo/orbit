@@ -29,8 +29,8 @@ $avatar-line-top: 4.4rem;
 // ----------------------------
 %text-wrap {
   overflow-wrap: break-word; // allow natural wrap
-  word-break: break-word;    // break long domains
-  white-space: wrap;         // preserve line breaks inserted as <br/>
+  word-break: break-word; // break long domains
+  white-space: wrap; // preserve line breaks inserted as <br/>
 }
 
 @mixin flex-it($dir: row, $jc: center, $ai: center) {
@@ -56,6 +56,7 @@ $avatar-line-top: 4.4rem;
 
   // Hover behaviour for whole post
   background-color: $bg-hover;
+
   &:hover {
     .orbpostwraper {
       .layer {
@@ -167,19 +168,30 @@ $avatar-line-top: 4.4rem;
       // ----------------------------
       // "More" button (kept absolute to top-right of layer)
       // ----------------------------
+
+      .moreiconwraper {
+        @include flex-it(column, flex-start, flex-start);
+
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        transform: translate(0.4rem, -1.2rem);
+      }
+
       .moreicon {
         @include flex-it(row, center, center);
         background: none;
         cursor: pointer;
-        position: absolute;
-        top: 0;
-        right: 0;
+
         font-size: 1.46rem;
         font-weight: 600;
         align-items: center;
-        color: #929292;
         gap: 0.4rem;
         line-height: 100%;
+        padding: 0.8rem;
+        border-radius: 1.8rem;
+
       }
     }
   }
@@ -282,6 +294,67 @@ $avatar-line-top: 4.4rem;
   user-select: none;
   transition: color $transition-fast;
 }
+
+
+/* orbpost.module.scss (append or adjust) */
+
+.moreiconwraper {
+  position: relative;
+  /* needed to position popover */
+}
+
+/* Popover container (positioned absolutely relative to .moreiconwraper) */
+.morePopover {
+  position: absolute;
+  right: 0;
+  /* align popover to the right of the button */
+  top: calc(80%);
+  /* small gap under the button */
+  z-index: 60;
+  min-width: 18rem;
+  max-width: 30rem;
+  border-radius: 14px;
+  overflow: hidden;
+  // box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+  background: transparent;
+  /* container transparent, inner has background */
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  box-shadow: hsla(0, 0%, 30%, 0.26) 0px 10px 50px;
+}
+
+/* inner wrapper for padding and content */
+.morePopoverInner {
+  background: hsl(0, 0%, 24%);
+  /* dark background */
+  border-radius: 12px;
+  padding: 2rem 1.8rem;
+  color: #fff;
+  user-select: none
+}
+
+/* single row showing "Shared on" and the date aligned right */
+.sharedRow {
+
+  @include flex-it(row, space-between, center);
+  gap: 1rem;
+}
+
+/* left label */
+.sharedLabel {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+
+/* right date */
+.sharedDate {
+  font-size: 1.3rem;
+  color: hsl(0, 0%, 60%);
+  font-weight: 500;
+  opacity: 0.95;
+}
+
 
 // ----------------------------
 // Small utilities / animation-related elements

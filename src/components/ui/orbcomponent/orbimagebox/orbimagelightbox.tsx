@@ -247,7 +247,7 @@ export default function ImageLightbox({
                                     {/* <OrbIcons name="image" size={30} fill="#fff" aria-hidden="true" /> */}
                                     You're at
                                     <span className={styles.pagenumber}>
-                                        <NumberFlow value={active + 1}/>
+                                        <NumberFlow value={active + 1} />
                                     </span>
                                     out
                                     of

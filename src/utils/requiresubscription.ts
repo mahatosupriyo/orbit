@@ -13,6 +13,6 @@ export async function requireSubscription() {
   if (!subscribed) {
     return { ok: false, reason: "no-sub" };
   }
-
+// User is authenticated and has an active subscription
   return { ok: true };
 }

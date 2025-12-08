@@ -57,17 +57,7 @@ $avatar-line-top: 4.4rem;
   // Hover behaviour for whole post
   background-color: $bg-hover;
 
-  &:hover {
-    .orbpostwraper {
-      .layer {
-        .avatarwraper {
-          .line {
-            background-color: $line-default;
-          }
-        }
-      }
-    }
-  }
+  // height: 100rem;
 
   // ----------------------------
   // Layout wrapper
@@ -90,16 +80,6 @@ $avatar-line-top: 4.4rem;
         @include flex-it(column, center, center);
         gap: 1rem;
         position: relative;
-
-        .avatar {
-          height: $avatar-size;
-          aspect-ratio: 1/1;
-          border-radius: 10rem;
-          pointer-events: none;
-          user-select: none;
-          object-fit: cover;
-          display: inline-flex;
-        }
       }
 
       // ----------------------------
@@ -355,6 +335,13 @@ $avatar-line-top: 4.4rem;
   opacity: 0.95;
 }
 
+.avatarwraper {
+  .avatar {
+    height: 3.8rem;
+    aspect-ratio: 1/1;
+    border-radius: 10rem;
+  }
+}
 
 // ----------------------------
 // Small utilities / animation-related elements

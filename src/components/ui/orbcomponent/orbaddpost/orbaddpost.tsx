@@ -7,6 +7,9 @@ import OrbIcons from '../../atomorb/orbicons';
 import OrbButton from '../../atomorb/buttonsorb/buttonorb';
 import { motion } from 'framer-motion';
 import { uploadGaragePost } from '@/server/actions/garage/createpost';
+import ReactMarkdown from 'react-markdown'; 
+import remarkGfm from 'remark-gfm'; 
+import remarkBreaks from 'remark-breaks'; 
 
 type ImgItem = { id: string; src: string; file?: File };
 
@@ -15,18 +18,29 @@ export default function OrbAddPostModal() {
   const [images, setImages] = useState<ImgItem[]>([]);
   const [text, setText] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const MAX_IMAGES = 5;
-  const MAX_CHARS = 200;
-  const MAX_LINES = 10;
+  const MAX_CHARS = 500;
+  const MAX_LINES = 15;
+
+  const radius = 8;
+  const circumference = 2 * Math.PI * radius;
+  const charCount = text.length;
+  const progress = Math.min(charCount / MAX_CHARS, 1);
+  const dashOffset = circumference - progress * circumference;
+  const progressColor = charCount >= MAX_CHARS ? '#ef4444' : '#3b82f6';
 
   useEffect(() => {
-    if (open && textareaRef.current) textareaRef.current.focus();
-  }, [open]);
+    if (open && textareaRef.current && !isPreview) {
+      setTimeout(() => textareaRef.current?.focus(), 50);
+    }
+  }, [open, isPreview]);
 
-  // keyboard shortcuts: Alt/Cmd+P to open, ESC to close
+  // Keyboard shortcuts
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const mod = e.altKey || e.metaKey;
@@ -41,10 +55,9 @@ export default function OrbAddPostModal() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // paste images from clipboard when modal open
+  // Paste Logic
   useEffect(() => {
     if (!open) return;
-
     const onPaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
       if (!items) return;
@@ -62,74 +75,46 @@ export default function OrbAddPostModal() {
           if (f) toRead.push(f);
         }
       }
-
       if (toRead.length === 0) return;
-
-      e.preventDefault(); // avoid pasting binary into textarea
-
-      const readers = toRead.map(
-        (file) =>
-          new Promise<ImgItem>((res) => {
-            const r = new FileReader();
-            r.onload = () =>
-              res({
-                id: cryptoRandomId(),
-                src: String(r.result),
-                file,
-              });
-            r.readAsDataURL(file);
-          })
-      );
-
+      e.preventDefault();
+      const readers = toRead.map((file) => new Promise<ImgItem>((res) => {
+        const r = new FileReader();
+        r.onload = () => res({ id: cryptoRandomId(), src: String(r.result), file });
+        r.readAsDataURL(file);
+      }));
       Promise.all(readers).then((newImgs) => {
         setImages((prev) => [...prev, ...newImgs].slice(0, MAX_IMAGES));
       });
     };
-
     window.addEventListener('paste', onPaste as any);
     return () => window.removeEventListener('paste', onPaste as any);
   }, [open, images.length]);
 
   function cryptoRandomId() {
-    try {
-      return crypto.randomUUID();
-    } catch {
-      return Math.random().toString(36).slice(2, 9);
-    }
+    try { return crypto.randomUUID(); } catch { return Math.random().toString(36).slice(2, 9); }
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
     if (!files || files.length === 0) return;
-
     const remaining = MAX_IMAGES - images.length;
     if (remaining <= 0) {
       if (fileInputRef.current) fileInputRef.current.value = '';
       return;
     }
-
     const chosen = Array.from(files).slice(0, remaining);
-    const readers = chosen.map(
-      (file) =>
-        new Promise<ImgItem>((res) => {
-          const r = new FileReader();
-          r.onload = () =>
-            res({
-              id: cryptoRandomId(),
-              src: String(r.result),
-              file,
-            });
-          r.readAsDataURL(file);
-        })
-    );
-
+    const readers = chosen.map((file) => new Promise<ImgItem>((res) => {
+      const r = new FileReader();
+      r.onload = () => res({ id: cryptoRandomId(), src: String(r.result), file });
+      r.readAsDataURL(file);
+    }));
     Promise.all(readers).then((newImgs) => {
       setImages((prev) => [...prev, ...newImgs].slice(0, MAX_IMAGES));
       if (fileInputRef.current) fileInputRef.current.value = '';
     });
   }
 
-  // reorder handlers
+  // Reordering
   const onDragStart = (e: React.DragEvent<HTMLDivElement>, idx: number) => {
     e.dataTransfer.setData('text/plain', String(idx));
     e.dataTransfer.effectAllowed = 'move';
@@ -146,12 +131,9 @@ export default function OrbAddPostModal() {
     });
   };
 
-  function removeImage(id: string) {
-    setImages((prev) => prev.filter((p) => p.id !== id));
-  }
+  function removeImage(id: string) { setImages((prev) => prev.filter((p) => p.id !== id)); }
   const onDoubleClickThumb = (id: string) => removeImage(id);
 
-  // textarea change: enforce max chars & lines; keep internal whitespace; collapse 3+ newlines -> 2
   function onTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     let val = e.target.value;
     val = val.replace(/\r\n/g, '\n');
@@ -162,130 +144,80 @@ export default function OrbAddPostModal() {
     setText(val);
   }
 
-  // convert dataURL -> File (visible to user; keep best-effort)
+  /**
+   * Helper specifically for the PREVIEW to make "ontheorbit.com" clickable.
+   * Standard Markdown requires http:// to auto-link. This forces it.
+   */
+  function formatForPreview(rawText: string) {
+    if (!rawText) return '';
+    
+    // Regex to find things that look like domains but aren't inside existing markdown links
+    const domainRegex = /(?<!\()((?:https?:\/\/|www\.)[^\s]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s]*)?)/gi;
+    
+    return rawText.replace(domainRegex, (match) => {
+      // If it already starts with http, let remark-gfm handle it, or wrap it
+      if (match.startsWith('http')) return match; 
+      // If it's a bare domain like "ontheorbit.com", wrap it in Markdown link syntax
+      return `[${match}](https://${match})`; 
+    });
+  }
+
   async function dataUrlToFile(dataUrl: string, filename = 'image.png') {
     const res = await fetch(dataUrl);
     const blob = await res.blob();
     return new File([blob], filename, { type: blob.type || 'image/png' });
   }
 
-  /**
-   * wrapDomains
-   * - Wraps URLs/domains in #^#...#^# markers so server can detect links.
-   * - Intentionally preserves the entire matched string (including path and query).
-   * - Avoids double-wrapping if already wrapped.
-   */
-  function wrapDomains(input: string) {
-    if (!input) return input;
+  // --- REMOVED `wrapDomains` FUNCTION TO PREVENT #^# MARKERS ---
 
-    // This pattern aims to match urls with optional path/query. It will not swallow trailing whitespace.
-    const urlPattern =
-      /(?:https?:\/\/[^\s#]+|www\.[^\s#]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s#]*)?)/gi;
+  const hasText = text.trim().length > 0;
+  const canSubmit = !uploading && hasText && images.length <= MAX_IMAGES;
 
-    return input.replace(urlPattern, (match, offset, full) => {
-      const start = typeof offset === 'number' ? offset : full.indexOf(match);
-      const end = start + match.length;
-      const before = full.lastIndexOf('#^#', start - 1);
-      const after = full.indexOf('#^#', end);
-
-      // if already inside markers, don't wrap
-      if (before !== -1 && after !== -1 && before < start && after > end) {
-        return match;
-      }
-      return `#^#${match}#^#`;
-    });
-  }
-
-  // FRONTEND validation: do not allow image-only posts (images require non-empty title/text)
-  const canSubmit =
-    !uploading &&
-    // must have some text to post
-    text.trim().length > 0 &&
-    // images cap respected implicitly
-    images.length <= MAX_IMAGES;
-
-  // submit handler
   async function handleSubmit(e?: React.FormEvent) {
     if (e) e.preventDefault();
     if (uploading) return;
-
-    // block image-only posts: require title/text when images exist
-    if (images.length > 0 && text.trim().length === 0) {
-      try {
-        alert('A title/text is required when uploading images.');
-      } catch {}
+    if (images.length > 0 && !hasText) {
+      alert('A title/text is required when uploading images.');
       return;
     }
-
-    // block entirely empty submissions
-    if (text.trim().length === 0 && images.length === 0) return;
+    if (!hasText && images.length === 0) return;
 
     setUploading(true);
-
     try {
-      // keep internal content intact; normalize line endings and collapse >2 newlines
       let finalText = text.replace(/\r\n/g, '\n');
       finalText = finalText.replace(/\n{3,}/g, '\n\n').replace(/\n{2,}/g, '\n\n');
-
-      // remove only leading/trailing blank lines, but DO NOT remove content characters
       finalText = finalText.replace(/^\s*\n+/, '').replace(/\n+\s*$/, '');
-
-      // IMPORTANT: avoid aggressively trimming characters that could be part of URL path
-      // but trim surrounding whitespace
       finalText = finalText.trim();
-
-      // wrap domains/urls for server processing
-      const wrapped = wrapDomains(finalText);
-
+      
       const formData = new FormData();
-      // server expects title and caption — use wrapped text for both
-      // If wrapped is empty (text-only not provided), guard earlier so this won't be reached
-      formData.append('title', wrapped || '');
-      formData.append('caption', wrapped || '');
+      formData.append('title', finalText || '');
+      formData.append('caption', finalText || '');
 
-      // convert images to File if needed and append
       const filesToAppend: File[] = [];
       for (let i = 0; i < images.length; i++) {
         const img = images[i];
-        if (img.file) {
-          filesToAppend.push(img.file);
-        } else if (img.src && typeof img.src === 'string' && img.src.startsWith('data:')) {
-          // eslint-disable-next-line no-await-in-loop
-          const file = await dataUrlToFile(img.src, `pasted-${i}.png`);
-          filesToAppend.push(file);
-        } else if (img.src && typeof img.src === 'string') {
-          // attempt best-effort fetch if it's a remote url (may fail due to CORS)
+        if (img.file) filesToAppend.push(img.file);
+        else if (img.src && typeof img.src === 'string') {
           try {
-            // eslint-disable-next-line no-await-in-loop
-            const file = await dataUrlToFile(img.src, `img-${i}.png`);
+            const filename = img.src.startsWith('data:') ? `pasted-${i}.png` : `img-${i}.png`;
+            const file = await dataUrlToFile(img.src, filename);
             filesToAppend.push(file);
-          } catch {
-            // skip this image if we can't fetch it
-          }
+          } catch {}
         }
       }
-
       filesToAppend.forEach((file) => formData.append('images', file));
 
       const res = await uploadGaragePost(formData);
-
       if (res?.success) {
         setText('');
         setImages([]);
         setOpen(false);
-        try {
-          alert('Post uploaded successfully');
-        } catch {}
       } else {
-        try {
-          alert(res?.message || 'Upload failed');
-        } catch {}
+        alert(res?.message || 'Upload failed');
       }
     } catch (err: any) {
       console.error('Upload failed', err);
-      try {
-        alert(err?.message || 'Upload failed unexpectedly');
-      } catch {}
+      alert(err?.message || 'Upload failed unexpectedly');
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -311,18 +243,64 @@ export default function OrbAddPostModal() {
           }}
         >
           <div className={styles.body}>
-            <div className={styles.writerRow}>
-              <textarea
-                className={styles.txtinput}
-                placeholder="Share your story"
-                value={text}
-                ref={textareaRef}
-                onChange={onTextChange}
-                rows={Math.min(10, Math.max(3, currentLines))}
-                disabled={uploading}
-                aria-label="Post text"
-              />
+            <div className={styles.headerRow} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
+                <button
+                  type="button"
+                  onClick={() => setIsPreview(!isPreview)}
+                  className={styles.toggleBtn}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '0.8rem',
+                    color: isPreview ? '#3b82f6' : '#888',
+                    cursor: 'pointer',
+                    fontWeight: 600
+                  }}
+                >
+                  {isPreview ? 'Back to Edit' : 'Preview Markdown'}
+                </button>
+            </div>
 
+            <div className={styles.writerRow} style={{ minHeight: '120px' }}>
+              {isPreview ? (
+                // PREVIEW MODE
+                <div 
+                  className={styles.markdownPreview} 
+                  style={{ 
+                    padding: '0.5rem', 
+                    fontSize: '1rem', 
+                    lineHeight: '1.5',
+                    color: '#000',
+                    maxHeight: '300px',
+                    overflowY: 'auto'
+                  }}
+                >
+                  {text ? (
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm, remarkBreaks]}
+                      components={{
+                        a: ({node, ...props}) => <a style={{color: '#2563eb', textDecoration: 'underline'}} target="_blank" rel="noopener noreferrer" {...props} />
+                      }}
+                    >
+                      {formatForPreview(text)}
+                    </ReactMarkdown>
+                  ) : (
+                    <span style={{ color: '#aaa', fontStyle: 'italic' }}>Nothing to preview...</span>
+                  )}
+                </div>
+              ) : (
+                // EDIT MODE
+                <textarea
+                  className={styles.txtinput}
+                  placeholder="Share your story (Markdown supported)"
+                  value={text}
+                  ref={textareaRef}
+                  onChange={onTextChange}
+                  rows={Math.min(10, Math.max(3, currentLines))}
+                  disabled={uploading}
+                  aria-label="Post text"
+                />
+              )}
               <div className={styles.controls}></div>
             </div>
           </div>
@@ -344,7 +322,6 @@ export default function OrbAddPostModal() {
                   type="button"
                   className={styles.removeImageBtn}
                   onClick={() => removeImage(img.id)}
-                  aria-label="Remove image"
                   disabled={uploading}
                 >
                   <OrbIcons name="close" />
@@ -377,10 +354,16 @@ export default function OrbAddPostModal() {
             </div>
 
             <div className={styles.footerActions}>
-              <div className={styles.progresscircle} aria-hidden>
-                <svg width="20" height="20">
-                  <circle cx="10" cy="10" r={8} stroke="hsla(0, 0%, 24%, 1.00)" strokeWidth="1.2" fill="none" />
-                  <circle cx="10" cy="10" r={8} stroke="#3b82f6" strokeWidth="1.2" fill="none" strokeDasharray={2 * Math.PI * 8} transform="rotate(-90 10 10)" />
+              <div className={styles.progresscircle} aria-hidden title={`${charCount}/${MAX_CHARS}`}>
+                <svg width="24" height="24">
+                  <circle cx="12" cy="12" r={radius} stroke="hsla(0, 0%, 24%, 1.00)" strokeWidth="2" fill="none" />
+                  <circle 
+                    cx="12" cy="12" r={radius} 
+                    stroke={progressColor} strokeWidth="2" fill="none" 
+                    strokeDasharray={circumference} strokeDashoffset={dashOffset}
+                    strokeLinecap="round" transform="rotate(-90 12 12)" 
+                    style={{ transition: 'stroke-dashoffset 0.3s ease, stroke 0.3s ease' }}
+                  />
                 </svg>
               </div>
 
@@ -388,7 +371,6 @@ export default function OrbAddPostModal() {
                 type="button"
                 className={styles.uploadBtn}
                 onClick={() => void handleSubmit()}
-                // IMPORTANT: disable when uploading OR text empty OR (images exist but no text)
                 disabled={!canSubmit}
                 style={{ padding: '1rem', borderRadius: '2rem' }}
                 variant="active"

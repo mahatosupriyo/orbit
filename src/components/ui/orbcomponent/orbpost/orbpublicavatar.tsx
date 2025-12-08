@@ -19,7 +19,7 @@ import styles from "./orbpost.module.scss";
  * @param {string} [props.avatarUrl] - Optional URL to the avatar image. Uses fallback if not provided
  * @returns {React.ReactElement} Rendered avatar element with styling
  */
-export default function Avatar({
+export default function PublicAvatar({
     username,
     avatarUrl,
 }: {
@@ -31,15 +31,13 @@ export default function Avatar({
 
     return (
         <div className={styles.avatarwraper}>
-            {/* Avatar image with dragging disabled for better UX */}
             <img
+                style={{ userSelect: 'none', pointerEvents: 'none' }}
                 draggable={false}
                 src={avatarUrl || FALLBACK_AVATAR}
                 alt={`${username} avatar`}
                 className={styles.avatar}
             />
-            {/* Decorative line element below avatar */}
-            <div className={styles.line} />
         </div>
     );
 }

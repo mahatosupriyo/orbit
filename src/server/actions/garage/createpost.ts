@@ -1,187 +1,239 @@
-"use server"
+"use server";
 
-import {
-    S3Client,
-    PutObjectCommand,
-} from "@aws-sdk/client-s3"
-import { revalidatePath } from "next/cache"
-import { db } from "@/server/db"
-import { auth } from "@/auth"
-import sharp from "sharp"
-import crypto from "crypto"
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { revalidatePath } from "next/cache";
+import { db } from "@/server/db";
+import { auth } from "@/auth";
+import sharp from "sharp";
+import crypto from "crypto";
 
 const s3Client = new S3Client({
-    region: process.env.ORBIT_AWS_REGION!,
-    credentials: {
-        accessKeyId: process.env.ORBIT_AWS_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.ORBIT_AWS_SECRET_ACCESS_KEY!,
-    },
-})
+  region: process.env.ORBIT_AWS_REGION!,
+  credentials: {
+    accessKeyId: process.env.ORBIT_AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.ORBIT_AWS_SECRET_ACCESS_KEY!,
+  },
+});
 
-const BUCKET_NAME = process.env.ORBIT_S3_BUCKET_NAME!
-const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"]
-const MAX_IMAGE_SIZE = 10 * 1024 * 1024
-const MAX_IMAGES = 5
-const IMAGE_WIDTH = 1080
-const IMAGE_HEIGHT = 1350
-const WEBP_QUALITY = 85
+const BUCKET_NAME = process.env.ORBIT_S3_BUCKET_NAME!;
 
-// ---- TEXT SANITIZATION / FORMATTING ----
+// ---------- IMAGE CONSTANTS (INSTAGRAM STYLE 4:5 PORTRAIT) ----------
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10 MB
+const MAX_IMAGES = 5;
+
+// 4:5 aspect ratio (width : height = 1080 : 1350)
+const IMAGE_WIDTH = 1080;
+const IMAGE_HEIGHT = 1350;
+const WEBP_QUALITY = 85;
+// -------------------------------------------------------------------
+
+/** Normalize and sanitize post text; preserves paragraphs but removes excessive blank lines */
 function normalizePostText(text: string) {
-    if (!text) return ""
-
-    // Normalize line endings to LF
-    text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n")
-
-    // Remove only leading blank lines (preserve other leading whitespace inside first line)
-    text = text.replace(/^\s*\n+/, "")
-
-    // Remove only trailing blank lines (do not strip a single final newline inside content)
-    text = text.replace(/\n+\s*$/, "")
-
-    // Collapse 3+ newlines into exactly two (so maximum one empty line / paragraph separator)
-    text = text.replace(/\n{3,}/g, "\n\n")
-
-    // Collapse more than two consecutive blank lines to two (safety, same as above but explicit)
-    text = text.replace(/\n{2,}/g, "\n\n")
-
-    // URL pattern: matches http(s)://..., www...., or domain.tld[/...]
-    // This preserves the full path and query (does not trim anything from the match).
-    const urlPattern = /(?:https?:\/\/[^\s#]+|www\.[^\s#]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s#]*)?)/gi
-
-    // Replace URLs with wrapper #^#...#^#, but avoid double-wrapping if already wrapped.
-    text = text.replace(urlPattern, function (match: string, offset: number, str: string) {
-        // Make sure offset is a number (it should be when used by replace)
-        const start = typeof offset === "number" ? offset : str.indexOf(match)
-        const end = start + match.length
-
-        // Find nearest preceding marker and next following marker
-        const before = str.lastIndexOf("#^#", start - 1)
-        const after = str.indexOf("#^#", end)
-
-        // If both markers exist and they enclose this match, skip wrapping
-        if (before !== -1 && after !== -1 && before < start && after > end) {
-            return match
-        }
-
-        return `#^#${match}#^#`
-    })
-
-    return text
+  if (!text) return "";
+  text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  text = text.replace(/^\s*\n+/, "");
+  text = text.replace(/\n+\s*$/, "");
+  text = text.replace(/\n{3,}/g, "\n\n");
+  text = text.replace(/\n{2,}/g, "\n\n");
+  return text;
 }
 
-export async function uploadGaragePost(formData: FormData): Promise<{ success: boolean; message: string }> {
-    try {
-        const session = await auth()
+/**
+ * Server action to create a garage post + upload images to S3 + create Asset rows and attach them.
+ *
+ * Expects FormData with:
+ * - title (string)
+ * - caption (string | null)
+ * - images (0..n Files) appended with key 'images'
+ * - optional externalUrl / makingOf
+ */
+export async function uploadGaragePost(
+  formData: FormData
+): Promise<{ success: boolean; message: string; images?: string[] }> {
+  try {
+    const session = await auth();
 
-        // Only logged-in admin can post
-        if (!session?.user?.id) {
-            return { success: false, message: "Not authenticated" }
-        }
-        if (session.user.role !== "ADMIN") {
-            return { success: false, message: "Not authorized" }
-        }
+    if (!session?.user?.id) return { success: false, message: "Not authenticated" };
+    if (session.user.role !== "ADMIN") return { success: false, message: "Not authorized" };
 
-        // Extract form fields
-        let title = formData.get("title")?.toString() || ""
-        let caption = formData.get("caption")?.toString() || null
-        const externalUrl = formData.get("externalUrl")?.toString() || null
-        const makingOfPlaybackID = formData.get("makingOf")?.toString() || null
+    // Extract & normalize
+    let title = formData.get("title")?.toString() || "";
+    let caption = formData.get("caption")?.toString() || null;
+    const externalUrl = formData.get("externalUrl")?.toString() || null;
+    const makingOfPlaybackID = formData.get("makingOf")?.toString() || null;
 
-        // Apply server text normalization (preserves paragraphs, trims leading/trailing blank lines)
-        title = normalizePostText(title)
-        if (caption) caption = normalizePostText(caption)
+    title = normalizePostText(title);
+    if (caption) caption = normalizePostText(caption);
 
-        // Files validation (allow zero files — text-only posts are valid).
-        const files = formData.getAll("images").filter(f => f instanceof File) as File[]
-        if (files.length > MAX_IMAGES) return { success: false, message: "You can upload up to 5 images only" }
-
-        for (const file of files) {
-            // If file.type is empty or unknown, be permissive but still check size.
-            if (file.type && !ALLOWED_IMAGE_TYPES.includes(file.type)) {
-                return { success: false, message: "Unsupported image format" }
-            }
-            if (file.size > MAX_IMAGE_SIZE) return { success: false, message: "Image exceeds size limit (10MB)" }
-        }
-
-        // --------- Minimal addition: require title/text when images are provided ----------
-        if (files.length > 0 && (!title || title.trim().length === 0)) {
-            return { success: false, message: "A title/text is required when uploading images" }
-        }
-        // -------------------------------------------------------------------------------
-
-        // If both title empty and no files, reject as empty post.
-        if ((!title || title.trim().length === 0) && files.length === 0) {
-            return { success: false, message: "Post text/title cannot be empty" }
-        }
-
-        // Create DB post
-        const newPost = await db.garagePost.create({
-            data: {
-                title,
-                caption,
-                externalUrl,
-                createdById: session.user.id,
-            },
-        })
-
-        // Upload images to S3 (only if files exist)
-        const uploadedAssets = await Promise.all(
-            files.map(async (file, index) => {
-                const fileBuffer = Buffer.from(await file.arrayBuffer())
-                const fileHash = crypto.createHash("md5").update(`${Date.now()}-${file.name}`).digest("hex")
-                const fileName = `garage/${session.user.id}/${newPost.id}/images/${fileHash}.webp`
-
-                const processedImage = await sharp(fileBuffer)
-                    .resize({ width: IMAGE_WIDTH, height: IMAGE_HEIGHT, fit: "cover" })
-                    .webp({ quality: WEBP_QUALITY })
-                    .toBuffer()
-
-                await s3Client.send(new PutObjectCommand({
-                    Bucket: BUCKET_NAME,
-                    Key: fileName,
-                    Body: processedImage,
-                    ContentType: "image/webp",
-                }))
-
-                return db.asset.create({
-                    data: { playbackID: fileName, order: index },
-                })
-            })
-        )
-
-        // Connect images relation only if any assets were created
-        if (uploadedAssets.length > 0) {
-            await db.garagePost.update({
-                where: { id: newPost.id },
-                data: { images: { connect: uploadedAssets.map(a => ({ id: a.id })) } },
-            })
-        }
-
-        // If making-of video exists
-        if (makingOfPlaybackID) {
-            const videoAsset = await db.asset.create({
-                data: { playbackID: makingOfPlaybackID },
-            })
-
-            await db.garagePost.update({
-                where: { id: newPost.id },
-                data: { makingOf: { connect: { id: videoAsset.id } } },
-            })
-        }
-
-        // revalidate relevant path(s)
-        try {
-            revalidatePath("/test")
-        } catch (e) {
-            // don't fail the whole flow if revalidation fails
-            console.warn("Revalidate path failed:", e)
-        }
-
-        return { success: true, message: "Post uploaded successfully" }
-
-    } catch (error) {
-        console.error("GaragePost upload error:", error)
-        return { success: false, message: "Server error while uploading post" }
+    // Files (may be zero)
+    const files = formData.getAll("images").filter((f) => f instanceof File) as File[];
+    if (files.length > MAX_IMAGES) {
+      return { success: false, message: `You can upload up to ${MAX_IMAGES} images only` };
     }
+
+    // Validate each file
+    for (const f of files) {
+      if (f.type && !ALLOWED_IMAGE_TYPES.includes(f.type)) {
+        return { success: false, message: "Unsupported image format" };
+      }
+      if (typeof f.size === "number" && f.size > MAX_IMAGE_SIZE) {
+        return { success: false, message: "Image exceeds size limit (10MB)" };
+      }
+    }
+
+    // require title when images present
+    if (files.length > 0 && (!title || title.trim().length === 0)) {
+      return { success: false, message: "A title/text is required when uploading images" };
+    }
+
+    if ((!title || title.trim().length === 0) && files.length === 0) {
+      return { success: false, message: "Post text/title cannot be empty" };
+    }
+
+    // Create DB post
+    const newPost = await db.garagePost.create({
+      data: {
+        title,
+        caption,
+        externalUrl,
+        createdById: session.user.id,
+      },
+    });
+
+    const uploadedUrls: string[] = [];
+    const createdAssets: { id: number }[] = [];
+
+    // Upload & asset creation
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // read file into buffer
+      let inputBuffer: Buffer;
+      try {
+        const ab = await file.arrayBuffer();
+        inputBuffer = Buffer.from(ab);
+      } catch (e) {
+        console.warn("Failed to read file buffer:", e);
+        continue;
+      }
+
+      // ----------- STRICT 4:5 CROP WITH "COVER" BEHAVIOUR -----------
+      let outBuffer: Buffer;
+      let meta: sharp.Metadata | undefined;
+      try {
+        const sh = sharp(inputBuffer).rotate(); // auto-orient based on EXIF
+
+        meta = await sh.metadata();
+
+        outBuffer = await sh
+          .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
+            fit: "cover",     // like object-fit: cover
+            position: "centre", // center crop
+          })
+          .webp({ quality: WEBP_QUALITY })
+          .toBuffer();
+      } catch (err) {
+        console.warn("Sharp failed for image:", err);
+        continue;
+      }
+      // ---------------------------------------------------------------
+
+      // S3 key & upload
+      const fileHash = crypto
+        .createHash("md5")
+        .update(`${Date.now()}-${file.name}-${Math.random()}`)
+        .digest("hex");
+      const key = `garage/${session.user.id}/${newPost.id}/images/${fileHash}.webp`;
+
+      try {
+        await s3Client.send(
+          new PutObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: key,
+            Body: outBuffer,
+            ContentType: "image/webp",
+          })
+        );
+      } catch (s3Err) {
+        console.error("S3 upload failed:", s3Err);
+        continue;
+      }
+
+      const region = process.env.ORBIT_AWS_REGION!;
+      const publicUrl = `https://${BUCKET_NAME}.s3.${region}.amazonaws.com/${key}`;
+      uploadedUrls.push(publicUrl);
+
+      // Create Asset row (match your Prisma schema)
+      try {
+        const aspectRatio =
+          IMAGE_WIDTH && IMAGE_HEIGHT ? `${IMAGE_WIDTH}x${IMAGE_HEIGHT}` : null; // consistent 1080x1350
+        const asset = await db.asset.create({
+          data: {
+            playbackID: key, // store S3 key for reference
+            filename: file.name ?? key,
+            status: "READY", // AssetStatus enum value
+            order: i,
+            aspectRatio: aspectRatio ?? undefined,
+          },
+        });
+        createdAssets.push({ id: asset.id });
+      } catch (assetErr) {
+        console.warn("Failed to create Asset row. Check schema permissions.", assetErr);
+      }
+    } // end for files
+
+    // Connect created assets to garagePost via many-to-many relation (GaragePostImages)
+    if (createdAssets.length > 0) {
+      try {
+        await db.garagePost.update({
+          where: { id: newPost.id },
+          data: {
+            images: {
+              connect: createdAssets.map((a) => ({ id: a.id })),
+            },
+          },
+        });
+      } catch (e) {
+        console.warn("Could not connect assets to garagePost; check relation fields.", e);
+      }
+    }
+
+    // If a making-of video playback id was passed, create an Asset and attach via assetId
+    if (makingOfPlaybackID) {
+      try {
+        const videoAsset = await db.asset.create({
+          data: {
+            playbackID: makingOfPlaybackID,
+            filename: makingOfPlaybackID,
+            status: "READY",
+          },
+        });
+
+        // Update garagePost.assetId to reference the video asset (schema uses assetId FK)
+        try {
+          await db.garagePost.update({
+            where: { id: newPost.id },
+            data: { assetId: videoAsset.id },
+          });
+        } catch (e) {
+          console.warn("Could not attach makingOf asset to garagePost.", e);
+        }
+      } catch (e) {
+        console.warn("Failed to create makingOf asset:", e);
+      }
+    }
+
+    // Revalidate any relevant paths (best-effort)
+    try {
+      revalidatePath("/test");
+    } catch (e) {
+      console.warn("Revalidate failed:", e);
+    }
+
+    return { success: true, message: "Post uploaded successfully", images: uploadedUrls };
+  } catch (err) {
+    console.error("GaragePost upload error:", err);
+    return { success: false, message: "Server error while uploading post" };
+  }
 }

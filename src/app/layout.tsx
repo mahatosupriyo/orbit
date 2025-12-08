@@ -3,6 +3,7 @@ import "./styles/global.scss";
 import Head from "next/head";
 import { SessionProvider } from 'next-auth/react';
 import { Toaster } from 'react-hot-toast'
+import TanstackProvider from "@/components/ui/orblayout/provider/provider";
 
 
 export const metadata: Metadata = {
@@ -69,9 +70,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        
+
         <link rel="stylesheet" href="https://use.typekit.net/aaf7wuq.css"></link>
-        
+
       </Head>
       <body>
         <Toaster
@@ -93,9 +94,11 @@ export default function RootLayout({
             },
           }}
         />
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+        <TanstackProvider>
+          <SessionProvider>
+            {children}
+          </SessionProvider>
+        </TanstackProvider>
       </body>
     </html>
   )

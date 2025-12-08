@@ -5,6 +5,7 @@ export interface ImageItem {
 }
 
 export interface OrbGaragePostProps {
+  id: number,
   username: string;
   avatarUrl?: string;
   content: string;

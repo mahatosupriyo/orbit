@@ -22,12 +22,13 @@ export default function PostItem({ post }: { post: ApiPost }) {
 
   return (
     <OrbPost
+      id={post.id}
       username={post.createdBy.username}
       avatarUrl={post.createdBy.image}
       content={post.title}
       href={`/${post.createdBy.username}`}
       images={post.images.map((i) => ({ id: i.id, src: i.url, alt: post.title }))}
-      likes={likeCount}
+      // likes={likeCount}
       isLiked={isLiked}
       onLike={toggle}
       postedAt={formatTime(post.createdAt)}

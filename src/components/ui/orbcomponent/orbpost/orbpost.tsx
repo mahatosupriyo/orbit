@@ -22,10 +22,11 @@ import { formatTime } from "@/utils/time";
  */
 export default function OrbPost(props: OrbGaragePostProps) {
   const {
+    id,
     username,
     avatarUrl,
-    content,
     postedAt,
+    content,
     href = "/",
     images = [],
     likes = 0,
@@ -155,9 +156,10 @@ export default function OrbPost(props: OrbGaragePostProps) {
               <div className={styles.postImages}>
                 <ImageLightbox
                   images={images}
+
                   className={styles.postImagePreview}
-                  aria-label={`Post images (${images.length} image${images.length !== 1 ? "s" : ""})`}
-                />
+                  aria-label={`Post images (${images.length} image${images.length !== 1 ? "s" : ""})`} />
+                  
               </div>
             )}
 

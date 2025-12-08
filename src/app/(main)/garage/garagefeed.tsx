@@ -176,6 +176,7 @@ export default function GarageFeed() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <CapsuleCard post={post} />
+                  
                 </motion.div>
               ))}
             </motion.div>

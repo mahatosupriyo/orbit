@@ -17,11 +17,11 @@ import Link from "next/link";
 interface GaragePost {
     id: number;
     title: string;
-    caption: string | null;
-    externalUrl: string | null;
+    caption?: string | null;
+    externalUrl?: string | null;
     createdAt: string;
     images: Array<{ id: number; url: string; order: number | null }>;
-    makingOf: { id: number; playbackID: string } | null;
+    makingOf?: { id: number; playbackID: string } | null;
     createdBy: {
         username: string | null;
         image: string | null;

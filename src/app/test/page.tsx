@@ -9,13 +9,14 @@ import { motion, Variants, cubicBezier } from "framer-motion";
 
 import styles from "./test.module.scss";
 import OrbNavigator from "@/components/ui/orbcomponent/orbnav/orbnavigator";
+import ShimmerLoader from "@/components/atoms/loading/loadingbox";
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import PublicAvatar from "@/components/ui/orbcomponent/orbpost/orbpublicavatar";
-import { useGaragePostLike } from "@/server/hooks/useGaragePostLike";
 import OrbIcons from "@/components/ui/atomorb/orbicons";
+import { formatPostDate } from "@/server/utils/dateFormat";
 
 const ImageLightbox = dynamic(
   () => import("@/components/ui/orbcomponent/orbimagebox/orbimagelightbox"),
@@ -70,7 +71,6 @@ const MarkdownContentRenderer = ({ content }: { content: string }) => (
 );
 
 const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
-  const { isLiked, likeCount, toggle } = useGaragePostLike(!!post.isLiked, post.likeCount, post.id);
   const imagesForLightbox = useMemo(() => post.images.map((img) => ({ id: img.id, src: img.url, alt: img.url?.split("/").pop() ?? `${post.createdBy.username}-img-${img.id}` })), [post.images, post.createdBy.username]);
 
   return (
@@ -88,6 +88,16 @@ const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
           <MarkdownContentRenderer content={post.title} />
 
           {post.images.length > 0 && <div style={{ marginTop: '1rem' }}><ImageLightbox images={imagesForLightbox} previewSize="100%" /></div>}
+
+          <p style={
+            {
+              marginTop: '1.6rem',
+              fontSize: '1.12rem',
+              fontWeight: 500,
+              opacity: 0.36
+            }
+          }>{formatPostDate(post.createdAt)}</p>
+
         </div>
       </div>
     </article>
@@ -113,7 +123,29 @@ const InfiniteScrollSentinel: React.FC<{ onIntersect: () => void; isFetching: bo
 
   return (
     <div ref={sentinelRef} style={{ height: "20px", margin: "20px 0", textAlign: "center", opacity: 0.5 }}>
-      {isFetching && <span className={styles.spinner}>Loading more...</span>}
+      {isFetching &&
+        <div
+          style={{
+            padding: '1.8rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}
+          className={styles.spinner}>
+          <div style={{ display: "flex", flexDirection: 'row', alignItems: 'flex-start', gap: '1rem' }}>
+            <ShimmerLoader height="3.8rem" width="3.8rem" borderRadius="50rem" />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', marginTop: '0.2rem', flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
+                <ShimmerLoader height="2rem" width="14.8rem" borderRadius="50rem" />
+              </div>
+              <div style={{ marginTop: '0.6rem' }}>
+                <ShimmerLoader height="1.6rem" width="6rem" borderRadius="4rem" />
+              </div>
+
+              <ShimmerLoader height="40rem" width="30rem" borderRadius="1.6rem" />
+            </div>
+          </div>
+        </div>}
       {!canFetchMore && <span style={{ color: "#aaa" }}>You've seen all new posts.</span>}
     </div>
   );
@@ -178,7 +210,30 @@ export default function Feed() {
   return (
     <div className={styles.wraper}>
       <div className={styles.feed}>
-        {status === "pending" && <div className={styles.loading}>Initial Loading...</div>}
+        {status === "pending" &&
+          <div className={styles.loading}
+            style={{
+              padding: '1.8rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: 'row', alignItems: 'flex-start', gap: '1rem' }}>
+              <ShimmerLoader height="3.8rem" width="3.8rem" borderRadius="50rem" />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'flex', marginTop: '0.2rem', flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
+                  <ShimmerLoader height="2rem" width="14.8rem" borderRadius="50rem" />
+                </div>
+                <div style={{ marginTop: '0.6rem' }}>
+                  <ShimmerLoader height="1.6rem" width="6rem" borderRadius="4rem" />
+                </div>
+
+                <ShimmerLoader height="40rem" width="30rem" borderRadius="1.6rem" />
+              </div>
+            </div>
+
+          </div>}
         {status === "error" && <div style={{ color: "salmon", padding: 20 }}>Error: {error?.message ?? "Something went wrong"}</div>}
 
         {status === "success" && (

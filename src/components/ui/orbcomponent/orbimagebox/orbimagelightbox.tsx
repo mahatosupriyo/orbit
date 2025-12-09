@@ -252,7 +252,7 @@ export default function ImageLightbox({
                                     out
                                     of
                                     <span className={styles.pagenumber}>
-                                        {images.length}
+                                        <NumberFlow value={images.length} />
                                     </span>
                                 </p>
                                 <motion.button

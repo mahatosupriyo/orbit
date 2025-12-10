@@ -26,21 +26,21 @@ const convertToPng = (blob: Blob): Promise<Blob> => {
     return new Promise((resolve, reject) => {
         const img = new Image();
         const url = URL.createObjectURL(blob);
-        
+
         img.onload = () => {
             const canvas = document.createElement("canvas");
             canvas.width = img.naturalWidth;
             canvas.height = img.naturalHeight;
             const ctx = canvas.getContext("2d");
-            
+
             if (!ctx) {
                 reject(new Error("Canvas context failed"));
                 return;
             }
-            
+
             // Draw image to canvas
             ctx.drawImage(img, 0, 0);
-            
+
             // Export as PNG
             canvas.toBlob((pngBlob) => {
                 if (pngBlob) {
@@ -51,12 +51,12 @@ const convertToPng = (blob: Blob): Promise<Blob> => {
                 URL.revokeObjectURL(url);
             }, "image/png");
         };
-        
+
         img.onerror = () => {
             URL.revokeObjectURL(url);
             reject(new Error("Failed to load image for conversion"));
         };
-        
+
         img.src = url;
     });
 };
@@ -69,11 +69,11 @@ export default function ImageLightbox({
 }: Props) {
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(0);
-    
+
     // UI States for the copy button
     const [isCopying, setIsCopying] = useState(false);
     const [copied, setCopied] = useState(false);
-    
+
     const overlayRef = useRef<HTMLDivElement | null>(null);
     const swiperRef = useRef<any>(null);
 
@@ -106,7 +106,7 @@ export default function ImageLightbox({
         setActive(idx);
         setOpen(true);
         setTimeout(() => {
-            try { swiperRef.current?.slideTo(idx, 0); } catch {}
+            try { swiperRef.current?.slideTo(idx, 0); } catch { }
         }, 60);
     }
 
@@ -116,8 +116,8 @@ export default function ImageLightbox({
         onClose?.();
     }
 
-    function prev() { try { swiperRef.current?.slidePrev(); } catch {} }
-    function next() { try { swiperRef.current?.slideNext(); } catch {} }
+    function prev() { try { swiperRef.current?.slidePrev(); } catch { } }
+    function next() { try { swiperRef.current?.slideNext(); } catch { } }
 
     /**
      * Copies the CURRENTLY ACTIVE image to clipboard as PNG
@@ -136,7 +136,7 @@ export default function ImageLightbox({
             // 1. Fetch original image (Bypass CORS cache)
             const response = await fetch(currentImg.src, {
                 mode: "cors",
-                cache: "no-store" 
+                cache: "no-store"
             });
 
             if (!response.ok) throw new Error("Failed to fetch image");
@@ -173,9 +173,9 @@ export default function ImageLightbox({
     // Layout logic
     const previewClass =
         images.length === 1 ? styles.layout1 :
-        images.length === 2 ? styles.layout2 :
-        images.length === 3 ? styles.layout3 :
-        images.length === 4 ? styles.layout4 : styles.layout5plus;
+            images.length === 2 ? styles.layout2 :
+                images.length === 3 ? styles.layout3 :
+                    images.length === 4 ? styles.layout4 : styles.layout5plus;
 
     const maxThumbCountToShow = Math.max(images.length, 1);
 
@@ -232,67 +232,133 @@ export default function ImageLightbox({
                         role="dialog"
                     >
                         <div className={styles.toplayer}>
-                            {/* Page Counter */}
-                            <p className={styles.page}>
-                                You're at{" "}
-                                <span className={styles.pagenumber}>
-                                    <NumberFlow value={active + 1} />
-                                </span>{" "}
-                                out of{" "}
-                                <span className={styles.pagenumber}>
-                                    <NumberFlow value={images.length} />
-                                </span>
-                            </p>
 
-                            {/* Actions Group */}
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                                
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                {/* Page Counter */}
+                                <p className={styles.page}>
+                                    You're at{" "}
+                                    <span className={styles.pagenumber}>
+                                        <NumberFlow value={active + 1} />
+                                    </span>{" "}
+                                    out of{" "}
+                                    <span className={styles.pagenumber}>
+                                        <NumberFlow value={images.length} />
+                                    </span>
+                                </p>
+
+
                                 {/* COPY IMAGE BUTTON */}
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
                                     className={styles.closeBtn}
                                     onClick={handleCopyImage}
                                     disabled={isCopying}
-                                    
+
                                     aria-label="Copy image"
                                     title="Copy image to clipboard"
-                                    style={{ 
+                                    style={{
                                         color: copied ? "#4ade80" : "#fff",
                                         cursor: isCopying ? "wait" : "pointer",
-                                        display: "flex", 
+                                        display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
 
-                                        height: '6rem',
-                                        width: '6rem',
+                                        // padding: 0,
+                                        borderRadius: '2rem',
+                                        fontWeight: 500,
+                                        padding: '0rem 1.4rem 0rem 0.6rem',
+
+                                        height: '5.4rem',
+                                        marginLeft: '1rem'
+                                        // width: '5.4rem',
                                     }}
                                 >
                                     {isCopying ? (
                                         // Loading Spinner
                                         <div
                                             style={{
-                                                width: "14px",
-                                                height: "14px",
-                                                border: "2px solid rgba(255,255,255,0.3)",
-                                                borderTopColor: "currentColor",
-                                                borderRadius: "50%",
-                                                animation: "spin 1s linear infinite",
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                flexDirection: 'row',
+                                                justifyContent: 'flex-start',
+
+                                                height: '30px',
+                                                // width: '30px',
                                             }}
-                                        />
+                                        >
+
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'center',
+
+                                                    height: '30px',
+                                                    width: '30px',
+                                                }}
+                                            >
+                                                <div
+                                                    style={{
+                                                        width: "14px",
+                                                        height: "14px",
+                                                        border: "2px solid rgba(255,255,255,0.3)",
+                                                        borderTopColor: "currentColor",
+                                                        borderRadius: "50%",
+                                                        animation: "spin 1s linear infinite",
+                                                    }}
+                                                />
+                                            </div>
+                                            Coping
+                                        </div>
                                     ) : copied ? (
                                         // Success Checkmark
-                                        <OrbIcons name="copyimage" size={30} fill="#4ade80" />
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <OrbIcons name="copyimage" size={30} fill="#4ade80" />
+                                            Copied
+                                        </div>
                                     ) : (
                                         // Default Copy Icon
-                                        <OrbIcons name="copyimage" size={30} fill="#fff" />
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <OrbIcons name="copyimage" size={30} fill="#fff" />
+                                            Copy
+                                        </div>
                                     )}
+
                                     <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                                 </motion.button>
+
+                            </div>
+
+
+                            {/* Actions Group */}
+                            <div>
 
                                 {/* CLOSE BUTTON */}
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
                                     className={styles.closeBtn}
+                                    style={{
+                                        height: '5.4rem'
+                                    }}
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         closeViewer();
@@ -352,7 +418,7 @@ export default function ImageLightbox({
                                                 animate={{ scale: 1, opacity: 1 }}
                                                 transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
                                                 draggable={false}
-                                                onContextMenu={(e) => e.preventDefault()} 
+                                                onContextMenu={(e) => e.preventDefault()}
                                             />
                                         </SwiperSlide>
                                     ))}

@@ -1,15 +1,13 @@
+// OrbAddPostModal.tsx
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import OrbModal from '../../orblayout/orbmodal/orbmodal';
 import styles from './orbaddpost.module.scss';
 import OrbIcons from '../../atomorb/orbicons';
 import OrbButton from '../../atomorb/buttonsorb/buttonorb';
 import { motion } from 'framer-motion';
 import { uploadGaragePost } from '@/server/actions/garage/createpost';
-import ReactMarkdown from 'react-markdown'; 
-import remarkGfm from 'remark-gfm'; 
-import remarkBreaks from 'remark-breaks'; 
 
 type ImgItem = { id: string; src: string; file?: File };
 
@@ -18,7 +16,6 @@ export default function OrbAddPostModal() {
   const [images, setImages] = useState<ImgItem[]>([]);
   const [text, setText] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [isPreview, setIsPreview] = useState(false);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -27,6 +24,7 @@ export default function OrbAddPostModal() {
   const MAX_CHARS = 500;
   const MAX_LINES = 15;
 
+  // svg progress circle constants
   const radius = 8;
   const circumference = 2 * Math.PI * radius;
   const charCount = text.length;
@@ -34,13 +32,15 @@ export default function OrbAddPostModal() {
   const dashOffset = circumference - progress * circumference;
   const progressColor = charCount >= MAX_CHARS ? '#ef4444' : '#3b82f6';
 
+  // focus textarea when opening modal
   useEffect(() => {
-    if (open && textareaRef.current && !isPreview) {
-      setTimeout(() => textareaRef.current?.focus(), 50);
+    if (open && textareaRef.current) {
+      const t = setTimeout(() => textareaRef.current?.focus(), 50);
+      return () => clearTimeout(t);
     }
-  }, [open, isPreview]);
+  }, [open]);
 
-  // Keyboard shortcuts
+  // keyboard shortcuts
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const mod = e.altKey || e.metaKey;
@@ -55,12 +55,13 @@ export default function OrbAddPostModal() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // Paste Logic
+  // paste images (Ctrl/Cmd+V from clipboard)
   useEffect(() => {
     if (!open) return;
     const onPaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
       if (!items) return;
+
       const remaining = MAX_IMAGES - images.length;
       if (remaining <= 0) return;
 
@@ -70,57 +71,71 @@ export default function OrbAddPostModal() {
         if (it.kind === 'file') {
           const f = it.getAsFile();
           if (f && f.type.startsWith('image/')) toRead.push(f);
-        } else if (it.type && it.type.startsWith('image/')) {
-          const f = it.getAsFile();
-          if (f) toRead.push(f);
         }
       }
       if (toRead.length === 0) return;
       e.preventDefault();
-      const readers = toRead.map((file) => new Promise<ImgItem>((res) => {
-        const r = new FileReader();
-        r.onload = () => res({ id: cryptoRandomId(), src: String(r.result), file });
-        r.readAsDataURL(file);
-      }));
+
+      const readers = toRead.map((file) =>
+        new Promise<ImgItem>((res) => {
+          const r = new FileReader();
+          r.onload = () => res({ id: cryptoRandomId(), src: String(r.result), file });
+          r.readAsDataURL(file);
+        })
+      );
+
       Promise.all(readers).then((newImgs) => {
         setImages((prev) => [...prev, ...newImgs].slice(0, MAX_IMAGES));
       });
     };
+
     window.addEventListener('paste', onPaste as any);
     return () => window.removeEventListener('paste', onPaste as any);
+    // images.length intentionally included so we know available slots
   }, [open, images.length]);
 
-  function cryptoRandomId() {
-    try { return crypto.randomUUID(); } catch { return Math.random().toString(36).slice(2, 9); }
-  }
+  const cryptoRandomId = useCallback(() => {
+    try {
+      return crypto.randomUUID();
+    } catch {
+      return Math.random().toString(36).slice(2, 9);
+    }
+  }, []);
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+
     const remaining = MAX_IMAGES - images.length;
     if (remaining <= 0) {
       if (fileInputRef.current) fileInputRef.current.value = '';
       return;
     }
+
     const chosen = Array.from(files).slice(0, remaining);
-    const readers = chosen.map((file) => new Promise<ImgItem>((res) => {
-      const r = new FileReader();
-      r.onload = () => res({ id: cryptoRandomId(), src: String(r.result), file });
-      r.readAsDataURL(file);
-    }));
+    const readers = chosen.map((file) =>
+      new Promise<ImgItem>((res) => {
+        const r = new FileReader();
+        r.onload = () => res({ id: cryptoRandomId(), src: String(r.result), file });
+        r.readAsDataURL(file);
+      })
+    );
+
     Promise.all(readers).then((newImgs) => {
       setImages((prev) => [...prev, ...newImgs].slice(0, MAX_IMAGES));
       if (fileInputRef.current) fileInputRef.current.value = '';
     });
-  }
+  }, [images.length, MAX_IMAGES, cryptoRandomId]);
 
-  // Reordering
-  const onDragStart = (e: React.DragEvent<HTMLDivElement>, idx: number) => {
+  // drag & drop reorder
+  const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement>, idx: number) => {
     e.dataTransfer.setData('text/plain', String(idx));
     e.dataTransfer.effectAllowed = 'move';
-  };
-  const onDragOver = (e: React.DragEvent) => e.preventDefault();
-  const onDropThumb = (e: React.DragEvent<HTMLDivElement>, idx: number) => {
+  }, []);
+
+  const onDragOver = useCallback((e: React.DragEvent) => e.preventDefault(), []);
+
+  const onDropThumb = useCallback((e: React.DragEvent<HTMLDivElement>, idx: number) => {
     const from = Number(e.dataTransfer.getData('text/plain'));
     if (Number.isNaN(from)) return;
     setImages((prev) => {
@@ -129,66 +144,63 @@ export default function OrbAddPostModal() {
       copy.splice(idx, 0, item);
       return copy;
     });
-  };
+  }, []);
 
-  function removeImage(id: string) { setImages((prev) => prev.filter((p) => p.id !== id)); }
-  const onDoubleClickThumb = (id: string) => removeImage(id);
+  const removeImage = useCallback((id: string) => {
+    setImages((prev) => prev.filter((p) => p.id !== id));
+  }, []);
 
-  function onTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  const onDoubleClickThumb = useCallback((id: string) => removeImage(id), [removeImage]);
+
+  // text change: normalize CRLF -> LF, enforce max chars and max lines
+  const onTextChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let val = e.target.value;
+    // normalize line endings
     val = val.replace(/\r\n/g, '\n');
+
+    // enforce max chars
     if (val.length > MAX_CHARS) val = val.slice(0, MAX_CHARS);
+
+    // enforce max lines (counts empty lines too)
     const lines = val.split('\n');
-    if (lines.length > MAX_LINES) val = lines.slice(0, MAX_LINES).join('\n');
-    val = val.replace(/\n{3,}/g, '\n\n');
+    if (lines.length > MAX_LINES) {
+      val = lines.slice(0, MAX_LINES).join('\n');
+    }
+
+    // do not collapse multiple blank lines here — user expects what they type preserved
     setText(val);
-  }
+  }, [MAX_CHARS, MAX_LINES]);
 
-  /**
-   * Helper specifically for the PREVIEW to make "ontheorbit.com" clickable.
-   * Standard Markdown requires http:// to auto-link. This forces it.
-   */
-  function formatForPreview(rawText: string) {
-    if (!rawText) return '';
-    
-    // Regex to find things that look like domains but aren't inside existing markdown links
-    const domainRegex = /(?<!\()((?:https?:\/\/|www\.)[^\s]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s]*)?)/gi;
-    
-    return rawText.replace(domainRegex, (match) => {
-      // If it already starts with http, let remark-gfm handle it, or wrap it
-      if (match.startsWith('http')) return match; 
-      // If it's a bare domain like "ontheorbit.com", wrap it in Markdown link syntax
-      return `[${match}](https://${match})`; 
-    });
-  }
-
+  // helper to convert dataURL to File (for pasted external images)
   async function dataUrlToFile(dataUrl: string, filename = 'image.png') {
     const res = await fetch(dataUrl);
     const blob = await res.blob();
     return new File([blob], filename, { type: blob.type || 'image/png' });
   }
 
-  // --- REMOVED `wrapDomains` FUNCTION TO PREVENT #^# MARKERS ---
-
   const hasText = text.trim().length > 0;
-  const canSubmit = !uploading && hasText && images.length <= MAX_IMAGES;
+  const canSubmit = !uploading && (hasText || images.length > 0) && images.length <= MAX_IMAGES;
 
   async function handleSubmit(e?: React.FormEvent) {
     if (e) e.preventDefault();
     if (uploading) return;
+
+    // require text when there are images (as the original logic required title/text with images)
     if (images.length > 0 && !hasText) {
       alert('A title/text is required when uploading images.');
       return;
     }
+
     if (!hasText && images.length === 0) return;
 
     setUploading(true);
+
     try {
+      // normalize line endings and trim leading/trailing whitespace but preserve internal newlines
       let finalText = text.replace(/\r\n/g, '\n');
-      finalText = finalText.replace(/\n{3,}/g, '\n\n').replace(/\n{2,}/g, '\n\n');
-      finalText = finalText.replace(/^\s*\n+/, '').replace(/\n+\s*$/, '');
-      finalText = finalText.trim();
-      
+      finalText = finalText.replace(/^\s+/, '').replace(/\s+$/, ''); // remove leading/trailing whitespace/newlines
+      // note: do NOT collapse multiple consecutive newlines — preserve user's formatting
+
       const formData = new FormData();
       formData.append('title', finalText || '');
       formData.append('caption', finalText || '');
@@ -202,9 +214,13 @@ export default function OrbAddPostModal() {
             const filename = img.src.startsWith('data:') ? `pasted-${i}.png` : `img-${i}.png`;
             const file = await dataUrlToFile(img.src, filename);
             filesToAppend.push(file);
-          } catch {}
+          } catch (err) {
+            // if a pasted URL fails to convert, skip it rather than blocking the whole upload
+            // console.warn('Failed converting image src to file', err);
+          }
         }
       }
+
       filesToAppend.forEach((file) => formData.append('images', file));
 
       const res = await uploadGaragePost(formData);
@@ -243,64 +259,18 @@ export default function OrbAddPostModal() {
           }}
         >
           <div className={styles.body}>
-            <div className={styles.headerRow} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
-                <button
-                  type="button"
-                  onClick={() => setIsPreview(!isPreview)}
-                  className={styles.toggleBtn}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '0.8rem',
-                    color: isPreview ? '#3b82f6' : '#888',
-                    cursor: 'pointer',
-                    fontWeight: 600
-                  }}
-                >
-                  {isPreview ? 'Back to Edit' : 'Preview Markdown'}
-                </button>
-            </div>
-
             <div className={styles.writerRow} style={{ minHeight: '120px' }}>
-              {isPreview ? (
-                // PREVIEW MODE
-                <div 
-                  className={styles.markdownPreview} 
-                  style={{ 
-                    padding: '0.5rem', 
-                    fontSize: '1rem', 
-                    lineHeight: '1.5',
-                    color: '#000',
-                    maxHeight: '300px',
-                    overflowY: 'auto'
-                  }}
-                >
-                  {text ? (
-                    <ReactMarkdown 
-                      remarkPlugins={[remarkGfm, remarkBreaks]}
-                      components={{
-                        a: ({node, ...props}) => <a style={{color: '#2563eb', textDecoration: 'underline'}} target="_blank" rel="noopener noreferrer" {...props} />
-                      }}
-                    >
-                      {formatForPreview(text)}
-                    </ReactMarkdown>
-                  ) : (
-                    <span style={{ color: '#aaa', fontStyle: 'italic' }}>Nothing to preview...</span>
-                  )}
-                </div>
-              ) : (
-                // EDIT MODE
-                <textarea
-                  className={styles.txtinput}
-                  placeholder="Share your story (Markdown supported)"
-                  value={text}
-                  ref={textareaRef}
-                  onChange={onTextChange}
-                  rows={Math.min(10, Math.max(3, currentLines))}
-                  disabled={uploading}
-                  aria-label="Post text"
-                />
-              )}
+              {/* EDIT MODE ONLY - no markdown preview */}
+              <textarea
+                className={styles.txtinput}
+                placeholder="Share your story"
+                value={text}
+                ref={textareaRef}
+                onChange={onTextChange}
+                rows={Math.min(10, Math.max(3, currentLines))}
+                disabled={uploading}
+                aria-label="Post text"
+              />
               <div className={styles.controls}></div>
             </div>
           </div>
@@ -357,11 +327,11 @@ export default function OrbAddPostModal() {
               <div className={styles.progresscircle} aria-hidden title={`${charCount}/${MAX_CHARS}`}>
                 <svg width="24" height="24">
                   <circle cx="12" cy="12" r={radius} stroke="hsla(0, 0%, 24%, 1.00)" strokeWidth="2" fill="none" />
-                  <circle 
-                    cx="12" cy="12" r={radius} 
-                    stroke={progressColor} strokeWidth="2" fill="none" 
+                  <circle
+                    cx="12" cy="12" r={radius}
+                    stroke={progressColor} strokeWidth="2" fill="none"
                     strokeDasharray={circumference} strokeDashoffset={dashOffset}
-                    strokeLinecap="round" transform="rotate(-90 12 12)" 
+                    strokeLinecap="round" transform="rotate(-90 12 12)"
                     style={{ transition: 'stroke-dashoffset 0.3s ease, stroke 0.3s ease' }}
                   />
                 </svg>

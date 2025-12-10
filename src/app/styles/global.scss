@@ -29,7 +29,15 @@ a {
     text-decoration: none;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+}
+
+::-moz-scrollbar {
     display: none;
 }
 

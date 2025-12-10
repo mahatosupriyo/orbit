@@ -316,7 +316,7 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
   align-items: center;
   justify-content: center;
   gap: 0.2rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.016rem;
   color: hsl(0, 0%, 100%);
   user-select: none;
@@ -566,6 +566,7 @@ $thumb-radius: 0.6rem;
   transition: transform 160ms $bezier-fast, box-shadow 220ms ease;
   will-change: transform, box-shadow;
   border: 0.01rem solid hsla(0, 0%, 12%);
+  box-shadow: 0 4px 60px hsla(0, 0%, 0%, 0.5);
 
   &:hover {
     box-shadow: hsla(0, 0%, 60%, 0.276) 0px 48px 100px 0px;
@@ -586,3 +587,5 @@ $thumb-radius: 0.6rem;
   border-radius: inherit;
   transition: transform 220ms $bezier-open, opacity 160ms linear;
 }
+
+

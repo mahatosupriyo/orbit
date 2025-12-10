@@ -1,7 +1,7 @@
-// components/Feed.tsx (replace your current Feed file)
+// components/Feed.tsx
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -10,13 +10,11 @@ import { motion, Variants, cubicBezier } from "framer-motion";
 import styles from "./test.module.scss";
 import OrbNavigator from "@/components/ui/orbcomponent/orbnav/orbnavigator";
 import ShimmerLoader from "@/components/atoms/loading/loadingbox";
-
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
 import PublicAvatar from "@/components/ui/orbcomponent/orbpost/orbpublicavatar";
 import OrbIcons from "@/components/ui/atomorb/orbicons";
 import { formatPostDate } from "@/server/utils/dateFormat";
+import { DownloadButton } from "./downloadbtn";
+import { DownloadZipButton } from "./zipdownload";
 
 const ImageLightbox = dynamic(
   () => import("@/components/ui/orbcomponent/orbimagebox/orbimagelightbox"),
@@ -52,7 +50,77 @@ const itemVariants: Variants = {
   }
 };
 
+/**
+ * Linkify: returns an array of React nodes where URLs/domains are turned into <a> tags.
+ * This approach avoids dangerous innerHTML and keeps text escaped by React.
+ */
+function Linkify({ text }: { text: string }) {
+  if (!text) return null;
+
+  // Matches http(s) URLs, www.* URLs, and bare domains like example.com/path
+  const urlRegex = /(?:(https?:\/\/[^\s]+)|(?:www\.[^\s]+)|(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s]*)?))/gi;
+
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = urlRegex.exec(text)) !== null) {
+    const idx = match.index;
+    if (idx > lastIndex) parts.push(text.slice(lastIndex, idx));
+    const matchedText = match[0];
+
+    // ensure scheme
+    const href = matchedText.startsWith("http") ? matchedText : `https://${matchedText}`;
+    parts.push(
+      <a
+        key={idx}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.inlinelink}
+        style={{ wordBreak: "break-word" }}
+      >
+        {matchedText}
+      </a>
+    );
+
+    lastIndex = idx + matchedText.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return <>{parts}</>;
+}
+
+/**
+ * PostText: preserves user-entered newlines (single & multiple) using pre-wrap,
+ * and linkifies any URLs/domains using Linkify.
+ *
+ * This avoids the Markdown pipeline which collapses multiple blank lines
+ * and changes whitespace semantics.
+ */
+const PostText: React.FC<{ text: string }> = ({ text }) => {
+  return (
+    <div
+      style={{
+        fontSize: "1.56rem",
+        lineHeight: "136%",
+        fontWeight: 500,
+        color: "#999",
+        marginTop: "1.2rem",
+        wordBreak: "break-word",
+        whiteSpace: "pre-wrap", // preserve single & multiple newlines
+      }}
+    >
+      <Linkify text={text} />
+    </div>
+  );
+};
+
 function formatWithDomains(rawText: string) {
+  // Deprecated for rendering — we keep it for compatibility if ever needed.
   if (!rawText) return "";
   const domainRegex =
     /(?<!\()((?:https?:\/\/|www\.)[^\s]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s]*)?)/gi;
@@ -62,42 +130,104 @@ function formatWithDomains(rawText: string) {
   });
 }
 
-const MarkdownContentRenderer = ({ content }: { content: string }) => (
-  <div style={{ fontSize: "1.56rem", lineHeight: "146%", fontWeight: 500, color: "#999", marginTop: "1.2rem", wordBreak: "break-word" }}>
-    <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} components={{ a: ({ node, ...props }) => <a className={styles.inlinelink} target="_blank" rel="noopener noreferrer" {...props} /> }}>
-      {formatWithDomains(content)}
-    </ReactMarkdown>
-  </div>
-);
-
 const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
-  const imagesForLightbox = useMemo(() => post.images.map((img) => ({ id: img.id, src: img.url, alt: img.url?.split("/").pop() ?? `${post.createdBy.username}-img-${img.id}` })), [post.images, post.createdBy.username]);
+  const imagesForLightbox = useMemo(
+    () =>
+      post.images.map((img) => ({
+        id: img.id,
+        src: img.url,
+        alt: img.url?.split("/").pop() ?? `${post.createdBy.username}-img-${img.id}`,
+      })),
+    [post.images, post.createdBy.username]
+  );
 
   return (
-    <article style={{ overflow: "hidden", padding: "1.8rem", borderBottom: "0.1rem solid hsla(0,0%,100%,0.1)", backgroundColor: "hsla(0,0%,10%,1)" }}>
+    <article
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        padding: "1.8rem",
+        borderBottom: "0.1rem solid hsla(0,0%,100%,0.1)",
+        backgroundColor: "#1a1a1aff",
+      }}
+    >
       <div style={{ display: "flex", gap: "1rem" }}>
-        <div><PublicAvatar username={post.createdBy.username} avatarUrl={post.createdBy.image} /></div>
+        <div>
+          <PublicAvatar username={post.createdBy.username} avatarUrl={post.createdBy.image} />
+        </div>
+
         <div>
           <div style={{ marginBottom: "6px" }}>
-            <Link href="/" style={{ color: "#fff", fontWeight: "600", fontSize: "1.66rem", textDecoration: "none", lineHeight: '100%', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+            <Link
+              href="/"
+              style={{
+                color: "#fff",
+                fontWeight: "600",
+                fontSize: "1.66rem",
+                textDecoration: "none",
+                lineHeight: "100%",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+              }}
+            >
               {post.createdBy.username}
               <OrbIcons name="verified" size={11} />
             </Link>
           </div>
 
-          <MarkdownContentRenderer content={post.title} />
 
-          {post.images.length > 0 && <div style={{ marginTop: '1rem' }}><ImageLightbox images={imagesForLightbox} previewSize="100%" /></div>}
+          {/* Use PostText to preserve user newlines and auto-link URLs */}
+          <PostText text={post.title} />
 
-          <p style={
-            {
-              marginTop: '1.6rem',
-              fontSize: '1.12rem',
+          {post.images.length > 0 && (
+            <div style={{ marginTop: "1rem" }}>
+              <ImageLightbox
+                images={imagesForLightbox}
+                previewSize="100%"
+                // username={post.createdBy.username}
+                // postId={post.id}
+              />
+
+              <div style={{
+                marginTop: "1rem",
+                display: "flex",
+                alignItems: "center",
+                marginRight: '0.6rem',
+                position: 'absolute',
+                top: 0,
+                right: 0
+              }}>
+                {post.images.length === 1 ? (
+                  // CASE A: Single Image -> Single Download Button
+                  <DownloadButton
+                    url={post.images[0].url}
+                    filename={`${post.createdBy.username}-post-${post.id}.jpg`}
+                  />
+                ) : (
+                  // CASE B: Multiple Images -> One Clean "Download All" Button
+                  <DownloadZipButton
+                    images={post.images}
+                    username={post.createdBy.username}
+                    postId={post.id}
+                  />
+                )}
+              </div>
+
+
+            </div>
+          )}
+
+          <p
+            style={{
+              marginTop: "1.6rem",
+              fontSize: "1.12rem",
               fontWeight: 500,
-              opacity: 0.36
-            }
-          }>{formatPostDate(post.createdAt)}</p>
-
+              opacity: 0.36,
+            }}
+          >
+            {formatPostDate(post.createdAt)}
+          </p>
         </div>
       </div>
     </article>
@@ -105,7 +235,12 @@ const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
 };
 const PostItem = React.memo(TestPostItemBase);
 
-const InfiniteScrollSentinel: React.FC<{ onIntersect: () => void; isFetching: boolean; canFetchMore: boolean; hasUserScrolled?: boolean; }> = ({ onIntersect, isFetching, canFetchMore }) => {
+const InfiniteScrollSentinel: React.FC<{
+  onIntersect: () => void;
+  isFetching: boolean;
+  canFetchMore: boolean;
+  hasUserScrolled?: boolean;
+}> = ({ onIntersect, isFetching, canFetchMore }) => {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -123,29 +258,31 @@ const InfiniteScrollSentinel: React.FC<{ onIntersect: () => void; isFetching: bo
 
   return (
     <div ref={sentinelRef} style={{ height: "20px", margin: "20px 0", textAlign: "center", opacity: 0.5 }}>
-      {isFetching &&
+      {isFetching && (
         <div
           style={{
-            padding: '1.8rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem'
+            padding: "1.8rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
           }}
-          className={styles.spinner}>
-          <div style={{ display: "flex", flexDirection: 'row', alignItems: 'flex-start', gap: '1rem' }}>
+          className={styles.spinner}
+        >
+          <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "1rem" }}>
             <ShimmerLoader height="3.8rem" width="3.8rem" borderRadius="50rem" />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'flex', marginTop: '0.2rem', flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div style={{ display: "flex", marginTop: "0.2rem", flexDirection: "row", alignItems: "center", gap: "0.4rem" }}>
                 <ShimmerLoader height="2rem" width="14.8rem" borderRadius="50rem" />
               </div>
-              <div style={{ marginTop: '0.6rem' }}>
+              <div style={{ marginTop: "0.6rem" }}>
                 <ShimmerLoader height="1.6rem" width="6rem" borderRadius="4rem" />
               </div>
 
               <ShimmerLoader height="40rem" width="30rem" borderRadius="1.6rem" />
             </div>
           </div>
-        </div>}
+        </div>
+      )}
       {!canFetchMore && <span style={{ color: "#aaa" }}>You've seen all new posts.</span>}
     </div>
   );
@@ -168,28 +305,20 @@ const fetchPosts = async ({ pageParam = 1, signal }: FetchContext): Promise<Fetc
 };
 
 export default function Feed() {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    status,
-    error,
-  } = useInfiniteQuery<FetchResponse, Error>({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error } = useInfiniteQuery<
+    FetchResponse,
+    Error
+  >({
     queryKey: ["garage-posts"],
-    queryFn: ({ pageParam = 1, signal }) =>
-      fetchPosts({ pageParam: pageParam as number, signal }),
+    queryFn: ({ pageParam = 1, signal }) => fetchPosts({ pageParam: pageParam as number, signal }),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.hasMore ? allPages.length + 1 : undefined,
+    getNextPageParam: (lastPage, allPages) => (lastPage.hasMore ? allPages.length + 1 : undefined),
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 5,
   });
 
-
-  const allPosts = useMemo(() => data?.pages.flatMap(p => p.posts) ?? [], [data]);
-  const isSubscriber = useMemo(() => (data?.pages?.[0]?.isSubscriber ?? true), [data]);
-
+  const allPosts = useMemo(() => data?.pages.flatMap((p) => p.posts) ?? [], [data]);
+  const isSubscriber = useMemo(() => data?.pages?.[0]?.isSubscriber ?? true, [data]);
 
   const [hasUserScrolled, setHasUserScrolled] = useState(false);
 
@@ -207,33 +336,40 @@ export default function Feed() {
   // canFetchMore: true only when user is subscriber and backend says there is more
   const canFetchMore = !!isSubscriber && !!hasNextPage;
 
+  // memoized fetchNextPage callback (optional)
+  const handleFetchNext = useCallback(() => {
+    if (canFetchMore) fetchNextPage();
+  }, [canFetchMore, fetchNextPage]);
+
   return (
     <div className={styles.wraper}>
       <div className={styles.feed}>
-        {status === "pending" &&
-          <div className={styles.loading}
+        {status === "pending" && (
+          <div
+            className={styles.loading}
             style={{
-              padding: '1.8rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem'
+              padding: "1.8rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
             }}
           >
-            <div style={{ display: "flex", flexDirection: 'row', alignItems: 'flex-start', gap: '1rem' }}>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "1rem" }}>
               <ShimmerLoader height="3.8rem" width="3.8rem" borderRadius="50rem" />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ display: 'flex', marginTop: '0.2rem', flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div style={{ display: "flex", marginTop: "0.2rem", flexDirection: "row", alignItems: "center", gap: "0.4rem" }}>
                   <ShimmerLoader height="2rem" width="14.8rem" borderRadius="50rem" />
                 </div>
-                <div style={{ marginTop: '0.6rem' }}>
+                <div style={{ marginTop: "0.6rem" }}>
                   <ShimmerLoader height="1.6rem" width="6rem" borderRadius="4rem" />
                 </div>
 
                 <ShimmerLoader height="40rem" width="30rem" borderRadius="1.6rem" />
               </div>
             </div>
+          </div>
+        )}
 
-          </div>}
         {status === "error" && <div style={{ color: "salmon", padding: 20 }}>Error: {error?.message ?? "Something went wrong"}</div>}
 
         {status === "success" && (
@@ -244,7 +380,6 @@ export default function Feed() {
               </motion.div>
             ))}
 
-            {/* If not subscribed, show paywall / promotional content below first page */}
             {!isSubscriber && (
               <div style={{ padding: "2rem", textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
                 <h3 style={{ margin: 0, color: "#fff" }}>More posts are for subscribers only</h3>
@@ -252,9 +387,11 @@ export default function Feed() {
                   You've reached the free preview. Subscribe to unlock the full feed and get unlimited access.
                 </p>
                 <div style={{ marginTop: "1rem" }}>
-                  <Link href="/subscribe" className={styles.subscribeBtn}>Subscribe</Link>
+                  <Link href="/subscribe" className={styles.subscribeBtn}>
+                    Subscribe
+                  </Link>
                 </div>
-                {/* "Some other content" can go here: e.g. curated picks, promos */}
+
                 <div style={{ marginTop: "1.2rem", color: "#999" }}>
                   <strong>Curated picks:</strong>
                   <ul style={{ listStyle: "none", paddingLeft: 0 }}>
@@ -265,12 +402,7 @@ export default function Feed() {
               </div>
             )}
 
-            <InfiniteScrollSentinel
-              onIntersect={() => { if (canFetchMore) fetchNextPage(); }}
-              isFetching={isFetchingNextPage}
-              canFetchMore={canFetchMore}
-              hasUserScrolled={hasUserScrolled}
-            />
+            <InfiniteScrollSentinel onIntersect={handleFetchNext} isFetching={isFetchingNextPage} canFetchMore={canFetchMore} hasUserScrolled={hasUserScrolled} />
           </>
         )}
       </div>

@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import styles from '@/components/ui/atomorb/buttonsorb/buttonorb.module.scss';
-import { motion } from 'framer-motion'
 
 /**
  * ButtonProps interface

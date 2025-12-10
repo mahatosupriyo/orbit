@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./orbimagelightbox.module.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,19 +9,11 @@ import { Navigation, Keyboard, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
-import OrbIcons from "../../atomorb/orbicons";
+import OrbIcons from "../../atomorb/orbicons"; // Adjust path if needed
 import NumberFlow from "@number-flow/react";
 
-/** Represents a single image in the lightbox */
 type Img = { id: string | number; src: string; alt?: string };
 
-/**
- * Props for the ImageLightbox component
- * @property images - Array of images to display
- * @property className - Optional CSS class for the preview grid
- * @property previewSize - Size of preview grid (px number or CSS value)
- * @property onClose - Callback triggered when lightbox closes
- */
 type Props = {
     images: Img[];
     className?: string;
@@ -29,44 +21,63 @@ type Props = {
     onClose?: () => void;
 };
 
-/**
- * ImageLightbox Component
- *
- * A responsive, accessible image lightbox with keyboard navigation,
- * swiper support, and smooth animations using Framer Motion.
- *
- * Features:
- * - Grid preview thumbnails with responsive layouts (1-5+ images)
- * - Full-screen lightbox viewer with swipe/arrow navigation
- * - Keyboard support (Escape to close, Arrow keys to navigate)
- * - Body scroll lock when open
- * - Shared layout animations between preview and viewer
- *
- * @example
- * ```tsx
- * <ImageLightbox
- *   images={[{ id: 1, src: '/image1.jpg', alt: 'Photo 1' }]}
- *   previewSize="100%"
- *   onClose={() => console.log('closed')}
- * />
- * ```
- */
+// Helper: Convert any image blob to PNG (Required for Clipboard API support)
+const convertToPng = (blob: Blob): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(blob);
+        
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext("2d");
+            
+            if (!ctx) {
+                reject(new Error("Canvas context failed"));
+                return;
+            }
+            
+            // Draw image to canvas
+            ctx.drawImage(img, 0, 0);
+            
+            // Export as PNG
+            canvas.toBlob((pngBlob) => {
+                if (pngBlob) {
+                    resolve(pngBlob);
+                } else {
+                    reject(new Error("PNG conversion failed"));
+                }
+                URL.revokeObjectURL(url);
+            }, "image/png");
+        };
+        
+        img.onerror = () => {
+            URL.revokeObjectURL(url);
+            reject(new Error("Failed to load image for conversion"));
+        };
+        
+        img.src = url;
+    });
+};
+
 export default function ImageLightbox({
     images,
     className,
     previewSize = "100%",
     onClose,
 }: Props) {
-    // State management
-    const [open, setOpen] = useState(false); // Lightbox open/closed state
-    const [active, setActive] = useState(0); // Currently active slide index
-    const overlayRef = useRef<HTMLDivElement | null>(null); // Reference to overlay for click handling
-    const swiperRef = useRef<any>(null); // Reference to Swiper instance
+    const [open, setOpen] = useState(false);
+    const [active, setActive] = useState(0);
+    
+    // UI States for the copy button
+    const [isCopying, setIsCopying] = useState(false);
+    const [copied, setCopied] = useState(false);
+    
+    const overlayRef = useRef<HTMLDivElement | null>(null);
+    const swiperRef = useRef<any>(null);
 
-    /**
-     * Effect: Lock body scroll when lightbox is open
-     * Prevents scroll on underlying content
-     */
+    // Lock body scroll
     useEffect(() => {
         if (!open) return;
         const prev = document.body.style.overflow;
@@ -76,99 +87,96 @@ export default function ImageLightbox({
         };
     }, [open]);
 
-    /**
-     * Effect: Handle keyboard navigation
-     * - Escape: Close lightbox
-     * - ArrowLeft: Previous image
-     * - ArrowRight: Next image
-     */
+    // Keyboard support
     useEffect(() => {
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") {
-                closeViewer();
-            } else if (e.key === "ArrowLeft") {
-                prev();
-            } else if (e.key === "ArrowRight") {
-                next();
+            if (e.key === "Escape") closeViewer();
+            else if (e.key === "ArrowLeft") prev();
+            else if (e.key === "ArrowRight") next();
+            else if ((e.metaKey || e.ctrlKey) && e.key === "c") {
+                e.preventDefault();
+                handleCopyImage();
             }
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
-    }, []);
+    }, [active, open]);
 
-    /**
-     * Open the lightbox at a specific image index
-     * @param idx - Image index to display (default: 0)
-     */
     function openViewer(idx = 0) {
         setActive(idx);
         setOpen(true);
-        // Delayed slide transition to allow animation setup
         setTimeout(() => {
-            try {
-                swiperRef.current?.slideTo(idx, 0);
-            } catch {
-                // Safely handle Swiper API errors
-            }
+            try { swiperRef.current?.slideTo(idx, 0); } catch {}
         }, 60);
     }
 
-    /**
-     * Close the lightbox and trigger optional callback
-     */
     function closeViewer() {
         setOpen(false);
+        setCopied(false);
         onClose?.();
     }
 
-    /**
-     * Navigate to previous image
-     */
-    function prev() {
-        try {
-            swiperRef.current?.slidePrev();
-        } catch {
-            // Safely handle Swiper API errors
-        }
-    }
+    function prev() { try { swiperRef.current?.slidePrev(); } catch {} }
+    function next() { try { swiperRef.current?.slideNext(); } catch {} }
 
     /**
-     * Navigate to next image
+     * Copies the CURRENTLY ACTIVE image to clipboard as PNG
      */
-    function next() {
-        try {
-            swiperRef.current?.slideNext();
-        } catch {
-            // Safely handle Swiper API errors
-        }
-    }
+    const handleCopyImage = async (e?: React.MouseEvent) => {
+        e?.stopPropagation();
+        if (isCopying) return;
 
-    /**
-     * Generate unique layoutId for Framer Motion shared layout animations
-     * @param id - Image ID
-     * @returns Formatted layout identifier string
-     */
+        setIsCopying(true);
+        setCopied(false);
+
+        try {
+            const currentImg = images[active];
+            if (!currentImg) throw new Error("No image selected");
+
+            // 1. Fetch original image (Bypass CORS cache)
+            const response = await fetch(currentImg.src, {
+                mode: "cors",
+                cache: "no-store" 
+            });
+
+            if (!response.ok) throw new Error("Failed to fetch image");
+
+            const originalBlob = await response.blob();
+            let blobToWrite = originalBlob;
+
+            // 2. Convert to PNG if it isn't already (Browsers require PNG for clipboard)
+            if (originalBlob.type !== "image/png") {
+                blobToWrite = await convertToPng(originalBlob);
+            }
+
+            // 3. Write PNG Blob to Clipboard
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    "image/png": blobToWrite
+                })
+            ]);
+
+            // 4. Success Feedback
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+
+        } catch (err) {
+            console.error("Failed to copy image:", err);
+            alert("Could not copy image. Please try downloading instead.");
+        } finally {
+            setIsCopying(false);
+        }
+    };
+
     const layoutId = (id: string | number) => `lightbox-img-${id}`;
 
-    /**
-     * Determine CSS layout class based on image count
-     * Provides responsive grid layouts for different image counts
-     */
+    // Layout logic
     const previewClass =
-        images.length === 1
-            ? styles.layout1
-            : images.length === 2
-                ? styles.layout2
-                : images.length === 3
-                    ? styles.layout3
-                    : images.length === 4
-                        ? styles.layout4
-                        : styles.layout5plus;
+        images.length === 1 ? styles.layout1 :
+        images.length === 2 ? styles.layout2 :
+        images.length === 3 ? styles.layout3 :
+        images.length === 4 ? styles.layout4 : styles.layout5plus;
 
-    /**
-     * Calculate maximum thumbnails to display
-     * Currently shows all images; can be limited for performance
-     */
     const maxThumbCountToShow = Math.max(images.length, 1);
 
     return (
@@ -178,7 +186,6 @@ export default function ImageLightbox({
                 className={`${styles.previewGrid} ${previewClass} ${className ?? ""}`}
                 style={{ width: typeof previewSize === "number" ? `${previewSize}px` : previewSize }}
                 role="list"
-                aria-label="Image previews"
             >
                 {images.slice(0, maxThumbCountToShow).map((img, i) => {
                     const extraCount = images.length - maxThumbCountToShow;
@@ -190,8 +197,6 @@ export default function ImageLightbox({
                             className={styles.thumbBtn}
                             onClick={() => openViewer(i)}
                             type="button"
-                            role="listitem"
-                            aria-label={`Open image ${i + 1}`}
                         >
                             <motion.img
                                 src={img.src}
@@ -213,48 +218,78 @@ export default function ImageLightbox({
 
             {/* Full-Screen Lightbox Overlay */}
             <AnimatePresence>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        width: '100%',
+                {open && (
+                    <motion.div
+                        className={styles.overlay}
+                        ref={overlayRef}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                        onClick={(e) => {
+                            if (e.target === overlayRef.current) closeViewer();
+                        }}
+                        role="dialog"
+                    >
+                        <div className={styles.toplayer}>
+                            {/* Page Counter */}
+                            <p className={styles.page}>
+                                You're at{" "}
+                                <span className={styles.pagenumber}>
+                                    <NumberFlow value={active + 1} />
+                                </span>{" "}
+                                out of{" "}
+                                <span className={styles.pagenumber}>
+                                    <NumberFlow value={images.length} />
+                                </span>
+                            </p>
 
-                    }}
-                >
+                            {/* Actions Group */}
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                
+                                {/* COPY IMAGE BUTTON */}
+                                <motion.button
+                                    whileTap={{ scale: 0.9 }}
+                                    className={styles.closeBtn}
+                                    onClick={handleCopyImage}
+                                    disabled={isCopying}
+                                    
+                                    aria-label="Copy image"
+                                    title="Copy image to clipboard"
+                                    style={{ 
+                                        color: copied ? "#4ade80" : "#fff",
+                                        cursor: isCopying ? "wait" : "pointer",
+                                        display: "flex", 
+                                        alignItems: "center",
+                                        justifyContent: "center",
 
-                    {open && (
-                        <motion.div
-                            className={styles.overlay}
-                            ref={overlayRef}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                            onClick={(e) => {
-                                // Close only when clicking the backdrop, not inner content
-                                if (e.target === overlayRef.current) {
-                                    closeViewer();
-                                }
-                            }}
-                            aria-modal="true"
-                            role="dialog"
-                        >
-                            {/* Top Navigation Bar */}
-                            <div className={styles.toplayer}>
-                                {/* <div style={{ width: '8.67rem' }}></div> */}
-                                <p className={styles.page}>
-                                    {/* <OrbIcons name="image" size={30} fill="#fff" aria-hidden="true" /> */}
-                                    You're at
-                                    <span className={styles.pagenumber}>
-                                        <NumberFlow value={active + 1} />
-                                    </span>
-                                    out
-                                    of
-                                    <span className={styles.pagenumber}>
-                                        <NumberFlow value={images.length} />
-                                    </span>
-                                </p>
+                                        height: '6rem',
+                                        width: '6rem',
+                                    }}
+                                >
+                                    {isCopying ? (
+                                        // Loading Spinner
+                                        <div
+                                            style={{
+                                                width: "14px",
+                                                height: "14px",
+                                                border: "2px solid rgba(255,255,255,0.3)",
+                                                borderTopColor: "currentColor",
+                                                borderRadius: "50%",
+                                                animation: "spin 1s linear infinite",
+                                            }}
+                                        />
+                                    ) : copied ? (
+                                        // Success Checkmark
+                                        <OrbIcons name="copyimage" size={30} fill="#4ade80" />
+                                    ) : (
+                                        // Default Copy Icon
+                                        <OrbIcons name="copyimage" size={30} fill="#fff" />
+                                    )}
+                                    <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                                </motion.button>
+
+                                {/* CLOSE BUTTON */}
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
                                     className={styles.closeBtn}
@@ -268,86 +303,81 @@ export default function ImageLightbox({
                                     <OrbIcons name="close" size={20} />
                                 </motion.button>
                             </div>
+                        </div>
 
-                            {/* Main Viewer Shell */}
-                            <motion.div
-                                className={styles.shell}
-                                onClick={(e) => e.stopPropagation()}
-                                initial={{ y: 6 }}
-                                animate={{ y: 0 }}
-                                exit={{ y: 6 }}
-                                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                            >
-                                <div className={styles.swiperWrapper}>
-                                    {/* Previous Button - visible when not on first image */}
-                                    {active > 0 && (
-                                        <motion.button
-                                            whileTap={{ scale: 0.9, opacity: '0.6', borderRadius: '10rem', transition: { duration: 0.1, ease: easeInOut } }}
-                                            initial={{ opacity: 0, borderRadius: '0.2rem' }}
-                                            animate={{ opacity: 1, borderRadius: '2.8rem' }}
-                                            transition={{ delay: 0.4, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                                            className={`${styles.customNavBtn} ${styles.customPrevBtn}`}
-                                            aria-label="Previous image"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                prev();
-                                            }}
-                                        >
-                                            <OrbIcons name="left" size={30} fill="#fff" />
-                                        </motion.button>
-                                    )}
-
-                                    {/* Image Carousel - powered by Swiper */}
-                                    <Swiper
-                                        modules={[Navigation, Keyboard, Scrollbar]}
-                                        navigation={false}
-                                        className={styles.swiper}
-                                        spaceBetween={0}
-                                        scrollbar={{ draggable: true }}
-                                        onSwiper={(s) => (swiperRef.current = s)}
-                                        onSlideChange={(s) => setActive(s.activeIndex)}
-                                        initialSlide={active}
+                        {/* Main Viewer Shell */}
+                        <motion.div
+                            className={styles.shell}
+                            onClick={(e) => e.stopPropagation()}
+                            initial={{ y: 6 }}
+                            animate={{ y: 0 }}
+                            exit={{ y: 6 }}
+                            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                            <div className={styles.swiperWrapper}>
+                                {active > 0 && (
+                                    <motion.button
+                                        whileTap={{ scale: 0.9 }}
+                                        initial={{ opacity: 0, borderRadius: "0.2rem" }}
+                                        animate={{ opacity: 1, borderRadius: "2.8rem" }}
+                                        transition={{ delay: 0.4, duration: 0.2 }}
+                                        className={`${styles.customNavBtn} ${styles.customPrevBtn}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            prev();
+                                        }}
                                     >
-                                        {images.map((img) => (
-                                            <SwiperSlide key={img.id}>
-                                                <motion.img
-                                                    src={img.src}
-                                                    alt={img.alt ?? ""}
-                                                    className={styles.slideImg}
-                                                    layoutId={layoutId(img.id)}
-                                                    initial={{ scale: 0.98, opacity: 0.96 }}
-                                                    animate={{ scale: 1, opacity: 1 }}
-                                                    transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
-                                                    draggable={false}
-                                                />
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
+                                        <OrbIcons name="left" size={30} fill="#fff" />
+                                    </motion.button>
+                                )}
 
-                                    {/* Next Button - visible when not on last image */}
-                                    {active < images.length - 1 && (
-                                        <motion.button
-                                            whileTap={{ scale: 0.96, opacity: '0.6', borderRadius: '10rem', transition: { duration: 0.1, ease: easeInOut } }}
-                                            initial={{ opacity: 0, borderRadius: '0.2rem' }}
-                                            animate={{ opacity: 1, borderRadius: '2.8rem' }}
-                                            exit={{ opacity: 0, filter: 'blur(100px)' }}
-                                            transition={{ delay: 0.4, duration: 0.02, ease: [0.22, 1, 0.36, 1] }}
-                                            className={`${styles.customNavBtn} ${styles.customNextBtn}`}
-                                            aria-label="Next image"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                next();
-                                            }}
-                                        >
-                                            <OrbIcons name="right" size={30} fill="#fff" />
-                                        </motion.button>
-                                    )}
-                                </div>
-                            </motion.div>
+                                <Swiper
+                                    modules={[Navigation, Keyboard, Scrollbar]}
+                                    navigation={false}
+                                    className={styles.swiper}
+                                    spaceBetween={20}
+                                    scrollbar={{ draggable: true }}
+                                    onSwiper={(s) => (swiperRef.current = s)}
+                                    onSlideChange={(s) => setActive(s.activeIndex)}
+                                    initialSlide={active}
+                                >
+                                    {images.map((img) => (
+                                        <SwiperSlide key={img.id}>
+                                            <motion.img
+                                                src={img.src}
+                                                alt={img.alt ?? ""}
+                                                className={styles.slideImg}
+                                                layoutId={layoutId(img.id)}
+                                                initial={{ scale: 0.98, opacity: 0.96 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+                                                draggable={false}
+                                                onContextMenu={(e) => e.preventDefault()} 
+                                            />
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+
+                                {active < images.length - 1 && (
+                                    <motion.button
+                                        whileTap={{ scale: 0.96 }}
+                                        initial={{ opacity: 0, borderRadius: "0.2rem" }}
+                                        animate={{ opacity: 1, borderRadius: "2.8rem" }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ delay: 0.4, duration: 0.02 }}
+                                        className={`${styles.customNavBtn} ${styles.customNextBtn}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            next();
+                                        }}
+                                    >
+                                        <OrbIcons name="right" size={30} fill="#fff" />
+                                    </motion.button>
+                                )}
+                            </div>
                         </motion.div>
-                    )}
-                </div>
-
+                    </motion.div>
+                )}
             </AnimatePresence>
         </>
     );

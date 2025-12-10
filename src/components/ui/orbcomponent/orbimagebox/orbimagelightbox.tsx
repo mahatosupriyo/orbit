@@ -193,6 +193,7 @@ export default function ImageLightbox({
                     return (
                         <motion.button
                             whileTap={{ scale: 0.98 }}
+                            whileHover={{scale: 1.01}}
                             key={img.id}
                             className={styles.thumbBtn}
                             onClick={() => openViewer(i)}
@@ -289,7 +290,6 @@ export default function ImageLightbox({
                                                 justifyContent: 'flex-start',
 
                                                 height: '30px',
-                                                // width: '30px',
                                             }}
                                         >
 
@@ -357,7 +357,8 @@ export default function ImageLightbox({
                                     whileTap={{ scale: 0.9 }}
                                     className={styles.closeBtn}
                                     style={{
-                                        height: '5.4rem'
+                                        height: '5.4rem',
+                                        borderRadius: '2rem'
                                     }}
                                     onClick={(e) => {
                                         e.stopPropagation();

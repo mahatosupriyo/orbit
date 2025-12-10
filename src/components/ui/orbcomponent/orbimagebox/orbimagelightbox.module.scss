@@ -2,7 +2,6 @@
    Variables / tokens
    (change these to theme your UI)
    --------------------------- */
-$overlay-bg: hsla(0, 0%, 10%, 0.7); // overlay backdrop color
 $overlay-bg-alt: hsla(0, 0%, 14%, 0.55); // alternative overlay (comment noted)
 $bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
 $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -22,7 +21,7 @@ $overlay-z: 99999;
    Overlay (full-screen backdrop)
    --------------------------- */
 /* valid HSLA syntax (alpha last) — use whichever you prefer */
-$overlay-bg: hsla(0, 0%, 10%, 0.7);
+$overlay-bg: hsl(0, 0%, 10%);
 /* or: --overlay-bg: hsl(0 0% 14% / 0.55); */
 $bezier-open: cubic-bezier(0.22, 1, 0.36, 1);
 $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -566,12 +565,6 @@ $thumb-radius: 0.6rem;
   transition: transform 160ms $bezier-fast, box-shadow 220ms ease;
   will-change: transform, box-shadow;
   border: 0.01rem solid hsla(0, 0%, 12%);
-  box-shadow: 0 4px 60px hsla(0, 0%, 0%, 0.5);
-
-  &:hover {
-    box-shadow: hsla(0, 0%, 60%, 0.276) 0px 48px 100px 0px;
-    // box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
-  }
 }
 
 /* thumbnail image */

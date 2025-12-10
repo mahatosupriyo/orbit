@@ -185,11 +185,9 @@ const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
               <ImageLightbox
                 images={imagesForLightbox}
                 previewSize="100%"
-                // username={post.createdBy.username}
-                // postId={post.id}
               />
 
-              <div style={{
+              {/* <div style={{
                 marginTop: "1rem",
                 display: "flex",
                 alignItems: "center",
@@ -212,8 +210,7 @@ const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
                     postId={post.id}
                   />
                 )}
-              </div>
-
+              </div> */}
 
             </div>
           )}

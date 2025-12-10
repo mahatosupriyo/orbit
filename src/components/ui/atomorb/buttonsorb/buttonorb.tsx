@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import styles from '@/components/ui/atomorb/buttonsorb/buttonorb.module.scss';
-
 /**
  * ButtonProps interface
  * - Extends standard button attributes.

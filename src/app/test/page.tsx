@@ -132,13 +132,7 @@ const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
 
   return (
     <article
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        padding: "1.8rem",
-        borderBottom: "0.1rem solid hsla(0,0%,100%,0.1)",
-        backgroundColor: "#1a1a1aff",
-      }}
+      className={styles.article}
     >
       <div style={{ display: "flex", gap: "1rem" }}>
         <div>
@@ -392,7 +386,6 @@ export default function Feed() {
           </>
         )}
       </div>
-
       <OrbNavigator />
     </div>
   );

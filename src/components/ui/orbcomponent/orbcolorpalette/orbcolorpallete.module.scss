@@ -87,18 +87,13 @@ $hide-below: 900px; // breakpoint where component is hidden (keepable or configu
    ========================= */
 .componentwraper {
     // layout: vertical column, centered horizontally
-    @include flex-it(column, flex-start, center);
+    @include flex-it(column, flex-start, space-between);
     width: 100%;
-    min-height: 100dvh;
+    min-height: 100%;
     padding: $pad-base;
     gap: $gap-base;
     position: relative;
     overflow: hidden;
-
-    // responsive: hide on small screens (kept from original file)
-    @media (max-width: $hide-below) {
-        display: none;
-    }
 
     /* ----------------------------------------------------------------
      Swatches row — a pill-like bar of color swatches / quick picks

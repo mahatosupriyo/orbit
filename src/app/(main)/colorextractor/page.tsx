@@ -6,9 +6,16 @@ import OrbNavigator from "@/components/ui/orbcomponent/orbnav/orbnavigator";
 export default function ColorExtractor() {
 
     return (
-        <div>
-            <OrbNavigator />
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            height: '100%',
+            minHeight: '100dvh',
+            justifyContent: 'space-between'
+        }}>
             <OrbColorPalette />
+            <OrbNavigator />
         </div>
     );
 }

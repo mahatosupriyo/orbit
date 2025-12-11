@@ -158,6 +158,10 @@ $bezier-fast: cubic-bezier(0.165, 0.84, 0.44, 1);
     background-color: $close-key-bg;
     -webkit-text-stroke: 0.01rem hsl(0, 0%, 36%);
     outline: 0.16rem solid $close-key-outline;
+
+    @media (max-width: 900px) {
+      display: none;
+    }
   }
 
   &:hover {

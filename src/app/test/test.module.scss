@@ -15,10 +15,25 @@
 
     @media (max-width: 900px) {
         margin: 0rem;
+        border: none;
         border-radius: 0rem 0rem 2rem 2rem;
     }
 }
 
+
+.posttxt {
+    font-size: 1.5rem;
+    line-height: 136%;
+    font-weight: 500;
+    color: #999;
+    margin-top: 1.6rem;
+    word-break: break-word;
+    white-space: pre-wrap;
+
+    @media (max-width: 900px) {
+        font-size: 1.4rem;
+    }
+}
 
 .wraper {
     display: flex;

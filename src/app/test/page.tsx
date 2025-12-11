@@ -104,15 +104,7 @@ function Linkify({ text }: { text: string }) {
 const PostText: React.FC<{ text: string }> = ({ text }) => {
   return (
     <div
-      style={{
-        fontSize: "1.5rem",
-        lineHeight: "136%",
-        fontWeight: 500,
-        color: "#999",
-        marginTop: "1.6rem",
-        wordBreak: "break-word",
-        whiteSpace: "pre-wrap", // preserve single & multiple newlines
-      }}
+      className={styles.posttxt}
     >
       <Linkify text={text} />
     </div>
@@ -258,7 +250,7 @@ const InfiniteScrollSentinel: React.FC<{
                 <ShimmerLoader height="1.6rem" width="6rem" borderRadius="4rem" />
               </div>
 
-              <ShimmerLoader height="40rem" width="30rem" borderRadius="1.6rem" />
+              <ShimmerLoader height="26rem" width="18rem" borderRadius="1.6rem" />
             </div>
           </div>
         </div>
@@ -344,7 +336,7 @@ export default function Feed() {
                   <ShimmerLoader height="1.6rem" width="6rem" borderRadius="4rem" />
                 </div>
 
-                <ShimmerLoader height="40rem" width="30rem" borderRadius="1.6rem" />
+                <ShimmerLoader height="26rem" width="18rem" borderRadius="1.6rem" />
               </div>
             </div>
           </div>

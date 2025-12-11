@@ -402,7 +402,7 @@ export default function ImageLightbox({
                                     modules={[Navigation, Keyboard, Scrollbar]}
                                     navigation={false}
                                     className={styles.swiper}
-                                    spaceBetween={20}
+                                    spaceBetween={0}
                                     scrollbar={{ draggable: true }}
                                     onSwiper={(s) => (swiperRef.current = s)}
                                     onSlideChange={(s) => setActive(s.activeIndex)}

@@ -36,6 +36,7 @@
     display: inline-block;
     //   @extend %text-wrap;
     text-wrap: wrap;
+    text-transform: lowercase;
     text-wrap: wrap; // best-effort; keep for legacy support
     color: #1B90D6; // default inline link color (JS may override)
     text-decoration: none;

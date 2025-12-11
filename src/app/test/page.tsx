@@ -105,11 +105,11 @@ const PostText: React.FC<{ text: string }> = ({ text }) => {
   return (
     <div
       style={{
-        fontSize: "1.56rem",
+        fontSize: "1.5rem",
         lineHeight: "136%",
         fontWeight: 500,
         color: "#999",
-        marginTop: "1.2rem",
+        marginTop: "0.6rem",
         wordBreak: "break-word",
         whiteSpace: "pre-wrap", // preserve single & multiple newlines
       }}
@@ -118,17 +118,6 @@ const PostText: React.FC<{ text: string }> = ({ text }) => {
     </div>
   );
 };
-
-function formatWithDomains(rawText: string) {
-  // Deprecated for rendering — we keep it for compatibility if ever needed.
-  if (!rawText) return "";
-  const domainRegex =
-    /(?<!\()((?:https?:\/\/|www\.)[^\s]+|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.[a-z]{2,}(?:\/[^\s]*)?)/gi;
-  return rawText.replace(domainRegex, (match) => {
-    if (match.startsWith("http")) return match;
-    return `[${match}](https://${match})`;
-  });
-}
 
 const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
   const imagesForLightbox = useMemo(

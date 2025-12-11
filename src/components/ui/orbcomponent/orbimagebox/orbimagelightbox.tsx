@@ -193,7 +193,7 @@ export default function ImageLightbox({
                     return (
                         <motion.button
                             whileTap={{ scale: 0.98 }}
-                            whileHover={{scale: 1.01}}
+                            whileHover={{ scale: 1.01 }}
                             key={img.id}
                             className={styles.thumbBtn}
                             onClick={() => openViewer(i)}
@@ -232,121 +232,125 @@ export default function ImageLightbox({
                         }}
                         role="dialog"
                     >
-                        <div className={styles.toplayer}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
 
-                            <div
+                                position: 'absolute',
+                                top: '0',
+                                // zIndex: 10,
+                            }}
+                            className={styles.toplayer}
+                        >
+
+                            {/* Page Counter */}
+                            <p className={styles.page}>
+                                <span className={styles.pagenumber}>
+                                    <NumberFlow value={active + 1} />
+                                </span>{" "}
+                                out of{" "}
+                                <span className={styles.pagenumber}>
+                                    <NumberFlow value={images.length} />
+                                </span>
+                            </p>
+
+
+                            {/* COPY IMAGE BUTTON */}
+                            <motion.button
+                                whileTap={{ scale: 0.9 }}
+                                className={styles.closeBtn}
+                                onClick={handleCopyImage}
+                                disabled={isCopying}
+
+                                aria-label="Copy image"
+                                title="Copy image to clipboard"
                                 style={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
+                                    color: copied ? "#4ade80" : "#fff",
+                                    cursor: isCopying ? "wait" : "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    userSelect: 'none',
+
+                                    // padding: 0,
+                                    borderRadius: '2rem',
+                                    fontWeight: 600,
+                                    padding: '0rem 1.4rem 0rem 0.6rem',
+
+                                    height: '5.4rem',
+                                    marginLeft: '1rem'
+                                    // width: '5.4rem',
                                 }}
                             >
-                                {/* Page Counter */}
-                                <p className={styles.page}>
-                                    You're at{" "}
-                                    <span className={styles.pagenumber}>
-                                        <NumberFlow value={active + 1} />
-                                    </span>{" "}
-                                    out of{" "}
-                                    <span className={styles.pagenumber}>
-                                        <NumberFlow value={images.length} />
-                                    </span>
-                                </p>
+                                {isCopying ? (
+                                    // Loading Spinner
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            flexDirection: 'row',
+                                            justifyContent: 'flex-start',
 
+                                            height: '30px',
+                                        }}
+                                    >
 
-                                {/* COPY IMAGE BUTTON */}
-                                <motion.button
-                                    whileTap={{ scale: 0.9 }}
-                                    className={styles.closeBtn}
-                                    onClick={handleCopyImage}
-                                    disabled={isCopying}
-
-                                    aria-label="Copy image"
-                                    title="Copy image to clipboard"
-                                    style={{
-                                        color: copied ? "#4ade80" : "#fff",
-                                        cursor: isCopying ? "wait" : "pointer",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-
-                                        // padding: 0,
-                                        borderRadius: '2rem',
-                                        fontWeight: 500,
-                                        padding: '0rem 1.4rem 0rem 0.6rem',
-
-                                        height: '5.4rem',
-                                        marginLeft: '1rem'
-                                        // width: '5.4rem',
-                                    }}
-                                >
-                                    {isCopying ? (
-                                        // Loading Spinner
                                         <div
                                             style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 flexDirection: 'row',
-                                                justifyContent: 'flex-start',
+                                                justifyContent: 'center',
 
                                                 height: '30px',
+                                                width: '30px',
                                             }}
                                         >
-
                                             <div
                                                 style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    flexDirection: 'row',
-                                                    justifyContent: 'center',
-
-                                                    height: '30px',
-                                                    width: '30px',
+                                                    width: "14px",
+                                                    height: "14px",
+                                                    border: "2px solid rgba(255,255,255,0.3)",
+                                                    borderTopColor: "currentColor",
+                                                    borderRadius: "50%",
+                                                    animation: "spin 1s linear infinite",
                                                 }}
-                                            >
-                                                <div
-                                                    style={{
-                                                        width: "14px",
-                                                        height: "14px",
-                                                        border: "2px solid rgba(255,255,255,0.3)",
-                                                        borderTopColor: "currentColor",
-                                                        borderRadius: "50%",
-                                                        animation: "spin 1s linear infinite",
-                                                    }}
-                                                />
-                                            </div>
-                                            Coping
+                                            />
                                         </div>
-                                    ) : copied ? (
-                                        // Success Checkmark
-                                        <div
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                            }}
-                                        >
-                                            <OrbIcons name="copyimage" size={30} fill="#4ade80" />
-                                            Copied
-                                        </div>
-                                    ) : (
-                                        // Default Copy Icon
-                                        <div
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                            }}
-                                        >
-                                            <OrbIcons name="copyimage" size={30} fill="#fff" />
-                                            Copy
-                                        </div>
-                                    )}
+                                        Copying
+                                    </div>
+                                ) : copied ? (
+                                    // Success Checkmark
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <OrbIcons name="copyimage" size={30} fill="#4ade80" />
+                                        Copied
+                                    </div>
+                                ) : (
+                                    // Default Copy Icon
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <OrbIcons name="copyimage" size={30} fill="#fff" />
+                                        Copy
+                                    </div>
+                                )}
 
-                                    <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-                                </motion.button>
+                                <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                            </motion.button>
 
-                            </div>
 
 
                             {/* Actions Group */}

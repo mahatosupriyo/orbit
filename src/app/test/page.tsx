@@ -109,7 +109,7 @@ const PostText: React.FC<{ text: string }> = ({ text }) => {
         lineHeight: "136%",
         fontWeight: 500,
         color: "#999",
-        marginTop: "0.6rem",
+        marginTop: "1.6rem",
         wordBreak: "break-word",
         whiteSpace: "pre-wrap", // preserve single & multiple newlines
       }}

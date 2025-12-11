@@ -6,7 +6,7 @@ import OrbSearchComponent from "../orbsearch/orbsearch";
 import { JSX } from "react";
 import OrbAddPostModal from "../orbaddpost/orbaddpost";
 import styles from './orbnav.module.scss';
-import WarnMobile from "../../atomorb/warnmobile/warnmobile";
+// import WarnMobile from "../../atomorb/warnmobile/warnmobile";
 
 /**
  * OrbNavigator Component
@@ -50,7 +50,7 @@ export default function OrbNavigator(): JSX.Element {
             </LnkOrbButton>
 
             {/* Mobile-specific warning component */}
-            <WarnMobile />
+            {/* <WarnMobile /> */}
 
             {/* Search bar component */}
             <OrbSearchComponent />

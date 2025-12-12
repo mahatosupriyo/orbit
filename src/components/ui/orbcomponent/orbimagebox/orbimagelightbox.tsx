@@ -246,134 +246,128 @@ export default function ImageLightbox({
                             className={styles.toplayer}
                         >
 
-                            {/* Page Counter */}
-                            <p className={styles.page}>
-                                <span className={styles.pagenumber}>
-                                    <NumberFlow value={active + 1} />
-                                </span>{" "}
-                                out of{" "}
-                                <span className={styles.pagenumber}>
-                                    <NumberFlow value={images.length} />
-                                </span>
-                            </p>
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                gap: '0.8rem'
+                            }}>
+                                {/* Page Counter */}
+                                <p className={styles.page}>
+                                    <span className={styles.pagenumber}>
+                                        <NumberFlow value={active + 1} />
+                                    </span>{" "}
+                                    {/* out of{" "} */}
+                                    of
+                                    <span className={styles.pagenumber}>
+                                        <NumberFlow value={images.length} />
+                                    </span>
+                                </p>
 
+                                <span
+                                    className={styles.separator}
+                                ></span>
 
-                            {/* COPY IMAGE BUTTON */}
-                            <motion.button
-                                whileTap={{ scale: 0.9 }}
-                                className={styles.closeBtn}
-                                onClick={handleCopyImage}
-                                disabled={isCopying}
+                                {/* COPY IMAGE BUTTON */}
+                                <motion.button
+                                    whileTap={{ scale: 0.9 }}
+                                    className={styles.copyBtn}
+                                    onClick={handleCopyImage}
+                                    disabled={isCopying}
 
-                                aria-label="Copy image"
-                                title="Copy image to clipboard"
-                                style={{
-                                    color: copied ? "#4ade80" : "#fff",
-                                    cursor: isCopying ? "wait" : "pointer",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    userSelect: 'none',
-
-                                    // padding: 0,
-                                    borderRadius: '2rem',
-                                    fontWeight: 600,
-                                    padding: '0rem 1.4rem 0rem 0.6rem',
-
-                                    height: '5.4rem',
-                                    marginLeft: '1rem'
-                                    // width: '5.4rem',
-                                }}
-                            >
-                                {isCopying ? (
-                                    // Loading Spinner
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            flexDirection: 'row',
-                                            justifyContent: 'flex-start',
-
-                                            height: '30px',
-                                        }}
-                                    >
-
+                                    aria-label="Copy image"
+                                    title="Copy image to clipboard"
+                                    style={{
+                                        color: copied ? "#4ade80" : "#fff",
+                                        cursor: isCopying ? "wait" : "pointer",
+                                    }}
+                                >
+                                    {isCopying ? (
+                                        // Loading Spinner
                                         <div
                                             style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 flexDirection: 'row',
-                                                justifyContent: 'center',
+                                                justifyContent: 'flex-start',
 
                                                 height: '30px',
-                                                width: '30px',
                                             }}
                                         >
+
                                             <div
                                                 style={{
-                                                    width: "14px",
-                                                    height: "14px",
-                                                    border: "2px solid rgba(255,255,255,0.3)",
-                                                    borderTopColor: "currentColor",
-                                                    borderRadius: "50%",
-                                                    animation: "spin 1s linear infinite",
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'center',
+
+                                                    height: '30px',
+                                                    width: '30px',
                                                 }}
-                                            />
+                                            >
+                                                <div
+                                                    style={{
+                                                        width: "14px",
+                                                        height: "14px",
+                                                        border: "2px solid rgba(255,255,255,0.3)",
+                                                        borderTopColor: "currentColor",
+                                                        borderRadius: "50%",
+                                                        animation: "spin 1s linear infinite",
+                                                    }}
+                                                />
+                                            </div>
+                                            Copying
                                         </div>
-                                        Copying
-                                    </div>
-                                ) : copied ? (
-                                    // Success Checkmark
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <OrbIcons name="copyimage" size={30} fill="#4ade80" />
-                                        Copied
-                                    </div>
-                                ) : (
-                                    // Default Copy Icon
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <OrbIcons name="copyimage" size={30} fill="#fff" />
-                                        Copy
-                                    </div>
-                                )}
+                                    ) : copied ? (
+                                        // Success Checkmark
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
 
-                                <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-                            </motion.button>
+                                            }}
+                                        >
+                                            <OrbIcons name="copyimage" size={30} fill="#4ade80" />
+                                            Copied
+                                        </div>
+                                    ) : (
+                                        // Default Copy Icon
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <OrbIcons name="copyimage" size={30} fill="#fff" />
+                                            Copy
+                                        </div>
+                                    )}
 
-
-
-                            {/* Actions Group */}
-                            <div>
-
-                                {/* CLOSE BUTTON */}
-                                <motion.button
-                                    whileTap={{ scale: 0.9 }}
-                                    className={styles.closeBtn}
-                                    style={{
-                                        height: '5.4rem',
-                                        borderRadius: '2rem'
-                                    }}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        closeViewer();
-                                    }}
-                                    aria-label="Close viewer"
-                                >
-                                    <span className={styles.key}>Esc</span>
-                                    <OrbIcons name="close" size={20} />
+                                    <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                                 </motion.button>
+
                             </div>
+
+
+
+
+
+                            {/* CLOSE BUTTON */}
+                            <motion.button
+                                whileTap={{ scale: 0.9 }}
+                                className={styles.closeBtn}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    closeViewer();
+                                }}
+                                aria-label="Close viewer"
+                            >
+                                <span className={styles.key}>Esc</span>
+                                <OrbIcons name="close" size={20} />
+                            </motion.button>
                         </div>
 
                         {/* Main Viewer Shell */}

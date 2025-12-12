@@ -41,9 +41,9 @@ export default function OrbNavigator(): JSX.Element {
     return (
         <nav className={styles.orbnav} aria-label="Main navigation">
             {/* Garage/Home navigation button */}
-            <LnkOrbButton variant='iconic' href='/test' aria-label="Garage">
+            <LnkOrbButton variant='iconic' href='/' aria-label="Garage">
                 <OrbIcons
-                    fill={pathname === '/test' ? ACTIVE_FILL : DEFAULT_FILL}
+                    fill={pathname === '/' ? ACTIVE_FILL : DEFAULT_FILL}
                     name='garage'
                     size={ICON_SIZE}
                 />

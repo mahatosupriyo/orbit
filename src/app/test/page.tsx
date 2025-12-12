@@ -13,8 +13,6 @@ import ShimmerLoader from "@/components/atoms/loading/loadingbox";
 import PublicAvatar from "@/components/ui/orbcomponent/orbpost/orbpublicavatar";
 import OrbIcons from "@/components/ui/atomorb/orbicons";
 import { formatPostDate } from "@/server/utils/dateFormat";
-import { DownloadButton } from "./downloadbtn";
-import { DownloadZipButton } from "./zipdownload";
 
 const ImageLightbox = dynamic(
   () => import("@/components/ui/orbcomponent/orbimagebox/orbimagelightbox"),
@@ -161,31 +159,6 @@ const TestPostItemBase: React.FC<{ post: GaragePost }> = ({ post }) => {
                 images={imagesForLightbox}
                 previewSize="100%"
               />
-
-              {/* <div style={{
-                marginTop: "1rem",
-                display: "flex",
-                alignItems: "center",
-                marginRight: '0.6rem',
-                position: 'absolute',
-                top: 0,
-                right: 0
-              }}>
-                {post.images.length === 1 ? (
-                  // CASE A: Single Image -> Single Download Button
-                  <DownloadButton
-                    url={post.images[0].url}
-                    filename={`${post.createdBy.username}-post-${post.id}.jpg`}
-                  />
-                ) : (
-                  // CASE B: Multiple Images -> One Clean "Download All" Button
-                  <DownloadZipButton
-                    images={post.images}
-                    username={post.createdBy.username}
-                    postId={post.id}
-                  />
-                )}
-              </div> */}
 
             </div>
           )}
